@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://templatical.com/sitemap.xml
