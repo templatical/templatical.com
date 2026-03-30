@@ -71,10 +71,10 @@ const terminalLabel = t('a11y.terminal');
                     </div>
                     <pre
                         class="overflow-x-auto p-5 font-mono text-sm/7 text-neutral-300"
-                    ><code><span class="text-neutral-500">$</span> npm install <span class="text-primary">@templatical/vue</span>
+                    ><code><span class="text-neutral-500">$</span> npm install <span class="text-primary">@templatical/editor</span>
 
-<span class="text-blue-400">import</span> { <span class="text-neutral-100">init</span> } <span class="text-blue-400">from</span> <span class="text-primary">'@templatical/vue'</span>
-<span class="text-blue-400">import</span> <span class="text-primary">'@templatical/vue/style.css'</span>
+<span class="text-blue-400">import</span> { <span class="text-neutral-100">init</span> } <span class="text-blue-400">from</span> <span class="text-primary">'@templatical/editor'</span>
+<span class="text-blue-400">import</span> <span class="text-primary">'@templatical/editor/style.css'</span>
 
 <span class="text-blue-400">const</span> <span class="text-neutral-100">editor</span> = <span class="text-neutral-100">init</span>({
   <span class="text-neutral-100">container</span>: <span class="text-primary">'#editor'</span>,
