@@ -4,9 +4,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppLogoIcon from './AppLogoIcon.vue';
 import SiteContainer from './SiteContainer.vue';
-import IconDiscord from './icons/IconDiscord.vue';
 import IconGitHub from './icons/IconGitHub.vue';
-import IconX from './icons/IconX.vue';
 
 const { t } = useI18n();
 
@@ -26,8 +24,6 @@ const links = computed<FooterLink[]>(() => [
 
 const socialLinks = [
     { label: 'GitHub', href: URLS.github, icon: IconGitHub },
-    { label: 'Discord', href: URLS.discord, icon: IconDiscord },
-    { label: 'X', href: URLS.twitter, icon: IconX },
 ];
 </script>
 

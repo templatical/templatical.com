@@ -14,7 +14,6 @@ Static marketing site for the open-source Templatical SDK. Deployed to Cloudflar
 
 - `bun` for dependency management and scripts.
 - `@/` alias maps to `src/`.
-- `<style scoped>` for component-specific styles.
 - Component naming: `The` prefix for singletons (TheNavbar, TheFooter), `Site` prefix for design system primitives (SiteButton, SiteHeading), descriptive names for content components (FeatureShowcase, ComparisonTable).
 - External URLs centralized in `src/lib/urls.ts`.
 - All user-facing text must go through i18n (`t('key')`) — no hardcoded strings in templates.

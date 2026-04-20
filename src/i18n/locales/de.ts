@@ -293,7 +293,7 @@ const de: MessageSchema = {
         meta: {
             title: 'Community — Templatical',
             description:
-                'Treten Sie der Templatical-Community bei. Auf GitHub beitragen, auf Discord chatten und auf X für Updates folgen.',
+                'Treten Sie der Templatical-Community bei. Tragen Sie auf GitHub bei und helfen Sie, die Zukunft der Open-Source E-Mail-Tools zu gestalten.',
         },
         hero: {
             eyebrow: 'Community',
@@ -306,18 +306,6 @@ const de: MessageSchema = {
             description:
                 'Geben Sie dem Repo einen Stern, melden Sie Probleme, reichen Sie Pull Requests ein und erkunden Sie den Quellcode. Die gesamte Entwicklung findet öffentlich statt.',
             cta: 'Auf GitHub ansehen',
-        },
-        discord: {
-            title: 'Discord',
-            description:
-                'Chatten Sie mit dem Team und anderen Entwicklern. Holen Sie sich Hilfe, teilen Sie was Sie bauen und diskutieren Sie neue Funktionen.',
-            cta: 'Discord beitreten',
-        },
-        twitter: {
-            title: 'X / Twitter',
-            description:
-                'Folgen Sie uns für Release-Ankündigungen, Tipps und Updates zum Projekt.',
-            cta: 'Auf X folgen',
         },
         contributing: {
             eyebrow: 'Open Source',

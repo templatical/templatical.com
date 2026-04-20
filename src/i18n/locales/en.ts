@@ -291,7 +291,7 @@ export default {
         meta: {
             title: 'Community — Templatical',
             description:
-                'Join the Templatical community. Contribute on GitHub, chat on Discord, and follow us on X for updates.',
+                'Join the Templatical community. Contribute on GitHub and help shape the future of open-source email tooling.',
         },
         hero: {
             eyebrow: 'Community',
@@ -304,18 +304,6 @@ export default {
             description:
                 'Star the repo, report issues, submit pull requests, and explore the source code. All development happens in the open.',
             cta: 'View on GitHub',
-        },
-        discord: {
-            title: 'Discord',
-            description:
-                'Chat with the team and other developers. Get help, share what you\'re building, and discuss new features.',
-            cta: 'Join Discord',
-        },
-        twitter: {
-            title: 'X / Twitter',
-            description:
-                'Follow us for release announcements, tips, and updates on the project.',
-            cta: 'Follow on X',
         },
         contributing: {
             eyebrow: 'Open source',

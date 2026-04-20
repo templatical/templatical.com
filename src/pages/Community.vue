@@ -3,10 +3,8 @@ import CommunityCard from '@/components/CommunityCard.vue';
 import CtaSection from '@/components/CtaSection.vue';
 import SiteButton from '@/components/SiteButton.vue';
 import SiteSection from '@/components/SiteSection.vue';
-import IconDiscord from '@/components/icons/IconDiscord.vue';
 import IconGitHub from '@/components/icons/IconGitHub.vue';
 import IconChevronRight from '@/components/icons/IconChevronRight.vue';
-import IconX from '@/components/icons/IconX.vue';
 import { URLS } from '@/lib/urls';
 import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
@@ -36,7 +34,7 @@ useHead({
 
         <section class="bg-white py-20 sm:py-28 dark:bg-neutral-950">
             <div
-                class="mx-auto grid w-full max-w-2xl grid-cols-1 gap-4 px-6 md:max-w-3xl lg:max-w-7xl lg:grid-cols-3 lg:px-10"
+                class="mx-auto grid w-full max-w-2xl grid-cols-1 gap-4 px-6 md:max-w-3xl lg:max-w-7xl lg:px-10"
             >
                 <CommunityCard
                     :title="t('community.github.title')"
@@ -44,20 +42,6 @@ useHead({
                     :href="URLS.github"
                     :cta="t('community.github.cta')"
                     :icon="IconGitHub"
-                />
-                <CommunityCard
-                    :title="t('community.discord.title')"
-                    :description="t('community.discord.description')"
-                    :href="URLS.discord"
-                    :cta="t('community.discord.cta')"
-                    :icon="IconDiscord"
-                />
-                <CommunityCard
-                    :title="t('community.twitter.title')"
-                    :description="t('community.twitter.description')"
-                    :href="URLS.twitter"
-                    :cta="t('community.twitter.cta')"
-                    :icon="IconX"
                 />
             </div>
         </section>

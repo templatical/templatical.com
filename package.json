@@ -9,6 +9,7 @@
     "preview": "vite preview --port 4174"
   },
   "dependencies": {
+    "@unhead/vue": "^1.11",
     "@vueuse/core": "^14",
     "@vueuse/integrations": "^14",
     "clsx": "^2.1",
