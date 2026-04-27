@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
+import { useViewTransitions } from '@/composables/useViewTransitions';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
+
+useViewTransitions();
 </script>
 
 <template>
@@ -15,12 +18,12 @@ const { t } = useI18n();
             {{ t('a11y.skipToContent') }}
         </a>
 
-        <TheNavbar />
+        <TheNavbar class="vt-navbar" />
 
-        <main id="main-content">
+        <main id="main-content" class="vt-main">
             <router-view />
         </main>
 
-        <TheFooter />
+        <TheFooter class="vt-footer" />
     </div>
 </template>

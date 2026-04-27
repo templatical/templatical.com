@@ -235,3 +235,84 @@
         transform: translateY(0);
     }
 }
+
+/* ─── View Transitions: cinematic page change ─────────────────────────
+   Persistent surfaces (navbar, footer) get their own transition names
+   so they're lifted out of the root snapshot and don't crossfade with
+   themselves. Main content fades + scales subtly between routes. */
+
+.vt-navbar {
+    view-transition-name: site-navbar;
+}
+.vt-footer {
+    view-transition-name: site-footer;
+}
+.vt-main {
+    view-transition-name: site-main;
+}
+
+::view-transition-group(site-navbar),
+::view-transition-group(site-footer) {
+    animation-duration: 0s;
+}
+::view-transition-old(site-navbar),
+::view-transition-new(site-navbar),
+::view-transition-old(site-footer),
+::view-transition-new(site-footer) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-old(site-main),
+::view-transition-new(site-main),
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 420ms;
+    animation-timing-function: var(--ease-spring);
+    mix-blend-mode: normal;
+}
+
+::view-transition-old(site-main),
+::view-transition-old(root) {
+    animation-name: vt-page-out;
+}
+::view-transition-new(site-main),
+::view-transition-new(root) {
+    animation-name: vt-page-in;
+}
+
+@keyframes vt-page-out {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.985);
+        filter: blur(4px);
+    }
+}
+
+@keyframes vt-page-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(1.012);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(site-main),
+    ::view-transition-new(site-main),
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 1ms;
+        animation-name: none;
+    }
+}
