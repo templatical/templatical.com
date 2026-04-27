@@ -1,35 +1,21 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { useFetch } from '@vueuse/core';
+import { computed } from 'vue';
 import { URLS } from '@/lib/urls';
 import IconGitHub from './icons/IconGitHub.vue';
 
-const count = ref<number | null>(null);
-const controller = new AbortController();
+const { data } = useFetch('https://api.github.com/repos/templatical/sdk', {
+    timeout: 1500,
+}).get().json<{ stargazers_count?: number }>();
+
+const count = computed(() =>
+    typeof data.value?.stargazers_count === 'number' ? data.value.stargazers_count : null,
+);
 
 function format(n: number): string {
     if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
     return String(n);
 }
-
-onMounted(async () => {
-    const timeout = setTimeout(() => controller.abort(), 1500);
-    try {
-        const res = await fetch('https://api.github.com/repos/templatical/sdk', {
-            signal: controller.signal,
-        });
-        if (!res.ok) return;
-        const data = await res.json();
-        if (typeof data.stargazers_count === 'number') {
-            count.value = data.stargazers_count;
-        }
-    } catch {
-        // silent — abort, network, or parse error → fall back to Star label only
-    } finally {
-        clearTimeout(timeout);
-    }
-});
-
-onBeforeUnmount(() => controller.abort());
 </script>
 
 <template>

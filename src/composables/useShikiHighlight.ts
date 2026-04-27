@@ -5,7 +5,7 @@ import {
     type ShikiTransformer,
 } from 'shiki';
 
-type Highlighter = HighlighterGeneric<'javascript' | 'html', 'github-dark'>;
+type Highlighter = HighlighterGeneric<'javascript' | 'html' | 'lit', 'github-dark'>;
 
 let highlighterPromise: Promise<Highlighter> | null = null;
 
@@ -13,7 +13,7 @@ export function getHighlighter(): Promise<Highlighter> {
     if (!highlighterPromise) {
         highlighterPromise = createHighlighter({
             themes: ['github-dark'],
-            langs: ['javascript', 'html'],
+            langs: ['javascript', 'html', 'lit'],
         }) as Promise<Highlighter>;
     }
     return highlighterPromise;
@@ -26,6 +26,15 @@ export const stripPreBackground: ShikiTransformer = {
                 .replace(/background-color\s*:\s*[^;]+;?/g, '')
                 .trim();
         }
+    },
+};
+
+export const tagTemplateAsHtml: ShikiTransformer = {
+    preprocess(code) {
+        return code.replace(/(template\s*:\s*)`/g, '$1html`');
+    },
+    postprocess(html) {
+        return html.replace(/<span[^>]*>\s*html\s*<\/span>/g, '');
     },
 };
 

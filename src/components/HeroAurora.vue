@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import {
+    useDark,
+    useDevicePixelRatio,
+    useEventListener,
+    useIntersectionObserver,
+    usePreferredReducedMotion,
+    useResizeObserver,
+} from '@vueuse/core';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 withDefaults(
     defineProps<{
@@ -15,6 +23,10 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const root = ref<HTMLDivElement | null>(null);
 const supported = ref(true);
 
+const isDark = useDark();
+const reducedMotionPref = usePreferredReducedMotion();
+const { pixelRatio } = useDevicePixelRatio();
+
 let gl: WebGL2RenderingContext | null = null;
 let program: WebGLProgram | null = null;
 let raf = 0;
@@ -24,12 +36,6 @@ let mouseY = 0.4;
 let tMouseX = 0.5;
 let tMouseY = 0.4;
 let visible = true;
-let isDark = false;
-let resizeObs: ResizeObserver | null = null;
-let intersectObs: IntersectionObserver | null = null;
-let mqDark: MediaQueryList | null = null;
-let mqMotion: MediaQueryList | null = null;
-let reducedMotion = false;
 
 const VERT = `#version 300 es
 in vec2 a;
@@ -191,7 +197,7 @@ function init() {
 function resize() {
     const c = canvas.value;
     if (!c || !gl) return;
-    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+    const dpr = Math.min(1.5, pixelRatio.value || 1);
     const w = Math.floor(c.clientWidth * dpr);
     const h = Math.floor(c.clientHeight * dpr);
     if (c.width !== w || c.height !== h) {
@@ -210,6 +216,7 @@ function frame(t: number) {
     mouseX += (tMouseX - mouseX) * 0.06;
     mouseY += (tMouseY - mouseY) * 0.06;
 
+    const reducedMotion = reducedMotionPref.value === 'reduce';
     const uT = gl.getUniformLocation(program, 'uT');
     const uR = gl.getUniformLocation(program, 'uR');
     const uM = gl.getUniformLocation(program, 'uM');
@@ -217,7 +224,7 @@ function frame(t: number) {
     gl.uniform1f(uT, reducedMotion ? 0 : elapsed);
     gl.uniform2f(uR, canvas.value!.width, canvas.value!.height);
     gl.uniform2f(uM, mouseX, 1 - mouseY);
-    gl.uniform1f(uDark, isDark ? 1 : 0);
+    gl.uniform1f(uDark, isDark.value ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
@@ -238,56 +245,39 @@ function onPointer(e: PointerEvent) {
     kick();
 }
 
-onMounted(() => {
-    mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    reducedMotion = mqMotion.matches;
-    mqMotion.addEventListener('change', (e) => {
-        reducedMotion = e.matches;
-        kick();
-    });
+// Re-render whenever the inputs change (motion preference, theme, DPR).
+watch([reducedMotionPref, isDark, pixelRatio], () => kick());
 
+useEventListener(typeof window !== 'undefined' ? window : null, 'pointermove', onPointer, {
+    passive: true,
+});
+
+useResizeObserver(canvas, () => {
+    resize();
+    kick();
+});
+
+useIntersectionObserver(
+    root,
+    ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) kick();
+    },
+    { threshold: 0 },
+);
+
+onMounted(() => {
     if (!init()) {
         supported.value = false;
         return;
     }
-
-    isDark = document.documentElement.classList.contains('dark');
-    const mo = new MutationObserver(() => {
-        isDark = document.documentElement.classList.contains('dark');
-        kick();
-    });
-    mo.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class'],
-    });
-
-    resizeObs = new ResizeObserver(() => {
-        resize();
-        kick();
-    });
-    resizeObs.observe(canvas.value!);
     resize();
-
-    intersectObs = new IntersectionObserver(
-        (entries) => {
-            visible = entries[0].isIntersecting;
-            if (visible) kick();
-        },
-        { threshold: 0 },
-    );
-    intersectObs.observe(root.value!);
-
-    window.addEventListener('pointermove', onPointer, { passive: true });
-
-    // one frame even if reduced-motion to paint static
+    // Paint at least one frame, even under reduced-motion.
     raf = requestAnimationFrame(frame);
 });
 
 onBeforeUnmount(() => {
     if (raf) cancelAnimationFrame(raf);
-    resizeObs?.disconnect();
-    intersectObs?.disconnect();
-    window.removeEventListener('pointermove', onPointer);
 });
 </script>
 

@@ -18,7 +18,7 @@ import IconSwatch from '@/components/icons/IconSwatch.vue';
 import { useHead } from '@unhead/vue';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { getHighlighter, stripPreBackground } from '@/composables/useShikiHighlight';
+import { getHighlighter, stripPreBackground, tagTemplateAsHtml } from '@/composables/useShikiHighlight';
 import { URLS } from '@/lib/urls';
 
 const { t, tm, locale, fallbackLocale } = useI18n();
@@ -298,9 +298,9 @@ onMounted(async () => {
         if (s.variants?.length) {
             s.variants.forEach((v, i) => {
                 next[highlightKey(s.slug, i)] = h.codeToHtml(v.code, {
-                    lang: 'javascript',
+                    lang: 'lit',
                     theme: 'github-dark',
-                    transformers: [stripPreBackground],
+                    transformers: [stripPreBackground, tagTemplateAsHtml],
                 });
             });
         } else if (s.code) {

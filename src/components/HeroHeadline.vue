@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils';
-import { computed, onBeforeUnmount, onMounted, ref, useAttrs } from 'vue';
+import {
+    useEventListener,
+    useMediaQuery,
+    useMouse,
+    usePreferredReducedMotion,
+    useRafFn,
+    useResizeObserver,
+    useTimeoutFn,
+} from '@vueuse/core';
+import { computed, onMounted, ref, useAttrs, watch } from 'vue';
 
 const props = withDefaults(
     defineProps<{
@@ -41,30 +50,60 @@ function computeTokens(text: string, accent?: string) {
     });
 }
 
-let pointerHandler: ((e: PointerEvent) => void) | null = null;
-let scrollHandler: (() => void) | null = null;
-let resizeObs: ResizeObserver | null = null;
-let raf = 0;
-let disposed = false;
+const reducedMotion = usePreferredReducedMotion();
+const coarsePointer = useMediaQuery('(pointer: coarse)');
+const { x: pointerX, y: pointerY } = useMouse({ type: 'client', initialValue: { x: -9999, y: -9999 } });
+
+const startDelay = 80;
+const perChar = 18;
+const duration = 720;
+const radius = 120;
+
+let chars: HTMLElement[] = [];
+let centers: { x: number; y: number }[] = [];
+
+function measure() {
+    centers = chars.map((c) => {
+        const r = c.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+}
+
+const { pause: pauseRaf, resume: resumeRaf } = useRafFn(
+    () => {
+        for (let i = 0; i < chars.length; i++) {
+            const c = centers[i];
+            if (!c) continue;
+            const dx = pointerX.value - c.x;
+            const dy = pointerY.value - c.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 > radius * radius) {
+                chars[i].style.transform = '';
+                continue;
+            }
+            const d = Math.sqrt(d2);
+            const f = (1 - d / radius) ** 2;
+            const tx = -(dx / Math.max(d, 1)) * f * 4;
+            const ty = -(dy / Math.max(d, 1)) * f * 4 - f * 2;
+            chars[i].style.transform =
+                `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px)`;
+        }
+    },
+    { immediate: false },
+);
+
+useEventListener(typeof window !== 'undefined' ? window : null, 'scroll', () => measure(), {
+    passive: true,
+});
+useResizeObserver(typeof document !== 'undefined' ? document.body : null, measure);
 
 onMounted(() => {
-    if (typeof window === 'undefined') return;
-    const prefersReduced = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-    ).matches;
-
     enhanced.value = true;
-
     const el = root.value;
     if (!el) return;
+    chars = Array.from(el.querySelectorAll<HTMLElement>('.hh__c'));
 
-    const chars = Array.from(el.querySelectorAll<HTMLElement>('.hh__c'));
-    const total = chars.length;
-    const startDelay = 80;
-    const perChar = 18;
-    const duration = 720;
-
-    if (prefersReduced) {
+    if (reducedMotion.value === 'reduce') {
         chars.forEach((node) => {
             node.style.opacity = '1';
             node.style.transform = 'none';
@@ -96,74 +135,16 @@ onMounted(() => {
         );
     });
 
-    const coarse = window.matchMedia('(pointer: coarse)').matches;
-    if (coarse) return;
+    if (coarsePointer.value) return;
 
-    let targetX = -9999;
-    let targetY = -9999;
-
-    pointerHandler = (e: PointerEvent) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-    };
-    window.addEventListener('pointermove', pointerHandler, { passive: true });
-
-    let centers: { x: number; y: number }[] = [];
-    const measure = () => {
-        centers = chars.map((c) => {
-            const r = c.getBoundingClientRect();
-            return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-        });
-    };
     measure();
-    resizeObs = new ResizeObserver(measure);
-    resizeObs.observe(document.body);
-    scrollHandler = measure;
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-
-    const driftStart =
-        performance.now() + startDelay + total * perChar + duration;
-    const radius = 120;
-
-    const tick = () => {
-        if (disposed) return;
-        const now = performance.now();
-        if (now < driftStart) {
-            raf = requestAnimationFrame(tick);
-            return;
-        }
-        for (let i = 0; i < chars.length; i++) {
-            const c = centers[i];
-            if (!c) continue;
-            const dx = targetX - c.x;
-            const dy = targetY - c.y;
-            const d2 = dx * dx + dy * dy;
-            if (d2 > radius * radius) {
-                chars[i].style.transform = '';
-                continue;
-            }
-            const d = Math.sqrt(d2);
-            const f = (1 - d / radius) ** 2;
-            const tx = -(dx / Math.max(d, 1)) * f * 4;
-            const ty = -(dy / Math.max(d, 1)) * f * 4 - f * 2;
-            chars[i].style.transform =
-                `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px)`;
-        }
-        raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
+    // Start the magnetic effect after the intro animation completes.
+    useTimeoutFn(resumeRaf, startDelay + chars.length * perChar + duration);
 });
 
-onBeforeUnmount(() => {
-    disposed = true;
-    if (raf) cancelAnimationFrame(raf);
-    if (pointerHandler) {
-        window.removeEventListener('pointermove', pointerHandler);
-    }
-    if (scrollHandler) {
-        window.removeEventListener('scroll', scrollHandler);
-    }
-    resizeObs?.disconnect();
+// Stop the raf loop when reduced-motion turns on mid-session.
+watch(reducedMotion, (v) => {
+    if (v === 'reduce') pauseRaf();
 });
 </script>
 
