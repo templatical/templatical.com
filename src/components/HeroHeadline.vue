@@ -97,54 +97,68 @@ useEventListener(typeof window !== 'undefined' ? window : null, 'scroll', () => 
 });
 useResizeObserver(typeof document !== 'undefined' ? document.body : null, measure);
 
+function clearTransforms() {
+    for (const node of chars) node.style.transform = '';
+}
+
 onMounted(() => {
     enhanced.value = true;
     const el = root.value;
     if (!el) return;
     chars = Array.from(el.querySelectorAll<HTMLElement>('.hh__c'));
 
-    if (reducedMotion.value === 'reduce') {
+    const isReduced = reducedMotion.value === 'reduce';
+
+    if (isReduced) {
         chars.forEach((node) => {
             node.style.opacity = '1';
             node.style.transform = 'none';
             node.style.filter = 'none';
         });
-        return;
+    } else {
+        chars.forEach((node, i) => {
+            node.animate(
+                [
+                    {
+                        opacity: 0,
+                        transform: 'translateY(14px) scale(0.96)',
+                        filter: 'blur(6px)',
+                    },
+                    {
+                        opacity: 1,
+                        transform: 'translateY(0) scale(1)',
+                        filter: 'blur(0)',
+                    },
+                ],
+                {
+                    duration,
+                    delay: startDelay + i * perChar,
+                    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                    fill: 'both',
+                },
+            );
+        });
     }
-
-    chars.forEach((node, i) => {
-        node.animate(
-            [
-                {
-                    opacity: 0,
-                    transform: 'translateY(14px) scale(0.96)',
-                    filter: 'blur(6px)',
-                },
-                {
-                    opacity: 1,
-                    transform: 'translateY(0) scale(1)',
-                    filter: 'blur(0)',
-                },
-            ],
-            {
-                duration,
-                delay: startDelay + i * perChar,
-                easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                fill: 'both',
-            },
-        );
-    });
 
     if (coarsePointer.value) return;
 
     measure();
-    // Start the magnetic effect after the intro animation completes.
-    useTimeoutFn(resumeRaf, startDelay + chars.length * perChar + duration);
+    if (!isReduced) {
+        // Start the magnetic effect after the intro animation completes.
+        useTimeoutFn(resumeRaf, startDelay + chars.length * perChar + duration);
+    }
 });
 
-// Stop the raf loop when reduced-motion turns on mid-session.
+// React to reduced-motion toggling mid-session.
 watch(reducedMotion, (v) => {
-    if (v === 'reduce') pauseRaf();
+    if (coarsePointer.value) return;
+    if (v === 'reduce') {
+        pauseRaf();
+        clearTransforms();
+    } else if (chars.length) {
+        measure();
+        resumeRaf();
+    }
 });
 </script>
 

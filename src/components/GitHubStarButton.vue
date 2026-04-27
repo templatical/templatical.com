@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import { useFetch } from '@vueuse/core';
-import { computed } from 'vue';
 import { URLS } from '@/lib/urls';
+import { useGitHubStars } from '@/composables/useGitHubStars';
 import IconGitHub from './icons/IconGitHub.vue';
 
-const { data } = useFetch('https://api.github.com/repos/templatical/sdk', {
-    timeout: 1500,
-}).get().json<{ stargazers_count?: number }>();
-
-const count = computed(() =>
-    typeof data.value?.stargazers_count === 'number' ? data.value.stargazers_count : null,
-);
+const { stars: count } = useGitHubStars();
 
 function format(n: number): string {
     if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;

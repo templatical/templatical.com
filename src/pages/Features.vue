@@ -518,21 +518,29 @@ const faqItems = computed(() => [
                             >
                                 <div
                                     v-if="highlightedCode[highlightKey(section.slug, variantIndex(section.slug))]"
+                                    role="region"
+                                    :aria-label="t('a11y.codeExample')"
                                     v-html="highlightedCode[highlightKey(section.slug, variantIndex(section.slug))]"
                                 />
                                 <pre
                                     v-else
+                                    role="region"
+                                    :aria-label="t('a11y.codeExample')"
                                     class="overflow-x-auto font-mono text-sm/7 text-neutral-300"
                                 ><code>{{ section.variants[variantIndex(section.slug)].code }}</code></pre>
                             </div>
                             <template v-else>
                                 <div
                                     v-if="highlightedCode[section.slug]"
+                                    role="region"
+                                    :aria-label="t('a11y.codeExample')"
                                     class="code-block overflow-hidden rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
                                     v-html="highlightedCode[section.slug]"
                                 />
                                 <pre
                                     v-else
+                                    role="region"
+                                    :aria-label="t('a11y.codeExample')"
                                     class="overflow-x-auto rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 text-neutral-300 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
                                 ><code>{{ section.code }}</code></pre>
                             </template>

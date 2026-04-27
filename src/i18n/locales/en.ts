@@ -10,6 +10,7 @@ export default {
         terminal: 'terminal',
         yes: 'Yes',
         no: 'No',
+        codeExample: 'Code example',
     },
     nav: {
         features: 'Features',

@@ -115,11 +115,15 @@ onMounted(async () => {
                     </div>
                     <div
                         v-if="heroCodeHtml"
+                        role="region"
+                        :aria-label="t('a11y.codeExample')"
                         class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-300"
                         v-html="heroCodeHtml"
                     />
                     <pre
                         v-else
+                        role="region"
+                        :aria-label="t('a11y.codeExample')"
                         class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-300"
                     ><code>{{ heroCode }}</code></pre>
                 </div>

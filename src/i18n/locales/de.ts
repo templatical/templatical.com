@@ -12,6 +12,7 @@ const de: MessageSchema = {
         terminal: 'Terminal',
         yes: 'Ja',
         no: 'Nein',
+        codeExample: 'Codebeispiel',
     },
     nav: {
         features: 'Funktionen',
