@@ -1,20 +1,21 @@
 import { onMounted, ref, type Ref } from 'vue';
-import {
-    createHighlighter,
-    type HighlighterGeneric,
-    type ShikiTransformer,
-} from 'shiki';
+import { createHighlighterCore, type HighlighterCore } from 'shiki/core';
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
+import type { ShikiTransformer } from 'shiki';
 
-type Highlighter = HighlighterGeneric<'javascript' | 'html' | 'lit', 'github-dark'>;
+let highlighterPromise: Promise<HighlighterCore> | null = null;
 
-let highlighterPromise: Promise<Highlighter> | null = null;
-
-export function getHighlighter(): Promise<Highlighter> {
+export function getHighlighter(): Promise<HighlighterCore> {
     if (!highlighterPromise) {
-        highlighterPromise = createHighlighter({
-            themes: ['github-dark'],
-            langs: ['javascript', 'html', 'lit'],
-        }) as Promise<Highlighter>;
+        highlighterPromise = createHighlighterCore({
+            themes: [import('@shikijs/themes/github-dark')],
+            langs: [
+                import('@shikijs/langs/javascript'),
+                import('@shikijs/langs/html'),
+                import('@shikijs/langs/lit'),
+            ],
+            engine: createJavaScriptRegexEngine(),
+        });
     }
     return highlighterPromise;
 }
