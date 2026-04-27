@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import AuroraField from '@/components/AuroraField.vue';
 import BentoGrid from '@/components/BentoGrid.vue';
 import CtaSection from '@/components/CtaSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import IconArrowDownTray from '@/components/icons/IconArrowDownTray.vue';
+import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
 import IconArrowUturnLeft from '@/components/icons/IconArrowUturnLeft.vue';
 import IconDevicePhone from '@/components/icons/IconDevicePhone.vue';
 import IconGlobe from '@/components/icons/IconGlobe.vue';
@@ -35,71 +37,90 @@ interface FeatureSection {
 
 const featureSections = computed<FeatureSection[]>(() => [
     {
-        eyebrow: t('features.editor.eyebrow'),
-        title: t('features.editor.title'),
-        description: t('features.editor.description'),
-        features: tm('features.editor.features') as string[],
+        eyebrow: t('features.customBlocks.eyebrow'),
+        title: t('features.customBlocks.title'),
+        description: t('features.customBlocks.description'),
+        features: tm('features.customBlocks.features') as string[],
         bg: 'gray',
     },
     {
-        eyebrow: t('features.dx.eyebrow'),
-        title: t('features.dx.title'),
-        description: t('features.dx.description'),
-        features: tm('features.dx.features') as string[],
+        eyebrow: t('features.mergeTags.eyebrow'),
+        title: t('features.mergeTags.title'),
+        description: t('features.mergeTags.description'),
+        features: tm('features.mergeTags.features') as string[],
         bg: 'white',
     },
     {
-        eyebrow: t('features.output.eyebrow'),
-        title: t('features.output.title'),
-        description: t('features.output.description'),
-        features: tm('features.output.features') as string[],
+        eyebrow: t('features.displayConditions.eyebrow'),
+        title: t('features.displayConditions.title'),
+        description: t('features.displayConditions.description'),
+        features: tm('features.displayConditions.features') as string[],
         bg: 'gray',
     },
     {
-        eyebrow: t('features.extensibility.eyebrow'),
-        title: t('features.extensibility.title'),
-        description: t('features.extensibility.description'),
-        features: tm('features.extensibility.features') as string[],
+        eyebrow: t('features.theming.eyebrow'),
+        title: t('features.theming.title'),
+        description: t('features.theming.description'),
+        features: tm('features.theming.features') as string[],
         bg: 'white',
+    },
+    {
+        eyebrow: t('features.defaults.eyebrow'),
+        title: t('features.defaults.title'),
+        description: t('features.defaults.description'),
+        features: tm('features.defaults.features') as string[],
+        bg: 'gray',
     },
 ]);
 
-const moreItems = computed(() => [
+const supportingItems = computed(() => [
     {
-        key: 'themeCustomization',
-        icon: IconSwatch,
-        title: t('features.moreItems.themeCustomization.title'),
-        description: t('features.moreItems.themeCustomization.description'),
+        key: 'framework',
+        icon: IconGlobe,
+        title: t('features.supportingItems.framework.title'),
+        description: t('features.supportingItems.framework.description'),
+    },
+    {
+        key: 'output',
+        icon: IconArrowUpTray,
+        title: t('features.supportingItems.output.title'),
+        description: t('features.supportingItems.output.description'),
+    },
+    {
+        key: 'cloud',
+        icon: IconDevicePhone,
+        title: t('features.supportingItems.cloud.title'),
+        description: t('features.supportingItems.cloud.description'),
     },
     {
         key: 'darkMode',
         icon: IconMoon,
-        title: t('features.moreItems.darkMode.title'),
-        description: t('features.moreItems.darkMode.description'),
+        title: t('features.supportingItems.darkMode.title'),
+        description: t('features.supportingItems.darkMode.description'),
     },
     {
         key: 'i18n',
         icon: IconGlobe,
-        title: t('features.moreItems.i18n.title'),
-        description: t('features.moreItems.i18n.description'),
+        title: t('features.supportingItems.i18n.title'),
+        description: t('features.supportingItems.i18n.description'),
     },
     {
         key: 'undoRedo',
         icon: IconArrowUturnLeft,
-        title: t('features.moreItems.undoRedo.title'),
-        description: t('features.moreItems.undoRedo.description'),
+        title: t('features.supportingItems.undoRedo.title'),
+        description: t('features.supportingItems.undoRedo.description'),
     },
     {
         key: 'responsivePreview',
-        icon: IconDevicePhone,
-        title: t('features.moreItems.responsivePreview.title'),
-        description: t('features.moreItems.responsivePreview.description'),
+        icon: IconSwatch,
+        title: t('features.supportingItems.responsivePreview.title'),
+        description: t('features.supportingItems.responsivePreview.description'),
     },
     {
         key: 'beefreeImport',
         icon: IconArrowDownTray,
-        title: t('features.moreItems.beefreeImport.title'),
-        description: t('features.moreItems.beefreeImport.description'),
+        title: t('features.supportingItems.beefreeImport.title'),
+        description: t('features.supportingItems.beefreeImport.description'),
     },
 ]);
 
@@ -132,22 +153,26 @@ const faqItems = computed(() => [
 </script>
 
 <template>
-    <div>
+    <div class="relative isolate">
+        <AuroraField :intensity="0.9" :hue-start="35" :hue-end="170" />
+
+        <div class="relative z-10">
         <SiteSection
             :eyebrow="t('features.hero.eyebrow')"
             :headline="t('features.hero.headline')"
             :subheadline="t('features.hero.subheadline')"
             headline-as="h1"
+            class="!bg-white/55 backdrop-blur-xl dark:!bg-neutral-950/55"
         />
 
         <section
             v-for="(section, index) in featureSections"
             :key="index"
             :class="[
-                'py-20 sm:py-28',
+                'py-20 sm:py-28 backdrop-blur-xl',
                 section.bg === 'gray'
-                    ? 'bg-neutral-50 dark:bg-neutral-900'
-                    : 'bg-white dark:bg-neutral-950',
+                    ? 'bg-neutral-50/55 dark:bg-neutral-900/55'
+                    : 'bg-white/45 dark:bg-neutral-950/55',
             ]"
         >
             <div
@@ -196,18 +221,20 @@ const faqItems = computed(() => [
         </section>
 
         <SiteSection
-            :eyebrow="t('features.moreFeatures.eyebrow')"
-            :headline="t('features.moreFeatures.headline')"
-            :subheadline="t('features.moreFeatures.subheadline')"
+            :eyebrow="t('features.supporting.eyebrow')"
+            :headline="t('features.supporting.headline')"
+            :subheadline="t('features.supporting.subheadline')"
             bg="gray"
+            class="!bg-neutral-50/55 backdrop-blur-xl dark:!bg-neutral-900/55"
         >
-            <BentoGrid :items="moreItems" />
+            <BentoGrid :items="supportingItems" />
         </SiteSection>
 
         <SiteSection
             :eyebrow="t('features.migration.eyebrow')"
             :headline="t('features.migration.title')"
             :subheadline="t('features.migration.description')"
+            class="!bg-white/45 backdrop-blur-xl dark:!bg-neutral-950/55"
         >
             <ul class="flex max-w-2xl flex-col gap-3">
                 <li
@@ -235,10 +262,14 @@ const faqItems = computed(() => [
             </ul>
         </SiteSection>
 
-        <SiteSection :headline="t('features.faq.headline')">
+        <SiteSection
+            :headline="t('features.faq.headline')"
+            class="!bg-white/45 backdrop-blur-xl dark:!bg-neutral-950/55"
+        >
             <FaqSection :items="faqItems" />
         </SiteSection>
 
         <CtaSection />
+        </div>
     </div>
 </template>

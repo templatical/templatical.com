@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { URLS } from '@/lib/urls';
-import { useScrollLock } from '@vueuse/core';
+import { useScrollLock, useWindowScroll } from '@vueuse/core';
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 import { computed, nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import AppLogoIcon from './AppLogoIcon.vue';
 import DarkModeToggle from './DarkModeToggle.vue';
 import LocaleSwitcher from './LocaleSwitcher.vue';
@@ -11,6 +12,9 @@ import SiteButton from './SiteButton.vue';
 import IconGitHub from './icons/IconGitHub.vue';
 
 const { t } = useI18n();
+const route = useRoute();
+const { y: scrollY } = useWindowScroll();
+const isHome = computed(() => route.path === '/');
 
 interface NavLink {
     label: string;
@@ -26,6 +30,9 @@ const links = computed<NavLink[]>(() => [
 ]);
 
 const isMobileMenuOpen = ref(false);
+const solid = computed(
+    () => !isHome.value || scrollY.value > 40 || isMobileMenuOpen.value,
+);
 const menuRef = ref<HTMLElement | null>(null);
 const menuTriggerRef = ref<HTMLElement | null>(null);
 const bodyScrollLock = useScrollLock(
@@ -54,7 +61,12 @@ const linkClasses =
 
 <template>
     <header
-        class="sticky top-0 z-50 border-b border-neutral-200/50 bg-white/80 backdrop-blur-lg dark:border-neutral-800/50 dark:bg-neutral-950/80"
+        :class="[
+            'site-nav sticky top-0 z-50 border-b transition-[background-color,backdrop-filter,border-color] duration-300 ease-out motion-reduce:transition-none',
+            solid
+                ? 'border-neutral-200/50 bg-white/80 backdrop-blur-lg dark:border-neutral-800/50 dark:bg-neutral-950/80'
+                : 'border-transparent bg-transparent backdrop-blur-0',
+        ]"
     >
         <nav aria-label="Main">
             <div
