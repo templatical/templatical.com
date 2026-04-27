@@ -24,7 +24,6 @@ interface NavLink {
 
 const links = computed<NavLink[]>(() => [
     { label: t('nav.features'), href: '/features' },
-    { label: t('nav.community'), href: '/community' },
     { label: t('nav.docs'), href: URLS.docs, external: true },
     { label: t('nav.playground'), href: URLS.playground, external: true },
 ]);

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { URLS } from '@/lib/urls';
 import IconGitHub from './icons/IconGitHub.vue';
 
 const count = ref<number | null>(null);
+const controller = new AbortController();
 
 function format(n: number): string {
     if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
@@ -11,17 +12,24 @@ function format(n: number): string {
 }
 
 onMounted(async () => {
+    const timeout = setTimeout(() => controller.abort(), 1500);
     try {
-        const res = await fetch('https://api.github.com/repos/templatical/sdk');
+        const res = await fetch('https://api.github.com/repos/templatical/sdk', {
+            signal: controller.signal,
+        });
         if (!res.ok) return;
         const data = await res.json();
         if (typeof data.stargazers_count === 'number') {
             count.value = data.stargazers_count;
         }
     } catch {
-        // silent — fall back to Star label only
+        // silent — abort, network, or parse error → fall back to Star label only
+    } finally {
+        clearTimeout(timeout);
     }
 });
+
+onBeforeUnmount(() => controller.abort());
 </script>
 
 <template>

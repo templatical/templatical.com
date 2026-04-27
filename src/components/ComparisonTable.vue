@@ -25,21 +25,21 @@ const { sectionRef, isVisible } = useScrollReveal();
                 : 'motion-safe:opacity-0',
         ]"
     >
-        <table class="w-full min-w-[480px] text-left text-sm">
+        <table class="w-full min-w-[420px] text-left text-sm">
             <thead>
                 <tr class="bg-neutral-50 dark:bg-neutral-900">
                     <th
-                        class="px-6 py-4 font-medium text-neutral-950 dark:text-white"
+                        class="px-4 py-4 sm:px-6 font-medium text-neutral-950 dark:text-white"
                     >
                         {{ t('home.comparison.featureColumn') }}
                     </th>
                     <th
-                        class="px-6 py-4 font-medium text-primary"
+                        class="px-4 py-4 sm:px-6 font-medium text-primary"
                     >
                         Templatical
                     </th>
                     <th
-                        class="px-6 py-4 font-medium text-neutral-500 dark:text-neutral-400"
+                        class="px-4 py-4 sm:px-6 font-medium text-neutral-600 dark:text-neutral-400"
                     >
                         BeeFree
                     </th>
@@ -56,12 +56,12 @@ const { sectionRef, isVisible } = useScrollReveal();
                     ]"
                 >
                     <td
-                        class="px-6 py-4 text-neutral-950 dark:text-white"
+                        class="px-4 py-4 sm:px-6 text-neutral-950 dark:text-white"
                         :class="{ 'font-medium': row.highlight }"
                     >
                         {{ row.feature }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-4 sm:px-6">
                         <svg
                             v-if="row.templatical === true"
                             xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,7 @@ const { sectionRef, isVisible } = useScrollReveal();
                             {{ row.templatical }}
                         </span>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-4 sm:px-6">
                         <svg
                             v-if="row.beefree === true"
                             xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ const { sectionRef, isVisible } = useScrollReveal();
                             viewBox="0 0 24 24"
                             stroke-width="2"
                             stroke="currentColor"
-                            class="size-5 text-neutral-500"
+                            class="size-5 text-neutral-600 dark:text-neutral-400"
                             role="img"
                             aria-label="Yes"
                         >
@@ -140,7 +140,7 @@ const { sectionRef, isVisible } = useScrollReveal();
                         </svg>
                         <span
                             v-else
-                            class="text-neutral-500 dark:text-neutral-400"
+                            class="text-neutral-600 dark:text-neutral-400"
                         >
                             {{ row.beefree }}
                         </span>

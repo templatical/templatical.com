@@ -7,8 +7,4 @@ export const routes = [
         path: '/features',
         component: () => import('./pages/Features.vue'),
     },
-    {
-        path: '/community',
-        component: () => import('./pages/Community.vue'),
-    },
 ];

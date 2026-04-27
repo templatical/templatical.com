@@ -13,7 +13,7 @@ const { sectionRef, isVisible } = useScrollReveal(0.2);
 <template>
     <section
         ref="sectionRef"
-        class="bg-neutral-950 py-20 sm:py-28 dark:bg-neutral-900"
+        class="bg-inverse py-20 sm:py-28"
     >
         <SiteContainer>
             <div

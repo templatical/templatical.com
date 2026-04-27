@@ -11,7 +11,6 @@ const de: MessageSchema = {
     },
     nav: {
         features: 'Funktionen',
-        community: 'Community',
         docs: 'Dokumentation',
         playground: 'Playground',
         getStarted: 'Loslegen',
@@ -23,7 +22,6 @@ const de: MessageSchema = {
         resources: 'Ressourcen',
         legal: 'Rechtliches',
         features: 'Funktionen',
-        community: 'Community',
         documentation: 'Dokumentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -321,32 +319,6 @@ const de: MessageSchema = {
                     answer: 'Templatical Cloud bietet Team-Zusammenarbeit, KI-Funktionen, API-Zugriff und Multi-Tenancy für Teams, die eine verwaltete Lösung wünschen. Das Open-Source SDK bleibt kostenlos.',
                 },
             },
-        },
-    },
-    community: {
-        meta: {
-            title: 'Community — Templatical',
-            description:
-                'Treten Sie der Templatical-Community bei. Tragen Sie auf GitHub bei und helfen Sie, die Zukunft der Open-Source E-Mail-Tools zu gestalten.',
-        },
-        hero: {
-            eyebrow: 'Community',
-            headline: 'Treten Sie der Templatical-Community bei',
-            subheadline:
-                'Verbinden Sie sich mit anderen Entwicklern, tragen Sie zum Projekt bei und helfen Sie, die Zukunft der Open-Source E-Mail-Tools zu gestalten.',
-        },
-        github: {
-            title: 'GitHub',
-            description:
-                'Geben Sie dem Repo einen Stern, melden Sie Probleme, reichen Sie Pull Requests ein und erkunden Sie den Quellcode. Die gesamte Entwicklung findet öffentlich statt.',
-            cta: 'Auf GitHub ansehen',
-        },
-        contributing: {
-            eyebrow: 'Open Source',
-            headline: 'Zu Templatical beitragen',
-            subheadline:
-                'Templatical wird von der Community gebaut. Ob Sie einen Tippfehler korrigieren, eine Funktion hinzufügen oder die Dokumentation verbessern — jeder Beitrag zählt.',
-            cta: 'Beitragsrichtlinien lesen',
         },
     },
 };

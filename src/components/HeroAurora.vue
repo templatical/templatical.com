@@ -100,10 +100,10 @@ void main(){
   float n3 = fbm(q*0.6 - 3.0);
 
   // warm OKLch palette — primary hue 55, neutrals 60
-  vec3 cA = lch(mix(0.92, 0.30, uDark), mix(0.05, 0.10, uDark), 55.0);   // primary glow
-  vec3 cB = lch(mix(0.85, 0.22, uDark), mix(0.04, 0.08, uDark), 35.0);   // warm copper
-  vec3 cC = lch(mix(0.97, 0.16, uDark), mix(0.02, 0.04, uDark), 80.0);   // pale gold
-  vec3 cD = lch(mix(0.99, 0.14, uDark), mix(0.005, 0.02, uDark), 60.0);  // base
+  vec3 cA = lch(mix(0.80, 0.30, uDark), mix(0.16, 0.10, uDark), 55.0);   // primary glow
+  vec3 cB = lch(mix(0.84, 0.22, uDark), mix(0.12, 0.08, uDark), 35.0);   // warm copper
+  vec3 cC = lch(mix(0.92, 0.16, uDark), mix(0.07, 0.04, uDark), 80.0);   // pale gold
+  vec3 cD = lch(mix(0.98, 0.14, uDark), mix(0.012, 0.02, uDark), 60.0);  // base
 
   vec3 lab = mix(cD, cA, smoothstep(0.35, 0.85, n));
   lab = mix(lab, cB, smoothstep(0.45, 0.9, n2)*0.55);
@@ -293,7 +293,9 @@ onBeforeUnmount(() => {
             class="absolute inset-0 size-full"
         />
         <div v-if="!supported" class="hero-aurora-fallback absolute inset-0" />
-        <div class="hero-aurora-mask absolute inset-0" />
+        <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent from-65% to-neutral-50 dark:to-neutral-950"
+        />
     </div>
 </template>
 
@@ -333,21 +335,5 @@ onBeforeUnmount(() => {
             oklch(14.5% 0.008 60 / 0.95),
             transparent 70%
         );
-}
-.hero-aurora-mask {
-    background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        transparent 65%,
-        var(--color-neutral-50, white) 100%
-    );
-}
-:global(.dark) .hero-aurora-mask {
-    background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        transparent 65%,
-        var(--color-neutral-950, black) 100%
-    );
 }
 </style>

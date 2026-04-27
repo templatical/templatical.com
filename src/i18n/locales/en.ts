@@ -9,7 +9,6 @@ export default {
     },
     nav: {
         features: 'Features',
-        community: 'Community',
         docs: 'Docs',
         playground: 'Playground',
         getStarted: 'Get Started',
@@ -21,7 +20,6 @@ export default {
         resources: 'Resources',
         legal: 'Legal',
         features: 'Features',
-        community: 'Community',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -319,32 +317,6 @@ export default {
                     answer: 'Templatical Cloud offers team collaboration, AI features, API access, and multi-tenancy for teams that want a managed solution. The open-source SDK remains free.',
                 },
             },
-        },
-    },
-    community: {
-        meta: {
-            title: 'Community — Templatical',
-            description:
-                'Join the Templatical community. Contribute on GitHub and help shape the future of open-source email tooling.',
-        },
-        hero: {
-            eyebrow: 'Community',
-            headline: 'Join the Templatical community',
-            subheadline:
-                'Connect with other developers, contribute to the project, and help shape the future of open-source email tooling.',
-        },
-        github: {
-            title: 'GitHub',
-            description:
-                'Star the repo, report issues, submit pull requests, and explore the source code. All development happens in the open.',
-            cta: 'View on GitHub',
-        },
-        contributing: {
-            eyebrow: 'Open source',
-            headline: 'Contribute to Templatical',
-            subheadline:
-                'Templatical is built by the community. Whether you\'re fixing a typo, adding a feature, or improving docs — every contribution matters.',
-            cta: 'Read the Contributing Guide',
         },
     },
 };
