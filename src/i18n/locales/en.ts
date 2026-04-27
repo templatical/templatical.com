@@ -252,10 +252,6 @@ export default {
                 title: 'JSON in, MJML out',
                 description: 'Templates are portable JSON. Output is MJML — render in the browser or on your server, send through any provider. No vendor render API.',
             },
-            cloud: {
-                title: 'Cloud (in development)',
-                description: 'Real-time collaboration, AI rewrite, AI chat, comments, snapshots — coming as the Templatical Cloud tier. Use the managed tier or self-host the open code.',
-            },
             darkMode: {
                 title: 'Dark mode',
                 description: 'First-class dark mode with auto-detect or manual toggle. Both themes are designed, not an afterthought.',

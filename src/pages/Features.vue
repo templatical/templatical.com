@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AuroraField from '@/components/AuroraField.vue';
 import BentoGrid from '@/components/BentoGrid.vue';
 import CtaSection from '@/components/CtaSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
@@ -7,7 +6,6 @@ import SiteSection from '@/components/SiteSection.vue';
 import IconArrowDownTray from '@/components/icons/IconArrowDownTray.vue';
 import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
 import IconArrowUturnLeft from '@/components/icons/IconArrowUturnLeft.vue';
-import IconDevicePhone from '@/components/icons/IconDevicePhone.vue';
 import IconGlobe from '@/components/icons/IconGlobe.vue';
 import IconMoon from '@/components/icons/IconMoon.vue';
 import IconSwatch from '@/components/icons/IconSwatch.vue';
@@ -87,12 +85,6 @@ const supportingItems = computed(() => [
         description: t('features.supportingItems.output.description'),
     },
     {
-        key: 'cloud',
-        icon: IconDevicePhone,
-        title: t('features.supportingItems.cloud.title'),
-        description: t('features.supportingItems.cloud.description'),
-    },
-    {
         key: 'darkMode',
         icon: IconMoon,
         title: t('features.supportingItems.darkMode.title'),
@@ -153,69 +145,66 @@ const faqItems = computed(() => [
 </script>
 
 <template>
-    <div class="relative isolate">
-        <AuroraField :intensity="0.9" :hue-start="35" :hue-end="170" />
+    <div class="relative isolate overflow-hidden">
+        <div
+            aria-hidden="true"
+            class="section-glow pointer-events-none absolute inset-x-0 top-0 -z-10 h-[900px]"
+        />
 
-        <div class="relative z-10">
         <SiteSection
             :eyebrow="t('features.hero.eyebrow')"
             :headline="t('features.hero.headline')"
             :subheadline="t('features.hero.subheadline')"
             headline-as="h1"
-            class="!bg-white/55 backdrop-blur-xl dark:!bg-neutral-950/55"
+            class="!bg-transparent !py-14 sm:!py-20"
         />
 
-        <section
-            v-for="(section, index) in featureSections"
-            :key="index"
-            :class="[
-                'py-20 sm:py-28 backdrop-blur-xl',
-                section.bg === 'gray'
-                    ? 'bg-neutral-50/55 dark:bg-neutral-900/55'
-                    : 'bg-white/45 dark:bg-neutral-950/55',
-            ]"
-        >
+        <section class="bg-white py-14 sm:py-20 dark:bg-neutral-950">
             <div
                 class="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-7xl lg:px-10"
             >
-                <div class="max-w-2xl">
-                    <div class="text-sm/7 font-semibold text-primary">
-                        {{ section.eyebrow }}
-                    </div>
-                    <h2
-                        class="mt-2 font-display text-[2rem]/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <article
+                        v-for="(section, index) in featureSections"
+                        :key="index"
+                        class="flex flex-col gap-4 rounded-xl bg-white p-6 shadow-sm ring-1 ring-neutral-950/5 dark:bg-neutral-900 dark:ring-white/10"
                     >
-                        {{ section.title }}
-                    </h2>
-                    <p
-                        class="mt-4 text-base/7 text-neutral-700 dark:text-neutral-400"
-                    >
-                        {{ section.description }}
-                    </p>
-                    <ul class="mt-6 flex flex-col gap-3">
-                        <li
-                            v-for="feature in section.features"
-                            :key="feature"
-                            class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
+                        <div class="text-xs/6 font-semibold tracking-wide uppercase text-primary">
+                            {{ section.eyebrow }}
+                        </div>
+                        <h2
+                            class="font-display text-xl/8 tracking-tight text-pretty text-neutral-950 dark:text-white"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="2"
-                                stroke="currentColor"
-                                class="mt-0.5 size-5 shrink-0 text-primary"
-                                aria-hidden="true"
+                            {{ section.title }}
+                        </h2>
+                        <p class="text-sm/7 text-neutral-700 dark:text-neutral-400">
+                            {{ section.description }}
+                        </p>
+                        <ul class="mt-auto flex flex-col gap-2 pt-2">
+                            <li
+                                v-for="feature in section.features.slice(0, 3)"
+                                :key="feature"
+                                class="flex gap-2 text-sm/6 text-neutral-700 dark:text-neutral-400"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="m4.5 12.75 6 6 9-13.5"
-                                />
-                            </svg>
-                            {{ feature }}
-                        </li>
-                    </ul>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    class="mt-0.5 size-4 shrink-0 text-primary"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="m4.5 12.75 6 6 9-13.5"
+                                    />
+                                </svg>
+                                {{ feature }}
+                            </li>
+                        </ul>
+                    </article>
                 </div>
             </div>
         </section>
@@ -225,7 +214,7 @@ const faqItems = computed(() => [
             :headline="t('features.supporting.headline')"
             :subheadline="t('features.supporting.subheadline')"
             bg="gray"
-            class="!bg-neutral-50/55 backdrop-blur-xl dark:!bg-neutral-900/55"
+            class="!py-14 sm:!py-20"
         >
             <BentoGrid :items="supportingItems" />
         </SiteSection>
@@ -234,7 +223,7 @@ const faqItems = computed(() => [
             :eyebrow="t('features.migration.eyebrow')"
             :headline="t('features.migration.title')"
             :subheadline="t('features.migration.description')"
-            class="!bg-white/45 backdrop-blur-xl dark:!bg-neutral-950/55"
+            class="!py-14 sm:!py-20"
         >
             <ul class="flex max-w-2xl flex-col gap-3">
                 <li
@@ -264,12 +253,11 @@ const faqItems = computed(() => [
 
         <SiteSection
             :headline="t('features.faq.headline')"
-            class="!bg-white/45 backdrop-blur-xl dark:!bg-neutral-950/55"
+            class="!py-14 sm:!py-20"
         >
             <FaqSection :items="faqItems" />
         </SiteSection>
 
         <CtaSection />
-        </div>
     </div>
 </template>

@@ -254,10 +254,6 @@ const de: MessageSchema = {
                 title: 'JSON rein, MJML raus',
                 description: 'Templates sind portables JSON. Ausgabe ist MJML — rendern Sie im Browser oder auf Ihrem Server, versenden Sie über jeden Anbieter. Keine Vendor-Render-API.',
             },
-            cloud: {
-                title: 'Cloud (in Entwicklung)',
-                description: 'Echtzeit-Zusammenarbeit, KI-Rewrite, KI-Chat, Kommentare, Snapshots — kommen als Templatical Cloud-Tarif. Managed-Tarif nutzen oder den offenen Code selbst hosten.',
-            },
             darkMode: {
                 title: 'Dark Mode',
                 description: 'Erstklassiger Dark Mode mit Auto-Erkennung oder manuellem Umschalter. Beide Themes sind durchdacht, kein Nachgedanke.',

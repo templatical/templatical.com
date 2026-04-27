@@ -82,6 +82,21 @@
     }
 }
 
+@utility section-glow {
+    background: radial-gradient(
+        55% 65% at 50% 0%,
+        color-mix(in oklch, var(--primary) 18%, transparent),
+        transparent 72%
+    );
+}
+.dark .section-glow {
+    background: radial-gradient(
+        55% 65% at 50% 0%,
+        color-mix(in oklch, var(--primary) 32%, transparent),
+        transparent 72%
+    );
+}
+
 :root {
     --background: oklch(99.5% 0.002 60);
     --foreground: oklch(18% 0.01 60);
