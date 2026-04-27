@@ -1,7 +1,7 @@
 import { useIntersectionObserver } from '@vueuse/core';
 import { ref } from 'vue';
 
-export function useScrollReveal(threshold = 0.15) {
+export function useScrollReveal(threshold = 0.15, rootMargin = '0px') {
     const sectionRef = ref<HTMLElement | null>(null);
     const isVisible = ref(false);
 
@@ -13,7 +13,7 @@ export function useScrollReveal(threshold = 0.15) {
                 stop();
             }
         },
-        { threshold },
+        { threshold, rootMargin },
     );
 
     return { sectionRef, isVisible };

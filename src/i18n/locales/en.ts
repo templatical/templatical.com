@@ -5,7 +5,11 @@ export default {
         switchToDark: 'Switch to dark mode',
         switchToLanguage: 'Switch language to {language}',
         mobileMenu: 'Navigation menu',
+        mainNav: 'Main',
+        footerNav: 'Footer',
         terminal: 'terminal',
+        yes: 'Yes',
+        no: 'No',
     },
     nav: {
         features: 'Features',
@@ -14,6 +18,9 @@ export default {
         getStarted: 'Get Started',
         openMenu: 'Open menu',
         closeMenu: 'Close menu',
+    },
+    github: {
+        star: 'Star',
     },
     footer: {
         product: 'Product',
@@ -177,6 +184,14 @@ export default {
             subheadline:
                 'Five power features and a clean set of table-stakes. No tier, no paywall, no vendor render API.',
         },
+        docsLink: 'Read the docs',
+        examplesLabel: '{title} examples',
+        variants: {
+            static: 'Static',
+            apiBacked: 'API-backed',
+            predefined: 'Predefined',
+            customPicker: 'Custom picker',
+        },
         customBlocks: {
             eyebrow: 'Power feature · 1',
             title: 'Custom blocks with API-backed data',
@@ -185,8 +200,11 @@ export default {
             features: [
                 'Per-field configuration: text, image, color, select, repeatable',
                 'Static template or live API fetch at preview time',
-                'Use blocks as CRM data cards, product picks, or anything fetchable',
-                "Type-safe block factories via {'@'}templatical/types",
+                'Required fields with validation; optional read-only fields',
+                'Liquid templates with conditionals and built-in filters',
+                'Repeatable field arrays for collections like product grids',
+                'Custom SVG icon per block in the editor sidebar',
+                'Type-safe block factories with TypeScript types',
             ],
         },
         mergeTags: {
@@ -198,6 +216,9 @@ export default {
                 'Built-in syntaxes plus a hook for your own',
                 'Human-readable labels rendered in the editor canvas',
                 'Type-ahead picker driven by your data shape',
+                'Optional onRequest hook to swap the picker for your CRM UI',
+                'Logic tags for branched content based on plan or role',
+                'Built-in Liquid filters: default, upcase, escape',
                 'Round-trip safe — JSON stores the canonical token',
             ],
         },
@@ -208,8 +229,11 @@ export default {
                 'Show or hide blocks based on recipient attributes, with live preview in the editor. Built in, no extra service.',
             features: [
                 'Per-block show/hide rules from recipient attributes',
+                'Group conditions by audience, segment, or role',
                 'Live preview while editing',
+                'allowCustom: true lets editors add conditions inline',
                 'Custom before/after wrappers for provider-specific syntax',
+                'Wrappers emit Liquid — your ESP evaluates at send time',
                 'No external service or paid add-on required',
             ],
         },
@@ -220,7 +244,10 @@ export default {
                 '27 OKLch tokens, custom fonts, dark mode, complete theme overrides. No CSS hacking, no paid tier — your brand becomes the editor’s default.',
             features: [
                 '27 OKLch design tokens covering every surface',
-                'Custom fonts and full theme overrides',
+                'Light + dark theme overrides via the same theme.dark key',
+                'Custom fonts via --tpl-font-sans and --tpl-font-mono',
+                'Radius, shadows, spacing — every surface tokenized',
+                'uiTheme: auto, light, or dark with system preference detection',
                 'Dark mode first-class with auto-detect or manual toggle',
                 'Tailwind 4 with `tpl:` prefix — no preflight, no style leaks',
             ],
@@ -232,9 +259,12 @@ export default {
                 'Define your brand once. New templates and new blocks pick up your defaults automatically — colors, fonts, padding, layout. Consistent without copy-paste.',
             features: [
                 'Set brand defaults once at init() time',
+                'Per-block-type defaults: button, divider, spacer, image, social',
+                'Template-level defaults: width, background, font family',
                 'New templates inherit colors, fonts, padding, layout',
                 'New blocks pick up the same defaults automatically',
-                'Override per-template when you need to',
+                'Mix and match presets — corporate, playful, minimal',
+                'Override per-template via the templateDefaults field',
             ],
         },
         supporting: {
@@ -270,7 +300,7 @@ export default {
             },
             beefreeImport: {
                 title: 'BeeFree import',
-                description: "Import BeeFree JSON templates directly via {'@'}templatical/import-beefree. Automatic block mapping with a detailed conversion report.",
+                description: 'Import BeeFree JSON templates directly via the templatical/import-beefree package. Automatic block mapping with a detailed conversion report.',
             },
         },
         migration: {

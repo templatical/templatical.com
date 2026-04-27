@@ -45,7 +45,7 @@ const socialLinks = [
                 </router-link>
 
                 <nav
-                    aria-label="Footer"
+                    :aria-label="t('a11y.footerNav')"
                     class="flex flex-wrap gap-x-6 gap-y-2 text-sm/7"
                 >
                     <template v-for="link in links" :key="link.href">

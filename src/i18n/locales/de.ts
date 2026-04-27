@@ -7,7 +7,11 @@ const de: MessageSchema = {
         switchToDark: 'Zum dunklen Modus wechseln',
         switchToLanguage: 'Sprache auf {language} wechseln',
         mobileMenu: 'Navigationsmenü',
+        mainNav: 'Hauptnavigation',
+        footerNav: 'Fußzeile',
         terminal: 'Terminal',
+        yes: 'Ja',
+        no: 'Nein',
     },
     nav: {
         features: 'Funktionen',
@@ -16,6 +20,9 @@ const de: MessageSchema = {
         getStarted: 'Loslegen',
         openMenu: 'Menü öffnen',
         closeMenu: 'Menü schließen',
+    },
+    github: {
+        star: 'Star',
     },
     footer: {
         product: 'Produkt',
@@ -179,6 +186,14 @@ const de: MessageSchema = {
             subheadline:
                 'Fünf Power-Features und ein sauberer Satz an Standard-Funktionen. Kein Tarif, keine Paywall, keine Vendor-Render-API.',
         },
+        docsLink: 'Zur Dokumentation',
+        examplesLabel: 'Beispiele für {title}',
+        variants: {
+            static: 'Statisch',
+            apiBacked: 'API-basiert',
+            predefined: 'Vordefiniert',
+            customPicker: 'Eigener Picker',
+        },
         customBlocks: {
             eyebrow: 'Power-Feature · 1',
             title: 'Benutzerdefinierte Blöcke mit API-Daten',
@@ -187,8 +202,11 @@ const de: MessageSchema = {
             features: [
                 'Pro-Feld-Konfiguration: Text, Bild, Farbe, Auswahl, wiederholbar',
                 'Statisches Template oder Live-API-Abruf zur Preview-Zeit',
-                'Blöcke als CRM-Datenkarten, Produktauswahlen oder beliebige Daten',
-                "Typsichere Block-Factories über {'@'}templatical/types",
+                'Pflichtfelder mit Validierung; optionale Read-only-Felder',
+                'Liquid-Templates mit Bedingungen und integrierten Filtern',
+                'Wiederholbare Feldgruppen für Sammlungen wie Produktraster',
+                'Eigenes SVG-Icon pro Block in der Editor-Sidebar',
+                'Typsichere Block-Factories mit TypeScript-Typen',
             ],
         },
         mergeTags: {
@@ -200,6 +218,9 @@ const de: MessageSchema = {
                 'Eingebaute Syntaxen plus Hook für Ihre eigene',
                 'Lesbare Labels werden direkt im Editor gerendert',
                 'Type-Ahead-Picker basierend auf Ihrer Datenstruktur',
+                'Optionaler onRequest-Hook ersetzt den Picker durch Ihre CRM-UI',
+                'Logik-Tags für verzweigten Inhalt nach Plan oder Rolle',
+                'Eingebaute Liquid-Filter: default, upcase, escape',
                 'Round-Trip-sicher — JSON speichert das kanonische Token',
             ],
         },
@@ -210,8 +231,11 @@ const de: MessageSchema = {
                 'Blöcke basierend auf Empfänger-Attributen ein- oder ausblenden, mit Live-Preview im Editor. Eingebaut, kein Zusatzdienst.',
             features: [
                 'Pro-Block-Regeln basierend auf Empfänger-Attributen',
+                'Bedingungen nach Zielgruppe, Segment oder Rolle gruppieren',
                 'Live-Preview während der Bearbeitung',
+                'allowCustom: true erlaubt eigene Bedingungen inline',
                 'Benutzerdefinierte Vor-/Nach-Wrapper für anbieterspezifische Syntax',
+                'Wrapper geben Liquid aus — Ihr ESP wertet beim Versand aus',
                 'Kein externer Dienst oder kostenpflichtiges Add-on nötig',
             ],
         },
@@ -222,7 +246,10 @@ const de: MessageSchema = {
                 '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Kein CSS-Hack, kein kostenpflichtiger Tarif — Ihre Marke wird zum Standard des Editors.',
             features: [
                 '27 OKLch-Design-Tokens für jede Oberfläche',
-                'Eigene Schriften und vollständige Theme-Overrides',
+                'Light- und Dark-Theme-Overrides über denselben theme.dark-Schlüssel',
+                'Eigene Schriften via --tpl-font-sans und --tpl-font-mono',
+                'Radius, Schatten, Abstände — jede Oberfläche tokenisiert',
+                'uiTheme: auto, light oder dark mit Systempräferenz-Erkennung',
                 'Dark Mode erstklassig mit Auto-Erkennung oder manuellem Umschalter',
                 'Tailwind 4 mit `tpl:`-Prefix — kein Preflight, keine Style-Leaks',
             ],
@@ -234,9 +261,12 @@ const de: MessageSchema = {
                 'Definieren Sie Ihre Marke einmal. Neue Templates und Blöcke übernehmen Ihre Standards automatisch — Farben, Schriften, Abstände, Layout. Konsistent ohne Copy-Paste.',
             features: [
                 'Marken-Standards einmal beim init() setzen',
+                'Standards pro Blocktyp: button, divider, spacer, image, social',
+                'Vorlagenstandards: Breite, Hintergrund, Schriftfamilie',
                 'Neue Templates erben Farben, Schriften, Abstände, Layout',
                 'Neue Blöcke übernehmen dieselben Standards automatisch',
-                'Pro Template überschreiben, wenn nötig',
+                'Vordefinierte Presets — corporate, playful, minimal',
+                'Pro Vorlage überschreiben via templateDefaults',
             ],
         },
         supporting: {
@@ -272,7 +302,7 @@ const de: MessageSchema = {
             },
             beefreeImport: {
                 title: 'BeeFree-Import',
-                description: "Importieren Sie BeeFree JSON-Vorlagen direkt via {'@'}templatical/import-beefree. Automatisches Block-Mapping mit detailliertem Konvertierungsbericht.",
+                description: 'Importieren Sie BeeFree JSON-Vorlagen direkt via das templatical/import-beefree-Paket. Automatisches Block-Mapping mit detailliertem Konvertierungsbericht.',
             },
         },
         migration: {

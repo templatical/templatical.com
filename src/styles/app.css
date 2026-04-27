@@ -82,6 +82,18 @@
     }
 }
 
+/* Shiki output: collapse the pre-level line-height so the preserved \n
+   between line spans doesn't double the visual gap. */
+.shiki {
+    line-height: 0;
+    overflow-x: auto;
+}
+.shiki .line {
+    display: block;
+    line-height: 1.75rem;
+    min-height: 1.75rem;
+}
+
 @utility section-glow {
     background: radial-gradient(
         55% 65% at 50% 0%,

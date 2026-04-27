@@ -14,7 +14,10 @@ import IconGitHub from './icons/IconGitHub.vue';
 const { t } = useI18n();
 const route = useRoute();
 const { y: scrollY } = useWindowScroll();
-const isHome = computed(() => route.path === '/');
+const hasTransparentHero = computed(() => {
+    const path = route.path.replace(/\/$/, '');
+    return path === '' || path.endsWith('/features');
+});
 
 interface NavLink {
     label: string;
@@ -30,7 +33,10 @@ const links = computed<NavLink[]>(() => [
 
 const isMobileMenuOpen = ref(false);
 const solid = computed(
-    () => !isHome.value || scrollY.value > 40 || isMobileMenuOpen.value,
+    () =>
+        !hasTransparentHero.value ||
+        scrollY.value > 40 ||
+        isMobileMenuOpen.value,
 );
 const menuRef = ref<HTMLElement | null>(null);
 const menuTriggerRef = ref<HTMLElement | null>(null);
@@ -67,7 +73,7 @@ const linkClasses =
                 : 'border-transparent bg-transparent backdrop-blur-0',
         ]"
     >
-        <nav aria-label="Main">
+        <nav :aria-label="t('a11y.mainNav')">
             <div
                 class="mx-auto flex h-21 max-w-7xl items-center gap-4 px-6 lg:px-10"
             >

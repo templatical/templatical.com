@@ -71,7 +71,7 @@ const { sectionRef, isVisible } = useScrollReveal();
                             stroke="currentColor"
                             class="size-5 text-primary"
                             role="img"
-                            aria-label="Yes"
+                            :aria-label="t('a11y.yes')"
                         >
                             <path
                                 stroke-linecap="round"
@@ -88,7 +88,7 @@ const { sectionRef, isVisible } = useScrollReveal();
                             stroke="currentColor"
                             class="size-5 text-neutral-300 dark:text-neutral-600"
                             role="img"
-                            aria-label="No"
+                            :aria-label="t('a11y.no')"
                         >
                             <path
                                 stroke-linecap="round"
@@ -113,7 +113,7 @@ const { sectionRef, isVisible } = useScrollReveal();
                             stroke="currentColor"
                             class="size-5 text-neutral-600 dark:text-neutral-400"
                             role="img"
-                            aria-label="Yes"
+                            :aria-label="t('a11y.yes')"
                         >
                             <path
                                 stroke-linecap="round"
@@ -130,7 +130,7 @@ const { sectionRef, isVisible } = useScrollReveal();
                             stroke="currentColor"
                             class="size-5 text-neutral-300 dark:text-neutral-600"
                             role="img"
-                            aria-label="No"
+                            :aria-label="t('a11y.no')"
                         >
                             <path
                                 stroke-linecap="round"

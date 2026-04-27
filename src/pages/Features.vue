@@ -2,7 +2,13 @@
 import BentoGrid from '@/components/BentoGrid.vue';
 import CtaSection from '@/components/CtaSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
+import HeroAurora from '@/components/HeroAurora.vue';
+import HeroHeadline from '@/components/HeroHeadline.vue';
+import RevealOnScroll from '@/components/RevealOnScroll.vue';
+import SiteContainer from '@/components/SiteContainer.vue';
+import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
+import SiteText from '@/components/SiteText.vue';
 import IconArrowDownTray from '@/components/icons/IconArrowDownTray.vue';
 import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
 import IconArrowUturnLeft from '@/components/icons/IconArrowUturnLeft.vue';
@@ -10,10 +16,18 @@ import IconGlobe from '@/components/icons/IconGlobe.vue';
 import IconMoon from '@/components/icons/IconMoon.vue';
 import IconSwatch from '@/components/icons/IconSwatch.vue';
 import { useHead } from '@unhead/vue';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { getHighlighter, stripPreBackground } from '@/composables/useShikiHighlight';
+import { URLS } from '@/lib/urls';
 
-const { t, tm } = useI18n();
+const { t, tm, locale, fallbackLocale } = useI18n();
+
+function docsUrl(path: string): string {
+    const fallback = String(fallbackLocale.value);
+    const prefix = locale.value === fallback ? '' : `/${locale.value}`;
+    return `${URLS.docs}${prefix}${path}`;
+}
 
 useHead({
     title: computed(() => t('features.meta.title')),
@@ -25,51 +39,280 @@ useHead({
     ],
 });
 
+interface CodeVariant {
+    label: string;
+    code: string;
+}
 interface FeatureSection {
+    slug: string;
     eyebrow: string;
     title: string;
     description: string;
     features: string[];
-    bg: 'white' | 'gray';
+    code?: string;
+    variants?: CodeVariant[];
+    docsPath: string;
 }
 
 const featureSections = computed<FeatureSection[]>(() => [
     {
+        slug: 'custom-blocks',
+        docsPath: '/guide/custom-blocks',
         eyebrow: t('features.customBlocks.eyebrow'),
         title: t('features.customBlocks.title'),
         description: t('features.customBlocks.description'),
         features: tm('features.customBlocks.features') as string[],
-        bg: 'gray',
+        variants: [
+            {
+                label: t('features.variants.static'),
+                code: `const editor = await init({
+  container: '#editor',
+  customBlocks: [
+    {
+      type: 'event-details',
+      name: 'Event Details',
+      description: 'Date, time, location, and a map link',
+      fields: [
+        { type: 'text',  key: 'eventName', label: 'Event Name', required: true },
+        { type: 'text',  key: 'date',      label: 'Date',       default: 'April 15, 2026' },
+        { type: 'text',  key: 'location',  label: 'Location' },
+        { type: 'text',  key: 'mapUrl',    label: 'Map Link (optional)' },
+        { type: 'color', key: 'accent',    label: 'Accent',     default: '#7c3aed' },
+      ],
+      template: \`
+        <div style="border: 2px solid {{ accent }}; padding: 20px; border-radius: 8px;">
+          <h3 style="color: {{ accent }};">{{ eventName }}</h3>
+          <p>📅 {{ date }} · 📍 {{ location }}</p>
+          {% if mapUrl %}
+            <a href="{{ mapUrl }}">View on Map →</a>
+          {% endif %}
+        </div>
+      \`,
+    },
+  ],
+})`,
+            },
+            {
+                label: t('features.variants.apiBacked'),
+                code: `const editor = await init({
+  container: '#editor',
+  customBlocks: [
+    {
+      type: 'featured-article',
+      name: 'Featured Article',
+      description: 'Fetches article data from your CMS',
+      fields: [
+        { type: 'text',     key: 'title',    label: 'Title',    readOnly: true },
+        { type: 'textarea', key: 'excerpt',  label: 'Excerpt',  readOnly: true },
+        { type: 'image',    key: 'imageUrl', label: 'Cover image' },
+        { type: 'text',     key: 'author',   label: 'Author',   readOnly: true },
+      ],
+      template: \`
+        <article style="border: 1px solid #e5e7eb; border-radius: 8px;">
+          {% if imageUrl %}
+            <img src="{{ imageUrl }}" width="100%" />
+          {% endif %}
+          <div style="padding: 20px;">
+            <h3>{{ title }}</h3>
+            <p>{{ excerpt }}</p>
+            {% if author %}
+              <small>By {{ author }}</small>
+            {% endif %}
+          </div>
+        </article>
+      \`,
+      dataSource: {
+        label: 'Change article',
+        async onFetch({ fieldValues }) {
+          const res = await fetch(\`/api/articles?category=\${fieldValues.category}\`)
+          const articles = await res.json()
+          const picked = await openPicker(articles)
+          return picked?.data ?? null
+        },
+      },
+    },
+  ],
+})`,
+            },
+        ],
     },
     {
+        slug: 'merge-tags',
+        docsPath: '/guide/merge-tags',
         eyebrow: t('features.mergeTags.eyebrow'),
         title: t('features.mergeTags.title'),
         description: t('features.mergeTags.description'),
         features: tm('features.mergeTags.features') as string[],
-        bg: 'white',
+        variants: [
+            {
+                label: t('features.variants.predefined'),
+                code: `const editor = await init({
+  container: '#editor',
+  mergeTags: {
+    syntax: 'liquid',
+    tags: [
+      { label: 'First name',      value: '{{first_name}}' },
+      { label: 'Email',           value: '{{email}}' },
+      { label: 'Plan name',       value: '{{plan_name}}' },
+      { label: 'Order ID',        value: '{{order_id}}' },
+      { label: 'Order total',     value: '{{order_total}}' },
+      { label: 'Unsubscribe URL', value: '{{unsubscribe_url}}' },
+    ],
+  },
+})`,
+            },
+            {
+                label: t('features.variants.customPicker'),
+                code: `const editor = await init({
+  container: '#editor',
+  mergeTags: {
+    syntax: 'liquid',
+    tags: [
+      { label: 'First name', value: '{{first_name}}' },
+      { label: 'Email',      value: '{{email}}' },
+    ],
+    // Editor calls onRequest when the user inserts a merge tag.
+    // Open your own picker (CRM-aware modal, search, etc.) and
+    // resolve with the chosen tag — or null on cancel.
+    async onRequest() {
+      const picked = await openMergeTagPicker({
+        title: 'Select a merge tag',
+        groups: ['Contact', 'Account', 'Order'],
+        endpoint: '/api/crm/fields',
+      })
+      return picked ?? null
+    },
+  },
+})`,
+            },
+        ],
     },
     {
+        slug: 'display-conditions',
+        docsPath: '/guide/display-conditions',
         eyebrow: t('features.displayConditions.eyebrow'),
         title: t('features.displayConditions.title'),
         description: t('features.displayConditions.description'),
         features: tm('features.displayConditions.features') as string[],
-        bg: 'gray',
+        code: `const editor = await init({
+  container: '#editor',
+  displayConditions: {
+    conditions: [
+      {
+        label: 'VIP Partners',
+        before: '{% if vip_partner %}',
+        after: '{% endif %}',
+        group: 'Audience',
+        description: 'Show only to VIP partner accounts',
+      },
+      {
+        label: 'Enterprise',
+        before: '{% if plan == "enterprise" %}',
+        after: '{% endif %}',
+        group: 'Audience',
+      },
+      {
+        label: 'Early Bird',
+        before: '{% if early_bird %}',
+        after: '{% endif %}',
+        group: 'Registration',
+      },
+    ],
+    allowCustom: true,
+  },
+})`,
     },
     {
+        slug: 'theming',
+        docsPath: '/guide/theming',
         eyebrow: t('features.theming.eyebrow'),
         title: t('features.theming.title'),
         description: t('features.theming.description'),
         features: tm('features.theming.features') as string[],
-        bg: 'white',
+        code: `const editor = await init({
+  container: '#editor',
+  uiTheme: 'auto',
+  theme: {
+    '--tpl-color-primary':    '#0d9488',
+    '--tpl-color-accent':     '#0ea5e9',
+    '--tpl-color-background': '#ffffff',
+    '--tpl-radius':           '10px',
+    '--tpl-font-sans':        'Inter, system-ui, sans-serif',
+    dark: {
+      '--tpl-color-primary':    '#22d3ee',
+      '--tpl-color-accent':     '#a78bfa',
+      '--tpl-color-background': '#0b1220',
+    },
+  },
+})`,
     },
     {
+        slug: 'defaults',
+        docsPath: '/guide/defaults',
         eyebrow: t('features.defaults.eyebrow'),
         title: t('features.defaults.title'),
         description: t('features.defaults.description'),
         features: tm('features.defaults.features') as string[],
-        bg: 'gray',
+        code: `const editor = await init({
+  container: '#editor',
+  blockDefaults: {
+    button: {
+      backgroundColor: '#0f3460',
+      textColor: '#ffffff',
+      borderRadius: 2,
+      fontSize: 14,
+      buttonPadding: { top: 14, right: 28, bottom: 14, left: 28 },
+    },
+    divider: { color: '#e5e7eb', thickness: 1 },
+    spacer: { height: 24 },
+    image:  { align: 'center' },
+  },
+  templateDefaults: {
+    width: 640,
+    backgroundColor: '#f8f9fa',
+    fontFamily: 'Georgia, serif',
+  },
+})`,
     },
 ]);
+
+// Highlighted code per section. For variant-bearing sections, keyed by `${slug}__${i}`.
+// For single-code sections, keyed by slug.
+const highlightedCode = ref<Record<string, string>>({});
+const activeVariant = ref<Record<string, number>>({});
+
+function variantIndex(slug: string): number {
+    return activeVariant.value[slug] ?? 0;
+}
+function selectVariant(slug: string, idx: number) {
+    activeVariant.value[slug] = idx;
+}
+function highlightKey(slug: string, idx?: number): string {
+    return idx === undefined ? slug : `${slug}__${idx}`;
+}
+
+onMounted(async () => {
+    const h = await getHighlighter();
+    const next: Record<string, string> = {};
+    for (const s of featureSections.value) {
+        if (s.variants?.length) {
+            s.variants.forEach((v, i) => {
+                next[highlightKey(s.slug, i)] = h.codeToHtml(v.code, {
+                    lang: 'javascript',
+                    theme: 'github-dark',
+                    transformers: [stripPreBackground],
+                });
+            });
+        } else if (s.code) {
+            next[s.slug] = h.codeToHtml(s.code, {
+                lang: 'javascript',
+                theme: 'github-dark',
+                transformers: [stripPreBackground],
+            });
+        }
+    }
+    highlightedCode.value = next;
+});
 
 const supportingItems = computed(() => [
     {
@@ -145,67 +388,157 @@ const faqItems = computed(() => [
 </script>
 
 <template>
-    <div class="relative isolate overflow-hidden">
-        <div
-            aria-hidden="true"
-            class="section-glow pointer-events-none absolute inset-x-0 top-0 -z-10 h-[900px]"
-        />
+    <div>
+        <section
+            class="relative isolate -mt-21 overflow-hidden bg-white pt-37 pb-28 sm:pt-41 sm:pb-40 dark:bg-neutral-950"
+        >
+            <HeroAurora
+                fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
+            />
+            <SiteContainer class="relative">
+                <div class="flex max-w-2xl flex-col gap-6">
+                    <div class="flex flex-col gap-2">
+                        <SiteEyebrow>
+                            {{ t('features.hero.eyebrow') }}
+                        </SiteEyebrow>
+                        <HeroHeadline
+                            :text="t('features.hero.headline')"
+                            as="h1"
+                        />
+                    </div>
+                    <SiteText class="text-pretty">
+                        <p>{{ t('features.hero.subheadline') }}</p>
+                    </SiteText>
+                </div>
+            </SiteContainer>
+        </section>
 
-        <SiteSection
-            :eyebrow="t('features.hero.eyebrow')"
-            :headline="t('features.hero.headline')"
-            :subheadline="t('features.hero.subheadline')"
-            headline-as="h1"
-            class="!bg-transparent !py-14 sm:!py-20"
-        />
-
-        <section class="bg-white py-14 sm:py-20 dark:bg-neutral-950">
+        <section
+            v-for="(section, idx) in featureSections"
+            :key="section.slug"
+            :class="[
+                'py-20 lg:py-28',
+                idx % 2 === 0
+                    ? 'bg-white dark:bg-neutral-950'
+                    : 'bg-neutral-50 dark:bg-neutral-900',
+            ]"
+        >
             <div
                 class="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-7xl lg:px-10"
             >
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <article
-                        v-for="(section, index) in featureSections"
-                        :key="index"
-                        class="flex flex-col gap-4 rounded-xl bg-white p-6 shadow-sm ring-1 ring-neutral-950/5 dark:bg-neutral-900 dark:ring-white/10"
-                    >
-                        <div class="text-xs/6 font-semibold tracking-wide uppercase text-primary">
-                            {{ section.eyebrow }}
-                        </div>
-                        <h2
-                            class="font-display text-xl/8 tracking-tight text-pretty text-neutral-950 dark:text-white"
-                        >
-                            {{ section.title }}
-                        </h2>
-                        <p class="text-sm/7 text-neutral-700 dark:text-neutral-400">
-                            {{ section.description }}
-                        </p>
-                        <ul class="mt-auto flex flex-col gap-2 pt-2">
-                            <li
-                                v-for="feature in section.features.slice(0, 3)"
-                                :key="feature"
-                                class="flex gap-2 text-sm/6 text-neutral-700 dark:text-neutral-400"
+                <RevealOnScroll>
+                    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
+                        <div class="flex flex-col gap-5">
+                            <div class="text-sm/7 font-semibold text-primary">
+                                {{ section.eyebrow }}
+                            </div>
+                            <h2
+                                class="font-display text-3xl/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
                             >
+                                {{ section.title }}
+                            </h2>
+                            <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
+                                {{ section.description }}
+                            </p>
+                            <ul class="mt-2 flex flex-col gap-3">
+                                <li
+                                    v-for="feature in section.features"
+                                    :key="feature"
+                                    class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke="currentColor"
+                                        class="mt-0.5 size-5 shrink-0 text-primary"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="m4.5 12.75 6 6 9-13.5"
+                                        />
+                                    </svg>
+                                    {{ feature }}
+                                </li>
+                            </ul>
+                            <a
+                                :href="docsUrl(section.docsPath)"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="mt-2 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                            >
+                                {{ t('features.docsLink') }}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke-width="2"
                                     stroke="currentColor"
-                                    class="mt-0.5 size-4 shrink-0 text-primary"
+                                    class="size-4"
                                     aria-hidden="true"
                                 >
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        d="m4.5 12.75 6 6 9-13.5"
+                                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
                                     />
                                 </svg>
-                                {{ feature }}
-                            </li>
-                        </ul>
-                    </article>
-                </div>
+                            </a>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <div
+                                v-if="section.variants?.length"
+                                role="tablist"
+                                :aria-label="t('features.examplesLabel', { title: section.title })"
+                                class="inline-flex self-start rounded-md bg-neutral-100 p-1 ring-1 ring-neutral-200 dark:bg-neutral-800/60 dark:ring-neutral-700"
+                            >
+                                <button
+                                    v-for="(v, i) in section.variants"
+                                    :key="v.label"
+                                    type="button"
+                                    role="tab"
+                                    :aria-selected="variantIndex(section.slug) === i"
+                                    :class="[
+                                        'rounded-sm px-3 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+                                        variantIndex(section.slug) === i
+                                            ? 'bg-white text-neutral-950 shadow-sm dark:bg-neutral-900 dark:text-white'
+                                            : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white',
+                                    ]"
+                                    @click="selectVariant(section.slug, i)"
+                                >
+                                    {{ v.label }}
+                                </button>
+                            </div>
+                            <div
+                                v-if="section.variants?.length"
+                                class="code-block overflow-hidden rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
+                            >
+                                <div
+                                    v-if="highlightedCode[highlightKey(section.slug, variantIndex(section.slug))]"
+                                    v-html="highlightedCode[highlightKey(section.slug, variantIndex(section.slug))]"
+                                />
+                                <pre
+                                    v-else
+                                    class="overflow-x-auto font-mono text-sm/7 text-neutral-300"
+                                ><code>{{ section.variants[variantIndex(section.slug)].code }}</code></pre>
+                            </div>
+                            <template v-else>
+                                <div
+                                    v-if="highlightedCode[section.slug]"
+                                    class="code-block overflow-hidden rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
+                                    v-html="highlightedCode[section.slug]"
+                                />
+                                <pre
+                                    v-else
+                                    class="overflow-x-auto rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 text-neutral-300 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
+                                ><code>{{ section.code }}</code></pre>
+                            </template>
+                        </div>
+                    </div>
+                </RevealOnScroll>
             </div>
         </section>
 

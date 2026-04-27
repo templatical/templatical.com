@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
+withDefaults(
+    defineProps<{
+        fadeClass?: string;
+    }>(),
+    {
+        fadeClass:
+            'bg-gradient-to-b from-transparent from-65% to-neutral-50 dark:to-neutral-950',
+    },
+);
+
 const canvas = ref<HTMLCanvasElement | null>(null);
 const root = ref<HTMLDivElement | null>(null);
 const supported = ref(true);
@@ -293,9 +303,7 @@ onBeforeUnmount(() => {
             class="absolute inset-0 size-full"
         />
         <div v-if="!supported" class="hero-aurora-fallback absolute inset-0" />
-        <div
-            class="absolute inset-0 bg-gradient-to-b from-transparent from-65% to-neutral-50 dark:to-neutral-950"
-        />
+        <div :class="['absolute inset-0', fadeClass]" />
     </div>
 </template>
 

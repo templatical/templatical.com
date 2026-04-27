@@ -1,20 +1,11 @@
 <script setup lang="ts">
-import BentoGrid from '@/components/BentoGrid.vue';
 import ComparisonTable from '@/components/ComparisonTable.vue';
 import CtaSection from '@/components/CtaSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
 import SiteButton from '@/components/SiteButton.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteSection from '@/components/SiteSection.vue';
-import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
-import IconArrowsRightLeft from '@/components/icons/IconArrowsRightLeft.vue';
 import IconChevronRight from '@/components/icons/IconChevronRight.vue';
-import IconDevicePhone from '@/components/icons/IconDevicePhone.vue';
-import IconGlobe from '@/components/icons/IconGlobe.vue';
-import IconPuzzle from '@/components/icons/IconPuzzle.vue';
-import IconSwatch from '@/components/icons/IconSwatch.vue';
-import IconTag from '@/components/icons/IconTag.vue';
-import IconWrench from '@/components/icons/IconWrench.vue';
 import { URLS } from '@/lib/urls';
 import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
@@ -31,60 +22,6 @@ useHead({
         },
     ],
 });
-
-const powerFeatures = computed(() => [
-    {
-        key: 'customBlocks',
-        icon: IconPuzzle,
-        title: t('home.bentoItems.customBlocks.title'),
-        description: t('home.bentoItems.customBlocks.description'),
-    },
-    {
-        key: 'mergeTags',
-        icon: IconTag,
-        title: t('home.bentoItems.mergeTags.title'),
-        description: t('home.bentoItems.mergeTags.description'),
-    },
-    {
-        key: 'displayConditions',
-        icon: IconArrowsRightLeft,
-        title: t('home.bentoItems.displayConditions.title'),
-        description: t('home.bentoItems.displayConditions.description'),
-    },
-    {
-        key: 'theming',
-        icon: IconSwatch,
-        title: t('home.bentoItems.theming.title'),
-        description: t('home.bentoItems.theming.description'),
-    },
-    {
-        key: 'defaults',
-        icon: IconWrench,
-        title: t('home.bentoItems.defaults.title'),
-        description: t('home.bentoItems.defaults.description'),
-    },
-]);
-
-const supportingFeatures = computed(() => [
-    {
-        key: 'framework',
-        icon: IconGlobe,
-        title: t('home.bentoItems.framework.title'),
-        description: t('home.bentoItems.framework.description'),
-    },
-    {
-        key: 'output',
-        icon: IconArrowUpTray,
-        title: t('home.bentoItems.output.title'),
-        description: t('home.bentoItems.output.description'),
-    },
-    {
-        key: 'cloud',
-        icon: IconDevicePhone,
-        title: t('home.bentoItems.cloud.title'),
-        description: t('home.bentoItems.cloud.description'),
-    },
-]);
 
 const comparisonRows = computed(() => [
     {
@@ -189,22 +126,6 @@ const comparisonRows = computed(() => [
             </div>
         </SiteSection>
         -->
-
-        <SiteSection
-            :eyebrow="t('home.features.eyebrow')"
-            :headline="t('home.features.headline')"
-            :subheadline="t('home.features.subheadline')"
-        >
-            <BentoGrid :items="powerFeatures" />
-        </SiteSection>
-
-        <SiteSection
-            :eyebrow="t('home.features.supportingEyebrow')"
-            :headline="t('home.features.supportingHeadline')"
-            bg="gray"
-        >
-            <BentoGrid :items="supportingFeatures" />
-        </SiteSection>
 
         <SiteSection
             :eyebrow="t('home.comparison.eyebrow')"

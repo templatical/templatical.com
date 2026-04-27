@@ -1,16 +1,53 @@
 <script setup lang="ts">
 import { URLS } from '@/lib/urls';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { getHighlighter, stripPreBackground } from '@/composables/useShikiHighlight';
 import AnnouncementBadge from './AnnouncementBadge.vue';
 import GitHubStarButton from './GitHubStarButton.vue';
 import HeroAurora from './HeroAurora.vue';
+import HeroHeadline from './HeroHeadline.vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
-import SiteHeading from './SiteHeading.vue';
 import IconChevronRight from './icons/IconChevronRight.vue';
 
 const { t } = useI18n();
 const terminalLabel = t('a11y.terminal');
+
+const heroCode = `// npm install @templatical/editor @templatical/renderer
+
+import { init } from '@templatical/editor'
+import '@templatical/editor/style.css'
+
+const editor = await init({
+  container: '#editor',
+  onChange(content) {
+    // JSON content — store, version, send anywhere
+    console.log(content)
+  },
+})
+
+// MJML out — render in browser or on your server
+const mjml = editor.toMjml()`;
+
+const heroCodeHtml = ref<string | null>(null);
+
+onMounted(async () => {
+    const h = await getHighlighter();
+    heroCodeHtml.value = h.codeToHtml(heroCode, {
+        lang: 'javascript',
+        theme: 'github-dark',
+        transformers: [
+            stripPreBackground,
+            {
+                line(node, line) {
+                    const existing = (node.properties.style as string | undefined) ?? '';
+                    node.properties.style = `${existing ? `${existing};` : ''}--i:${line - 1}`;
+                },
+            },
+        ],
+    });
+});
 </script>
 
 <template>
@@ -33,11 +70,10 @@ const terminalLabel = t('a11y.terminal');
             <GitHubStarButton
                 class="motion-safe:animate-fade-in motion-safe:[animation-delay:50ms]"
             />
-            <SiteHeading
-                class="hero-headline max-w-4xl motion-safe:animate-fade-in motion-safe:[animation-delay:100ms]"
-            >
-                {{ t('home.hero.headline') }}
-            </SiteHeading>
+            <HeroHeadline
+                :text="t('home.hero.headline')"
+                class="hero-headline max-w-4xl"
+            />
             <div
                 class="flex max-w-2xl flex-col gap-4 text-lg/8 text-neutral-600 motion-safe:animate-fade-in motion-safe:[animation-delay:200ms] dark:text-neutral-400"
             >
@@ -77,9 +113,15 @@ const terminalLabel = t('a11y.terminal');
                             {{ terminalLabel }}
                         </span>
                     </div>
-                    <pre
+                    <div
+                        v-if="heroCodeHtml"
                         class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-300"
-                    ><code><span class="hero-line [--i:0]"><span class="text-neutral-500">$</span> npm install <span class="text-primary">@templatical/editor @templatical/renderer</span></span><span class="hero-line [--i:1]"> </span><span class="hero-line [--i:2]"><span class="text-blue-400">import</span> { <span class="text-neutral-100">init</span> } <span class="text-blue-400">from</span> <span class="text-primary">'@templatical/editor'</span></span><span class="hero-line [--i:3]"><span class="text-blue-400">import</span> <span class="text-primary">'@templatical/editor/style.css'</span></span><span class="hero-line [--i:4]"> </span><span class="hero-line [--i:5]"><span class="text-blue-400">const</span> <span class="text-neutral-100">editor</span> = <span class="text-blue-400">await</span> <span class="text-neutral-100">init</span>({</span><span class="hero-line [--i:6]">  <span class="text-neutral-100">container</span>: <span class="text-primary">'#editor'</span>,</span><span class="hero-line [--i:7]">  <span class="text-neutral-100">onChange</span>(<span class="text-neutral-100">content</span>) {</span><span class="hero-line [--i:8]">    <span class="text-neutral-500">// JSON content — store, version, send anywhere</span></span><span class="hero-line [--i:9]">    <span class="text-neutral-100">console</span>.<span class="text-neutral-100">log</span>(<span class="text-neutral-100">content</span>)</span><span class="hero-line [--i:10]">  },</span><span class="hero-line [--i:11]">})</span><span class="hero-line [--i:12]"> </span><span class="hero-line [--i:13]"><span class="text-neutral-500">// MJML out — render in browser or on your server</span></span><span class="hero-line [--i:14]"><span class="text-blue-400">const</span> <span class="text-neutral-100">mjml</span> = <span class="text-neutral-100">editor</span>.<span class="text-neutral-100">toMjml</span>()</span></code></pre>
+                        v-html="heroCodeHtml"
+                    />
+                    <pre
+                        v-else
+                        class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-300"
+                    ><code>{{ heroCode }}</code></pre>
                 </div>
             </div>
         </SiteContainer>
@@ -87,13 +129,20 @@ const terminalLabel = t('a11y.terminal');
 </template>
 
 <style scoped>
-.hero-code .hero-line {
+.hero-code :deep(pre) {
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+    line-height: 0;
+}
+.hero-code :deep(.line) {
     display: block;
-    min-height: 1.75em;
+    line-height: 1.75rem;
+    min-height: 1.75rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .hero-code .hero-line {
+    .hero-code :deep(.line) {
         opacity: 0;
         transform: translateY(6px);
         animation: hero-line-in 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
