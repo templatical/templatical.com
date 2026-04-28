@@ -11,7 +11,7 @@ defineProps<{
     }>;
 }>();
 
-const { sectionRef, isVisible } = useScrollReveal();
+const { sectionRef, isVisible, shouldHide } = useScrollReveal();
 </script>
 
 <template>
@@ -24,9 +24,8 @@ const { sectionRef, isVisible } = useScrollReveal();
             :key="item.key"
             :class="[
                 'flex flex-col gap-4 rounded-xl bg-white p-6 shadow-sm ring-1 ring-neutral-950/5 dark:bg-neutral-900 dark:ring-white/10',
-                isVisible
-                    ? 'motion-safe:animate-scroll-reveal'
-                    : 'motion-safe:opacity-0',
+                isVisible && 'motion-safe:animate-scroll-reveal',
+                shouldHide && 'motion-safe:opacity-0',
             ]"
         >
             <div

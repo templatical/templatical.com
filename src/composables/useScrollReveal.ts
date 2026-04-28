@@ -1,20 +1,34 @@
-import { useIntersectionObserver } from '@vueuse/core';
-import { ref } from 'vue';
+import { useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
+import { computed, onMounted, ref } from 'vue';
 
 export function useScrollReveal(threshold = 0.15, rootMargin = '0px') {
     const sectionRef = ref<HTMLElement | null>(null);
-    const isVisible = ref(false);
+    const prepared = ref(false);
+    const hasRevealed = ref(false);
 
     const { stop } = useIntersectionObserver(
         sectionRef,
-        ([{ isIntersecting }]) => {
-            if (isIntersecting) {
-                isVisible.value = true;
+        ([entry]) => {
+            if (entry?.isIntersecting) {
+                hasRevealed.value = true;
                 stop();
             }
         },
         { threshold, rootMargin },
     );
 
-    return { sectionRef, isVisible };
+    onMounted(() => {
+        prepared.value = true;
+        useTimeoutFn(() => {
+            hasRevealed.value = true;
+            stop();
+        }, 2000);
+    });
+
+    const isVisible = computed(() => hasRevealed.value);
+    const shouldHide = computed(
+        () => prepared.value && !hasRevealed.value,
+    );
+
+    return { sectionRef, isVisible, shouldHide };
 }

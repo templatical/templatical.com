@@ -1,14 +1,18 @@
-import { onMounted, ref, type Ref } from 'vue';
+import { onMounted, ref, watch, type Ref } from 'vue';
 import { createHighlighterCore, type HighlighterCore } from 'shiki/core';
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 import type { ShikiTransformer } from 'shiki';
+import { useDarkMode } from './useDarkMode';
 
 let highlighterPromise: Promise<HighlighterCore> | null = null;
 
 export function getHighlighter(): Promise<HighlighterCore> {
     if (!highlighterPromise) {
         highlighterPromise = createHighlighterCore({
-            themes: [import('@shikijs/themes/github-dark')],
+            themes: [
+                import('@shikijs/themes/github-dark'),
+                import('@shikijs/themes/github-light'),
+            ],
             langs: [
                 import('@shikijs/langs/javascript'),
                 import('@shikijs/langs/html'),
@@ -18,6 +22,10 @@ export function getHighlighter(): Promise<HighlighterCore> {
         });
     }
     return highlighterPromise;
+}
+
+export function shikiThemeFor(isDark: boolean): 'github-dark' | 'github-light' {
+    return isDark ? 'github-dark' : 'github-light';
 }
 
 export const stripPreBackground: ShikiTransformer = {
@@ -44,13 +52,16 @@ export function useShikiHighlight(
     options: { lang?: string; transformers?: ShikiTransformer[] } = {},
 ): Ref<string | null> {
     const html = ref<string | null>(null);
-    onMounted(async () => {
+    const { isDark } = useDarkMode();
+    const render = async () => {
         const h = await getHighlighter();
         html.value = h.codeToHtml(code, {
             lang: options.lang ?? 'javascript',
-            theme: 'github-dark',
+            theme: shikiThemeFor(isDark.value),
             transformers: options.transformers,
         });
-    });
+    };
+    onMounted(render);
+    watch(isDark, render);
     return html;
 }

@@ -14,9 +14,10 @@ import IconGlobe from '@/components/icons/IconGlobe.vue';
 import IconMoon from '@/components/icons/IconMoon.vue';
 import IconSwatch from '@/components/icons/IconSwatch.vue';
 import { useHead } from '@unhead/vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { getHighlighter, stripPreBackground, tagTemplateAsHtml } from '@/composables/useShikiHighlight';
+import { tagTemplateAsHtml } from '@/composables/useShikiHighlight';
+import CodeBlock from '@/components/CodeBlock.vue';
 import { URLS } from '@/lib/urls';
 
 const { t, tm, locale, fallbackLocale } = useI18n();
@@ -274,9 +275,6 @@ const featureSections = computed<FeatureSection[]>(() => [
     },
 ]);
 
-// Highlighted code per section. For variant-bearing sections, keyed by `${slug}__${i}`.
-// For single-code sections, keyed by slug.
-const highlightedCode = ref<Record<string, string>>({});
 const activeVariant = ref<Record<string, number>>({});
 
 function variantIndex(slug: string): number {
@@ -285,32 +283,6 @@ function variantIndex(slug: string): number {
 function selectVariant(slug: string, idx: number) {
     activeVariant.value[slug] = idx;
 }
-function highlightKey(slug: string, idx?: number): string {
-    return idx === undefined ? slug : `${slug}__${idx}`;
-}
-
-onMounted(async () => {
-    const h = await getHighlighter();
-    const next: Record<string, string> = {};
-    for (const s of featureSections.value) {
-        if (s.variants?.length) {
-            s.variants.forEach((v, i) => {
-                next[highlightKey(s.slug, i)] = h.codeToHtml(v.code, {
-                    lang: 'lit',
-                    theme: 'github-dark',
-                    transformers: [stripPreBackground, tagTemplateAsHtml],
-                });
-            });
-        } else if (s.code) {
-            next[s.slug] = h.codeToHtml(s.code, {
-                lang: 'javascript',
-                theme: 'github-dark',
-                transformers: [stripPreBackground],
-            });
-        }
-    }
-    highlightedCode.value = next;
-});
 
 const supportingItems = computed(() => [
     {
@@ -478,38 +450,17 @@ const supportingItems = computed(() => [
                                     {{ v.label }}
                                 </button>
                             </div>
-                            <div
+                            <CodeBlock
                                 v-if="section.variants?.length"
-                                class="code-block overflow-hidden rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
-                            >
-                                <div
-                                    v-if="highlightedCode[highlightKey(section.slug, variantIndex(section.slug))]"
-                                    role="region"
-                                    :aria-label="t('a11y.codeExample')"
-                                    v-html="highlightedCode[highlightKey(section.slug, variantIndex(section.slug))]"
-                                />
-                                <pre
-                                    v-else
-                                    role="region"
-                                    :aria-label="t('a11y.codeExample')"
-                                    class="overflow-x-auto font-mono text-sm/7 text-neutral-300"
-                                ><code>{{ section.variants[variantIndex(section.slug)].code }}</code></pre>
-                            </div>
-                            <template v-else>
-                                <div
-                                    v-if="highlightedCode[section.slug]"
-                                    role="region"
-                                    :aria-label="t('a11y.codeExample')"
-                                    class="code-block overflow-hidden rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
-                                    v-html="highlightedCode[section.slug]"
-                                />
-                                <pre
-                                    v-else
-                                    role="region"
-                                    :aria-label="t('a11y.codeExample')"
-                                    class="overflow-x-auto rounded-xl bg-neutral-950 p-5 font-mono text-sm/7 text-neutral-300 shadow-lg ring-1 ring-white/10 dark:bg-neutral-900"
-                                ><code>{{ section.code }}</code></pre>
-                            </template>
+                                :code="section.variants[variantIndex(section.slug)].code"
+                                lang="lit"
+                                :transformers="[tagTemplateAsHtml]"
+                            />
+                            <CodeBlock
+                                v-else-if="section.code"
+                                :code="section.code"
+                                lang="javascript"
+                            />
                         </div>
                     </div>
                 </RevealOnScroll>

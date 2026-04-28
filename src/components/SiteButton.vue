@@ -26,8 +26,8 @@ defineOptions({ inheritAttrs: false });
 const attrs = useAttrs();
 
 const sizeClasses: Record<string, string> = {
-    md: 'px-3.5 py-1.5',
-    lg: 'px-4 py-2',
+    md: 'min-h-11 px-3.5 py-1.5',
+    lg: 'min-h-11 px-4 py-2',
 };
 
 const classes = computed(() =>

@@ -57,7 +57,7 @@ function onTabKeydown(event: KeyboardEvent, idx: number) {
                     :aria-controls="`competitor-panel-${slug}`"
                     :tabindex="active === slug ? 0 : -1"
                     :class="[
-                        'rounded-full px-4 py-2 text-sm/6 font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none motion-reduce:transition-none',
+                        'inline-flex min-h-11 items-center justify-center rounded-full px-4 py-2 text-sm/6 font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none motion-reduce:transition-none',
                         active === slug
                             ? 'bg-white text-neutral-950 shadow-sm dark:bg-neutral-950 dark:text-white'
                             : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white',

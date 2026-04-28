@@ -7,7 +7,7 @@ import SiteContainer from './SiteContainer.vue';
 import IconChevronRight from './icons/IconChevronRight.vue';
 
 const { t } = useI18n();
-const { sectionRef, isVisible } = useScrollReveal(0.2);
+const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
 </script>
 
 <template>
@@ -19,9 +19,8 @@ const { sectionRef, isVisible } = useScrollReveal(0.2);
             <div
                 :class="[
                     'flex flex-col items-center gap-8 text-center',
-                    isVisible
-                        ? 'motion-safe:animate-scroll-reveal'
-                        : 'motion-safe:opacity-0',
+                    isVisible && 'motion-safe:animate-scroll-reveal',
+                    shouldHide && 'motion-safe:opacity-0',
                 ]"
             >
                 <h2

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { URLS } from '@/lib/urls';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { getHighlighter, stripPreBackground } from '@/composables/useShikiHighlight';
+import { getHighlighter, shikiThemeFor, stripPreBackground } from '@/composables/useShikiHighlight';
+import { useDarkMode } from '@/composables/useDarkMode';
 import AnnouncementBadge from './AnnouncementBadge.vue';
 import GitHubStarButton from './GitHubStarButton.vue';
 import HeroAurora from './HeroAurora.vue';
@@ -12,7 +13,6 @@ import SiteContainer from './SiteContainer.vue';
 import IconChevronRight from './icons/IconChevronRight.vue';
 
 const { t } = useI18n();
-const terminalLabel = t('a11y.terminal');
 
 const heroCode = `// npm install @templatical/editor @templatical/renderer
 
@@ -31,12 +31,13 @@ const editor = await init({
 const mjml = editor.toMjml()`;
 
 const heroCodeHtml = ref<string | null>(null);
+const { isDark } = useDarkMode();
 
-onMounted(async () => {
+async function renderHeroCode() {
     const h = await getHighlighter();
     heroCodeHtml.value = h.codeToHtml(heroCode, {
         lang: 'javascript',
-        theme: 'github-dark',
+        theme: shikiThemeFor(isDark.value),
         transformers: [
             stripPreBackground,
             {
@@ -47,7 +48,10 @@ onMounted(async () => {
             },
         ],
     });
-});
+}
+
+onMounted(renderHeroCode);
+watch(isDark, renderHeroCode);
 </script>
 
 <template>
@@ -101,30 +105,20 @@ onMounted(async () => {
                 class="hero-terminal-wrap mx-auto max-w-2xl motion-safe:animate-scale-in motion-safe:[animation-delay:400ms]"
             >
                 <div
-                    class="relative overflow-hidden rounded-lg bg-neutral-950 shadow-2xl ring-1 ring-white/10 dark:bg-neutral-900"
+                    class="relative overflow-hidden rounded-lg bg-neutral-100 shadow-2xl ring-1 ring-black/10 dark:bg-neutral-900 dark:ring-white/10"
                 >
-                    <div
-                        class="flex items-center gap-2 border-b border-white/10 px-4 py-3"
-                    >
-                        <div class="size-3 rounded-full bg-white/10" />
-                        <div class="size-3 rounded-full bg-white/10" />
-                        <div class="size-3 rounded-full bg-white/10" />
-                        <span class="ml-2 text-xs text-neutral-500">
-                            {{ terminalLabel }}
-                        </span>
-                    </div>
                     <div
                         v-if="heroCodeHtml"
                         role="region"
                         :aria-label="t('a11y.codeExample')"
-                        class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-300"
+                        class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-700 dark:text-neutral-300"
                         v-html="heroCodeHtml"
                     />
                     <pre
                         v-else
                         role="region"
                         :aria-label="t('a11y.codeExample')"
-                        class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-300"
+                        class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-700 dark:text-neutral-300"
                     ><code>{{ heroCode }}</code></pre>
                 </div>
             </div>
