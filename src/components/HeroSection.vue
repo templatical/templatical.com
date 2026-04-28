@@ -57,9 +57,12 @@ watch(isDark, renderHeroCode);
 <template>
     <section
         id="hero"
-        class="relative isolate -mt-21 overflow-hidden bg-neutral-50 pt-41 sm:pt-53 dark:bg-neutral-950"
+        class="relative -mt-21 bg-neutral-50 pt-41 sm:pt-53 dark:bg-neutral-950"
     >
-        <HeroAurora />
+        <HeroAurora
+            root-class="inset-x-0 top-0 -bottom-40"
+            fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
+        />
 
         <SiteContainer
             class="relative flex flex-col items-center gap-8 text-center"

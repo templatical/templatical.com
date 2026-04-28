@@ -42,9 +42,10 @@ const faqItems = computed(() =>
 <template>
     <div>
         <section
-            class="relative isolate -mt-21 overflow-hidden bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950"
+            class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950"
         >
             <HeroAurora
+                root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
             />
             <SiteContainer class="relative">

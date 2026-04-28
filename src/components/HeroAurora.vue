@@ -12,10 +12,12 @@ import { useDarkMode } from '@/composables/useDarkMode';
 withDefaults(
     defineProps<{
         fadeClass?: string;
+        rootClass?: string;
     }>(),
     {
         fadeClass:
             'bg-gradient-to-b from-transparent from-65% to-neutral-50 dark:to-neutral-950',
+        rootClass: 'inset-0',
     },
 );
 
@@ -285,7 +287,7 @@ onBeforeUnmount(() => {
     <div
         ref="root"
         aria-hidden="true"
-        class="hero-aurora pointer-events-none absolute inset-0 overflow-hidden"
+        :class="['hero-aurora pointer-events-none absolute overflow-hidden', rootClass]"
     >
         <canvas
             v-show="supported"

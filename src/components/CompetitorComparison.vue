@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import RevealOnScroll from '@/components/RevealOnScroll.vue';
 import SiteButton from '@/components/SiteButton.vue';
+import VariantTabs from '@/components/VariantTabs.vue';
 import IconChevronRight from '@/components/icons/IconChevronRight.vue';
 import { URLS } from '@/lib/urls';
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const competitors = ['beefree', 'unlayer', 'grapesjs'] as const;
@@ -17,19 +18,17 @@ const migrationPaths: Record<Slug, string> = {
 
 const { t, tm, locale, fallbackLocale } = useI18n();
 
-const active = ref<Slug>('beefree');
-const tabRefs = ref<HTMLButtonElement[]>([]);
-const tablistRef = ref<HTMLDivElement | null>(null);
-const pillStyle = ref<Record<string, string>>({
-    transform: 'translateX(0)',
-    width: '0px',
-    opacity: '0',
-});
+const activeIndex = ref(0);
 const direction = ref<1 | -1>(1);
-const pillReady = ref(false);
 
+const active = computed<Slug>(() => competitors[activeIndex.value]);
 const activeName = computed(() => t(`home.comparison.tabs.${active.value}.name`));
-const activeIndex = computed(() => competitors.indexOf(active.value));
+const tabOptions = computed(() =>
+    competitors.map((slug) => ({
+        label: t(`home.comparison.tabs.${slug}.name`),
+        value: slug,
+    })),
+);
 const panelAnimClass = computed(() =>
     direction.value === 1
         ? 'motion-safe:animate-tab-in-right'
@@ -42,91 +41,26 @@ function docsUrl(path: string): string {
     return `${URLS.docs}${prefix}${path}`;
 }
 
-function updatePill() {
-    const btn = tabRefs.value[activeIndex.value];
-    if (!btn) return;
-    pillStyle.value = {
-        transform: `translateX(${btn.offsetLeft}px)`,
-        width: `${btn.offsetWidth}px`,
-        opacity: '1',
-    };
-    pillReady.value = true;
+function onTabChange(_: number, dir: 1 | -1) {
+    direction.value = dir;
 }
-
-function selectTab(slug: Slug) {
-    const next = competitors.indexOf(slug);
-    direction.value = next >= activeIndex.value ? 1 : -1;
-    active.value = slug;
-}
-
-function onTabKeydown(event: KeyboardEvent, idx: number) {
-    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
-    event.preventDefault();
-    const dir = event.key === 'ArrowRight' ? 1 : -1;
-    const next = (idx + dir + competitors.length) % competitors.length;
-    selectTab(competitors[next]);
-    tabRefs.value[next]?.focus();
-}
-
-let resizeObserver: ResizeObserver | null = null;
-
-onMounted(() => {
-    nextTick(updatePill);
-    if (typeof ResizeObserver !== 'undefined' && tablistRef.value) {
-        resizeObserver = new ResizeObserver(() => updatePill());
-        resizeObserver.observe(tablistRef.value);
-    }
-});
-
-onBeforeUnmount(() => {
-    resizeObserver?.disconnect();
-});
-
-watch(active, () => nextTick(updatePill));
-watch(locale, () => nextTick(updatePill));
 </script>
 
 <template>
     <RevealOnScroll>
         <div class="flex flex-col gap-8">
-            <div
-                ref="tablistRef"
-                role="tablist"
-                :aria-label="t('home.comparison.tabsLabel')"
-                class="relative flex flex-wrap gap-2 self-center rounded-full bg-neutral-100 p-1 ring-1 ring-neutral-950/5 dark:bg-neutral-900 dark:ring-white/10"
-            >
-                <span
-                    aria-hidden="true"
-                    class="pointer-events-none absolute top-1 bottom-1 left-0 rounded-full bg-white shadow-sm transition-[transform,width,opacity] duration-[380ms] ease-[var(--ease-spring)] will-change-transform motion-reduce:transition-none dark:bg-neutral-950"
-                    :style="pillStyle"
+            <div class="flex justify-center">
+                <VariantTabs
+                    v-model="activeIndex"
+                    :options="tabOptions"
+                    :aria-label="t('home.comparison.tabsLabel')"
+                    @change="onTabChange"
                 />
-                <button
-                    v-for="(slug, idx) in competitors"
-                    :key="slug"
-                    :ref="(el) => (tabRefs[idx] = el as HTMLButtonElement)"
-                    type="button"
-                    role="tab"
-                    :id="`competitor-tab-${slug}`"
-                    :aria-selected="active === slug"
-                    :aria-controls="`competitor-panel-${slug}`"
-                    :tabindex="active === slug ? 0 : -1"
-                    :class="[
-                        'relative z-10 inline-flex min-h-11 items-center justify-center rounded-full px-4 py-2 text-sm/6 font-medium transition-[color,transform] duration-200 ease-[var(--ease-spring)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100',
-                        active === slug
-                            ? 'text-neutral-950 dark:text-white'
-                            : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white',
-                    ]"
-                    @click="selectTab(slug)"
-                    @keydown="onTabKeydown($event, idx)"
-                >
-                    {{ t(`home.comparison.tabs.${slug}.name`) }}
-                </button>
             </div>
 
             <div
                 role="tabpanel"
                 :id="`competitor-panel-${active}`"
-                :aria-labelledby="`competitor-tab-${active}`"
                 :key="active"
                 :class="['flex flex-col gap-8', panelAnimClass]"
             >
