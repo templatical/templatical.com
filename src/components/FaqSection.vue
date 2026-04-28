@@ -1,35 +1,45 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref, useId } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     items: Array<{
         question: string;
         answer: string;
     }>;
 }>();
 
-const openIndex = ref<number | null>(null);
+const uid = useId();
+const entries = computed(() =>
+    props.items.map((item, index) => ({
+        ...item,
+        key: item.question,
+        buttonId: `${uid}-faq-button-${index}`,
+        panelId: `${uid}-faq-panel-${index}`,
+    })),
+);
 
-function toggle(index: number) {
-    openIndex.value = openIndex.value === index ? null : index;
+const openKey = ref<string | null>(null);
+
+function toggle(key: string) {
+    openKey.value = openKey.value === key ? null : key;
 }
 </script>
 
 <template>
     <div class="divide-y divide-neutral-200 dark:divide-neutral-800">
-        <div v-for="(item, index) in items" :key="index">
+        <div v-for="entry in entries" :key="entry.key">
             <button
-                :id="`faq-button-${index}`"
+                :id="entry.buttonId"
                 type="button"
                 class="flex w-full cursor-pointer items-center justify-between py-5 text-left transition-colors hover:text-primary"
-                :aria-expanded="openIndex === index"
-                :aria-controls="`faq-panel-${index}`"
-                @click="toggle(index)"
+                :aria-expanded="openKey === entry.key"
+                :aria-controls="entry.panelId"
+                @click="toggle(entry.key)"
             >
                 <span
                     class="text-base/7 font-medium text-neutral-950 dark:text-white"
                 >
-                    {{ item.question }}
+                    {{ entry.question }}
                 </span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +49,7 @@ function toggle(index: number) {
                     stroke="currentColor"
                     :class="[
                         'size-5 shrink-0 text-neutral-500 transition-transform duration-200',
-                        openIndex === index ? 'rotate-180' : '',
+                        openKey === entry.key ? 'rotate-180' : '',
                     ]"
                     aria-hidden="true"
                 >
@@ -51,20 +61,20 @@ function toggle(index: number) {
                 </svg>
             </button>
             <div
-                :id="`faq-panel-${index}`"
+                :id="entry.panelId"
                 role="region"
-                :aria-labelledby="`faq-button-${index}`"
-                :aria-hidden="openIndex !== index"
+                :aria-labelledby="entry.buttonId"
+                :aria-hidden="openKey !== entry.key"
                 :class="[
                     'grid transition-all duration-200',
-                    openIndex === index
+                    openKey === entry.key
                         ? 'grid-rows-[1fr] pb-5 opacity-100'
                         : 'grid-rows-[0fr] opacity-0',
                 ]"
             >
                 <div class="overflow-hidden">
                     <p class="text-sm/7 text-neutral-700 dark:text-neutral-400">
-                        {{ item.answer }}
+                        {{ entry.answer }}
                     </p>
                 </div>
             </div>

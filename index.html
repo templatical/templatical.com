@@ -13,6 +13,36 @@
             rel="stylesheet"
         />
         <link rel="icon" href="/logo-small.svg" type="image/svg+xml" />
+
+        <script>
+            (function () {
+                try {
+                    var stored = localStorage.getItem('templatical-theme');
+                    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    var dark = stored === 'dark' || ((!stored || stored === 'auto') && prefersDark);
+                    if (dark) document.documentElement.classList.add('dark');
+                } catch (_) {}
+            })();
+        </script>
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://templatical.com/" />
+        <meta property="og:title" content="Templatical — Open-Source Email Editor SDK" />
+        <meta
+            property="og:description"
+            content="The open-source BeeFree alternative. Embed a drag-and-drop email editor in your app."
+        />
+        <meta property="og:image" content="https://templatical.com/og.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Templatical — Open-Source Email Editor SDK" />
+        <meta
+            name="twitter:description"
+            content="The open-source BeeFree alternative. Embed a drag-and-drop email editor in your app."
+        />
+        <meta name="twitter:image" content="https://templatical.com/og.png" />
     </head>
     <body>
         <div id="app"></div>

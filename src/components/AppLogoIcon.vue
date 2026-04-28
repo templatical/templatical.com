@@ -9,5 +9,12 @@ defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
-    <img src="/logo.svg" alt="Templatical" :class="className" v-bind="$attrs" />
+    <img
+        src="/logo.svg"
+        alt="Templatical"
+        width="36"
+        height="36"
+        :class="className"
+        v-bind="$attrs"
+    />
 </template>

@@ -5,23 +5,31 @@ export default {
         switchToDark: 'Switch to dark mode',
         switchToLanguage: 'Switch language to {language}',
         mobileMenu: 'Navigation menu',
+        mainNav: 'Main',
+        footerNav: 'Footer',
         terminal: 'terminal',
+        yes: 'Yes',
+        no: 'No',
+        codeExample: 'Code example',
     },
     nav: {
         features: 'Features',
-        community: 'Community',
+        faq: 'FAQ',
         docs: 'Docs',
         playground: 'Playground',
         getStarted: 'Get Started',
         openMenu: 'Open menu',
         closeMenu: 'Close menu',
     },
+    github: {
+        star: 'Star',
+    },
     footer: {
         product: 'Product',
         resources: 'Resources',
         legal: 'Legal',
         features: 'Features',
-        community: 'Community',
+        faq: 'FAQ',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -37,53 +45,65 @@ export default {
         },
         hero: {
             badge: 'Now open source',
-            badgeCta: 'Star us on GitHub',
-            headline: 'The open-source email editor for your app',
+            badgeCta: 'View on GitHub',
+            headline: 'An open-source email editor with the features other editors paywall.',
             subheadline:
-                'A drop-in drag-and-drop email editor SDK. Build, customize, and export production-ready email templates. The open-source alternative to BeeFree.',
-            ctaPrimary: 'Try the Playground',
-            ctaSecondary: 'Read the Docs',
+                'Custom blocks, full theming, advanced merge tags, and display conditions — open-source in Templatical, paid tier elsewhere. Drop into any app with one init() call. JSON in, MJML out.',
+            ctaPrimary: 'Try live',
+            ctaSecondary: 'Compare',
         },
         trustedBy: {
             eyebrow: 'Trusted by developers',
             headline: 'Used by teams building better email experiences',
         },
         features: {
-            eyebrow: 'Everything you need',
-            headline: 'A complete email editor SDK',
+            eyebrow: 'Power features',
+            headline: 'Paid tier elsewhere. Open source here.',
             subheadline:
-                'Everything you need to embed a professional email editor in your application — no vendor lock-in, no per-seat pricing.',
+                'The features developers reach for first — and the ones that usually live behind a paywall — ship in the open-source SDK.',
+            supportingEyebrow: 'And the table-stakes',
+            supportingHeadline: 'Everything else you expect',
         },
         bentoItems: {
-            editor: {
-                title: 'Drag-and-Drop Editor',
+            customBlocks: {
+                title: 'Custom blocks with API-backed data',
                 description:
-                    '13 block types including text, images, buttons, and multi-column sections with 5 layout options. Your users build emails without touching code.',
-            },
-            export: {
-                title: 'MJML Export',
-                description:
-                    'Export templates as MJML — the industry standard for responsive email markup. Convert to HTML on your server with any MJML library.',
+                    'Register your own block types — static templates or live data fetched from your API at preview time. Paid tier elsewhere, open-source here.',
             },
             mergeTags: {
-                title: 'Merge Tags',
+                title: 'Merge tags with pluggable syntax',
                 description:
-                    '5 syntax presets out of the box: Liquid, Handlebars, Mailchimp, AMPscript, and Django. Or define your own custom syntax.',
-            },
-            customBlocks: {
-                title: 'Custom Blocks',
-                description:
-                    'Define your own block types with custom fields (text, image, color, select, repeatable) and HTML templates. Fetch field data from your API.',
-            },
-            theming: {
-                title: 'Theming & Dark Mode',
-                description:
-                    '27 semantic color tokens to match your brand. Built-in dark mode with auto-detection. Full i18n support with English and German.',
+                    'Handlebars, Liquid, JS template literals, or your own — with human-readable label replacement directly in the editor canvas. Build a CRM-aware tag picker in minutes.',
             },
             displayConditions: {
-                title: 'Display Conditions',
+                title: 'Display conditions',
                 description:
-                    'Conditional content blocks that show or hide based on rules. Wrap blocks with custom before/after code for dynamic email personalization.',
+                    'Show or hide blocks based on recipient attributes, with live preview in the editor. Built in, no extra service.',
+            },
+            theming: {
+                title: 'Full theming via design tokens',
+                description:
+                    '27 OKLch tokens, custom fonts, dark mode, complete theme overrides. No CSS hacking, no paid tier — your brand becomes the editor’s default.',
+            },
+            defaults: {
+                title: 'Template & block defaults',
+                description:
+                    'Define your brand once. New templates and new blocks pick up your defaults automatically — colors, fonts, padding, layout. Consistent without copy-paste.',
+            },
+            framework: {
+                title: 'Drop-in framework integration',
+                description:
+                    'One init() call to mount, one to unmount. First-class examples for React, Vue, Svelte, Angular, and vanilla JS. No framework lock-in.',
+            },
+            output: {
+                title: 'JSON in, MJML out',
+                description:
+                    'Templates are portable JSON. Output is MJML — render in the browser or on your server, send through any provider. No vendor render API.',
+            },
+            cloud: {
+                title: 'Cloud (in development)',
+                description:
+                    'Real-time collaboration with block locking, AI rewrite, AI chat, comments, and snapshots — coming as the Templatical Cloud tier. The implementation is open code; you’ll be able to use the managed tier or self-host.',
             },
         },
         steps: {
@@ -108,12 +128,13 @@ export default {
             },
         },
         comparison: {
-            eyebrow: 'Why Templatical?',
-            headline: 'The open-source alternative to BeeFree',
+            eyebrow: 'Why these rows matter',
+            headline: 'Paywalled elsewhere. Open-source here.',
             subheadline:
-                'Already using BeeFree? Switch to Templatical and own your email editor. No vendor lock-in, no usage caps, no surprises.',
+                'Custom blocks, full theming, advanced merge tags, display conditions. In Beefree these features start unlocking at the Superpowers tier ($2,500/mo). In Unlayer, custom blocks unlock at Scale ($750/mo) and custom CSS at Optimize ($2,000/mo). In GrapesJS, several of these don’t exist out of the box — you build them yourself. In Templatical, they’re part of the open-source SDK — no tier, no paywall.',
             migrationNote:
                 'Already on BeeFree? Migrate in minutes with our free import tools.',
+            seeFullComparison: 'See the full comparison',
             featureColumn: 'Feature',
             rows: {
                 openSource: 'Open Source',
@@ -148,101 +169,137 @@ export default {
         cta: {
             headline: 'Start building email templates today',
             subheadline:
-                'Open source, free forever. Get started with the docs or explore the code on GitHub.',
+                'Open source, free forever. Get started with the docs, star the repo, or sponsor development.',
             ctaPrimary: 'Get Started',
             ctaSecondary: 'View on GitHub',
+            ctaTertiary: 'Sponsor',
         },
     },
     features: {
         meta: {
             title: 'Features — Templatical',
             description:
-                'Drag-and-drop editor, MJML export, merge tags, custom blocks, display conditions, theming, dark mode, and BeeFree import. Everything in the open-source SDK.',
+                'Custom blocks, pluggable merge tags, display conditions, full theming, template defaults — open-source. Plus framework integration, MJML output, and the Cloud tier in development.',
         },
         hero: {
-            eyebrow: 'Features',
-            headline: 'Everything you need to build emails',
+            eyebrow: 'Power features',
+            headline: 'The features other editors paywall — open-source here.',
             subheadline:
-                'A fully-featured email editor SDK that your developers will love and your users will find intuitive.',
+                'Five power features and a clean set of table-stakes. No tier, no paywall, no vendor render API.',
         },
-        editor: {
-            eyebrow: 'Visual Editor',
-            title: 'Drag-and-drop email building',
+        docsLink: 'Read the docs',
+        examplesLabel: '{title} examples',
+        variants: {
+            static: 'Static',
+            apiBacked: 'API-backed',
+            predefined: 'Predefined',
+            customPicker: 'Custom picker',
+        },
+        customBlocks: {
+            eyebrow: 'Power feature · 1',
+            title: 'Custom blocks with API-backed data',
             description:
-                'An intuitive block-based editor that lets your users create beautiful, responsive emails without any coding knowledge.',
+                'Register your own block types — static templates or live data fetched from your API at preview time. Paid tier elsewhere, open-source here.',
             features: [
-                'Block-based editing with drag-and-drop',
-                'Responsive desktop and mobile preview',
-                'Undo/redo with full history',
-                '13 block types including multi-column sections',
+                'Per-field configuration: text, image, color, select, repeatable',
+                'Static template or live API fetch at preview time',
+                'Required fields with validation; optional read-only fields',
+                'Liquid templates with conditionals and built-in filters',
+                'Repeatable field arrays for collections like product grids',
+                'Custom SVG icon per block in the editor sidebar',
+                'Type-safe block factories with TypeScript types',
             ],
         },
-        dx: {
-            eyebrow: 'Developer Experience',
-            title: 'Built for developers, by developers',
+        mergeTags: {
+            eyebrow: 'Power feature · 2',
+            title: 'Merge tags with pluggable syntax',
             description:
-                'First-class TypeScript support, comprehensive events API, and deep customization options. Integrate in minutes, customize for months.',
+                'Handlebars, Liquid, JS template literals, or your own — with human-readable label replacement directly in the editor canvas. Build a CRM-aware tag picker in minutes.',
             features: [
-                'Full TypeScript support with detailed type definitions',
-                'Rich events API for editor lifecycle and user actions',
-                'Framework-agnostic — use via npm or a script tag in any app',
-                'IIFE and ES module builds for flexible integration',
+                'Built-in syntaxes plus a hook for your own',
+                'Human-readable labels rendered in the editor canvas',
+                'Type-ahead picker driven by your data shape',
+                'Optional onRequest hook to swap the picker for your CRM UI',
+                'Logic tags for branched content based on plan or role',
+                'Built-in Liquid filters: default, upcase, escape',
+                'Round-trip safe — JSON stores the canonical token',
             ],
         },
-        output: {
-            eyebrow: 'Output & Export',
-            title: 'MJML-powered email output',
+        displayConditions: {
+            eyebrow: 'Power feature · 3',
+            title: 'Display conditions',
             description:
-                'Export templates as MJML — the industry standard for responsive email markup. Convert to HTML server-side with the included renderer package.',
+                'Show or hide blocks based on recipient attributes, with live preview in the editor. Built in, no extra service.',
             features: [
-                'MJML export for reliable cross-client rendering',
-                'Server-side HTML conversion via @templatical/renderer',
-                'Automatic responsive layouts built into every template',
-                'Clean, optimized output with no unnecessary markup',
+                'Per-block show/hide rules from recipient attributes',
+                'Group conditions by audience, segment, or role',
+                'Live preview while editing',
+                'allowCustom: true lets editors add conditions inline',
+                'Custom before/after wrappers for provider-specific syntax',
+                'Wrappers emit Liquid — your ESP evaluates at send time',
+                'No external service or paid add-on required',
             ],
         },
-        extensibility: {
-            eyebrow: 'Extensibility',
-            title: 'Make it yours',
+        theming: {
+            eyebrow: 'Power feature · 4',
+            title: 'Full theming via design tokens',
             description:
-                'Extend the editor with custom blocks, dynamic merge tags, pluggable media handling, and display conditions.',
+                '27 OKLch tokens, custom fonts, dark mode, complete theme overrides. No CSS hacking, no paid tier — your brand becomes the editor’s default.',
             features: [
-                'Custom block types with your own UI',
-                'Configurable merge tags for dynamic content',
-                'Pluggable media integration via onRequestMedia callback',
-                'Display conditions for conditional email content',
+                '27 OKLch design tokens covering every surface',
+                'Light + dark theme overrides via the same theme.dark key',
+                'Custom fonts via --tpl-font-sans and --tpl-font-mono',
+                'Radius, shadows, spacing — every surface tokenized',
+                'uiTheme: auto, light, or dark with system preference detection',
+                'Dark mode first-class with auto-detect or manual toggle',
+                'Tailwind 4 with `tpl:` prefix — no preflight, no style leaks',
             ],
         },
-        moreFeatures: {
-            eyebrow: 'And more',
-            headline: 'Additional capabilities',
+        defaults: {
+            eyebrow: 'Power feature · 5',
+            title: 'Template & block defaults',
+            description:
+                'Define your brand once. New templates and new blocks pick up your defaults automatically — colors, fonts, padding, layout. Consistent without copy-paste.',
+            features: [
+                'Set brand defaults once at init() time',
+                'Per-block-type defaults: button, divider, spacer, image, social',
+                'Template-level defaults: width, background, font family',
+                'New templates inherit colors, fonts, padding, layout',
+                'New blocks pick up the same defaults automatically',
+                'Mix and match presets — corporate, playful, minimal',
+                'Override per-template via the templateDefaults field',
+            ],
+        },
+        supporting: {
+            eyebrow: 'And the table-stakes',
+            headline: 'Everything else you expect',
             subheadline:
-                'Every feature you need to ship a production email editor.',
+                'Drop-in mount, portable JSON, MJML output, framework-agnostic. Plus the polish — dark mode, i18n, undo/redo.',
         },
-        moreItems: {
-            themeCustomization: {
-                title: 'Theme Customization',
-                description: '27 semantic color tokens to style every surface. Match the editor to your product\'s look and feel.',
+        supportingItems: {
+            framework: {
+                title: 'Drop-in framework integration',
+                description: 'One init() call to mount, one to unmount. First-class examples for React, Vue, Svelte, Angular, and vanilla JS.',
+            },
+            output: {
+                title: 'JSON in, MJML out',
+                description: 'Templates are portable JSON. Output is MJML — render in the browser or on your server, send through any provider. No vendor render API.',
             },
             darkMode: {
-                title: 'Dark Mode',
-                description: 'Built-in dark mode with automatic system preference detection or manual toggle.',
+                title: 'Dark mode',
+                description: 'First-class dark mode with auto-detect or manual toggle. Both themes are designed, not an afterthought.',
             },
             i18n: {
                 title: 'Internationalization',
-                description: 'Multi-language editor UI with built-in translations. Load custom translations for any language.',
+                description: 'English and German built in. Load custom translations for any language.',
             },
             undoRedo: {
                 title: 'Undo / Redo',
-                description: 'Full history stack with up to 50 snapshots. Debounced to group rapid changes.',
+                description: 'Full history stack. Debounced to group rapid changes into sensible undo steps.',
             },
             responsivePreview: {
-                title: 'Responsive Preview',
-                description: 'Toggle between desktop, tablet, and mobile viewports to see how emails render on every device.',
-            },
-            beefreeImport: {
-                title: 'BeeFree Import',
-                description: 'Import BeeFree JSON templates directly. Automatic block mapping with a detailed conversion report.',
+                title: 'Responsive preview',
+                description: 'Toggle desktop, tablet, and mobile viewports to see how every email renders on every device.',
             },
         },
         migration: {
@@ -257,60 +314,53 @@ export default {
                 'Free and open-source migration tools',
             ],
         },
-        faq: {
-            headline: 'Frequently asked questions',
-            items: {
-                free: {
-                    question: 'Is Templatical really free?',
-                    answer: 'Yes. The editor SDK is licensed under FSL-1.1-MIT (Functional Source License) — free to use in any project with no usage caps or per-seat fees. The license converts to MIT after two years. Supporting packages like the renderer and BeeFree importer are MIT-licensed.',
-                },
-                commercial: {
-                    question: 'Can I use it in commercial products?',
-                    answer: 'Yes. The FSL-1.1-MIT license allows commercial use. You can embed Templatical in your SaaS product for your customers to build email templates.',
-                },
-                beefree: {
-                    question: 'How does it compare to BeeFree?',
-                    answer: 'Templatical offers similar drag-and-drop editing capabilities with full source code access. There are no usage-based pricing surprises, and your template data never leaves your infrastructure. Plus, we offer free migration tools to import your existing BeeFree templates.',
-                },
-                frameworks: {
-                    question: 'What frameworks are supported?',
-                    answer: 'Templatical works with any framework. While built with Vue internally, it provides a framework-agnostic JavaScript API via npm or a standalone script tag. Use it with React, Angular, Svelte, or plain HTML.',
-                },
-                migrate: {
-                    question: 'How do I migrate from BeeFree?',
-                    answer: 'We provide free, MIT-licensed migration tools that import your BeeFree JSON templates directly. The tools handle block mapping, style preservation, and merge tag conversion automatically.',
-                },
-                paid: {
-                    question: 'Is there a paid version?',
-                    answer: 'Templatical Cloud offers team collaboration, AI features, API access, and multi-tenancy for teams that want a managed solution. The open-source SDK remains free.',
-                },
-            },
-        },
     },
-    community: {
+    faq: {
         meta: {
-            title: 'Community — Templatical',
+            title: 'FAQ — Templatical',
             description:
-                'Join the Templatical community. Contribute on GitHub and help shape the future of open-source email tooling.',
+                'Answers about licensing, commercial use, framework support, BeeFree migration, and the Cloud tier.',
         },
         hero: {
-            eyebrow: 'Community',
-            headline: 'Join the Templatical community',
+            eyebrow: 'FAQ',
+            headline: 'Frequently asked questions',
             subheadline:
-                'Connect with other developers, contribute to the project, and help shape the future of open-source email tooling.',
+                'Licensing, commercial use, framework support, and how Templatical compares to other email editors.',
         },
-        github: {
-            title: 'GitHub',
-            description:
-                'Star the repo, report issues, submit pull requests, and explore the source code. All development happens in the open.',
-            cta: 'View on GitHub',
-        },
-        contributing: {
-            eyebrow: 'Open source',
-            headline: 'Contribute to Templatical',
-            subheadline:
-                'Templatical is built by the community. Whether you\'re fixing a typo, adding a feature, or improving docs — every contribution matters.',
-            cta: 'Read the Contributing Guide',
+        headline: 'Frequently asked questions',
+        items: {
+            free: {
+                question: 'Is Templatical really free?',
+                answer: 'Yes. The editor SDK is licensed under FSL-1.1-MIT (Functional Source License) — free to use in any project with no usage caps or per-seat fees. Every release automatically converts to MIT two years after it ships, with no action required.',
+            },
+            commercial: {
+                question: 'Can I use it in commercial products?',
+                answer: 'Yes — paid SaaS, internal tools, on-premise software, agency builds, anything. The only restriction: you can\'t rebrand Templatical and sell it as a competing hosted email-editor SaaS. Embedding it in a CRM, transactional email API, newsletter tool, or any product where the editor is one feature among many is fully allowed.',
+            },
+            packages: {
+                question: 'Which packages are MIT vs FSL?',
+                answer: 'Three of the six packages are pure MIT today: types, renderer, and the BeeFree importer. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
+            },
+            branding: {
+                question: 'Do I need to display "Powered by Templatical"?',
+                answer: 'No. The editor renders a small footer credit by default, but it\'s opt-out — pass branding: false to init() to hide it. There is no forced header logo or other attribution surface in the editor UI.',
+            },
+            beefree: {
+                question: 'How does it compare to BeeFree?',
+                answer: 'Templatical offers similar drag-and-drop editing capabilities with full source code access. There are no usage-based pricing surprises, and your template data never leaves your infrastructure. Plus, we offer free migration tools to import your existing BeeFree templates.',
+            },
+            frameworks: {
+                question: 'What frameworks are supported?',
+                answer: 'Templatical works with any framework. While built with Vue internally, it provides a framework-agnostic JavaScript API via npm or a standalone script tag. Use it with React, Angular, Svelte, or plain HTML.',
+            },
+            migrate: {
+                question: 'How do I migrate from another editor?',
+                answer: 'We provide free, MIT-licensed migration tools for BeeFree, Unlayer, and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically. See the migration guides in the docs for each source format.',
+            },
+            paid: {
+                question: 'Is there a paid version, and is it required?',
+                answer: 'The OSS SDK is fully standalone — no backend required, and it remains free. Templatical Cloud is an optional managed tier that adds AI rewrite, real-time collaboration, comments, snapshots, saved modules, API access, and multi-tenancy. The Cloud feature code is also open under FSL-1.1-MIT, so you can self-host it instead of using the managed service.',
+            },
         },
     },
 };

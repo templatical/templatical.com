@@ -16,7 +16,7 @@ interface FooterLink {
 
 const links = computed<FooterLink[]>(() => [
     { label: t('footer.features'), href: '/features' },
-    { label: t('footer.community'), href: '/community' },
+    { label: t('footer.faq'), href: '/faq' },
     { label: t('footer.documentation'), href: URLS.docs, external: true },
     { label: t('footer.playground'), href: URLS.playground, external: true },
     { label: t('footer.github'), href: URLS.github, external: true },
@@ -46,7 +46,7 @@ const socialLinks = [
                 </router-link>
 
                 <nav
-                    aria-label="Footer"
+                    :aria-label="t('a11y.footerNav')"
                     class="flex flex-wrap gap-x-6 gap-y-2 text-sm/7"
                 >
                     <template v-for="link in links" :key="link.href">
@@ -72,7 +72,7 @@ const socialLinks = [
             <div
                 class="flex flex-col items-start justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row sm:items-center dark:border-neutral-800"
             >
-                <div class="text-sm/7 text-neutral-500">
+                <div class="text-sm/7 text-neutral-600 dark:text-neutral-400">
                     {{ t('footer.copyright', { year: new Date().getFullYear() }) }}
                 </div>
                 <div class="flex items-center gap-1">

@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import BentoGrid from '@/components/BentoGrid.vue';
 import ComparisonTable from '@/components/ComparisonTable.vue';
 import CtaSection from '@/components/CtaSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
 import SiteButton from '@/components/SiteButton.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteSection from '@/components/SiteSection.vue';
-import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
-import IconArrowsRightLeft from '@/components/icons/IconArrowsRightLeft.vue';
 import IconChevronRight from '@/components/icons/IconChevronRight.vue';
-import IconPuzzle from '@/components/icons/IconPuzzle.vue';
-import IconSwatch from '@/components/icons/IconSwatch.vue';
-import IconTag from '@/components/icons/IconTag.vue';
-import IconWrench from '@/components/icons/IconWrench.vue';
 import { URLS } from '@/lib/urls';
 import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
@@ -29,45 +22,6 @@ useHead({
         },
     ],
 });
-
-const bentoItems = computed(() => [
-    {
-        key: 'editor',
-        icon: IconPuzzle,
-        title: t('home.bentoItems.editor.title'),
-        description: t('home.bentoItems.editor.description'),
-    },
-    {
-        key: 'export',
-        icon: IconArrowUpTray,
-        title: t('home.bentoItems.export.title'),
-        description: t('home.bentoItems.export.description'),
-    },
-    {
-        key: 'mergeTags',
-        icon: IconTag,
-        title: t('home.bentoItems.mergeTags.title'),
-        description: t('home.bentoItems.mergeTags.description'),
-    },
-    {
-        key: 'customBlocks',
-        icon: IconWrench,
-        title: t('home.bentoItems.customBlocks.title'),
-        description: t('home.bentoItems.customBlocks.description'),
-    },
-    {
-        key: 'theming',
-        icon: IconSwatch,
-        title: t('home.bentoItems.theming.title'),
-        description: t('home.bentoItems.theming.description'),
-    },
-    {
-        key: 'displayConditions',
-        icon: IconArrowsRightLeft,
-        title: t('home.bentoItems.displayConditions.title'),
-        description: t('home.bentoItems.displayConditions.description'),
-    },
-]);
 
 const comparisonRows = computed(() => [
     {
@@ -174,14 +128,6 @@ const comparisonRows = computed(() => [
         -->
 
         <SiteSection
-            :eyebrow="t('home.features.eyebrow')"
-            :headline="t('home.features.headline')"
-            :subheadline="t('home.features.subheadline')"
-        >
-            <BentoGrid :items="bentoItems" />
-        </SiteSection>
-
-        <SiteSection
             :eyebrow="t('home.comparison.eyebrow')"
             :headline="t('home.comparison.headline')"
             :subheadline="t('home.comparison.subheadline')"
@@ -192,6 +138,16 @@ const comparisonRows = computed(() => [
             >
                 {{ t('home.comparison.migrationNote') }}
             </p>
+            <div class="mt-6 flex justify-center">
+                <SiteButton
+                    :href="URLS.comparison"
+                    variant="plain"
+                    external
+                >
+                    {{ t('home.comparison.seeFullComparison') }}
+                    <IconChevronRight />
+                </SiteButton>
+            </div>
         </SiteSection>
 
         <section class="bg-neutral-50 py-16 dark:bg-neutral-900">

@@ -13,7 +13,7 @@ const { sectionRef, isVisible } = useScrollReveal(0.2);
 <template>
     <section
         ref="sectionRef"
-        class="bg-neutral-950 py-20 sm:py-28 dark:bg-neutral-900"
+        class="bg-inverse py-20 sm:py-28"
     >
         <SiteContainer>
             <div
@@ -32,7 +32,7 @@ const { sectionRef, isVisible } = useScrollReveal(0.2);
                 <p class="max-w-2xl text-lg/8 text-neutral-400">
                     {{ t('home.cta.subheadline') }}
                 </p>
-                <div class="flex items-center gap-4">
+                <div class="flex flex-wrap items-center justify-center gap-4">
                     <SiteButton
                         :href="URLS.docs"
                         color="white"
@@ -49,6 +49,16 @@ const { sectionRef, isVisible } = useScrollReveal(0.2);
                         external
                     >
                         {{ t('home.cta.ctaSecondary') }}
+                        <IconChevronRight />
+                    </SiteButton>
+                    <SiteButton
+                        :href="URLS.sponsor"
+                        variant="plain"
+                        color="white"
+                        size="lg"
+                        external
+                    >
+                        {{ t('home.cta.ctaTertiary') }}
                         <IconChevronRight />
                     </SiteButton>
                 </div>
