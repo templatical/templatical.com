@@ -65,6 +65,9 @@
     --animate-slide-in-left: slide-in-left 500ms var(--ease-spring) both;
     --animate-slide-in-right: slide-in-right 500ms var(--ease-spring) both;
     --animate-scroll-reveal: scroll-reveal 500ms var(--ease-spring) both;
+    --animate-tab-in-right: tab-in-right 320ms var(--ease-spring) both;
+    --animate-tab-in-left: tab-in-left 320ms var(--ease-spring) both;
+    --animate-stagger-up: stagger-up 340ms var(--ease-spring) both;
 }
 
 /*
@@ -222,6 +225,39 @@
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes tab-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes tab-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes stagger-up {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 

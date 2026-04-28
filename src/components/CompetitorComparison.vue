@@ -3,7 +3,7 @@ import RevealOnScroll from '@/components/RevealOnScroll.vue';
 import SiteButton from '@/components/SiteButton.vue';
 import IconChevronRight from '@/components/icons/IconChevronRight.vue';
 import { URLS } from '@/lib/urls';
-import { computed, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const competitors = ['beefree', 'unlayer', 'grapesjs'] as const;
@@ -19,8 +19,22 @@ const { t, tm, locale, fallbackLocale } = useI18n();
 
 const active = ref<Slug>('beefree');
 const tabRefs = ref<HTMLButtonElement[]>([]);
+const tablistRef = ref<HTMLDivElement | null>(null);
+const pillStyle = ref<Record<string, string>>({
+    transform: 'translateX(0)',
+    width: '0px',
+    opacity: '0',
+});
+const direction = ref<1 | -1>(1);
+const pillReady = ref(false);
 
 const activeName = computed(() => t(`home.comparison.tabs.${active.value}.name`));
+const activeIndex = computed(() => competitors.indexOf(active.value));
+const panelAnimClass = computed(() =>
+    direction.value === 1
+        ? 'motion-safe:animate-tab-in-right'
+        : 'motion-safe:animate-tab-in-left',
+);
 
 function docsUrl(path: string): string {
     const fallback = String(fallbackLocale.value);
@@ -28,24 +42,64 @@ function docsUrl(path: string): string {
     return `${URLS.docs}${prefix}${path}`;
 }
 
+function updatePill() {
+    const btn = tabRefs.value[activeIndex.value];
+    if (!btn) return;
+    pillStyle.value = {
+        transform: `translateX(${btn.offsetLeft}px)`,
+        width: `${btn.offsetWidth}px`,
+        opacity: '1',
+    };
+    pillReady.value = true;
+}
+
+function selectTab(slug: Slug) {
+    const next = competitors.indexOf(slug);
+    direction.value = next >= activeIndex.value ? 1 : -1;
+    active.value = slug;
+}
+
 function onTabKeydown(event: KeyboardEvent, idx: number) {
     if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
     event.preventDefault();
     const dir = event.key === 'ArrowRight' ? 1 : -1;
     const next = (idx + dir + competitors.length) % competitors.length;
-    active.value = competitors[next];
+    selectTab(competitors[next]);
     tabRefs.value[next]?.focus();
 }
+
+let resizeObserver: ResizeObserver | null = null;
+
+onMounted(() => {
+    nextTick(updatePill);
+    if (typeof ResizeObserver !== 'undefined' && tablistRef.value) {
+        resizeObserver = new ResizeObserver(() => updatePill());
+        resizeObserver.observe(tablistRef.value);
+    }
+});
+
+onBeforeUnmount(() => {
+    resizeObserver?.disconnect();
+});
+
+watch(active, () => nextTick(updatePill));
+watch(locale, () => nextTick(updatePill));
 </script>
 
 <template>
     <RevealOnScroll>
         <div class="flex flex-col gap-8">
             <div
+                ref="tablistRef"
                 role="tablist"
                 :aria-label="t('home.comparison.tabsLabel')"
-                class="flex flex-wrap gap-2 self-center rounded-full bg-neutral-100 p-1 ring-1 ring-neutral-950/5 dark:bg-neutral-900 dark:ring-white/10"
+                class="relative flex flex-wrap gap-2 self-center rounded-full bg-neutral-100 p-1 ring-1 ring-neutral-950/5 dark:bg-neutral-900 dark:ring-white/10"
             >
+                <span
+                    aria-hidden="true"
+                    class="pointer-events-none absolute top-1 bottom-1 left-0 rounded-full bg-white shadow-sm transition-[transform,width,opacity] duration-[380ms] ease-[var(--ease-spring)] will-change-transform motion-reduce:transition-none dark:bg-neutral-950"
+                    :style="pillStyle"
+                />
                 <button
                     v-for="(slug, idx) in competitors"
                     :key="slug"
@@ -57,12 +111,12 @@ function onTabKeydown(event: KeyboardEvent, idx: number) {
                     :aria-controls="`competitor-panel-${slug}`"
                     :tabindex="active === slug ? 0 : -1"
                     :class="[
-                        'inline-flex min-h-11 items-center justify-center rounded-full px-4 py-2 text-sm/6 font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none motion-reduce:transition-none',
+                        'relative z-10 inline-flex min-h-11 items-center justify-center rounded-full px-4 py-2 text-sm/6 font-medium transition-[color,transform] duration-200 ease-[var(--ease-spring)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100',
                         active === slug
-                            ? 'bg-white text-neutral-950 shadow-sm dark:bg-neutral-950 dark:text-white'
+                            ? 'text-neutral-950 dark:text-white'
                             : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white',
                     ]"
-                    @click="active = slug"
+                    @click="selectTab(slug)"
                     @keydown="onTabKeydown($event, idx)"
                 >
                     {{ t(`home.comparison.tabs.${slug}.name`) }}
@@ -74,7 +128,7 @@ function onTabKeydown(event: KeyboardEvent, idx: number) {
                 :id="`competitor-panel-${active}`"
                 :aria-labelledby="`competitor-tab-${active}`"
                 :key="active"
-                class="flex flex-col gap-8 motion-safe:animate-fade-in"
+                :class="['flex flex-col gap-8', panelAnimClass]"
             >
                 <div class="flex flex-col gap-6 rounded-2xl bg-white p-6 ring-1 ring-neutral-950/5 sm:p-8 dark:bg-neutral-950 dark:ring-white/10">
                     <p class="text-base/7 text-pretty text-neutral-700 dark:text-neutral-300">
@@ -109,15 +163,16 @@ function onTabKeydown(event: KeyboardEvent, idx: number) {
                 </div>
 
                 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    <div class="flex flex-col gap-4 rounded-2xl bg-primary/5 p-6 ring-1 ring-primary/20 sm:p-8 dark:bg-primary/10 dark:ring-primary/30">
+                    <div class="group flex flex-col gap-4 rounded-2xl bg-primary/5 p-6 ring-1 ring-primary/20 transition-[transform,box-shadow] duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-8 dark:bg-primary/10 dark:ring-primary/30">
                         <h3 class="text-sm/6 font-semibold text-primary">
                             {{ t('home.comparison.templaticalWinsLabel') }}
                         </h3>
                         <ul class="flex flex-col gap-3">
                             <li
-                                v-for="item in (tm(`home.comparison.tabs.${active}.templaticalWins`) as string[])"
+                                v-for="(item, i) in (tm(`home.comparison.tabs.${active}.templaticalWins`) as string[])"
                                 :key="item"
-                                class="flex gap-3 text-sm/6 text-neutral-800 dark:text-neutral-200"
+                                :style="{ animationDelay: `${120 + i * 55}ms` }"
+                                class="flex gap-3 text-sm/6 text-neutral-800 motion-safe:animate-stagger-up dark:text-neutral-200"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -139,15 +194,16 @@ function onTabKeydown(event: KeyboardEvent, idx: number) {
                         </ul>
                     </div>
 
-                    <div class="flex flex-col gap-4 rounded-2xl bg-neutral-50 p-6 ring-1 ring-neutral-950/5 sm:p-8 dark:bg-neutral-900 dark:ring-white/10">
+                    <div class="group flex flex-col gap-4 rounded-2xl bg-neutral-50 p-6 ring-1 ring-neutral-950/5 transition-[transform,box-shadow] duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-8 dark:bg-neutral-900 dark:ring-white/10">
                         <h3 class="text-sm/6 font-semibold text-neutral-700 dark:text-neutral-300">
                             {{ t('home.comparison.competitorWinsLabel', { name: activeName }) }}
                         </h3>
                         <ul class="flex flex-col gap-3">
                             <li
-                                v-for="item in (tm(`home.comparison.tabs.${active}.competitorWins`) as string[])"
+                                v-for="(item, i) in (tm(`home.comparison.tabs.${active}.competitorWins`) as string[])"
                                 :key="item"
-                                class="flex gap-3 text-sm/6 text-neutral-800 dark:text-neutral-200"
+                                :style="{ animationDelay: `${160 + i * 55}ms` }"
+                                class="flex gap-3 text-sm/6 text-neutral-800 motion-safe:animate-stagger-up dark:text-neutral-200"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -184,9 +240,10 @@ function onTabKeydown(event: KeyboardEvent, idx: number) {
                     </p>
                     <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2">
                         <li
-                            v-for="item in (tm('home.comparison.cloudFeatures') as string[])"
+                            v-for="(item, i) in (tm('home.comparison.cloudFeatures') as string[])"
                             :key="item"
-                            class="flex gap-2 text-sm/6 text-neutral-800 dark:text-neutral-200"
+                            :style="{ animationDelay: `${220 + i * 40}ms` }"
+                            class="flex gap-2 text-sm/6 text-neutral-800 motion-safe:animate-stagger-up dark:text-neutral-200"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

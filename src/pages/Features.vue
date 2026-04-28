@@ -18,6 +18,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { tagTemplateAsHtml } from '@/composables/useShikiHighlight';
 import CodeBlock from '@/components/CodeBlock.vue';
+import VariantTabs from '@/components/VariantTabs.vue';
 import { URLS } from '@/lib/urls';
 
 const { t, tm, locale, fallbackLocale } = useI18n();
@@ -276,12 +277,21 @@ const featureSections = computed<FeatureSection[]>(() => [
 ]);
 
 const activeVariant = ref<Record<string, number>>({});
+const variantDirection = ref<Record<string, 1 | -1>>({});
 
 function variantIndex(slug: string): number {
     return activeVariant.value[slug] ?? 0;
 }
 function selectVariant(slug: string, idx: number) {
+    const prev = variantIndex(slug);
+    if (idx === prev) return;
+    variantDirection.value[slug] = idx > prev ? 1 : -1;
     activeVariant.value[slug] = idx;
+}
+function variantAnimClass(slug: string): string {
+    return (variantDirection.value[slug] ?? 1) === 1
+        ? 'motion-safe:animate-tab-in-right'
+        : 'motion-safe:animate-tab-in-left';
 }
 
 const supportingItems = computed(() => [
@@ -427,35 +437,25 @@ const supportingItems = computed(() => [
                             </a>
                         </div>
                         <div class="flex flex-col gap-4">
+                            <VariantTabs
+                                v-if="section.variants?.length"
+                                size="sm"
+                                :options="section.variants"
+                                :model-value="variantIndex(section.slug)"
+                                :aria-label="t('features.examplesLabel', { title: section.title })"
+                                @update:model-value="selectVariant(section.slug, $event)"
+                            />
                             <div
                                 v-if="section.variants?.length"
-                                role="tablist"
-                                :aria-label="t('features.examplesLabel', { title: section.title })"
-                                class="inline-flex self-start rounded-md bg-neutral-100 p-1 ring-1 ring-neutral-200 dark:bg-neutral-800/60 dark:ring-neutral-700"
+                                :key="`${section.slug}-${variantIndex(section.slug)}`"
+                                :class="variantAnimClass(section.slug)"
                             >
-                                <button
-                                    v-for="(v, i) in section.variants"
-                                    :key="v.label"
-                                    type="button"
-                                    role="tab"
-                                    :aria-selected="variantIndex(section.slug) === i"
-                                    :class="[
-                                        'rounded-sm px-3 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-                                        variantIndex(section.slug) === i
-                                            ? 'bg-white text-neutral-950 shadow-sm dark:bg-neutral-900 dark:text-white'
-                                            : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white',
-                                    ]"
-                                    @click="selectVariant(section.slug, i)"
-                                >
-                                    {{ v.label }}
-                                </button>
+                                <CodeBlock
+                                    :code="section.variants[variantIndex(section.slug)].code"
+                                    lang="lit"
+                                    :transformers="[tagTemplateAsHtml]"
+                                />
                             </div>
-                            <CodeBlock
-                                v-if="section.variants?.length"
-                                :code="section.variants[variantIndex(section.slug)].code"
-                                lang="lit"
-                                :transformers="[tagTemplateAsHtml]"
-                            />
                             <CodeBlock
                                 v-else-if="section.code"
                                 :code="section.code"
