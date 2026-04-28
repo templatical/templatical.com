@@ -130,36 +130,132 @@ const de: MessageSchema = {
             },
         },
         comparison: {
-            eyebrow: 'Warum diese Zeilen zählen',
-            headline: 'Anderswo Paywall. Hier Open Source.',
+            eyebrow: 'Vergleich',
+            headline: 'Templatical im Vergleich',
             subheadline:
-                'Benutzerdefinierte Blöcke, vollständiges Theming, erweiterte Merge-Tags, Anzeigebedingungen. Bei Beefree erst ab Superpowers ($2.500/Monat). Bei Unlayer ab Scale ($750/Monat), Custom CSS ab Optimize ($2.000/Monat). Bei GrapesJS existieren mehrere davon nicht von Haus aus — Sie bauen sie selbst. Bei Templatical sind sie Teil des Open-Source-SDK — kein Tarif, keine Paywall.',
-            migrationNote:
-                'Bereits auf BeeFree? Migrieren Sie in Minuten mit unseren kostenlosen Import-Tools.',
+                'Ein ehrlicher, direkter Vergleich von Templatical mit Beefree, Unlayer und GrapesJS — einschließlich der Fälle, in denen die anderen die bessere Wahl sind.',
+            tabsLabel: 'Vergleichen mit',
+            factsLabels: {
+                license: 'Lizenz',
+                pricing: 'Preise',
+                selfHost: 'Selbst hostbar',
+            },
+            templaticalWinsLabel: 'Wo Templatical überzeugt',
+            competitorWinsLabel: 'Wo {name} überzeugt',
+            pickCompetitorLabel: 'Wann {name} die bessere Wahl ist',
+            pickUsLabel: 'Wann Templatical die bessere Wahl ist',
+            migrationCta: 'Bereits auf {name}?',
+            migrationLink: 'Migrationsanleitung ansehen',
             seeFullComparison: 'Vollständigen Vergleich ansehen',
-            featureColumn: 'Funktion',
-            rows: {
-                openSource: 'Open Source',
-                yourData: 'Ihre Daten, Ihre Server',
-                pricing: 'Preisgestaltung',
-                dragAndDrop: 'Drag-and-Drop Editor',
-                customBlocks: 'Benutzerdefinierte Blöcke',
-                mjmlSupport: 'MJML-Unterstützung',
-                mergeTags: 'Merge-Tags',
-                displayConditions: 'Anzeigebedingungen',
-                darkMode: 'Dark Mode',
-                undoRedo: 'Rückgängig / Wiederholen',
-                responsivePreview: 'Responsive Vorschau',
-                migrationTools: 'Kostenlose Migrations-Tools',
-                vendorLockIn: 'Kein Vendor Lock-In',
-                landingPageBuilder: 'Landing-Page-Builder',
-                communityDriven: 'Community-getrieben',
-            },
-            templaticalValues: {
-                pricing: 'Kostenlos & Open Source',
-            },
-            beefreeValues: {
-                pricing: 'Bezahlt pro Nutzung',
+            cloudSectionLabel: 'Mehr mit Templatical Cloud',
+            cloudSectionStatus: 'In Entwicklung',
+            cloudIntro:
+                'Diese Funktionen kommen als Templatical-Cloud-Variante. Der Feature-Code ist heute bereits Open Source unter FSL-1.1-MIT — nutzen Sie die verwaltete Cloud, sobald sie verfügbar ist, oder hosten Sie denselben Code selbst.',
+            cloudFeatures: [
+                'KI-Umschreibung und KI-Chat',
+                'Echtzeit-Zusammenarbeit mit Block-Level-Locking',
+                'Kommentare und Review-Threads',
+                'Snapshots und Versionshistorie',
+                'Gespeicherte Module über Vorlagen hinweg',
+                'Gehostete Medienbibliothek',
+                'Design-zu-Vorlage-Konvertierung',
+                'Versand von Test-E-Mails',
+                'MCP-Integration',
+                'API-Zugriff und Multi-Tenancy',
+            ],
+            cloudVsLabel: 'Wie {name} damit umgeht',
+            cloudLearnMore: 'Mehr über Templatical Cloud erfahren',
+            tabs: {
+                beefree: {
+                    name: 'Beefree SDK',
+                    positioning:
+                        'Ausgereifter gehosteter Editor mit dem umfangreichsten Funktionsumfang am Markt — preislich auf finanzierte Startups und Enterprises ausgerichtet.',
+                    facts: {
+                        license: 'Closed Source',
+                        pricing: 'Kostenlos + $350–5.000+/Monat bezahlt',
+                        selfHost: 'Nur als iframe',
+                    },
+                    templaticalWins: [
+                        'Vollständig selbst hostbar — Beefree liefert nur einen gehosteten iframe.',
+                        'MJML-Ausgabe statt proprietärem JSON über eine Vendor-Render-API.',
+                        'Offene API für Custom Blocks heute schon — Beefree schaltet Custom Blocks erst ab Superpowers ($2.500/Monat) frei.',
+                        'Kostenlos und bleibt es; FSL-1.1-MIT-lizenziert (automatisch MIT nach 2 Jahren).',
+                        'End-to-End TypeScript-Typen, nicht nur SDK-Type-Defs.',
+                    ],
+                    competitorWins: [
+                        '1.500+ vorgefertigte Templates als Template-Catalog-Add-on verfügbar.',
+                        'E-Mail-, Page-, Popup- und Document-Builder in einem Produkt.',
+                        '21-sprachige Editor-UI standardmäßig dabei.',
+                        'Etabliertes kommerzielles Produkt mit langer Erfolgsgeschichte im E-Mail-Editor-Bereich.',
+                    ],
+                    cloudVsCompetitor:
+                        'Beefree schaltet diese Funktionen hinter kostenpflichtigen Tarifen frei — Echtzeit-Zusammenarbeit ab Superpowers ($2.500/Monat); KI-Funktionen (Schreibassistent, Bildgenerierung, Alt-Text) verteilen sich über mehrere kostenpflichtige Tarife.',
+                    verdict: {
+                        competitor:
+                            'Wählen Sie Beefree, wenn Sie einen schlüsselfertigen gehosteten Editor, mehrere Builder-Produkte und eine umfangreiche Vorlagenbibliothek benötigen — und das Budget für die kostenpflichtigen Tarife haben.',
+                        us: 'Wählen Sie Templatical, wenn Sie Ihren Editor wirklich besitzen möchten — offener Code, MJML-Ausgabe und Premium-Funktionen ohne Paywalls.',
+                    },
+                },
+                unlayer: {
+                    name: 'Unlayer',
+                    positioning:
+                        'Einfacher React-Drop-in um einen gehosteten Editor. Der schnellste Weg zu einem eingebetteten Editor in einer React-App.',
+                    facts: {
+                        license: 'Wrapper MIT, Editor closed',
+                        pricing: 'Kostenlos + $250–2.000+/Monat bezahlt',
+                        selfHost: 'Nur als iframe',
+                    },
+                    templaticalWins: [
+                        'Vollständig selbst hostbar — Unlayer lädt den Editor nur als iframe von Unlayer-Servern.',
+                        'MJML-Ausgabe statt proprietärem JSON über die Unlayer-Render-API.',
+                        'Custom Blocks, Custom CSS und Themes im OSS-SDK — bei Unlayer erst ab Scale ($750/Monat) bzw. Optimize ($2.000/Monat).',
+                        'Aus jedem Framework einbettbar, nicht React-gekoppelt.',
+                        'Mehrsprachige i18n von Haus aus; Unlayer schaltet Lokalisierung erst ab Launch frei.',
+                    ],
+                    competitorWins: [
+                        'Schnellster React-Drop-in — eine Komponente, keine Infra zu betreiben.',
+                        'E-Mail-, Page-, Popup- und Document-Builder in einem Produkt.',
+                        'Niedrigerer Einstiegspreis als Beefree.',
+                        'Etabliertes kommerzielles Produkt mit beträchtlichem Kundenstamm.',
+                    ],
+                    cloudVsCompetitor:
+                        'Unlayer bietet nur Team-Level-Zusammenarbeit (kein Block-Level-Locking) und schaltet KI-gestütztes Schreiben erst ab Scale ($750/Monat) frei.',
+                    verdict: {
+                        competitor:
+                            'Wählen Sie Unlayer, wenn Sie den schnellsten Weg zu einem eingebetteten Editor in React wollen und mit einem gehosteten iframe leben können.',
+                        us: 'Wählen Sie Templatical, wenn Sie echte Ownership wollen — selbst hostbar, MJML-Ausgabe, framework-neutral.',
+                    },
+                },
+                grapesjs: {
+                    name: 'GrapesJS + MJML',
+                    positioning:
+                        'Open-Source-Web-Builder-Framework, das Sie mit dem MJML-Plugin zu einem E-Mail-Editor zusammenbauen können.',
+                    facts: {
+                        license: 'BSD-3-Clause',
+                        pricing: 'Kostenlos',
+                        selfHost: 'Ja',
+                    },
+                    templaticalWins: [
+                        'E-Mail-fokussiertes Produkt, kein generischer Page-Builder, der für E-Mails umfunktioniert wurde.',
+                        'Eingebaute Merge-Tags, Anzeigebedingungen, Dark Mode und Theming — bei GrapesJS alles DIY.',
+                        'Offene API für Custom Blocks mit API-gestützten Datenquellen — Ihre Domain-Entitäten werden zu Drag-and-Drop-Blöcken erster Klasse.',
+                        'Gebündelter, meinungsstarker Feature-Set statt eines Plugin-Bauprojekts.',
+                    ],
+                    competitorWins: [
+                        'Vollständig BSD-3-Clause — keinerlei FSL-Vorbehalt.',
+                        'Riesiges Plugin-Ökosystem (25k+ Stars, 190+ Contributors).',
+                        'Generisch genug, um Pages, Popups und Dokumente auf derselben Engine zu bauen.',
+                        'Vanilla-JavaScript-Core — keine Vue-Runtime-Abhängigkeit, hilfreich wenn Richtlinien das untersagen.',
+                        'Für immer kostenlos, kein Managed-Tier-Pfad geplant.',
+                    ],
+                    cloudVsCompetitor:
+                        'Bei GrapesJS Core gibt es nichts davon. Sie würden es selbst aus Drittanbieter-Plugins zusammenbauen oder von Grund auf entwickeln.',
+                    verdict: {
+                        competitor:
+                            'Wählen Sie GrapesJS, wenn Sie ein generisches Web-Builder-Framework wollen und bereit sind, Ihren E-Mail-Funktionsumfang selbst zusammenzubauen.',
+                        us: 'Wählen Sie Templatical, wenn Sie einen fokussierten E-Mail-Editor wollen — mit Merge-Tags, Anzeigebedingungen und Theming sofort einsatzbereit.',
+                    },
+                },
             },
         },
         cloud: {

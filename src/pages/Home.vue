@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ComparisonTable from '@/components/ComparisonTable.vue';
+import CompetitorComparison from '@/components/CompetitorComparison.vue';
 import CtaSection from '@/components/CtaSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
 import SiteButton from '@/components/SiteButton.vue';
@@ -23,84 +23,6 @@ useHead({
     ],
 });
 
-const comparisonRows = computed(() => [
-    {
-        feature: t('home.comparison.rows.openSource'),
-        templatical: true,
-        beefree: false,
-    },
-    {
-        feature: t('home.comparison.rows.yourData'),
-        templatical: true,
-        beefree: false,
-    },
-    {
-        feature: t('home.comparison.rows.pricing'),
-        templatical: t('home.comparison.templaticalValues.pricing'),
-        beefree: t('home.comparison.beefreeValues.pricing'),
-    },
-    {
-        feature: t('home.comparison.rows.dragAndDrop'),
-        templatical: true,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.customBlocks'),
-        templatical: true,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.mjmlSupport'),
-        templatical: true,
-        beefree: false,
-    },
-    {
-        feature: t('home.comparison.rows.mergeTags'),
-        templatical: true,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.displayConditions'),
-        templatical: true,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.darkMode'),
-        templatical: true,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.undoRedo'),
-        templatical: true,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.responsivePreview'),
-        templatical: true,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.migrationTools'),
-        templatical: true,
-        beefree: false,
-        highlight: true,
-    },
-    {
-        feature: t('home.comparison.rows.vendorLockIn'),
-        templatical: true,
-        beefree: false,
-    },
-    {
-        feature: t('home.comparison.rows.landingPageBuilder'),
-        templatical: false,
-        beefree: true,
-    },
-    {
-        feature: t('home.comparison.rows.communityDriven'),
-        templatical: true,
-        beefree: false,
-    },
-]);
 </script>
 
 <template>
@@ -132,13 +54,8 @@ const comparisonRows = computed(() => [
             :headline="t('home.comparison.headline')"
             :subheadline="t('home.comparison.subheadline')"
         >
-            <ComparisonTable :rows="comparisonRows" />
-            <p
-                class="mt-6 text-center text-sm/7 font-medium text-primary"
-            >
-                {{ t('home.comparison.migrationNote') }}
-            </p>
-            <div class="mt-6 flex justify-center">
+            <CompetitorComparison />
+            <div class="mt-10 flex justify-center">
                 <SiteButton
                     :href="URLS.comparison"
                     variant="plain"
