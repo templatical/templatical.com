@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BentoGrid from '@/components/BentoGrid.vue';
 import CtaSection from '@/components/CtaSection.vue';
-import FaqSection from '@/components/FaqSection.vue';
 import HeroAurora from '@/components/HeroAurora.vue';
 import HeroHeadline from '@/components/HeroHeadline.vue';
 import RevealOnScroll from '@/components/RevealOnScroll.vue';
@@ -9,7 +8,6 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import SiteText from '@/components/SiteText.vue';
-import IconArrowDownTray from '@/components/icons/IconArrowDownTray.vue';
 import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
 import IconArrowUturnLeft from '@/components/icons/IconArrowUturnLeft.vue';
 import IconGlobe from '@/components/icons/IconGlobe.vue';
@@ -351,40 +349,8 @@ const supportingItems = computed(() => [
         title: t('features.supportingItems.responsivePreview.title'),
         description: t('features.supportingItems.responsivePreview.description'),
     },
-    {
-        key: 'beefreeImport',
-        icon: IconArrowDownTray,
-        title: t('features.supportingItems.beefreeImport.title'),
-        description: t('features.supportingItems.beefreeImport.description'),
-    },
 ]);
 
-const faqItems = computed(() => [
-    {
-        question: t('features.faq.items.free.question'),
-        answer: t('features.faq.items.free.answer'),
-    },
-    {
-        question: t('features.faq.items.commercial.question'),
-        answer: t('features.faq.items.commercial.answer'),
-    },
-    {
-        question: t('features.faq.items.beefree.question'),
-        answer: t('features.faq.items.beefree.answer'),
-    },
-    {
-        question: t('features.faq.items.frameworks.question'),
-        answer: t('features.faq.items.frameworks.answer'),
-    },
-    {
-        question: t('features.faq.items.migrate.question'),
-        answer: t('features.faq.items.migrate.answer'),
-    },
-    {
-        question: t('features.faq.items.paid.question'),
-        answer: t('features.faq.items.paid.answer'),
-    },
-]);
 </script>
 
 <template>
@@ -590,13 +556,6 @@ const faqItems = computed(() => [
                     {{ feature }}
                 </li>
             </ul>
-        </SiteSection>
-
-        <SiteSection
-            :headline="t('features.faq.headline')"
-            class="!py-14 sm:!py-20"
-        >
-            <FaqSection :items="faqItems" />
         </SiteSection>
 
         <CtaSection />

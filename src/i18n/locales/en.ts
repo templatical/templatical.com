@@ -14,6 +14,7 @@ export default {
     },
     nav: {
         features: 'Features',
+        faq: 'FAQ',
         docs: 'Docs',
         playground: 'Playground',
         getStarted: 'Get Started',
@@ -28,6 +29,7 @@ export default {
         resources: 'Resources',
         legal: 'Legal',
         features: 'Features',
+        faq: 'FAQ',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -299,10 +301,6 @@ export default {
                 title: 'Responsive preview',
                 description: 'Toggle desktop, tablet, and mobile viewports to see how every email renders on every device.',
             },
-            beefreeImport: {
-                title: 'BeeFree import',
-                description: 'Import BeeFree JSON templates directly via the templatical/import-beefree package. Automatic block mapping with a detailed conversion report.',
-            },
         },
         migration: {
             eyebrow: 'Easy migration',
@@ -316,33 +314,52 @@ export default {
                 'Free and open-source migration tools',
             ],
         },
-        faq: {
+    },
+    faq: {
+        meta: {
+            title: 'FAQ — Templatical',
+            description:
+                'Answers about licensing, commercial use, framework support, BeeFree migration, and the Cloud tier.',
+        },
+        hero: {
+            eyebrow: 'FAQ',
             headline: 'Frequently asked questions',
-            items: {
-                free: {
-                    question: 'Is Templatical really free?',
-                    answer: 'Yes. The editor SDK is licensed under FSL-1.1-MIT (Functional Source License) — free to use in any project with no usage caps or per-seat fees. The license converts to MIT after two years. Supporting packages like the renderer and BeeFree importer are MIT-licensed.',
-                },
-                commercial: {
-                    question: 'Can I use it in commercial products?',
-                    answer: 'Yes. The FSL-1.1-MIT license allows commercial use. You can embed Templatical in your SaaS product for your customers to build email templates.',
-                },
-                beefree: {
-                    question: 'How does it compare to BeeFree?',
-                    answer: 'Templatical offers similar drag-and-drop editing capabilities with full source code access. There are no usage-based pricing surprises, and your template data never leaves your infrastructure. Plus, we offer free migration tools to import your existing BeeFree templates.',
-                },
-                frameworks: {
-                    question: 'What frameworks are supported?',
-                    answer: 'Templatical works with any framework. While built with Vue internally, it provides a framework-agnostic JavaScript API via npm or a standalone script tag. Use it with React, Angular, Svelte, or plain HTML.',
-                },
-                migrate: {
-                    question: 'How do I migrate from BeeFree?',
-                    answer: 'We provide free, MIT-licensed migration tools that import your BeeFree JSON templates directly. The tools handle block mapping, style preservation, and merge tag conversion automatically.',
-                },
-                paid: {
-                    question: 'Is there a paid version?',
-                    answer: 'Templatical Cloud offers team collaboration, AI features, API access, and multi-tenancy for teams that want a managed solution. The open-source SDK remains free.',
-                },
+            subheadline:
+                'Licensing, commercial use, framework support, and how Templatical compares to other email editors.',
+        },
+        headline: 'Frequently asked questions',
+        items: {
+            free: {
+                question: 'Is Templatical really free?',
+                answer: 'Yes. The editor SDK is licensed under FSL-1.1-MIT (Functional Source License) — free to use in any project with no usage caps or per-seat fees. Every release automatically converts to MIT two years after it ships, with no action required.',
+            },
+            commercial: {
+                question: 'Can I use it in commercial products?',
+                answer: 'Yes — paid SaaS, internal tools, on-premise software, agency builds, anything. The only restriction: you can\'t rebrand Templatical and sell it as a competing hosted email-editor SaaS. Embedding it in a CRM, transactional email API, newsletter tool, or any product where the editor is one feature among many is fully allowed.',
+            },
+            packages: {
+                question: 'Which packages are MIT vs FSL?',
+                answer: 'Three of the six packages are pure MIT today: types, renderer, and the BeeFree importer. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
+            },
+            branding: {
+                question: 'Do I need to display "Powered by Templatical"?',
+                answer: 'No. The editor renders a small footer credit by default, but it\'s opt-out — pass branding: false to init() to hide it. There is no forced header logo or other attribution surface in the editor UI.',
+            },
+            beefree: {
+                question: 'How does it compare to BeeFree?',
+                answer: 'Templatical offers similar drag-and-drop editing capabilities with full source code access. There are no usage-based pricing surprises, and your template data never leaves your infrastructure. Plus, we offer free migration tools to import your existing BeeFree templates.',
+            },
+            frameworks: {
+                question: 'What frameworks are supported?',
+                answer: 'Templatical works with any framework. While built with Vue internally, it provides a framework-agnostic JavaScript API via npm or a standalone script tag. Use it with React, Angular, Svelte, or plain HTML.',
+            },
+            migrate: {
+                question: 'How do I migrate from another editor?',
+                answer: 'We provide free, MIT-licensed migration tools for BeeFree, Unlayer, and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically. See the migration guides in the docs for each source format.',
+            },
+            paid: {
+                question: 'Is there a paid version, and is it required?',
+                answer: 'The OSS SDK is fully standalone — no backend required, and it remains free. Templatical Cloud is an optional managed tier that adds AI rewrite, real-time collaboration, comments, snapshots, saved modules, API access, and multi-tenancy. The Cloud feature code is also open under FSL-1.1-MIT, so you can self-host it instead of using the managed service.',
             },
         },
     },

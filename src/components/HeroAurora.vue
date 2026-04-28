@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-    useDark,
     useDevicePixelRatio,
     useEventListener,
     useIntersectionObserver,
@@ -8,6 +7,7 @@ import {
     useResizeObserver,
 } from '@vueuse/core';
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { useDarkMode } from '@/composables/useDarkMode';
 
 withDefaults(
     defineProps<{
@@ -23,7 +23,7 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const root = ref<HTMLDivElement | null>(null);
 const supported = ref(true);
 
-const isDark = useDark();
+const { isDark } = useDarkMode();
 const reducedMotionPref = usePreferredReducedMotion();
 const { pixelRatio } = useDevicePixelRatio();
 

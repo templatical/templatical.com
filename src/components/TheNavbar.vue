@@ -16,7 +16,7 @@ const route = useRoute();
 const { y: scrollY } = useWindowScroll();
 const hasTransparentHero = computed(() => {
     const path = route.path.replace(/\/$/, '');
-    return path === '' || path.endsWith('/features');
+    return path === '' || path.endsWith('/features') || path.endsWith('/faq');
 });
 
 interface NavLink {
@@ -27,6 +27,7 @@ interface NavLink {
 
 const links = computed<NavLink[]>(() => [
     { label: t('nav.features'), href: '/features' },
+    { label: t('nav.faq'), href: '/faq' },
     { label: t('nav.docs'), href: URLS.docs, external: true },
     { label: t('nav.playground'), href: URLS.playground, external: true },
 ]);

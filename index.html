@@ -14,6 +14,17 @@
         />
         <link rel="icon" href="/logo-small.svg" type="image/svg+xml" />
 
+        <script>
+            (function () {
+                try {
+                    var stored = localStorage.getItem('templatical-theme');
+                    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    var dark = stored === 'dark' || ((!stored || stored === 'auto') && prefersDark);
+                    if (dark) document.documentElement.classList.add('dark');
+                } catch (_) {}
+            })();
+        </script>
+
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://templatical.com/" />
         <meta property="og:title" content="Templatical — Open-Source Email Editor SDK" />

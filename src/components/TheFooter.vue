@@ -16,6 +16,7 @@ interface FooterLink {
 
 const links = computed<FooterLink[]>(() => [
     { label: t('footer.features'), href: '/features' },
+    { label: t('footer.faq'), href: '/faq' },
     { label: t('footer.documentation'), href: URLS.docs, external: true },
     { label: t('footer.playground'), href: URLS.playground, external: true },
     { label: t('footer.github'), href: URLS.github, external: true },
