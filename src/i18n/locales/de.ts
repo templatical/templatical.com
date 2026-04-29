@@ -53,12 +53,14 @@ const de: MessageSchema = {
                 'Benutzerdefinierte Blöcke, vollständiges Theming, erweiterte Merge-Tags und Anzeigebedingungen — alles im Open-Source-SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Dokumentation lesen',
+            frameworkNote: 'Intern in Vue 3 entwickelt — läuft konfliktfrei neben React, Svelte und Angular.',
             badges: [
                 'TypeScript-first',
                 'Auf MJML aufgebaut',
                 'FSL-1.1-MIT (auto-MIT)',
                 'Framework-neutral',
                 'Überall renderbar',
+                'Keine Telemetrie',
             ],
         },
         trustedBy: {
@@ -212,6 +214,11 @@ const de: MessageSchema = {
             ctaSecondary: 'Auf GitHub ansehen',
             ctaTertiary: 'Sponsor',
         },
+        migration: {
+            text: 'Schon auf einem gehosteten E-Mail-Builder? Kostenlose Importer für Ihre bestehenden Vorlagen.',
+            cta: 'Migrationsanleitungen ansehen',
+            sources: 'BeeFree · Unlayer · MJML',
+        },
         homeFaq: {
             eyebrow: 'Häufige Fragen',
             headline: 'Was Entwickler zuerst fragen',
@@ -222,9 +229,9 @@ const de: MessageSchema = {
                         'Sie dürfen Templatical kommerziell nutzen, in Ihr Produkt einbetten, Kunden dafür Geld berechnen und es selbst hosten — alles ab heute, kostenlos. Die einzige Einschränkung: Sie dürfen Templatical nicht als konkurrierendes E-Mail-Editor-Produkt weiterverkaufen. Nach zwei Jahren konvertiert jedes Release automatisch zu reinem MIT.',
                 },
                 {
-                    question: 'Wie unterscheidet sich das von <a href="https://mjml.io" target="_blank" rel="noopener" class="font-medium text-primary underline">MJML</a> oder komponentenbasierten E-Mail-Bibliotheken?',
+                    question: 'Wie schneidet das gegenüber einem gehosteten SaaS-E-Mail-Builder ab?',
                     answer:
-                        'MJML ist eine Markup-Sprache; Komponentenbibliotheken geben Ihren Entwicklern einen Weg, E-Mails zu schreiben. Templatical ist der Editor, den Ihre Endnutzer tatsächlich verwenden — Drag-and-Drop, Merge-Tags, Anzeigebedingungen, Theming — und gibt MJML aus, das Sie mit jedem MJML-Toolchain rendern können. Sie liefern den Editor; der darunterliegende Render-Stack bleibt Standard.',
+                        'Gehostete Builder liefern einen schlüsselfertigen Editor und einen vorgefertigten Vorlagenkatalog, sperren den Editor aber hinter ihrer UI und ihren Preisen — Custom Blocks, White-Label, erweitertes Theming und Custom-Merge-Tag-Syntax sind meist hinter Upgrade-Screens. Templatical ist das eingebettete, selbst hostbare Gegenteil: Ihre Kunden sehen Ihre Marke, Sie zahlen nichts pro Sitz, und Sie geben MJML aus, das Sie überall rendern können. Wenn Ihr Produkt einen Editor braucht, der sich wie Teil Ihrer App anfühlt, passt Templatical. Wenn Sie hauptsächlich einen gehosteten Editor mit einer großen vorgefertigten Vorlagenbibliothek wollen, ist ein SaaS-Builder schneller.',
                 },
                 {
                     question: 'Was enthält Templatical Cloud im Vergleich zum Open-Source-SDK?',
@@ -422,6 +429,10 @@ const de: MessageSchema = {
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
                 answer: 'Wir bieten kostenlose, MIT-lizenzierte Migrations-Tools für BeeFree, Unlayer und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch. Migrationsanleitungen für jedes Quellformat finden Sie in der Dokumentation.',
+            },
+            data: {
+                question: 'Wohin gehen meine Vorlagendaten?',
+                answer: 'Nirgendwohin. Das SDK läuft vollständig im Browser — keine Telemetrie, keine Remote-Aufrufe, keine Analytics. Ihre Vorlagen verlassen Ihre App nur, wenn Sie sie an Ihr eigenes Backend speichern.',
             },
             paid: {
                 question: 'Gibt es eine kostenpflichtige Version, und ist sie erforderlich?',

@@ -14,20 +14,21 @@ Deployed to Cloudflare Pages at [templatical.com](https://templatical.com).
 
 ## Getting Started
 
-Requires [Bun](https://bun.sh).
+Requires Node 22+ and [pnpm](https://pnpm.io). Easiest setup:
 
 ```bash
-bun install
-bun run dev
+corepack enable        # ships with Node, locks the pnpm version from package.json
+pnpm install
+pnpm run dev
 ```
 
 ## Scripts
 
-| Command           | Description                            |
-| ----------------- | -------------------------------------- |
-| `bun run dev`     | Start dev server                       |
-| `bun run build`   | Generate static HTML via vite-ssg      |
-| `bun run preview` | Preview the built site                 |
+| Command            | Description                            |
+| ------------------ | -------------------------------------- |
+| `pnpm run dev`     | Start dev server                       |
+| `pnpm run build`   | Generate static HTML via vite-ssg      |
+| `pnpm run preview` | Preview the built site                 |
 
 ## Project Structure
 

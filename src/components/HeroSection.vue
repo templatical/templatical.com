@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { URLS } from '@/lib/urls';
+import { useBundleSize } from '@/composables/useBundleSize';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import GitHubStarButton from './GitHubStarButton.vue';
@@ -12,6 +13,7 @@ import IconChevronRight from './icons/IconChevronRight.vue';
 
 const { t, tm } = useI18n();
 const heroBadges = computed(() => tm('home.hero.badges') as string[]);
+const { label: bundleLabel } = useBundleSize();
 </script>
 
 <template>
@@ -66,9 +68,25 @@ const heroBadges = computed(() => tm('home.hero.badges') as string[]);
                     <IconChevronRight />
                 </SiteButton>
             </div>
+            <p
+                class="max-w-xl text-xs/5 text-pretty text-neutral-500 motion-safe:animate-fade-in motion-safe:[animation-delay:450ms] dark:text-neutral-500"
+            >
+                {{ t('home.hero.frameworkNote') }}
+            </p>
             <ul
                 class="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs/5 text-neutral-500 motion-safe:animate-fade-in motion-safe:[animation-delay:500ms] dark:text-neutral-500"
             >
+                <li v-if="bundleLabel" class="flex items-center gap-2">
+                    <span
+                        class="rounded-full bg-white/60 px-2.5 py-1 font-mono ring-1 ring-neutral-950/5 backdrop-blur dark:bg-white/5 dark:ring-white/10"
+                    >
+                        {{ bundleLabel }}
+                    </span>
+                    <span
+                        class="text-neutral-300 dark:text-neutral-700"
+                        aria-hidden="true"
+                    >·</span>
+                </li>
                 <li
                     v-for="(badge, i) in heroBadges"
                     :key="badge"

@@ -3,6 +3,7 @@ import ComparisonSection from '@/components/ComparisonSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
 import HomeCloseSection from '@/components/HomeCloseSection.vue';
 import HomeFaqSection from '@/components/HomeFaqSection.vue';
+import MigrationBand from '@/components/MigrationBand.vue';
 import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -25,6 +26,8 @@ useHead({
         <HeroSection />
 
         <ComparisonSection />
+
+        <MigrationBand />
 
         <HomeFaqSection />
 

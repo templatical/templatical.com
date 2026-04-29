@@ -51,12 +51,14 @@ export default {
                 'Custom blocks, full theming, advanced merge tags, and display conditions — all built into the open-source SDK. Drop into any app with one init() call.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Read the docs',
+            frameworkNote: 'Built in Vue 3 internally — embeds alongside React, Svelte, Angular without conflict.',
             badges: [
                 'TypeScript-first',
                 'Built on MJML',
                 'FSL-1.1-MIT (auto-MIT)',
                 'Framework-neutral',
                 'Render anywhere',
+                'Zero telemetry',
             ],
         },
         trustedBy: {
@@ -210,6 +212,11 @@ export default {
             ctaSecondary: 'View on GitHub',
             ctaTertiary: 'Sponsor',
         },
+        migration: {
+            text: 'Already on a hosted email builder? Free importers for your existing templates.',
+            cta: 'See migration guides',
+            sources: 'BeeFree · Unlayer · MJML',
+        },
         homeFaq: {
             eyebrow: 'Common questions',
             headline: 'Things developers ask first',
@@ -220,9 +227,9 @@ export default {
                         'You can use Templatical commercially, embed it in your product, charge customers for your product, and self-host it — all today, free. The only restriction is you can’t resell Templatical as a competing email-editor product. After two years, every release auto-converts to plain MIT.',
                 },
                 {
-                    question: 'How is this different from <a href="https://mjml.io" target="_blank" rel="noopener" class="font-medium text-primary underline">MJML</a> or component-based email libraries?',
+                    question: 'How does this compare to a hosted SaaS email builder?',
                     answer:
-                        'MJML is a markup language; component libraries give developers a way to write emails. Templatical is the editor end-users actually use — drag-and-drop, merge tags, display conditions, theming — and it outputs MJML, which you can render with any MJML toolchain. You bring the editor; the rendering stack underneath is still standard.',
+                        'Hosted builders give you a turnkey editor and a stocked template catalog, but lock the editor behind their UI and pricing — custom blocks, white-label, advanced theming, and custom merge-tag syntax usually sit behind upgrade screens. Templatical is the embedded, self-hostable opposite: your customers see your brand, you pay nothing per seat, and you ship MJML you can render anywhere. If your product needs an editor that feels like part of your app, Templatical fits. If you mainly want a hosted editor with a large pre-built template library, a SaaS builder will be faster.',
                 },
                 {
                     question: 'What does Templatical Cloud include vs the open-source SDK?',
@@ -420,6 +427,10 @@ export default {
             migrate: {
                 question: 'How do I migrate from another editor?',
                 answer: 'We provide free, MIT-licensed migration tools for BeeFree, Unlayer, and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically. See the migration guides in the docs for each source format.',
+            },
+            data: {
+                question: 'Where does my template data go?',
+                answer: 'Nowhere. The SDK runs entirely in the browser — no telemetry, no remote calls, no analytics. Your templates never leave your app unless you save them to your own backend.',
             },
             paid: {
                 question: 'Is there a paid version, and is it required?',
