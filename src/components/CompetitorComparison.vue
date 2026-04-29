@@ -249,6 +249,10 @@ function onTabChange(_: number, dir: 1 | -1) {
                     </SiteButton>
                 </div>
             </div>
+
+            <p class="text-center text-xs/5 text-pretty text-neutral-500 dark:text-neutral-400">
+                {{ t('home.comparison.trademarkNote') }}
+            </p>
         </div>
     </RevealOnScroll>
 </template>
