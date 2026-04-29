@@ -29,7 +29,6 @@ const faqItems = computed(() =>
         'packages',
         'branding',
         'frameworks',
-        'beefree',
         'migrate',
         'paid',
     ].map((key) => ({

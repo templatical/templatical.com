@@ -5,7 +5,6 @@ export const URLS = {
     github: 'https://github.com/templatical/sdk',
     discussions: 'https://github.com/templatical/sdk/discussions',
     siteRepo: 'https://github.com/templatical/templatical.com',
-    comparison: 'https://docs.templatical.com/comparison',
     licenseFaq: 'https://docs.templatical.com/license-faq',
     showcase: 'https://docs.templatical.com/showcase',
     sponsor: 'https://github.com/sponsors/orkhanahmadov',
