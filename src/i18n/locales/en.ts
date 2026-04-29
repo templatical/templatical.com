@@ -193,7 +193,7 @@ export default {
                     verdict: {
                         competitor:
                             'Pick Beefree if you need a turnkey hosted editor, multi-product builders, and an extensive template library.',
-                        us: 'Pick Templatical if you want to own your editor — open code, MJML output, and the premium features without paywalls.',
+                        us: 'Pick Templatical if you want to own your editor — open code, MJML output, and these capabilities included in the open-source SDK.',
                     },
                 },
                 unlayer: {
