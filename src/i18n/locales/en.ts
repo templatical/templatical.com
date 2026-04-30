@@ -24,12 +24,16 @@ export default {
     },
     github: {
         star: 'Star',
+        starAction: 'Star Templatical on GitHub',
+        starActionWithCount: 'Star Templatical on GitHub — {count} stars',
     },
     heroEditor: {
         error: {
             message: 'Live preview unavailable — open the {playground} instead.',
             playgroundLabel: 'playground',
         },
+        previewAlt:
+            'Templatical editor: drag-and-drop email builder with toolbar, canvas, and inspector panels',
     },
     footer: {
         product: 'Product',

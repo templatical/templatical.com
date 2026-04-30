@@ -26,12 +26,16 @@ const de: MessageSchema = {
     },
     github: {
         star: 'Star',
+        starAction: 'Templatical auf GitHub mit einem Stern markieren',
+        starActionWithCount: 'Templatical auf GitHub mit einem Stern markieren — {count} Stars',
     },
     heroEditor: {
         error: {
             message: 'Live-Vorschau nicht verfügbar — öffne stattdessen den {playground}.',
             playgroundLabel: 'Playground',
         },
+        previewAlt:
+            'Templatical-Editor: Drag-and-Drop-E-Mail-Builder mit Symbolleiste, Canvas und Inspektor-Bereichen',
     },
     footer: {
         product: 'Produkt',

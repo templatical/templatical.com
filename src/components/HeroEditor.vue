@@ -268,7 +268,7 @@ onBeforeUnmount(() => {
             <img
                 v-else
                 src="/preview.png"
-                alt="Templatical editor preview"
+                :alt="t('heroEditor.previewAlt')"
                 class="block h-auto w-full"
             />
         </div>
