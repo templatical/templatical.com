@@ -4,7 +4,7 @@ import { URLS } from '@/lib/urls';
 import { useI18n } from 'vue-i18n';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 
 const { t } = useI18n();
 const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
@@ -48,7 +48,7 @@ const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
                         external
                     >
                         {{ t('home.cta.ctaSecondary') }}
-                        <IconChevronRight />
+                        <ChevronRight class="size-5" />
                     </SiteButton>
                     <SiteButton
                         :href="URLS.sponsor"
@@ -58,7 +58,7 @@ const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
                         external
                     >
                         {{ t('home.cta.ctaTertiary') }}
-                        <IconChevronRight />
+                        <ChevronRight class="size-5" />
                     </SiteButton>
                 </div>
             </div>

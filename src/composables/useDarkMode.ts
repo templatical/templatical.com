@@ -1,12 +1,33 @@
-import { useDark, useToggle } from '@vueuse/core';
+import { useColorMode, usePreferredDark } from '@vueuse/core';
+import { computed } from 'vue';
 
-const isDark = useDark({
+export type ThemeMode = 'auto' | 'light' | 'dark';
+
+const mode = useColorMode<ThemeMode>({
     storageKey: 'templatical-theme',
-    valueDark: 'dark',
-    valueLight: '',
+    initialValue: 'auto',
+    emitAuto: true,
+    modes: { auto: '', light: '', dark: 'dark' },
 });
-const toggle = useToggle(isDark);
+
+const preferredDark = usePreferredDark();
+const isDark = computed(
+    () => mode.value === 'dark' || (mode.value === 'auto' && preferredDark.value),
+);
+
+function setMode(next: ThemeMode) {
+    mode.value = next;
+}
+
+function cycleMode() {
+    mode.value =
+        mode.value === 'auto' ? 'light' : mode.value === 'light' ? 'dark' : 'auto';
+}
+
+function toggle() {
+    cycleMode();
+}
 
 export function useDarkMode() {
-    return { isDark, toggle };
+    return { isDark, mode, setMode, cycleMode, toggle };
 }

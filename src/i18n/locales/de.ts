@@ -5,6 +5,7 @@ const de: MessageSchema = {
         skipToContent: 'Zum Inhalt springen',
         switchToLight: 'Zum hellen Modus wechseln',
         switchToDark: 'Zum dunklen Modus wechseln',
+        switchToAuto: 'Zum Systemdesign wechseln',
         switchToLanguage: 'Sprache auf {language} wechseln',
         mobileMenu: 'Navigationsmenü',
         mainNav: 'Hauptnavigation',

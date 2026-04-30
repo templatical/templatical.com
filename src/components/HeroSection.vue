@@ -9,7 +9,7 @@ import HeroEditor from './HeroEditor.vue';
 import HeroHeadline from './HeroHeadline.vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 
 const { t, tm } = useI18n();
 const heroBadges = computed(() => tm('home.hero.badges') as string[]);
@@ -65,7 +65,7 @@ const { label: bundleLabel } = useBundleSize();
                     external
                 >
                     {{ t('home.hero.ctaSecondary') }}
-                    <IconChevronRight />
+                    <ChevronRight class="size-5" />
                 </SiteButton>
             </div>
             <p

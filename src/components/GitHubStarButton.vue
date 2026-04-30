@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { URLS } from '@/lib/urls';
 import { useGitHubStars } from '@/composables/useGitHubStars';
-import IconGitHub from './icons/IconGitHub.vue';
+import { Github } from 'lucide-vue-next';
 
 const { stars: count } = useGitHubStars();
 
@@ -21,7 +21,7 @@ function format(n: number): string {
         <span
             class="inline-flex items-center gap-1.5 bg-neutral-950/5 px-2.5 py-1 text-neutral-950 group-hover:bg-neutral-950/10 dark:bg-white/5 dark:text-white dark:group-hover:bg-white/10"
         >
-            <IconGitHub class="size-3.5" />
+            <Github class="size-3.5" />
             Star
         </span>
         <span

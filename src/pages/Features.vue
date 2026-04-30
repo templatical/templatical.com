@@ -8,11 +8,7 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import SiteText from '@/components/SiteText.vue';
-import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
-import IconArrowUturnLeft from '@/components/icons/IconArrowUturnLeft.vue';
-import IconGlobe from '@/components/icons/IconGlobe.vue';
-import IconMoon from '@/components/icons/IconMoon.vue';
-import IconSwatch from '@/components/icons/IconSwatch.vue';
+import { Globe, Moon, Palette, Undo2, Upload } from 'lucide-vue-next';
 import { useHead } from '@unhead/vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -297,37 +293,37 @@ function variantAnimClass(slug: string): string {
 const supportingItems = computed(() => [
     {
         key: 'framework',
-        icon: IconGlobe,
+        icon: Globe,
         title: t('features.supportingItems.framework.title'),
         description: t('features.supportingItems.framework.description'),
     },
     {
         key: 'output',
-        icon: IconArrowUpTray,
+        icon: Upload,
         title: t('features.supportingItems.output.title'),
         description: t('features.supportingItems.output.description'),
     },
     {
         key: 'darkMode',
-        icon: IconMoon,
+        icon: Moon,
         title: t('features.supportingItems.darkMode.title'),
         description: t('features.supportingItems.darkMode.description'),
     },
     {
         key: 'i18n',
-        icon: IconGlobe,
+        icon: Globe,
         title: t('features.supportingItems.i18n.title'),
         description: t('features.supportingItems.i18n.description'),
     },
     {
         key: 'undoRedo',
-        icon: IconArrowUturnLeft,
+        icon: Undo2,
         title: t('features.supportingItems.undoRedo.title'),
         description: t('features.supportingItems.undoRedo.description'),
     },
     {
         key: 'responsivePreview',
-        icon: IconSwatch,
+        icon: Palette,
         title: t('features.supportingItems.responsivePreview.title'),
         description: t('features.supportingItems.responsivePreview.description'),
     },

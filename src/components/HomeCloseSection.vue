@@ -3,7 +3,7 @@ import { useClipboard } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { URLS } from '@/lib/urls';
 import CodeBlock from './CodeBlock.vue';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
 
@@ -75,7 +75,7 @@ const mjml = editor.toMjml()`;
                         external
                     >
                         {{ t('home.close.ctaSecondary') }}
-                        <IconChevronRight />
+                        <ChevronRight class="size-5" />
                     </SiteButton>
                 </div>
             </div>

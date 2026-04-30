@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { URLS } from '@/lib/urls';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 import SiteContainer from './SiteContainer.vue';
 
 const { t } = useI18n();
@@ -30,7 +30,7 @@ const guidesUrl = `${URLS.docs}/guide/migration-from-beefree`;
                     class="ml-auto inline-flex items-center gap-1 font-medium text-neutral-900 group-hover:underline dark:text-white"
                 >
                     {{ t('home.migration.cta') }}
-                    <IconChevronRight class="size-4" />
+                    <ChevronRight class="size-4" />
                 </span>
             </a>
         </SiteContainer>

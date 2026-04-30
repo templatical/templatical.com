@@ -31,7 +31,7 @@ const { sectionRef, isVisible, shouldHide } = useScrollReveal();
             <div
                 class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
             >
-                <component :is="item.icon" />
+                <component :is="item.icon" class="size-5" />
             </div>
             <div class="flex flex-col gap-2">
                 <h3

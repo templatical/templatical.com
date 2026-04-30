@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useId } from 'vue';
 import { useI18n } from 'vue-i18n';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 import SiteContainer from './SiteContainer.vue';
 import SiteEyebrow from './SiteEyebrow.vue';
 import SiteSubheading from './SiteSubheading.vue';
@@ -95,7 +95,7 @@ function toggle(key: string) {
                     class="inline-flex items-center gap-1 text-sm/6 font-medium text-primary hover:underline"
                 >
                     {{ t('home.homeFaq.seeAll') }}
-                    <IconChevronRight class="size-4" />
+                    <ChevronRight class="size-4" />
                 </router-link>
             </div>
         </SiteContainer>

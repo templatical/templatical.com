@@ -3,6 +3,7 @@ export default {
         skipToContent: 'Skip to content',
         switchToLight: 'Switch to light mode',
         switchToDark: 'Switch to dark mode',
+        switchToAuto: 'Switch to system theme',
         switchToLanguage: 'Switch language to {language}',
         mobileMenu: 'Navigation menu',
         mainNav: 'Main',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils';
 import { computed, useAttrs } from 'vue';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 
 const props = withDefaults(
     defineProps<{
@@ -38,7 +38,7 @@ const classes = computed(() =>
             class="inline-flex shrink-0 items-center gap-2 font-semibold text-primary"
         >
             {{ props.cta }}
-            <IconChevronRight class="shrink-0" />
+            <ChevronRight class="size-5 shrink-0" />
         </span>
     </a>
     <router-link v-else :to="props.href" :class="classes">
@@ -51,7 +51,7 @@ const classes = computed(() =>
             class="inline-flex shrink-0 items-center gap-2 font-semibold text-primary"
         >
             {{ props.cta }}
-            <IconChevronRight class="shrink-0" />
+            <ChevronRight class="size-5 shrink-0" />
         </span>
     </router-link>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { URLS } from '@/lib/urls';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 import RevealOnScroll from './RevealOnScroll.vue';
 import SiteContainer from './SiteContainer.vue';
 import SiteEyebrow from './SiteEyebrow.vue';
@@ -138,7 +138,7 @@ function trailingLabel(slug: Slug): string {
                                     class="inline-flex items-center gap-1 self-start text-xs/5 font-medium text-amber-700 hover:underline dark:text-amber-300"
                                 >
                                     {{ t('home.comparison.cloudMore') }}
-                                    <IconChevronRight class="size-3.5" />
+                                    <ChevronRight class="size-3.5" />
                                 </a>
                             </div>
                         </template>

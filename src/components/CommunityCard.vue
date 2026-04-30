@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Component } from 'vue';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 
 defineProps<{
     title: string;
@@ -20,7 +20,7 @@ defineProps<{
         <div
             class="flex size-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-[background-color,transform] duration-200 group-hover:bg-primary/15 motion-safe:group-hover:scale-105"
         >
-            <component :is="icon" />
+            <component :is="icon" class="size-5" />
         </div>
         <div class="flex flex-col gap-2">
             <h3
@@ -36,7 +36,7 @@ defineProps<{
             class="inline-flex items-center gap-2 text-sm/7 font-medium text-primary"
         >
             {{ cta }}
-            <IconChevronRight class="transition-transform group-hover:translate-x-0.5" />
+            <ChevronRight class="size-5 transition-transform group-hover:translate-x-0.5" />
         </span>
     </a>
 </template>

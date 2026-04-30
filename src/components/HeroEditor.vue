@@ -179,22 +179,74 @@ onBeforeUnmount(() => {
                 <div ref="container" class="hero-editor-container" />
                 <div
                     v-if="status !== 'ready'"
-                    class="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-sm dark:bg-neutral-900/70"
+                    class="hero-editor-skeleton absolute inset-0 flex flex-col bg-white dark:bg-neutral-900"
                     aria-hidden="true"
                 >
-                    <p
+                    <!-- Top bar -->
+                    <div class="flex items-center gap-3 border-b border-neutral-200 px-4 py-3 dark:border-neutral-800">
+                        <div class="size-7 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                        <div class="h-3 w-24 rounded bg-neutral-200 dark:bg-neutral-800" />
+                        <div class="ml-auto flex items-center gap-2">
+                            <div class="h-7 w-20 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                            <div class="h-7 w-16 rounded-md bg-neutral-100 dark:bg-neutral-800/60" />
+                            <div class="h-7 w-16 rounded-md bg-neutral-100 dark:bg-neutral-800/60" />
+                            <div class="ml-3 size-7 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                            <div class="size-7 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                        </div>
+                    </div>
+
+                    <div class="flex flex-1 overflow-hidden">
+                        <!-- Left rail -->
+                        <div class="flex w-14 flex-col items-center gap-3 border-r border-neutral-200 py-4 dark:border-neutral-800">
+                            <div
+                                v-for="i in 8"
+                                :key="i"
+                                class="size-6 rounded-md bg-neutral-200 dark:bg-neutral-800"
+                            />
+                        </div>
+
+                        <!-- Canvas -->
+                        <div class="flex flex-1 justify-center bg-neutral-50 px-6 py-10 dark:bg-neutral-950/40">
+                            <div class="flex w-full max-w-md flex-col gap-4 rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+                                <div class="mx-auto h-5 w-32 rounded bg-neutral-200 dark:bg-neutral-800" />
+                                <div class="mx-auto h-3 w-48 rounded bg-neutral-200/80 dark:bg-neutral-800/80" />
+                                <div class="h-2 w-full rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
+                                <div class="h-2 w-5/6 rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
+                                <div class="h-2 w-2/3 rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
+                                <div class="mx-auto mt-2 h-9 w-40 rounded-md bg-neutral-300 dark:bg-neutral-700" />
+                                <div class="mt-2 h-px w-full bg-neutral-200 dark:bg-neutral-800" />
+                                <div class="mx-auto h-2 w-3/4 rounded bg-neutral-200/60 dark:bg-neutral-800/60" />
+                            </div>
+                        </div>
+
+                        <!-- Right sidebar -->
+                        <div class="hidden w-64 flex-col gap-4 border-l border-neutral-200 p-4 md:flex dark:border-neutral-800">
+                            <div class="flex gap-2">
+                                <div class="h-7 flex-1 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                                <div class="h-7 flex-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60" />
+                            </div>
+                            <div class="mt-6 flex flex-col items-center gap-3">
+                                <div class="size-10 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                                <div class="h-3 w-32 rounded bg-neutral-200 dark:bg-neutral-800" />
+                                <div class="h-2 w-40 rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
                         v-if="status === 'error'"
-                        class="text-sm text-neutral-600 dark:text-neutral-300"
+                        class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm dark:bg-neutral-900/80"
                     >
-                        Live preview unavailable. Try the
-                        <a
-                            href="https://play.templatical.com"
-                            target="_blank"
-                            rel="noopener"
-                            class="font-medium text-primary underline"
-                        >playground</a>.
-                    </p>
-                    <div v-else class="hero-editor-skeleton" />
+                        <p class="text-sm text-neutral-600 dark:text-neutral-300">
+                            Live preview unavailable. Try the
+                            <a
+                                href="https://play.templatical.com"
+                                target="_blank"
+                                rel="noopener"
+                                class="font-medium text-primary underline"
+                            >playground</a>.
+                        </p>
+                    </div>
                 </div>
             </template>
             <img
@@ -211,55 +263,32 @@ onBeforeUnmount(() => {
 <style scoped>
 .hero-editor-container {
     width: 100%;
-    height: 70vh;
-    min-height: 600px;
-    max-height: 860px;
+    height: 60vh;
+    min-height: 520px;
+    max-height: 740px;
 }
 @media (max-width: 640px) {
     .hero-editor-container {
-        height: 60vh;
-        min-height: 460px;
+        height: 55vh;
+        min-height: 420px;
     }
 }
 .hero-editor-skeleton {
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(
-            100deg,
-            transparent 30%,
-            rgba(0, 0, 0, 0.04) 50%,
-            transparent 70%
-        ),
-        repeating-linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.04) 0 14px,
-            transparent 14px 28px
-        );
-    background-size: 200% 100%, 100% 100%;
-    animation: shimmer 1.6s linear infinite;
+    animation: hero-editor-pulse 2s ease-in-out infinite;
 }
-:global(.dark) .hero-editor-skeleton {
-    background:
-        linear-gradient(
-            100deg,
-            transparent 30%,
-            rgba(255, 255, 255, 0.06) 50%,
-            transparent 70%
-        ),
-        repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.05) 0 14px,
-            transparent 14px 28px
-        );
-    background-size: 200% 100%, 100% 100%;
-}
-@keyframes shimmer {
-    from {
-        background-position: -200% 0, 0 0;
+@keyframes hero-editor-pulse {
+    0%,
+    100% {
+        opacity: 0.85;
     }
-    to {
-        background-position: 200% 0, 0 0;
+    50% {
+        opacity: 1;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-editor-skeleton {
+        animation: none;
+        opacity: 0.95;
     }
 }
 </style>
