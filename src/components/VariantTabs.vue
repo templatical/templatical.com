@@ -51,17 +51,27 @@ function onKeydown(event: KeyboardEvent) {
 }
 
 let resizeObserver: ResizeObserver | null = null;
+let rafId = 0;
+
+function queuePillUpdate() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        updatePill();
+    });
+}
 
 onMounted(() => {
     nextTick(updatePill);
     if (typeof ResizeObserver !== 'undefined' && tablistRef.value) {
-        resizeObserver = new ResizeObserver(() => updatePill());
+        resizeObserver = new ResizeObserver(queuePillUpdate);
         resizeObserver.observe(tablistRef.value);
     }
 });
 
 onBeforeUnmount(() => {
     resizeObserver?.disconnect();
+    if (rafId) cancelAnimationFrame(rafId);
 });
 
 watch(() => props.modelValue, () => nextTick(updatePill));

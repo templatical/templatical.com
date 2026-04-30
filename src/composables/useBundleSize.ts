@@ -70,7 +70,12 @@ async function fetchLatestVersion(): Promise<string | null> {
     }
 }
 
-async function fetchDefaultFilePath(version: string): Promise<string | null> {
+type PackageFiles = {
+    defaultPath: string | null;
+    minSize: number | null;
+};
+
+async function fetchPackageFiles(version: string): Promise<PackageFiles | null> {
     try {
         const res = await fetch(
             `https://data.jsdelivr.com/v1/packages/npm/${PACKAGE}@${version}?structure=flat`,
@@ -80,26 +85,14 @@ async function fetchDefaultFilePath(version: string): Promise<string | null> {
             default?: string;
             files?: { name: string; size?: number }[];
         };
-        return data.default ?? null;
-    } catch {
-        return null;
-    }
-}
-
-async function fetchFileMinSize(
-    version: string,
-    path: string,
-): Promise<number | null> {
-    try {
-        const res = await fetch(
-            `https://data.jsdelivr.com/v1/packages/npm/${PACKAGE}@${version}?structure=flat`,
-        );
-        if (!res.ok) return null;
-        const data = (await res.json()) as {
-            files?: { name: string; size?: number }[];
+        const defaultPath = data.default ?? null;
+        const match = defaultPath
+            ? data.files?.find((f) => f.name === defaultPath)
+            : null;
+        return {
+            defaultPath,
+            minSize: typeof match?.size === 'number' ? match.size : null,
         };
-        const match = data.files?.find((f) => f.name === path);
-        return typeof match?.size === 'number' ? match.size : null;
     } catch {
         return null;
     }
@@ -129,36 +122,33 @@ export function useBundleSize() {
             return;
         }
 
-        // 1. Bundlephobia (returns gzip directly)
-        const bp = await fetchBundlephobia();
+        const commit = (entry: CacheEntry) => {
+            writeCache(entry);
+            label.value = formatLabel(entry);
+        };
+
+        const [bp, version] = await Promise.all([
+            fetchBundlephobia(),
+            fetchLatestVersion(),
+        ]);
+
         if (bp !== null) {
-            const entry = { gzip: bp, fetchedAt: Date.now() };
-            writeCache(entry);
-            label.value = formatLabel(entry);
+            commit({ gzip: bp, fetchedAt: Date.now() });
             return;
         }
 
-        // 2. jsdelivr — resolve latest version + default file path
-        const version = await fetchLatestVersion();
         if (!version) return;
-        const filePath = await fetchDefaultFilePath(version);
-        if (!filePath) return;
+        const files = await fetchPackageFiles(version);
+        if (!files?.defaultPath) return;
 
-        // 3. Gzip the file locally via CompressionStream
-        const gzip = await gzipFile(version, filePath);
+        const gzip = await gzipFile(version, files.defaultPath);
         if (gzip !== null) {
-            const entry = { gzip, fetchedAt: Date.now() };
-            writeCache(entry);
-            label.value = formatLabel(entry);
+            commit({ gzip, fetchedAt: Date.now() });
             return;
         }
 
-        // 4. Fallback: jsdelivr minified size
-        const min = await fetchFileMinSize(version, filePath);
-        if (min !== null) {
-            const entry = { min, fetchedAt: Date.now() };
-            writeCache(entry);
-            label.value = formatLabel(entry);
+        if (files.minSize !== null) {
+            commit({ min: files.minSize, fetchedAt: Date.now() });
         }
     });
 
