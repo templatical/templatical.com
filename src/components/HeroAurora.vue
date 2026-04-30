@@ -199,7 +199,7 @@ function init() {
 function resize() {
     const c = canvas.value;
     if (!c || !gl) return;
-    const dpr = Math.min(1.5, pixelRatio.value || 1);
+    const dpr = Math.min(2, pixelRatio.value || 1);
     const w = Math.floor(c.clientWidth * dpr);
     const h = Math.floor(c.clientHeight * dpr);
     if (c.width !== w || c.height !== h) {

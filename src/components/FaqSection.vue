@@ -66,7 +66,7 @@ function toggle(key: string) {
                 :aria-labelledby="entry.buttonId"
                 :aria-hidden="openKey !== entry.key"
                 :class="[
-                    'grid transition-all duration-200',
+                    'grid transition-[grid-template-rows,opacity,padding] duration-200 ease-out',
                     openKey === entry.key
                         ? 'grid-rows-[1fr] pb-5 opacity-100'
                         : 'grid-rows-[0fr] opacity-0',

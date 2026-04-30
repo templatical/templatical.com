@@ -3,6 +3,7 @@ import { useIntersectionObserver, useMediaQuery } from '@vueuse/core';
 import { onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDarkMode } from '@/composables/useDarkMode';
+import { URLS } from '@/lib/urls';
 
 const EDITOR_ESM_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.js';
 const EDITOR_CSS_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.css';
@@ -98,7 +99,7 @@ const heroContent = {
 };
 
 const { isDark } = useDarkMode();
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 const isDesktop = useMediaQuery('(min-width: 1024px)');
 
 const root = useTemplateRef<HTMLDivElement>('root');
@@ -233,27 +234,30 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
 
-                    <div
-                        v-if="status === 'error'"
-                        class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm dark:bg-neutral-900/80"
-                    >
-                        <p class="text-sm text-neutral-600 dark:text-neutral-300">
-                            Live preview unavailable. Try the
-                            <a
-                                href="https://play.templatical.com"
-                                target="_blank"
-                                rel="noopener"
-                                class="font-medium text-primary underline"
-                            >playground</a>.
-                        </p>
-                    </div>
+                </div>
+                <div
+                    v-if="status === 'error'"
+                    role="alert"
+                    class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm dark:bg-neutral-900/80"
+                >
+                    <p class="text-sm text-neutral-600 dark:text-neutral-300">
+                        <i18n-t keypath="heroEditor.error.message" tag="span">
+                            <template #playground>
+                                <a
+                                    :href="URLS.playground"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="font-medium text-primary underline"
+                                >{{ t('heroEditor.error.playgroundLabel') }}</a>
+                            </template>
+                        </i18n-t>
+                    </p>
                 </div>
             </template>
             <img
                 v-else
                 src="/preview.png"
                 alt="Templatical editor preview"
-                loading="lazy"
                 class="block h-auto w-full"
             />
         </div>

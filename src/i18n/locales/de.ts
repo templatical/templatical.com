@@ -27,6 +27,12 @@ const de: MessageSchema = {
     github: {
         star: 'Star',
     },
+    heroEditor: {
+        error: {
+            message: 'Live-Vorschau nicht verfügbar — öffne stattdessen den {playground}.',
+            playgroundLabel: 'Playground',
+        },
+    },
     footer: {
         product: 'Produkt',
         resources: 'Ressourcen',

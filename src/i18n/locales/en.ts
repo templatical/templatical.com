@@ -25,6 +25,12 @@ export default {
     github: {
         star: 'Star',
     },
+    heroEditor: {
+        error: {
+            message: 'Live preview unavailable — open the {playground} instead.',
+            playgroundLabel: 'playground',
+        },
+    },
     footer: {
         product: 'Product',
         resources: 'Resources',

@@ -25,10 +25,10 @@ function format(n: number): string {
             Star
         </span>
         <span
-            v-if="count !== null"
-            class="bg-white px-2.5 py-1 tabular-nums text-neutral-700 dark:bg-neutral-950 dark:text-neutral-300"
+            class="inline-flex min-w-[2.25rem] justify-center px-2.5 py-1 tabular-nums text-neutral-700 dark:text-neutral-300"
+            :aria-label="count !== null ? `${count} stars on GitHub` : 'Loading GitHub star count'"
         >
-            {{ format(count) }}
+            <span :class="count === null && 'invisible'">{{ format(count ?? 0) }}</span>
         </span>
     </a>
 </template>
