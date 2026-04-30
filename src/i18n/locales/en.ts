@@ -388,11 +388,20 @@ export default {
             guideCta: 'See the migration guide',
         },
         cta: {
-            headline: 'Two ways to get started.',
-            subheadline:
-                'Greenfield project or switching from a hosted editor — both paths take minutes.',
-            ctaPrimary: 'Install the SDK',
-            ctaSecondary: 'Migrate your templates',
+            eyebrow: 'Get started',
+            headline: 'Pick your starting point.',
+            install: {
+                title: 'Install the SDK',
+                description:
+                    'Add the package, mount with one init() call, ship. First-class examples for every major framework.',
+                cta: 'Read the install guide',
+            },
+            migrate: {
+                title: 'Migrate your templates',
+                description:
+                    'Already in a hosted editor? Import your existing templates and configurations — automatic block mapping, no manual rebuild.',
+                cta: 'See the migration guide',
+            },
         },
     },
     faq: {

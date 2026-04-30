@@ -10,7 +10,7 @@ const guidesUrl = `${URLS.docs}/guide/migration-from-beefree`;
 </script>
 
 <template>
-    <section class="bg-white py-8 dark:bg-neutral-950">
+    <div class="bg-white py-8 dark:bg-neutral-950">
         <SiteContainer>
             <a
                 :href="guidesUrl"
@@ -34,5 +34,5 @@ const guidesUrl = `${URLS.docs}/guide/migration-from-beefree`;
                 </span>
             </a>
         </SiteContainer>
-    </section>
+    </div>
 </template>

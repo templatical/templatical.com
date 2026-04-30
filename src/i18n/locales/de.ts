@@ -390,11 +390,20 @@ const de: MessageSchema = {
             guideCta: 'Zum Migrations-Guide',
         },
         cta: {
-            headline: 'Zwei Wege loszulegen.',
-            subheadline:
-                'Neues Projekt oder Wechsel von einem Hosted-Editor — beide Wege dauern Minuten.',
-            ctaPrimary: 'SDK installieren',
-            ctaSecondary: 'Vorlagen migrieren',
+            eyebrow: 'Loslegen',
+            headline: 'Wählen Sie Ihren Startpunkt.',
+            install: {
+                title: 'SDK installieren',
+                description:
+                    'Paket hinzufügen, mit einem init()-Aufruf einbinden, ausliefern. Erstklassige Beispiele für jedes große Framework.',
+                cta: 'Zur Installations-Anleitung',
+            },
+            migrate: {
+                title: 'Vorlagen migrieren',
+                description:
+                    'Schon in einem Hosted-Editor? Importieren Sie bestehende Vorlagen und Konfigurationen — automatisches Block-Mapping, kein manuelles Nachbauen.',
+                cta: 'Zum Migrations-Guide',
+            },
         },
     },
     faq: {

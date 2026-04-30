@@ -13,15 +13,15 @@ const entries = computed(() => {
     const items = tm('home.homeFaq.items') as { question: string; answer: string }[];
     return items.map((item, index) => ({
         ...item,
-        key: item.question,
+        key: index,
         buttonId: `${uid}-home-faq-button-${index}`,
         panelId: `${uid}-home-faq-panel-${index}`,
     }));
 });
 
-const openKey = ref<string | null>(entries.value[0]?.key ?? null);
+const openKey = ref<number | null>(0);
 
-function toggle(key: string) {
+function toggle(key: number) {
     openKey.value = openKey.value === key ? null : key;
 }
 </script>
@@ -46,8 +46,9 @@ function toggle(key: string) {
                     >
                         <span
                             class="text-base/7 font-medium text-neutral-950 dark:text-white"
-                            v-html="entry.question"
-                        />
+                        >
+                            {{ entry.question }}
+                        </span>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -82,8 +83,9 @@ function toggle(key: string) {
                         <div class="overflow-hidden">
                             <p
                                 class="text-sm/7 text-neutral-700 dark:text-neutral-400"
-                                v-html="entry.answer"
-                            />
+                            >
+                                {{ entry.answer }}
+                            </p>
                         </div>
                     </div>
                 </div>

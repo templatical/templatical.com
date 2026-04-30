@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BentoGrid from '@/components/BentoGrid.vue';
 import HeroAurora from '@/components/HeroAurora.vue';
 import HeroHeadline from '@/components/HeroHeadline.vue';
 import RevealOnScroll from '@/components/RevealOnScroll.vue';
@@ -8,7 +7,7 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import SiteText from '@/components/SiteText.vue';
-import { ChevronRight, FileJson, History, Languages, Layout, Moon, Smartphone } from 'lucide-vue-next';
+import { ChevronRight } from 'lucide-vue-next';
 import { useHead } from '@unhead/vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -302,44 +301,14 @@ function variantAnimClass(slug: string): string {
         : 'motion-safe:animate-tab-in-left';
 }
 
-const supportingItems = computed(() => [
-    {
-        key: 'framework',
-        icon: Layout,
-        title: t('features.supportingItems.framework.title'),
-        description: t('features.supportingItems.framework.description'),
-    },
-    {
-        key: 'output',
-        icon: FileJson,
-        title: t('features.supportingItems.output.title'),
-        description: t('features.supportingItems.output.description'),
-    },
-    {
-        key: 'darkMode',
-        icon: Moon,
-        title: t('features.supportingItems.darkMode.title'),
-        description: t('features.supportingItems.darkMode.description'),
-    },
-    {
-        key: 'i18n',
-        icon: Languages,
-        title: t('features.supportingItems.i18n.title'),
-        description: t('features.supportingItems.i18n.description'),
-    },
-    {
-        key: 'undoRedo',
-        icon: History,
-        title: t('features.supportingItems.undoRedo.title'),
-        description: t('features.supportingItems.undoRedo.description'),
-    },
-    {
-        key: 'responsivePreview',
-        icon: Smartphone,
-        title: t('features.supportingItems.responsivePreview.title'),
-        description: t('features.supportingItems.responsivePreview.description'),
-    },
-]);
+const supportingItemKeys = [
+    'framework',
+    'output',
+    'darkMode',
+    'i18n',
+    'undoRedo',
+    'responsivePreview',
+] as const;
 
 </script>
 
@@ -491,7 +460,34 @@ const supportingItems = computed(() => [
             bg="gray"
             class="!py-14 sm:!py-20"
         >
-            <BentoGrid :items="supportingItems" />
+            <dl
+                class="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2 lg:gap-x-16 lg:gap-y-12"
+            >
+                <div
+                    v-for="(key, idx) in supportingItemKeys"
+                    :key="key"
+                    class="flex gap-5"
+                >
+                    <span
+                        aria-hidden="true"
+                        class="pt-0.5 font-mono text-xs/6 tabular-nums text-neutral-400 dark:text-neutral-600"
+                    >
+                        {{ String(idx + 1).padStart(2, '0') }}
+                    </span>
+                    <div class="flex flex-col gap-1.5">
+                        <dt
+                            class="text-base/7 font-medium text-neutral-950 dark:text-white"
+                        >
+                            {{ t(`features.supportingItems.${key}.title`) }}
+                        </dt>
+                        <dd
+                            class="max-w-prose text-sm/7 text-pretty text-neutral-700 dark:text-neutral-400"
+                        >
+                            {{ t(`features.supportingItems.${key}.description`) }}
+                        </dd>
+                    </div>
+                </div>
+            </dl>
         </SiteSection>
 
         <SiteSection
@@ -525,7 +521,7 @@ const supportingItems = computed(() => [
                 </li>
             </ul>
             <a
-                :href="docsUrl('/guide/migration')"
+                :href="docsUrl('/guide/migration-from-beefree')"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="mt-6 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
@@ -549,38 +545,48 @@ const supportingItems = computed(() => [
             </a>
         </SiteSection>
 
-        <section class="bg-neutral-50 py-20 sm:py-28 dark:bg-neutral-950">
+        <section class="bg-white py-20 sm:py-28 dark:bg-neutral-950">
             <SiteContainer>
-                <div
-                    class="bg-inverse flex flex-col items-center gap-8 rounded-3xl px-6 py-16 text-center sm:px-12 sm:py-24"
-                >
+                <div class="mb-12 flex max-w-2xl flex-col gap-3">
+                    <SiteEyebrow>{{ t('features.cta.eyebrow') }}</SiteEyebrow>
                     <h2
-                        class="max-w-3xl font-display text-3xl/10 tracking-tight text-pretty text-white sm:text-5xl/14"
+                        class="font-display text-3xl/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
                     >
                         {{ t('features.cta.headline') }}
                     </h2>
-                    <p class="max-w-2xl text-lg/8 text-neutral-400">
-                        {{ t('features.cta.subheadline') }}
-                    </p>
-                    <div class="flex flex-wrap items-center justify-center gap-4">
-                        <SiteButton
-                            :href="URLS.docs"
-                            color="white"
-                            size="lg"
-                            external
+                </div>
+                <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+                    <div
+                        v-for="path in [
+                            {
+                                key: 'install',
+                                href: URLS.docs,
+                            },
+                            {
+                                key: 'migrate',
+                                href: docsUrl('/guide/migration-from-beefree'),
+                            },
+                        ]"
+                        :key="path.key"
+                        class="group relative flex flex-col gap-5 rounded-2xl border border-neutral-200 bg-neutral-50/60 p-8 transition-colors hover:border-neutral-300 sm:p-10 dark:border-neutral-800 dark:bg-neutral-900/40 dark:hover:border-neutral-700"
+                    >
+                        <h3
+                            class="font-display text-2xl/8 tracking-tight text-neutral-950 sm:text-3xl/10 dark:text-white"
                         >
-                            {{ t('features.cta.ctaPrimary') }}
-                        </SiteButton>
-                        <SiteButton
-                            :href="docsUrl('/guide/migration')"
-                            variant="plain"
-                            color="white"
-                            size="lg"
-                            external
+                            {{ t(`features.cta.${path.key}.title`) }}
+                        </h3>
+                        <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
+                            {{ t(`features.cta.${path.key}.description`) }}
+                        </p>
+                        <a
+                            :href="path.href"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mt-auto inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                         >
-                            {{ t('features.cta.ctaSecondary') }}
-                            <ChevronRight class="size-5" />
-                        </SiteButton>
+                            {{ t(`features.cta.${path.key}.cta`) }}
+                            <ChevronRight class="size-4" />
+                        </a>
                     </div>
                 </div>
             </SiteContainer>
