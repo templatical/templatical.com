@@ -57,7 +57,7 @@ const de: MessageSchema = {
             badgeCta: 'Auf GitHub ansehen',
             headline: 'Ein Open-Source-Drag-and-Drop-E-Mail-Editor-SDK.',
             subheadline:
-                'Benutzerdefinierte Blöcke, vollständiges Theming, erweiterte Merge-Tags und Anzeigebedingungen — alles im Open-Source-SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
+                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags und Anzeigebedingungen — alles im Open-Source-SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Dokumentation lesen',
             frameworkNote: 'Intern in Vue 3 entwickelt — läuft konfliktfrei neben React, Svelte und Angular.',
@@ -70,13 +70,9 @@ const de: MessageSchema = {
                 'Keine Telemetrie',
             ],
         },
-        trustedBy: {
-            eyebrow: 'Vertraut von Entwicklern',
-            headline: 'Genutzt von Teams, die bessere E-Mail-Erlebnisse schaffen',
-        },
         features: {
             eyebrow: 'Power-Features',
-            headline: 'Power-Features, eingebaut im Open-Source-SDK.',
+            headline: 'Die Funktionen, nach denen Entwickler zuerst greifen.',
             subheadline:
                 'Die Funktionen, nach denen Entwickler zuerst greifen — benutzerdefinierte Blöcke, Merge-Tags, Anzeigebedingungen, Theming und Standards — alles im SDK enthalten.',
             supportingEyebrow: 'Und das Selbstverständliche',
@@ -216,7 +212,7 @@ const de: MessageSchema = {
         cta: {
             headline: 'Starten Sie noch heute mit E-Mail-Vorlagen',
             subheadline:
-                'Open Source, für immer kostenlos. Starten Sie mit der Dokumentation, geben Sie dem Repo einen Stern oder unterstützen Sie die Entwicklung.',
+                'Open Source. Für immer kostenlos. Heute selbst hosten, später optional in den Managed-Tarif wechseln.',
             ctaPrimary: 'Loslegen',
             ctaSecondary: 'Auf GitHub ansehen',
             ctaTertiary: 'Sponsor',
@@ -270,7 +266,7 @@ const de: MessageSchema = {
             headline: 'Was andere Editoren hinter Schranken halten — bei uns in Ihrem Repo. MIT-lizenziert.',
             subheadline:
                 'Fünf Power-Features und eine saubere Basis — alles enthalten, alles offen. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
-            pricingPill: 'Open Source · MIT · Selbst hosten kostenlos',
+            pricingPill: 'Open Source · MIT · Kostenlos selbst hosten',
         },
         docsLink: 'Zur Dokumentation',
         examplesLabel: 'Beispiele für {title}',
@@ -458,6 +454,14 @@ const de: MessageSchema = {
                 question: 'Gibt es eine kostenpflichtige Version, und ist sie erforderlich?',
                 answer: 'Nein, kostenpflichtig ist nicht erforderlich. Das Open-Source-SDK ist vollständig eigenständig — jede Editor-Funktion (Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output) ist enthalten und kostenlos selbst hostbar. Templatical Cloud ist ein separates, optionales Managed-Abo, das infrastrukturabhängige Funktionen ergänzt — Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, Snapshots, Kommentare, gehostete Medien, Multi-Tenancy, API-Zugriff. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als kostenpflichtiges Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
             },
+        },
+        stillAsking: {
+            eyebrow: 'Noch Fragen?',
+            headline: 'Antwort nicht gefunden?',
+            description:
+                'Fragen Sie die Community auf GitHub Discussions oder tauchen Sie in die Dokumentation für die tiefere API-Referenz ein.',
+            discussionsCta: 'Auf GitHub Discussions fragen',
+            docsCta: 'Zur Dokumentation',
         },
     },
 };

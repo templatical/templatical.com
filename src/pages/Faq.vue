@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import CtaSection from '@/components/CtaSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
 import HeroAurora from '@/components/HeroAurora.vue';
 import HeroHeadline from '@/components/HeroHeadline.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
+import { URLS } from '@/lib/urls';
+import { ChevronRight } from 'lucide-vue-next';
 import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -74,6 +75,44 @@ const faqItems = computed(() =>
             </SiteContainer>
         </section>
 
-        <CtaSection />
+        <section class="bg-white py-16 sm:py-24 dark:bg-neutral-950">
+            <SiteContainer>
+                <div
+                    class="flex flex-col gap-6 rounded-2xl border border-neutral-200 bg-neutral-50/60 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10 dark:border-neutral-800 dark:bg-neutral-900/40"
+                >
+                    <div class="flex flex-col gap-2">
+                        <SiteEyebrow>{{ t('faq.stillAsking.eyebrow') }}</SiteEyebrow>
+                        <h2
+                            class="font-display text-2xl/8 tracking-tight text-pretty text-neutral-950 sm:text-3xl/10 dark:text-white"
+                        >
+                            {{ t('faq.stillAsking.headline') }}
+                        </h2>
+                        <p class="max-w-xl text-base/7 text-neutral-700 dark:text-neutral-400">
+                            {{ t('faq.stillAsking.description') }}
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-3 sm:shrink-0 sm:items-end">
+                        <a
+                            :href="URLS.discussions"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1.5 text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                        >
+                            {{ t('faq.stillAsking.discussionsCta') }}
+                            <ChevronRight class="size-4" />
+                        </a>
+                        <a
+                            :href="URLS.docs"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1.5 text-sm/7 font-medium text-neutral-700 transition-colors hover:text-neutral-950 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-neutral-300 dark:hover:text-white"
+                        >
+                            {{ t('faq.stillAsking.docsCta') }}
+                            <ChevronRight class="size-4" />
+                        </a>
+                    </div>
+                </div>
+            </SiteContainer>
+        </section>
     </div>
 </template>

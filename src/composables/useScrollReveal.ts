@@ -1,10 +1,11 @@
-import { useIntersectionObserver } from '@vueuse/core';
+import { usePreferredReducedMotion, useIntersectionObserver } from '@vueuse/core';
 import { computed, onMounted, ref } from 'vue';
 
 export function useScrollReveal(threshold = 0.15, rootMargin = '0px') {
     const sectionRef = ref<HTMLElement | null>(null);
     const prepared = ref(false);
     const hasRevealed = ref(false);
+    const reducedMotion = usePreferredReducedMotion();
 
     const { stop } = useIntersectionObserver(
         sectionRef,
@@ -21,9 +22,14 @@ export function useScrollReveal(threshold = 0.15, rootMargin = '0px') {
         prepared.value = true;
     });
 
-    const isVisible = computed(() => hasRevealed.value);
+    const isVisible = computed(
+        () => reducedMotion.value === 'reduce' || hasRevealed.value,
+    );
     const shouldHide = computed(
-        () => prepared.value && !hasRevealed.value,
+        () =>
+            reducedMotion.value !== 'reduce' &&
+            prepared.value &&
+            !hasRevealed.value,
     );
 
     return { sectionRef, isVisible, shouldHide };

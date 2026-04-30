@@ -55,7 +55,7 @@ export default {
             badgeCta: 'View on GitHub',
             headline: 'An open-source drag-and-drop email editor SDK.',
             subheadline:
-                'Custom blocks, full theming, advanced merge tags, and display conditions — all built into the open-source SDK. Drop into any app with one init() call.',
+                'Custom blocks, full theming, merge tags, and display conditions — all built into the open-source SDK. Drop into any app with one init() call.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Read the docs',
             frameworkNote: 'Built in Vue 3 internally — embeds alongside React, Svelte, Angular without conflict.',
@@ -68,16 +68,12 @@ export default {
                 'Zero telemetry',
             ],
         },
-        trustedBy: {
-            eyebrow: 'Trusted by developers',
-            headline: 'Used by teams building better email experiences',
-        },
         features: {
             eyebrow: 'Power features',
-            headline: 'Power features, built into the open-source SDK.',
+            headline: 'The features developers reach for first.',
             subheadline:
                 'The features developers reach for first — custom blocks, merge tags, display conditions, theming, and defaults — all included in the SDK.',
-            supportingEyebrow: 'And the table-stakes',
+            supportingEyebrow: 'And the essentials',
             supportingHeadline: 'Everything else you expect',
         },
         bentoItems: {
@@ -214,7 +210,7 @@ export default {
         cta: {
             headline: 'Start building email templates today',
             subheadline:
-                'Open source, free forever. Get started with the docs, star the repo, or sponsor development.',
+                'Open source. Free forever. Self-host today, opt into the managed tier later.',
             ctaPrimary: 'Get Started',
             ctaSecondary: 'View on GitHub',
             ctaTertiary: 'Sponsor',
@@ -249,7 +245,7 @@ export default {
         close: {
             headline: 'Ship an email editor this week',
             subheadline:
-                'One npm install. One init() call. JSON in, MJML out — render anywhere, render free.',
+                'One npm install. One init() call. JSON in, MJML out — render anywhere, free.',
             installLabel: 'Install',
             copyLabel: 'Copy',
             copiedLabel: 'Copied',
@@ -268,7 +264,7 @@ export default {
             headline: 'The features other editors gate. In your repo. MIT-licensed.',
             subheadline:
                 'Five power features and a clean set of essentials — all included, all open. Portable JSON in, MJML out, no usage tier in the way.',
-            pricingPill: 'Open source · MIT · Self-host free',
+            pricingPill: 'Open source · MIT · Free to self-host',
         },
         docsLink: 'Read the docs',
         examplesLabel: '{title} examples',
@@ -456,6 +452,14 @@ export default {
                 question: 'Is there a paid version, and is it required?',
                 answer: 'No, paid is not required. The open-source SDK is fully standalone — every editor feature (custom blocks, merge tags, display conditions, theming, MJML output) is included and free to self-host. Templatical Cloud is a separate, optional managed subscription that adds infrastructure-dependent capabilities — real-time collaboration, AI rewrite and chat, snapshots, comments, hosted media, multi-tenancy, API access. Those rely on backend services we run, so they ship as a paid managed tier rather than self-hostable code.',
             },
+        },
+        stillAsking: {
+            eyebrow: 'Still curious?',
+            headline: 'Didn\'t find your answer?',
+            description:
+                'Ask the community on GitHub Discussions, or dive into the docs for the deeper API reference.',
+            discussionsCta: 'Ask on GitHub Discussions',
+            docsCta: 'Read the docs',
         },
     },
 };

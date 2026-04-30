@@ -13,7 +13,7 @@ const heroContent = {
     settings: {
         width: 600,
         backgroundColor: '#ffffff',
-        fontFamily: 'Inter, Arial, sans-serif',
+        fontFamily: 'Helvetica, Arial, sans-serif',
         preheaderText: 'Your workspace is ready — here is what comes next.',
     },
     blocks: [
@@ -113,9 +113,14 @@ type EditorInstance = {
 let editorInstance: EditorInstance | null = null;
 let cssLink: HTMLLinkElement | null = null;
 
+const LOAD_TIMEOUT_MS = 15000;
+
 async function mountEditor() {
     if (status.value !== 'idle') return;
     status.value = 'loading';
+    const timeout = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('timeout')), LOAD_TIMEOUT_MS),
+    );
     try {
         if (!document.querySelector(`link[href="${EDITOR_CSS_URL}"]`)) {
             cssLink = document.createElement('link');
@@ -124,21 +129,27 @@ async function mountEditor() {
             document.head.appendChild(cssLink);
         }
 
-        const mod = await import(/* @vite-ignore */ EDITOR_ESM_URL);
+        const mod = await Promise.race([
+            import(/* @vite-ignore */ EDITOR_ESM_URL),
+            timeout,
+        ]);
         if (!container.value) return;
-        editorInstance = await mod.init({
-            container: container.value,
-            uiTheme: isDark.value ? 'dark' : 'light',
-            locale: locale.value,
-            branding: false,
-            content: heroContent,
-            mergeTags: {
-                tags: [
-                    { label: 'First name', value: '{{first_name}}' },
-                    { label: 'Unsubscribe URL', value: '{{unsubscribe_url}}' },
-                ],
-            },
-        });
+        editorInstance = await Promise.race([
+            mod.init({
+                container: container.value,
+                uiTheme: isDark.value ? 'dark' : 'light',
+                locale: locale.value,
+                branding: false,
+                content: heroContent,
+                mergeTags: {
+                    tags: [
+                        { label: 'First name', value: '{{first_name}}' },
+                        { label: 'Unsubscribe URL', value: '{{unsubscribe_url}}' },
+                    ],
+                },
+            }),
+            timeout,
+        ]);
         status.value = 'ready';
     } catch (e) {
         console.warn('Templatical editor failed to load', e);

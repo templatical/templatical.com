@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useId } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronDown, ChevronRight } from 'lucide-vue-next';
 import SiteContainer from './SiteContainer.vue';
 import SiteEyebrow from './SiteEyebrow.vue';
 import SiteSubheading from './SiteSubheading.vue';
@@ -49,24 +49,13 @@ function toggle(key: number) {
                         >
                             {{ entry.question }}
                         </span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
+                        <ChevronDown
                             :class="[
-                                'size-5 shrink-0 text-neutral-500 transition-transform duration-200',
+                                'size-5 shrink-0 text-neutral-500 transition-transform duration-200 motion-reduce:transition-none',
                                 openKey === entry.key ? 'rotate-180' : '',
                             ]"
                             aria-hidden="true"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                            />
-                        </svg>
+                        />
                     </button>
                     <div
                         :id="entry.panelId"
@@ -74,15 +63,15 @@ function toggle(key: number) {
                         :aria-labelledby="entry.buttonId"
                         :aria-hidden="openKey !== entry.key"
                         :class="[
-                            'grid transition-[grid-template-rows,opacity,padding] duration-200 ease-out',
+                            'grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none',
                             openKey === entry.key
-                                ? 'grid-rows-[1fr] pb-5 opacity-100'
+                                ? 'grid-rows-[1fr] opacity-100'
                                 : 'grid-rows-[0fr] opacity-0',
                         ]"
                     >
                         <div class="overflow-hidden">
                             <p
-                                class="text-sm/7 text-neutral-700 dark:text-neutral-400"
+                                class="pb-5 text-sm/7 text-neutral-700 dark:text-neutral-300"
                             >
                                 {{ entry.answer }}
                             </p>
