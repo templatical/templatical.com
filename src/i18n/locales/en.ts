@@ -62,7 +62,7 @@ export default {
                 'Custom blocks, full theming, merge tags, and display conditions — all built into the open-source SDK. Drop into any app with one init() call.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Read the docs',
-            frameworkNote: 'Built in Vue 3 internally — embeds alongside React, Svelte, Angular without conflict.',
+            frameworkNote: 'Works in React, Svelte, Angular, Vue, and vanilla JS — one init() call, zero peer dependencies.',
             badges: [
                 'TypeScript-first',
                 'Built on MJML',
@@ -442,7 +442,7 @@ export default {
             },
             frameworks: {
                 question: 'What frameworks are supported?',
-                answer: 'Templatical works with any framework. While built with Vue internally, it provides a framework-agnostic JavaScript API via npm or a standalone script tag. Use it with React, Angular, Svelte, or plain HTML.',
+                answer: 'Templatical works in React, Svelte, Angular, Vue, and vanilla JS. The published package is fully self-contained — Vue is bundled inside, so consumers install one package with zero peer dependencies and mount the editor with a single init() call into any DOM element.',
             },
             migrate: {
                 question: 'How do I migrate from another editor?',
