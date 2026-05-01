@@ -23,7 +23,7 @@ const editor = await init({
   },
 })
 
-const mjml = editor.toMjml()`;
+const mjml = await editor.toMjml()`;
 </script>
 
 <template>
