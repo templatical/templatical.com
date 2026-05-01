@@ -5,6 +5,7 @@ const de: MessageSchema = {
         skipToContent: 'Zum Inhalt springen',
         switchToLight: 'Zum hellen Modus wechseln',
         switchToDark: 'Zum dunklen Modus wechseln',
+        switchToAuto: 'Zum Systemdesign wechseln',
         switchToLanguage: 'Sprache auf {language} wechseln',
         mobileMenu: 'Navigationsmenü',
         mainNav: 'Hauptnavigation',
@@ -25,6 +26,16 @@ const de: MessageSchema = {
     },
     github: {
         star: 'Star',
+        starAction: 'Templatical auf GitHub mit einem Stern markieren',
+        starActionWithCount: 'Templatical auf GitHub mit einem Stern markieren — {count} Stars',
+    },
+    heroEditor: {
+        error: {
+            message: 'Live-Vorschau nicht verfügbar — öffne stattdessen den {playground}.',
+            playgroundLabel: 'Playground',
+        },
+        previewAlt:
+            'Templatical-Editor: Drag-and-Drop-E-Mail-Builder mit Symbolleiste, Canvas und Inspektor-Bereichen',
     },
     footer: {
         product: 'Produkt',
@@ -43,26 +54,31 @@ const de: MessageSchema = {
         meta: {
             title: 'Templatical — Open-Source E-Mail-Editor SDK',
             description:
-                'Die Open-Source-Alternative zu BeeFree. Betten Sie einen Drag-and-Drop E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken und mehr.',
+                'Betten Sie einen Open-Source-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, vollständigem Theming und mehr.',
         },
         hero: {
             badge: 'Jetzt Open Source',
             badgeCta: 'Auf GitHub ansehen',
-            headline: 'Ein Open-Source-E-Mail-Editor mit den Funktionen, die andere Editoren hinter einer Paywall verstecken.',
+            headline: 'Ein Open-Source-Drag-and-Drop-E-Mail-Editor-SDK.',
             subheadline:
-                'Benutzerdefinierte Blöcke, vollständiges Theming, erweiterte Merge-Tags und Anzeigebedingungen — bei Templatical Open Source, anderswo nur in kostenpflichtigen Tarifen. In jede App mit einem init()-Aufruf einbinden. JSON rein, MJML raus.',
-            ctaPrimary: 'Live testen',
-            ctaSecondary: 'Vergleichen',
-        },
-        trustedBy: {
-            eyebrow: 'Vertraut von Entwicklern',
-            headline: 'Genutzt von Teams, die bessere E-Mail-Erlebnisse schaffen',
+                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags und Anzeigebedingungen — alles im Open-Source-SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
+            ctaPrimary: 'Playground öffnen',
+            ctaSecondary: 'Dokumentation lesen',
+            frameworkNote: 'Funktioniert in React, Svelte, Angular, Vue und Vanilla JS — ein init()-Aufruf, keine Peer-Dependencies.',
+            badges: [
+                'TypeScript-first',
+                'Auf MJML aufgebaut',
+                'FSL-1.1-MIT (auto-MIT)',
+                'Framework-neutral',
+                'Überall renderbar',
+                'Keine Telemetrie',
+            ],
         },
         features: {
             eyebrow: 'Power-Features',
-            headline: 'Kostenpflichtig anderswo. Open Source hier.',
+            headline: 'Die Funktionen, nach denen Entwickler zuerst greifen.',
             subheadline:
-                'Die Funktionen, nach denen Entwickler zuerst greifen — und die normalerweise hinter einer Paywall liegen — sind im Open-Source-SDK enthalten.',
+                'Die Funktionen, nach denen Entwickler zuerst greifen — benutzerdefinierte Blöcke, Merge-Tags, Anzeigebedingungen, Theming und Standards — alles im SDK enthalten.',
             supportingEyebrow: 'Und das Selbstverständliche',
             supportingHeadline: 'Alles, was Sie sonst noch erwarten',
         },
@@ -70,7 +86,7 @@ const de: MessageSchema = {
             customBlocks: {
                 title: 'Benutzerdefinierte Blöcke mit API-Daten',
                 description:
-                    'Registrieren Sie eigene Blocktypen — statische Templates oder Live-Daten aus Ihrer API zur Preview-Zeit. Anderswo kostenpflichtig, hier Open Source.',
+                    'Registrieren Sie eigene Blocktypen — statische Templates oder Live-Daten aus Ihrer API zur Preview-Zeit. Eingebaut im Open-Source-SDK.',
             },
             mergeTags: {
                 title: 'Merge-Tags mit flexibler Syntax',
@@ -85,7 +101,7 @@ const de: MessageSchema = {
             theming: {
                 title: 'Vollständiges Theming via Design-Tokens',
                 description:
-                    '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Kein CSS-Hack, kein kostenpflichtiger Tarif — Ihre Marke wird zum Standard des Editors.',
+                    '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Kein CSS-Hack — Ihre Marke wird zum Standard des Editors.',
             },
             defaults: {
                 title: 'Template- & Block-Standards',
@@ -100,7 +116,7 @@ const de: MessageSchema = {
             output: {
                 title: 'JSON rein, MJML raus',
                 description:
-                    'Templates sind portables JSON. Ausgabe ist MJML — rendern Sie im Browser oder auf Ihrem Server, versenden Sie über jeden Anbieter. Keine Vendor-Render-API.',
+                    'Templates sind portables JSON. Ausgabe ist MJML — rendern Sie im Browser oder auf Ihrem Server, versenden Sie über jeden Anbieter. Kein gehosteter Render-Dienst erforderlich.',
             },
             cloud: {
                 title: 'Cloud (in Entwicklung)',
@@ -130,160 +146,131 @@ const de: MessageSchema = {
             },
         },
         comparison: {
-            eyebrow: 'Vergleich',
-            headline: 'Templatical im Vergleich',
+            eyebrow: 'Warum Templatical',
+            headline: 'Alles enthalten, nichts hinter Bezahlschranken',
             subheadline:
-                'Ein ehrlicher, direkter Vergleich von Templatical mit Beefree, Unlayer und GrapesJS — einschließlich der Fälle, in denen die anderen die bessere Wahl sind.',
-            tabsLabel: 'Vergleichen mit',
-            factsLabels: {
-                license: 'Lizenz',
-                pricing: 'Preise',
-                selfHost: 'Selbst hostbar',
-            },
-            templaticalWinsLabel: 'Wo Templatical überzeugt',
-            competitorWinsLabel: 'Wo {name} überzeugt',
-            pickCompetitorLabel: 'Wann {name} die bessere Wahl ist',
-            pickUsLabel: 'Wann Templatical die bessere Wahl ist',
-            migrationCta: 'Bereits auf {name}?',
-            migrationLink: 'Migrationsanleitung ansehen',
-            seeFullComparison: 'Vollständigen Vergleich ansehen',
-            cloudSectionLabel: 'Mehr mit Templatical Cloud',
-            cloudSectionStatus: 'In Entwicklung',
-            cloudIntro:
-                'Diese Funktionen kommen als Templatical-Cloud-Variante. Der Feature-Code ist heute bereits Open Source unter FSL-1.1-MIT — nutzen Sie die verwaltete Cloud, sobald sie verfügbar ist, oder hosten Sie denselben Code selbst.',
-            cloudFeatures: [
-                'KI-Umschreibung und KI-Chat',
-                'Echtzeit-Zusammenarbeit mit Block-Level-Locking',
-                'Kommentare und Review-Threads',
-                'Snapshots und Versionshistorie',
-                'Gespeicherte Module über Vorlagen hinweg',
-                'Gehostete Medienbibliothek',
-                'Design-zu-Vorlage-Konvertierung',
-                'Versand von Test-E-Mails',
-                'MCP-Integration',
-                'API-Zugriff und Multi-Tenancy',
-            ],
-            cloudVsLabel: 'Wie {name} damit umgeht',
-            cloudLearnMore: 'Mehr über Templatical Cloud erfahren',
-            tabs: {
-                beefree: {
-                    name: 'Beefree SDK',
-                    positioning:
-                        'Ausgereifter gehosteter Editor mit dem umfangreichsten Funktionsumfang am Markt — preislich auf finanzierte Startups und Enterprises ausgerichtet.',
-                    facts: {
-                        license: 'Closed Source',
-                        pricing: 'Kostenlos + $350–5.000+/Monat bezahlt',
-                        selfHost: 'Nur als iframe',
-                    },
-                    templaticalWins: [
-                        'Vollständig selbst hostbar — Beefree liefert nur einen gehosteten iframe.',
-                        'MJML-Ausgabe statt proprietärem JSON über eine Vendor-Render-API.',
-                        'Offene API für Custom Blocks heute schon — Beefree schaltet Custom Blocks erst ab Superpowers ($2.500/Monat) frei.',
-                        'Kostenlos und bleibt es; FSL-1.1-MIT-lizenziert (automatisch MIT nach 2 Jahren).',
-                        'End-to-End TypeScript-Typen, nicht nur SDK-Type-Defs.',
+                'Selbst bauen kostet ein Quartal Engineering. SaaS-Builder verlangen pro Sitz und sperren die wichtigen Features hinter Upgrades. Templatical enthält sie — Open Source, selbst gehostet, sofort einbettbar.',
+            youBuildLabel: 'Müssten Sie selbst bauen',
+            paywalledLabel: 'Hinter Bezahlschranke oder eingeschränkt',
+            sdkLabel: 'Im Open-Source-SDK enthalten',
+            cloudLabel: 'Mit Templatical Cloud kommend',
+            cloudBadge: 'In Entwicklung',
+            cloudMore: 'Mehr unter cloud.templatical.com',
+            columns: {
+                diy: {
+                    title: 'Selbst bauen',
+                    description:
+                        'Ein Open-Source-Web-Builder-Framework mit einem MJML-Plugin kombinieren oder React-Email-Komponenten selbst zusammenstellen.',
+                    tradeOffs: [
+                        'Die Editor-UX selbst — Drag-and-Drop, Verschachtelung, Spalten, Undo/Redo',
+                        'Block-Level-Merge-Tag-Scoping',
+                        'Anzeigebedingungen mit Live-Vorschau',
+                        'Custom-Block-SDK mit API-gestützten Datenquellen',
+                        'Dark-Mode-Vorschau-Parität zur gesendeten E-Mail',
+                        'Theme-Tokens für konsistentes Branding',
+                        'MJML-Output, überall renderbar',
+                        'E-Mail-Client-Kompatibilität — Outlook 2007–365, Gmail-Clipping, Apple Mail',
+                        'Barrierefreiheit — Tastaturnavigation, ARIA, Screenreader',
+                        'Laufende Wartung — jede E-Mail-Client-Änderung ist ein Regressions-Risiko',
                     ],
-                    competitorWins: [
-                        '1.500+ vorgefertigte Templates als Template-Catalog-Add-on verfügbar.',
-                        'E-Mail-, Page-, Popup- und Document-Builder in einem Produkt.',
-                        '21-sprachige Editor-UI standardmäßig dabei.',
-                        'Etabliertes kommerzielles Produkt mit langer Erfolgsgeschichte im E-Mail-Editor-Bereich.',
-                    ],
-                    cloudVsCompetitor:
-                        'Beefree schaltet diese Funktionen hinter kostenpflichtigen Tarifen frei — Echtzeit-Zusammenarbeit ab Superpowers ($2.500/Monat); KI-Funktionen (Schreibassistent, Bildgenerierung, Alt-Text) verteilen sich über mehrere kostenpflichtige Tarife.',
-                    verdict: {
-                        competitor:
-                            'Wählen Sie Beefree, wenn Sie einen schlüsselfertigen gehosteten Editor, mehrere Builder-Produkte und eine umfangreiche Vorlagenbibliothek benötigen — und das Budget für die kostenpflichtigen Tarife haben.',
-                        us: 'Wählen Sie Templatical, wenn Sie Ihren Editor wirklich besitzen möchten — offener Code, MJML-Ausgabe und Premium-Funktionen ohne Paywalls.',
-                    },
                 },
-                unlayer: {
-                    name: 'Unlayer',
-                    positioning:
-                        'Einfacher React-Drop-in um einen gehosteten Editor. Der schnellste Weg zu einem eingebetteten Editor in einer React-App.',
-                    facts: {
-                        license: 'Wrapper MIT, Editor closed',
-                        pricing: 'Kostenlos + $250–2.000+/Monat bezahlt',
-                        selfHost: 'Nur als iframe',
-                    },
-                    templaticalWins: [
-                        'Vollständig selbst hostbar — Unlayer lädt den Editor nur als iframe von Unlayer-Servern.',
-                        'MJML-Ausgabe statt proprietärem JSON über die Unlayer-Render-API.',
-                        'Custom Blocks, Custom CSS und Themes im OSS-SDK — bei Unlayer erst ab Scale ($750/Monat) bzw. Optimize ($2.000/Monat).',
-                        'Aus jedem Framework einbettbar, nicht React-gekoppelt.',
-                        'Mehrsprachige i18n von Haus aus; Unlayer schaltet Lokalisierung erst ab Launch frei.',
+                hosted: {
+                    title: 'SaaS-Builder',
+                    description:
+                        'Eine gehostete Editor-Komponente einbinden, die auf eine Render-API des Anbieters zeigt.',
+                    tradeOffs: [
+                        'Custom Blocks nur in höheren Tarifen',
+                        'Anzeigebedingungen nur in höheren Tarifen',
+                        'Custom-Theming und Design-Tokens nur in höheren Tarifen',
+                        'White-Label und Marken-Entfernung nur Enterprise',
+                        'Custom-Merge-Tag-Syntax (Liquid, Handlebars) hinter Bezahlschranke',
+                        'Template- und Block-Defaults nur in höheren Tarifen',
+                        'Medien-Bibliothek — an den Speicher des Anbieters gebunden',
+                        'Preise skalieren pro Sitz oder Endnutzer',
+                        'Closed Source — kein Audit, Fork oder Erweitern',
+                        'Output an die Render-API des Anbieters gekoppelt',
                     ],
-                    competitorWins: [
-                        'Schnellster React-Drop-in — eine Komponente, keine Infra zu betreiben.',
-                        'E-Mail-, Page-, Popup- und Document-Builder in einem Produkt.',
-                        'Niedrigerer Einstiegspreis als Beefree.',
-                        'Etabliertes kommerzielles Produkt mit beträchtlichem Kundenstamm.',
-                    ],
-                    cloudVsCompetitor:
-                        'Unlayer bietet nur Team-Level-Zusammenarbeit (kein Block-Level-Locking) und schaltet KI-gestütztes Schreiben erst ab Scale ($750/Monat) frei.',
-                    verdict: {
-                        competitor:
-                            'Wählen Sie Unlayer, wenn Sie den schnellsten Weg zu einem eingebetteten Editor in React wollen und mit einem gehosteten iframe leben können.',
-                        us: 'Wählen Sie Templatical, wenn Sie echte Ownership wollen — selbst hostbar, MJML-Ausgabe, framework-neutral.',
-                    },
                 },
-                grapesjs: {
-                    name: 'GrapesJS + MJML',
-                    positioning:
-                        'Open-Source-Web-Builder-Framework, das Sie mit dem MJML-Plugin zu einem E-Mail-Editor zusammenbauen können.',
-                    facts: {
-                        license: 'BSD-3-Clause',
-                        pricing: 'Kostenlos',
-                        selfHost: 'Ja',
-                    },
-                    templaticalWins: [
-                        'E-Mail-fokussiertes Produkt, kein generischer Page-Builder, der für E-Mails umfunktioniert wurde.',
-                        'Eingebaute Merge-Tags, Anzeigebedingungen, Dark Mode und Theming — bei GrapesJS alles DIY.',
-                        'Offene API für Custom Blocks mit API-gestützten Datenquellen — Ihre Domain-Entitäten werden zu Drag-and-Drop-Blöcken erster Klasse.',
-                        'Gebündelter, meinungsstarker Feature-Set statt eines Plugin-Bauprojekts.',
+                templatical: {
+                    title: 'Templatical',
+                    description:
+                        'Ein speziell entwickeltes Open-Source-SDK für E-Mail-Editoren. Erlebnis besitzen, in Tagen statt Quartalen ausliefern, niemals an einer Bezahlschranke für Kernfunktionen anstoßen.',
+                    sdk: [
+                        'Custom Blocks mit API-gestützten Datenquellen',
+                        'Block-Level-Merge-Tags mit Scoping',
+                        'Anzeigebedingungen für dynamische Inhalte',
+                        'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
+                        'Standardmäßig White-Label — Ihre UI, Ihre Marke',
+                        'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
                     ],
-                    competitorWins: [
-                        'Vollständig BSD-3-Clause — keinerlei FSL-Vorbehalt.',
-                        'Riesiges Plugin-Ökosystem (25k+ Stars, 190+ Contributors).',
-                        'Generisch genug, um Pages, Popups und Dokumente auf derselben Engine zu bauen.',
-                        'Vanilla-JavaScript-Core — keine Vue-Runtime-Abhängigkeit, hilfreich wenn Richtlinien das untersagen.',
-                        'Für immer kostenlos, kein Managed-Tier-Pfad geplant.',
+                    cloud: [
+                        'KI-Umschreiben, KI-Chat, MCP-Integration',
+                        'Echtzeit-Kollaboration mit Block-Level-Sperrung',
+                        'Snapshots und Versionshistorie',
+                        'Multi-Tenancy und API-Zugriff',
                     ],
-                    cloudVsCompetitor:
-                        'Bei GrapesJS Core gibt es nichts davon. Sie würden es selbst aus Drittanbieter-Plugins zusammenbauen oder von Grund auf entwickeln.',
-                    verdict: {
-                        competitor:
-                            'Wählen Sie GrapesJS, wenn Sie ein generisches Web-Builder-Framework wollen und bereit sind, Ihren E-Mail-Funktionsumfang selbst zusammenzubauen.',
-                        us: 'Wählen Sie Templatical, wenn Sie einen fokussierten E-Mail-Editor wollen — mit Merge-Tags, Anzeigebedingungen und Theming sofort einsatzbereit.',
-                    },
                 },
             },
-        },
-        cloud: {
-            headline: 'Managed Hosting benötigt?',
-            description:
-                'Templatical Cloud bietet Team-Zusammenarbeit, API-Zugriff, Multi-Tenancy und verwaltete Infrastruktur — damit Sie sich auf Ihr Produkt konzentrieren können.',
-            cta: 'Templatical Cloud testen',
+            note: 'Open Source. Selbst gehostet. Keine Bezahlschranken bei Kernfunktionen.',
         },
         cta: {
             headline: 'Starten Sie noch heute mit E-Mail-Vorlagen',
             subheadline:
-                'Open Source, für immer kostenlos. Starten Sie mit der Dokumentation, geben Sie dem Repo einen Stern oder unterstützen Sie die Entwicklung.',
+                'Open Source. Für immer kostenlos. Heute selbst hosten, später optional in den Managed-Tarif wechseln.',
             ctaPrimary: 'Loslegen',
             ctaSecondary: 'Auf GitHub ansehen',
             ctaTertiary: 'Sponsor',
+        },
+        migration: {
+            text: 'Schon auf einem gehosteten E-Mail-Builder? Kostenlose Importer für Ihre bestehenden Vorlagen.',
+            cta: 'Migrationsanleitungen ansehen',
+            sources: 'BeeFree · Unlayer · MJML',
+        },
+        homeFaq: {
+            eyebrow: 'Häufige Fragen',
+            headline: 'Was Entwickler zuerst fragen',
+            items: [
+                {
+                    question: 'Was bedeutet FSL-1.1-MIT für die kommerzielle Nutzung?',
+                    answer:
+                        'Sie dürfen Templatical kommerziell nutzen, in Ihr Produkt einbetten, Kunden dafür Geld berechnen und es selbst hosten — alles ab heute, kostenlos. Die einzige Einschränkung: Sie dürfen Templatical nicht als konkurrierendes E-Mail-Editor-Produkt weiterverkaufen. Nach zwei Jahren konvertiert jedes Release automatisch zu reinem MIT.',
+                },
+                {
+                    question: 'Wie schneidet das gegenüber einem gehosteten SaaS-E-Mail-Builder ab?',
+                    answer:
+                        'Gehostete Builder liefern einen schlüsselfertigen Editor und einen vorgefertigten Vorlagenkatalog, sperren den Editor aber hinter ihrer UI und ihren Preisen — Custom Blocks, White-Label, erweitertes Theming und Custom-Merge-Tag-Syntax sind meist hinter Upgrade-Screens. Templatical ist das eingebettete, selbst hostbare Gegenteil: Ihre Kunden sehen Ihre Marke, Sie zahlen nichts pro Sitz, und Sie geben MJML aus, das Sie überall rendern können. Wenn Ihr Produkt einen Editor braucht, der sich wie Teil Ihrer App anfühlt, passt Templatical. Wenn Sie hauptsächlich einen gehosteten Editor mit einer großen vorgefertigten Vorlagenbibliothek wollen, ist ein SaaS-Builder schneller.',
+                },
+                {
+                    question: 'Was enthält Templatical Cloud im Vergleich zum Open-Source-SDK?',
+                    answer:
+                        'Das Open-Source-SDK enthält jede Editor-Funktion — Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output — kostenlos und selbst hostbar. Templatical Cloud ist ein separates, kostenpflichtiges Managed-Abo für infrastrukturabhängige Funktionen: Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, Snapshots, Kommentare, Multi-Tenancy, gehostete Medien. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
+                },
+            ],
+            seeAll: 'Alle Fragen ansehen',
+        },
+        close: {
+            headline: 'Diese Woche einen E-Mail-Editor ausliefern',
+            subheadline:
+                'Ein npm install. Ein init()-Aufruf. JSON rein, MJML raus — überall rendern, kostenlos.',
+            installLabel: 'Installieren',
+            copyLabel: 'Kopieren',
+            copiedLabel: 'Kopiert',
+            ctaPrimary: 'Playground öffnen',
+            ctaSecondary: 'Auf GitHub bewerten',
         },
     },
     features: {
         meta: {
             title: 'Funktionen — Templatical',
             description:
-                'Benutzerdefinierte Blöcke, flexible Merge-Tags, Anzeigebedingungen, vollständiges Theming, Template-Standards — Open Source. Plus Framework-Integration, MJML-Ausgabe und die Cloud-Stufe in Entwicklung.',
+                'Open-Source-Drag-and-Drop-E-Mail-Editor-SDK. Eigene Blöcke, vollständiges Theming, MJML-Ausgabe. Selbst hosten — kostenlos. MIT-lizenziert.',
         },
         hero: {
-            eyebrow: 'Power-Features',
-            headline: 'Die Funktionen, die andere Editoren hinter Paywalls verstecken — hier Open Source.',
+            eyebrow: 'Open-Source-SDK',
+            headline: 'Was andere Editoren hinter Schranken halten — bei uns in Ihrem Repo. MIT-lizenziert.',
             subheadline:
-                'Fünf Power-Features und ein sauberer Satz an Standard-Funktionen. Kein Tarif, keine Paywall, keine Vendor-Render-API.',
+                'Fünf Power-Features und eine saubere Basis — alles enthalten, alles offen. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
+            pricingPill: 'Open Source · MIT · Kostenlos selbst hosten',
         },
         docsLink: 'Zur Dokumentation',
         examplesLabel: 'Beispiele für {title}',
@@ -294,83 +281,78 @@ const de: MessageSchema = {
             customPicker: 'Eigener Picker',
         },
         customBlocks: {
-            eyebrow: 'Power-Feature · 1',
+            eyebrow: 'Erweiterbarkeit',
             title: 'Benutzerdefinierte Blöcke mit API-Daten',
             description:
-                'Registrieren Sie eigene Blocktypen — statische Templates oder Live-Daten aus Ihrer API zur Preview-Zeit. Anderswo kostenpflichtig, hier Open Source.',
+                'Registrieren Sie eigene Blocktypen — statische Templates oder Live-Daten aus Ihrer API zur Preview-Zeit. Eingebaut, nicht aufgesetzt.',
+            outcome: 'CRM-bewusste Blöcke, die Ihr Team ohne Engineering-Tickets einsetzt.',
             features: [
-                'Pro-Feld-Konfiguration: Text, Bild, Farbe, Auswahl, wiederholbar',
+                'Pro-Feld-Konfiguration: Text, Bild, Farbe, Auswahl, wiederholbare Arrays',
                 'Statisches Template oder Live-API-Abruf zur Preview-Zeit',
-                'Pflichtfelder mit Validierung; optionale Read-only-Felder',
                 'Liquid-Templates mit Bedingungen und integrierten Filtern',
-                'Wiederholbare Feldgruppen für Sammlungen wie Produktraster',
-                'Eigenes SVG-Icon pro Block in der Editor-Sidebar',
-                'Typsichere Block-Factories mit TypeScript-Typen',
+                'Typsichere Block-Factories mit vollständigen TypeScript-Typen',
             ],
+            docsLabel: 'Block-API ansehen',
         },
         mergeTags: {
-            eyebrow: 'Power-Feature · 2',
+            eyebrow: 'Personalisierung',
             title: 'Merge-Tags mit flexibler Syntax',
             description:
-                'Handlebars, Liquid, JS Template Literals oder Ihre eigene Syntax — mit lesbarer Label-Ersetzung direkt im Editor. Bauen Sie in Minuten eine CRM-bewusste Tag-Auswahl.',
+                'Handlebars, Liquid, JS Template Literals oder Ihre eigene Syntax — mit lesbaren Labels direkt im Editor. Keine herstellergebundene Syntax.',
+            outcome: 'Bauen Sie eine CRM-bewusste Tag-Auswahl an einem Nachmittag, nicht in einem Sprint.',
             features: [
                 'Eingebaute Syntaxen plus Hook für Ihre eigene',
                 'Lesbare Labels werden direkt im Editor gerendert',
-                'Type-Ahead-Picker basierend auf Ihrer Datenstruktur',
                 'Optionaler onRequest-Hook ersetzt den Picker durch Ihre CRM-UI',
-                'Logik-Tags für verzweigten Inhalt nach Plan oder Rolle',
-                'Eingebaute Liquid-Filter: default, upcase, escape',
                 'Round-Trip-sicher — JSON speichert das kanonische Token',
             ],
+            docsLabel: 'Merge-Tag-Referenz',
         },
         displayConditions: {
-            eyebrow: 'Power-Feature · 3',
+            eyebrow: 'Targeting',
             title: 'Anzeigebedingungen',
             description:
-                'Blöcke basierend auf Empfänger-Attributen ein- oder ausblenden, mit Live-Preview im Editor. Eingebaut, kein Zusatzdienst.',
+                'Blöcke basierend auf Empfänger-Attributen ein- oder ausblenden, mit Live-Preview im Editor. Eingebaut, kein kostenpflichtiges Add-on.',
+            outcome: 'Personalisierung ohne separaten Targeting-Dienst.',
             features: [
                 'Pro-Block-Regeln basierend auf Empfänger-Attributen',
-                'Bedingungen nach Zielgruppe, Segment oder Rolle gruppieren',
                 'Live-Preview während der Bearbeitung',
                 'allowCustom: true erlaubt eigene Bedingungen inline',
-                'Benutzerdefinierte Vor-/Nach-Wrapper für anbieterspezifische Syntax',
-                'Wrapper geben Liquid aus — Ihr ESP wertet beim Versand aus',
-                'Kein externer Dienst oder kostenpflichtiges Add-on nötig',
+                'Eigene Wrapper — Ihr ESP wertet Liquid beim Versand aus',
             ],
+            docsLabel: 'Bedingungen-Guide',
         },
         theming: {
-            eyebrow: 'Power-Feature · 4',
+            eyebrow: 'Branding',
             title: 'Vollständiges Theming via Design-Tokens',
             description:
-                '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Kein CSS-Hack, kein kostenpflichtiger Tarif — Ihre Marke wird zum Standard des Editors.',
+                '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Jede Oberfläche tokenisiert — nicht nur die im Marketing-Screenshot.',
+            outcome: 'Der Editor sieht ab Tag eins aus wie Ihr Produkt.',
             features: [
                 '27 OKLch-Design-Tokens für jede Oberfläche',
                 'Light- und Dark-Theme-Overrides über denselben theme.dark-Schlüssel',
                 'Eigene Schriften via --tpl-font-sans und --tpl-font-mono',
-                'Radius, Schatten, Abstände — jede Oberfläche tokenisiert',
-                'uiTheme: auto, light oder dark mit Systempräferenz-Erkennung',
-                'Dark Mode erstklassig mit Auto-Erkennung oder manuellem Umschalter',
                 'Tailwind 4 mit `tpl:`-Prefix — kein Preflight, keine Style-Leaks',
             ],
+            docsLabel: 'Theming-Referenz',
         },
         defaults: {
-            eyebrow: 'Power-Feature · 5',
+            eyebrow: 'Standards',
             title: 'Template- & Block-Standards',
             description:
-                'Definieren Sie Ihre Marke einmal. Neue Templates und Blöcke übernehmen Ihre Standards automatisch — Farben, Schriften, Abstände, Layout. Konsistent ohne Copy-Paste.',
+                'Definieren Sie Ihre Marke einmal. Neue Templates und Blöcke übernehmen Ihre Standards automatisch — Farben, Schriften, Abstände, Layout.',
+            outcome: 'Markenkonsistenz ohne Copy-Paste-Steuer.',
             features: [
                 'Marken-Standards einmal beim init() setzen',
                 'Standards pro Blocktyp: button, divider, spacer, image, social',
                 'Vorlagenstandards: Breite, Hintergrund, Schriftfamilie',
-                'Neue Templates erben Farben, Schriften, Abstände, Layout',
-                'Neue Blöcke übernehmen dieselben Standards automatisch',
-                'Vordefinierte Presets — corporate, playful, minimal',
                 'Pro Vorlage überschreiben via templateDefaults',
             ],
+            docsLabel: 'Standards-Referenz',
         },
         supporting: {
-            eyebrow: 'Und das Selbstverständliche',
-            headline: 'Alles, was Sie sonst noch erwarten',
+            eyebrow: 'Die Essentials',
+            headline: 'Alles andere, was Sie erwarten — richtig gemacht.',
             subheadline:
                 'Einsatzbereites Mounting, portables JSON, MJML-Ausgabe, framework-unabhängig. Plus die Politur — Dark Mode, i18n, Rückgängig/Wiederholen.',
         },
@@ -381,7 +363,7 @@ const de: MessageSchema = {
             },
             output: {
                 title: 'JSON rein, MJML raus',
-                description: 'Templates sind portables JSON. Ausgabe ist MJML — rendern Sie im Browser oder auf Ihrem Server, versenden Sie über jeden Anbieter. Keine Vendor-Render-API.',
+                description: 'Templates sind portables JSON. Ausgabe ist MJML — rendern Sie im Browser oder auf Ihrem Server, versenden Sie über jeden Anbieter. Kein gehosteter Render-Dienst erforderlich.',
             },
             darkMode: {
                 title: 'Dark Mode',
@@ -401,16 +383,33 @@ const de: MessageSchema = {
             },
         },
         migration: {
-            eyebrow: 'Einfache Migration',
-            title: 'In Minuten von BeeFree wechseln',
+            eyebrow: 'Schmerzlose Migration',
+            title: 'Schon in einem anderen Editor? Bringen Sie Ihre Vorlagen mit.',
             description:
-                'Nutzen Sie bereits BeeFree? Unsere kostenlosen Migrations-Tools importieren Ihre bestehenden Vorlagen und Konfigurationen. Kein manuelles Nachbauen nötig.',
+                'Importieren Sie bestehende Vorlagen und Konfigurationen aus großen Hosted-Editoren. Kostenlose Open-Source-Migrations-Tools — kein manuelles Nachbauen, kein Vendor-Lock-in.',
             features: [
-                'BeeFree JSON-Vorlagen direkt importieren',
+                'Bestehende JSON-Vorlagen direkt importieren',
                 'Automatisches Block-Mapping und Konvertierung',
                 'Stile, Layouts und Merge-Tags beibehalten',
                 'Kostenlose und Open-Source Migrations-Tools',
             ],
+            guideCta: 'Zum Migrations-Guide',
+        },
+        cta: {
+            eyebrow: 'Loslegen',
+            headline: 'Wählen Sie Ihren Startpunkt.',
+            install: {
+                title: 'SDK installieren',
+                description:
+                    'Paket hinzufügen, mit einem init()-Aufruf einbinden, ausliefern. Erstklassige Beispiele für jedes große Framework.',
+                cta: 'Zur Installations-Anleitung',
+            },
+            migrate: {
+                title: 'Vorlagen migrieren',
+                description:
+                    'Schon in einem Hosted-Editor? Importieren Sie bestehende Vorlagen und Konfigurationen — automatisches Block-Mapping, kein manuelles Nachbauen.',
+                cta: 'Zum Migrations-Guide',
+            },
         },
     },
     faq: {
@@ -423,7 +422,7 @@ const de: MessageSchema = {
             eyebrow: 'FAQ',
             headline: 'Häufig gestellte Fragen',
             subheadline:
-                'Lizenzierung, kommerzielle Nutzung, Framework-Support und wie Templatical mit anderen E-Mail-Editoren vergleicht.',
+                'Lizenzierung, kommerzielle Nutzung, Framework-Support, Migrationswege und die Cloud-Variante.',
         },
         headline: 'Häufig gestellte Fragen',
         items: {
@@ -443,22 +442,30 @@ const de: MessageSchema = {
                 question: 'Muss ich „Powered by Templatical" anzeigen?',
                 answer: 'Nein. Der Editor zeigt standardmäßig einen kleinen Footer-Credit an, der jedoch opt-out ist — übergeben Sie branding: false an init(), um ihn auszublenden. Es gibt kein erzwungenes Header-Logo oder andere Branding-Elemente in der Editor-UI.',
             },
-            beefree: {
-                question: 'Wie vergleicht es sich mit BeeFree?',
-                answer: 'Templatical bietet ähnliche Drag-and-Drop-Bearbeitungsfunktionen mit vollem Zugriff auf den Quellcode. Es gibt keine nutzungsbasierten Preisüberraschungen, und Ihre Vorlagendaten verlassen nie Ihre Infrastruktur. Außerdem bieten wir kostenlose Migrations-Tools zum Import Ihrer bestehenden BeeFree-Vorlagen.',
-            },
             frameworks: {
                 question: 'Welche Frameworks werden unterstützt?',
-                answer: 'Templatical funktioniert mit jedem Framework. Intern mit Vue gebaut, bietet es eine framework-unabhängige JavaScript-API via npm oder als eigenständiges Script-Tag. Nutzen Sie es mit React, Angular, Svelte oder purem HTML.',
+                answer: 'Templatical funktioniert in React, Svelte, Angular, Vue und Vanilla JS. Das veröffentlichte Paket ist vollständig in sich geschlossen — Vue ist intern gebündelt, daher installieren Konsumenten ein Paket ohne Peer-Dependencies und mounten den Editor mit einem einzigen init()-Aufruf in beliebige DOM-Elemente.',
             },
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
                 answer: 'Wir bieten kostenlose, MIT-lizenzierte Migrations-Tools für BeeFree, Unlayer und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch. Migrationsanleitungen für jedes Quellformat finden Sie in der Dokumentation.',
             },
+            data: {
+                question: 'Wohin gehen meine Vorlagendaten?',
+                answer: 'Nirgendwohin. Das SDK läuft vollständig im Browser — keine Telemetrie, keine Remote-Aufrufe, keine Analytics. Ihre Vorlagen verlassen Ihre App nur, wenn Sie sie an Ihr eigenes Backend speichern.',
+            },
             paid: {
                 question: 'Gibt es eine kostenpflichtige Version, und ist sie erforderlich?',
-                answer: 'Das OSS-SDK ist vollständig eigenständig — kein Backend erforderlich, und es bleibt kostenlos. Templatical Cloud ist eine optionale verwaltete Variante mit KI-Umschreibung, Echtzeit-Zusammenarbeit, Kommentaren, Snapshots, gespeicherten Modulen, API-Zugriff und Multi-Tenancy. Der Code der Cloud-Funktionen ist ebenfalls unter FSL-1.1-MIT offen, sodass Sie ihn selbst hosten können, anstatt unseren verwalteten Dienst zu nutzen.',
+                answer: 'Nein, kostenpflichtig ist nicht erforderlich. Das Open-Source-SDK ist vollständig eigenständig — jede Editor-Funktion (Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output) ist enthalten und kostenlos selbst hostbar. Templatical Cloud ist ein separates, optionales Managed-Abo, das infrastrukturabhängige Funktionen ergänzt — Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, Snapshots, Kommentare, gehostete Medien, Multi-Tenancy, API-Zugriff. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als kostenpflichtiges Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
             },
+        },
+        stillAsking: {
+            eyebrow: 'Noch Fragen?',
+            headline: 'Antwort nicht gefunden?',
+            description:
+                'Fragen Sie die Community auf GitHub Discussions oder tauchen Sie in die Dokumentation für die tiefere API-Referenz ein.',
+            discussionsCta: 'Auf GitHub Discussions fragen',
+            docsCta: 'Zur Dokumentation',
         },
     },
 };

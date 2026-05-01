@@ -12,10 +12,12 @@ import { useDarkMode } from '@/composables/useDarkMode';
 withDefaults(
     defineProps<{
         fadeClass?: string;
+        rootClass?: string;
     }>(),
     {
         fadeClass:
             'bg-gradient-to-b from-transparent from-65% to-neutral-50 dark:to-neutral-950',
+        rootClass: 'inset-0',
     },
 );
 
@@ -197,7 +199,7 @@ function init() {
 function resize() {
     const c = canvas.value;
     if (!c || !gl) return;
-    const dpr = Math.min(1.5, pixelRatio.value || 1);
+    const dpr = Math.min(2, pixelRatio.value || 1);
     const w = Math.floor(c.clientWidth * dpr);
     const h = Math.floor(c.clientHeight * dpr);
     if (c.width !== w || c.height !== h) {
@@ -285,7 +287,7 @@ onBeforeUnmount(() => {
     <div
         ref="root"
         aria-hidden="true"
-        class="hero-aurora pointer-events-none absolute inset-0 overflow-hidden"
+        :class="['hero-aurora pointer-events-none absolute overflow-hidden', rootClass]"
     >
         <canvas
             v-show="supported"

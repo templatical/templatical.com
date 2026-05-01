@@ -4,7 +4,7 @@ import { URLS } from '@/lib/urls';
 import { useI18n } from 'vue-i18n';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 
 const { t } = useI18n();
 const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
@@ -13,12 +13,12 @@ const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
 <template>
     <section
         ref="sectionRef"
-        class="bg-inverse py-20 sm:py-28"
+        class="bg-neutral-50 py-20 sm:py-28 dark:bg-neutral-950"
     >
         <SiteContainer>
             <div
                 :class="[
-                    'flex flex-col items-center gap-8 text-center',
+                    'bg-inverse flex flex-col items-center gap-8 rounded-3xl px-6 py-16 text-center sm:px-12 sm:py-24',
                     isVisible && 'motion-safe:animate-scroll-reveal',
                     shouldHide && 'motion-safe:opacity-0',
                 ]"
@@ -48,7 +48,7 @@ const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
                         external
                     >
                         {{ t('home.cta.ctaSecondary') }}
-                        <IconChevronRight />
+                        <ChevronRight class="size-5" />
                     </SiteButton>
                     <SiteButton
                         :href="URLS.sponsor"
@@ -58,7 +58,7 @@ const { sectionRef, isVisible, shouldHide } = useScrollReveal(0.2);
                         external
                     >
                         {{ t('home.cta.ctaTertiary') }}
-                        <IconChevronRight />
+                        <ChevronRight class="size-5" />
                     </SiteButton>
                 </div>
             </div>

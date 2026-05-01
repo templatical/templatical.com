@@ -205,7 +205,6 @@ watch(reducedMotion, (v) => {
 }
 .hh__c {
     display: inline-block;
-    will-change: transform, opacity, filter;
     transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hh--enhanced .hh__c {

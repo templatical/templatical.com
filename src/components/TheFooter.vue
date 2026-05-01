@@ -4,7 +4,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppLogoIcon from './AppLogoIcon.vue';
 import SiteContainer from './SiteContainer.vue';
-import IconGitHub from './icons/IconGitHub.vue';
+import { Github } from 'lucide-vue-next';
 
 const { t } = useI18n();
 
@@ -23,7 +23,7 @@ const links = computed<FooterLink[]>(() => [
 ]);
 
 const socialLinks = [
-    { label: 'GitHub', href: URLS.github, icon: IconGitHub },
+    { label: 'GitHub', href: URLS.github, icon: Github },
 ];
 </script>
 
@@ -84,7 +84,7 @@ const socialLinks = [
                         class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-neutral-400 transition-colors hover:text-neutral-950 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:hover:text-white"
                         :aria-label="social.label"
                     >
-                        <component :is="social.icon" />
+                        <component :is="social.icon" class="size-5" />
                     </a>
                 </div>
             </div>

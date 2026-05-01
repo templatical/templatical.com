@@ -1,76 +1,34 @@
 <script setup lang="ts">
 import { URLS } from '@/lib/urls';
-import { onMounted, ref, watch } from 'vue';
+import { useBundleSize } from '@/composables/useBundleSize';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { getHighlighter, shikiThemeFor, stripPreBackground } from '@/composables/useShikiHighlight';
-import { useDarkMode } from '@/composables/useDarkMode';
-import AnnouncementBadge from './AnnouncementBadge.vue';
 import GitHubStarButton from './GitHubStarButton.vue';
 import HeroAurora from './HeroAurora.vue';
+import HeroEditor from './HeroEditor.vue';
 import HeroHeadline from './HeroHeadline.vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
-import IconChevronRight from './icons/IconChevronRight.vue';
+import { ChevronRight } from 'lucide-vue-next';
 
-const { t } = useI18n();
-
-const heroCode = `// npm install @templatical/editor @templatical/renderer
-
-import { init } from '@templatical/editor'
-import '@templatical/editor/style.css'
-
-const editor = await init({
-  container: '#editor',
-  onChange(content) {
-    // JSON content — store, version, send anywhere
-    console.log(content)
-  },
-})
-
-// MJML out — render in browser or on your server
-const mjml = editor.toMjml()`;
-
-const heroCodeHtml = ref<string | null>(null);
-const { isDark } = useDarkMode();
-
-async function renderHeroCode() {
-    const h = await getHighlighter();
-    heroCodeHtml.value = h.codeToHtml(heroCode, {
-        lang: 'javascript',
-        theme: shikiThemeFor(isDark.value),
-        transformers: [
-            stripPreBackground,
-            {
-                line(node, line) {
-                    const existing = (node.properties.style as string | undefined) ?? '';
-                    node.properties.style = `${existing ? `${existing};` : ''}--i:${line - 1}`;
-                },
-            },
-        ],
-    });
-}
-
-onMounted(renderHeroCode);
-watch(isDark, renderHeroCode);
+const { t, tm } = useI18n();
+const heroBadges = computed(() => tm('home.hero.badges') as string[]);
+const { label: bundleLabel } = useBundleSize();
 </script>
 
 <template>
     <section
         id="hero"
-        class="relative isolate -mt-21 overflow-hidden bg-neutral-50 pt-41 sm:pt-53 dark:bg-neutral-950"
+        class="relative -mt-21 bg-neutral-50 pt-41 sm:pt-53 dark:bg-neutral-950"
     >
-        <HeroAurora />
+        <HeroAurora
+            root-class="inset-x-0 top-0 bottom-0"
+            fade-class="bg-gradient-to-b from-transparent from-55% to-neutral-50 dark:to-neutral-950"
+        />
 
         <SiteContainer
             class="relative flex flex-col items-center gap-8 text-center"
         >
-            <AnnouncementBadge
-                :text="t('home.hero.badge')"
-                :href="URLS.github"
-                :cta="t('home.hero.badgeCta')"
-                external
-                class="motion-safe:animate-fade-in"
-            />
             <GitHubStarButton
                 class="motion-safe:animate-fade-in motion-safe:[animation-delay:50ms]"
             />
@@ -83,88 +41,78 @@ watch(isDark, renderHeroCode);
             >
                 <p>{{ t('home.hero.subheadline') }}</p>
             </div>
+        </SiteContainer>
+
+        <SiteContainer class="relative mt-12">
+            <div class="hero-editor-wrap motion-safe:animate-scale-in motion-safe:[animation-delay:300ms]">
+                <HeroEditor />
+            </div>
+        </SiteContainer>
+
+        <SiteContainer
+            class="relative mt-12 flex flex-col items-center gap-8 pb-20 text-center sm:pb-28"
+        >
             <div
-                class="flex flex-wrap items-center justify-center gap-4 motion-safe:animate-fade-in motion-safe:[animation-delay:300ms]"
+                class="flex flex-wrap items-center justify-center gap-4 motion-safe:animate-fade-in motion-safe:[animation-delay:400ms]"
             >
                 <SiteButton :href="URLS.playground" size="lg" external>
                     {{ t('home.hero.ctaPrimary') }}
                 </SiteButton>
                 <SiteButton
-                    :href="URLS.comparison"
+                    :href="URLS.docs"
                     variant="plain"
                     size="lg"
                     external
                 >
                     {{ t('home.hero.ctaSecondary') }}
-                    <IconChevronRight />
+                    <ChevronRight class="size-5" />
                 </SiteButton>
             </div>
-        </SiteContainer>
-        <SiteContainer class="relative mt-16 pb-20 sm:pb-28">
-            <div
-                class="hero-terminal-wrap mx-auto max-w-2xl motion-safe:animate-scale-in motion-safe:[animation-delay:400ms]"
+            <p
+                class="max-w-xl text-xs/5 text-pretty text-neutral-500 motion-safe:animate-fade-in motion-safe:[animation-delay:450ms] dark:text-neutral-500"
             >
-                <div
-                    class="relative overflow-hidden rounded-lg bg-neutral-100 shadow-2xl ring-1 ring-black/10 dark:bg-neutral-900 dark:ring-white/10"
+                {{ t('home.hero.frameworkNote') }}
+            </p>
+            <ul
+                class="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs/5 text-neutral-500 motion-safe:animate-fade-in motion-safe:[animation-delay:500ms] dark:text-neutral-500"
+            >
+                <li v-if="bundleLabel" class="flex items-center gap-2">
+                    <span
+                        class="rounded-full bg-white/60 px-2.5 py-1 font-mono ring-1 ring-neutral-950/5 backdrop-blur dark:bg-white/5 dark:ring-white/10"
+                    >
+                        {{ bundleLabel }}
+                    </span>
+                    <span
+                        class="text-neutral-300 dark:text-neutral-700"
+                        aria-hidden="true"
+                    >·</span>
+                </li>
+                <li
+                    v-for="(badge, i) in heroBadges"
+                    :key="badge"
+                    class="flex items-center gap-2"
                 >
-                    <div
-                        v-if="heroCodeHtml"
-                        role="region"
-                        :aria-label="t('a11y.codeExample')"
-                        class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-700 dark:text-neutral-300"
-                        v-html="heroCodeHtml"
-                    />
-                    <pre
-                        v-else
-                        role="region"
-                        :aria-label="t('a11y.codeExample')"
-                        class="hero-code overflow-x-auto p-5 font-mono text-sm/7 text-neutral-700 dark:text-neutral-300"
-                    ><code>{{ heroCode }}</code></pre>
-                </div>
-            </div>
+                    <span
+                        class="rounded-full bg-white/60 px-2.5 py-1 font-mono ring-1 ring-neutral-950/5 backdrop-blur dark:bg-white/5 dark:ring-white/10"
+                    >
+                        {{ badge }}
+                    </span>
+                    <span
+                        v-if="i < heroBadges.length - 1"
+                        class="text-neutral-300 dark:text-neutral-700"
+                        aria-hidden="true"
+                    >·</span>
+                </li>
+            </ul>
         </SiteContainer>
     </section>
 </template>
 
 <style scoped>
-.hero-code :deep(pre) {
-    margin: 0;
-    padding: 0;
-    background: transparent !important;
-    line-height: 0;
-}
-.hero-code :deep(.line) {
-    display: block;
-    line-height: 1.75rem;
-    min-height: 1.75rem;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .hero-code :deep(.line) {
-        opacity: 0;
-        transform: translateY(6px);
-        animation: hero-line-in 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
-        animation-delay: calc(var(--i) * 55ms + 600ms);
-    }
-}
-
-@keyframes hero-line-in {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-        filter: blur(2px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-
 @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
-        .hero-terminal-wrap {
-            animation: terminal-parallax linear both;
+        .hero-editor-wrap {
+            animation: editor-parallax linear both;
             animation-timeline: scroll();
             animation-range: 0 600px;
         }
@@ -176,10 +124,10 @@ watch(isDark, renderHeroCode);
     }
 }
 
-@keyframes terminal-parallax {
+@keyframes editor-parallax {
     to {
-        transform: translateY(-40px) scale(0.985);
-        opacity: 0.85;
+        transform: translateY(-40px) scale(0.99);
+        opacity: 0.95;
     }
 }
 

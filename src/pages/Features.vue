@@ -1,23 +1,19 @@
 <script setup lang="ts">
-import BentoGrid from '@/components/BentoGrid.vue';
-import CtaSection from '@/components/CtaSection.vue';
 import HeroAurora from '@/components/HeroAurora.vue';
 import HeroHeadline from '@/components/HeroHeadline.vue';
 import RevealOnScroll from '@/components/RevealOnScroll.vue';
+import SiteButton from '@/components/SiteButton.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import SiteText from '@/components/SiteText.vue';
-import IconArrowUpTray from '@/components/icons/IconArrowUpTray.vue';
-import IconArrowUturnLeft from '@/components/icons/IconArrowUturnLeft.vue';
-import IconGlobe from '@/components/icons/IconGlobe.vue';
-import IconMoon from '@/components/icons/IconMoon.vue';
-import IconSwatch from '@/components/icons/IconSwatch.vue';
+import { ChevronRight } from 'lucide-vue-next';
 import { useHead } from '@unhead/vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { tagTemplateAsHtml } from '@/composables/useShikiHighlight';
 import CodeBlock from '@/components/CodeBlock.vue';
+import VariantTabs from '@/components/VariantTabs.vue';
 import { URLS } from '@/lib/urls';
 
 const { t, tm, locale, fallbackLocale } = useI18n();
@@ -47,19 +43,23 @@ interface FeatureSection {
     eyebrow: string;
     title: string;
     description: string;
+    outcome: string;
     features: string[];
     code?: string;
     variants?: CodeVariant[];
     docsPath: string;
+    docsLabel: string;
 }
 
 const featureSections = computed<FeatureSection[]>(() => [
     {
         slug: 'custom-blocks',
         docsPath: '/guide/custom-blocks',
+        docsLabel: t('features.customBlocks.docsLabel'),
         eyebrow: t('features.customBlocks.eyebrow'),
         title: t('features.customBlocks.title'),
         description: t('features.customBlocks.description'),
+        outcome: t('features.customBlocks.outcome'),
         features: tm('features.customBlocks.features') as string[],
         variants: [
             {
@@ -138,9 +138,11 @@ const featureSections = computed<FeatureSection[]>(() => [
     {
         slug: 'merge-tags',
         docsPath: '/guide/merge-tags',
+        docsLabel: t('features.mergeTags.docsLabel'),
         eyebrow: t('features.mergeTags.eyebrow'),
         title: t('features.mergeTags.title'),
         description: t('features.mergeTags.description'),
+        outcome: t('features.mergeTags.outcome'),
         features: tm('features.mergeTags.features') as string[],
         variants: [
             {
@@ -189,9 +191,11 @@ const featureSections = computed<FeatureSection[]>(() => [
     {
         slug: 'display-conditions',
         docsPath: '/guide/display-conditions',
+        docsLabel: t('features.displayConditions.docsLabel'),
         eyebrow: t('features.displayConditions.eyebrow'),
         title: t('features.displayConditions.title'),
         description: t('features.displayConditions.description'),
+        outcome: t('features.displayConditions.outcome'),
         features: tm('features.displayConditions.features') as string[],
         code: `const editor = await init({
   container: '#editor',
@@ -224,9 +228,11 @@ const featureSections = computed<FeatureSection[]>(() => [
     {
         slug: 'theming',
         docsPath: '/guide/theming',
+        docsLabel: t('features.theming.docsLabel'),
         eyebrow: t('features.theming.eyebrow'),
         title: t('features.theming.title'),
         description: t('features.theming.description'),
+        outcome: t('features.theming.outcome'),
         features: tm('features.theming.features') as string[],
         code: `const editor = await init({
   container: '#editor',
@@ -248,9 +254,11 @@ const featureSections = computed<FeatureSection[]>(() => [
     {
         slug: 'defaults',
         docsPath: '/guide/defaults',
+        docsLabel: t('features.defaults.docsLabel'),
         eyebrow: t('features.defaults.eyebrow'),
         title: t('features.defaults.title'),
         description: t('features.defaults.description'),
+        outcome: t('features.defaults.outcome'),
         features: tm('features.defaults.features') as string[],
         code: `const editor = await init({
   container: '#editor',
@@ -276,61 +284,41 @@ const featureSections = computed<FeatureSection[]>(() => [
 ]);
 
 const activeVariant = ref<Record<string, number>>({});
+const variantDirection = ref<Record<string, 1 | -1>>({});
 
 function variantIndex(slug: string): number {
     return activeVariant.value[slug] ?? 0;
 }
 function selectVariant(slug: string, idx: number) {
+    const prev = variantIndex(slug);
+    if (idx === prev) return;
+    variantDirection.value[slug] = idx > prev ? 1 : -1;
     activeVariant.value[slug] = idx;
 }
+function variantAnimClass(slug: string): string {
+    return (variantDirection.value[slug] ?? 1) === 1
+        ? 'motion-safe:animate-tab-in-right'
+        : 'motion-safe:animate-tab-in-left';
+}
 
-const supportingItems = computed(() => [
-    {
-        key: 'framework',
-        icon: IconGlobe,
-        title: t('features.supportingItems.framework.title'),
-        description: t('features.supportingItems.framework.description'),
-    },
-    {
-        key: 'output',
-        icon: IconArrowUpTray,
-        title: t('features.supportingItems.output.title'),
-        description: t('features.supportingItems.output.description'),
-    },
-    {
-        key: 'darkMode',
-        icon: IconMoon,
-        title: t('features.supportingItems.darkMode.title'),
-        description: t('features.supportingItems.darkMode.description'),
-    },
-    {
-        key: 'i18n',
-        icon: IconGlobe,
-        title: t('features.supportingItems.i18n.title'),
-        description: t('features.supportingItems.i18n.description'),
-    },
-    {
-        key: 'undoRedo',
-        icon: IconArrowUturnLeft,
-        title: t('features.supportingItems.undoRedo.title'),
-        description: t('features.supportingItems.undoRedo.description'),
-    },
-    {
-        key: 'responsivePreview',
-        icon: IconSwatch,
-        title: t('features.supportingItems.responsivePreview.title'),
-        description: t('features.supportingItems.responsivePreview.description'),
-    },
-]);
+const supportingItemKeys = [
+    'framework',
+    'output',
+    'darkMode',
+    'i18n',
+    'undoRedo',
+    'responsivePreview',
+] as const;
 
 </script>
 
 <template>
     <div>
         <section
-            class="relative isolate -mt-21 overflow-hidden bg-white pt-37 pb-28 sm:pt-41 sm:pb-40 dark:bg-neutral-950"
+            class="relative -mt-21 bg-white pt-37 pb-28 sm:pt-41 sm:pb-40 dark:bg-neutral-950"
         >
             <HeroAurora
+                root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
             />
             <SiteContainer class="relative">
@@ -347,6 +335,12 @@ const supportingItems = computed(() => [
                     <SiteText class="text-pretty">
                         <p>{{ t('features.hero.subheadline') }}</p>
                     </SiteText>
+                    <div
+                        class="inline-flex w-fit items-center gap-2 rounded-full border border-neutral-200 bg-white/60 px-3 py-1 text-xs/5 font-medium text-neutral-700 backdrop-blur dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300"
+                    >
+                        <span class="size-1.5 rounded-full bg-primary" aria-hidden="true" />
+                        {{ t('features.hero.pricingPill') }}
+                    </div>
                 </div>
             </SiteContainer>
         </section>
@@ -378,6 +372,9 @@ const supportingItems = computed(() => [
                             <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
                                 {{ section.description }}
                             </p>
+                            <p class="text-base/7 font-medium text-neutral-950 dark:text-white">
+                                {{ section.outcome }}
+                            </p>
                             <ul class="mt-2 flex flex-col gap-3">
                                 <li
                                     v-for="feature in section.features"
@@ -408,7 +405,7 @@ const supportingItems = computed(() => [
                                 rel="noopener noreferrer"
                                 class="mt-2 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
-                                {{ t('features.docsLink') }}
+                                {{ section.docsLabel }}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -427,35 +424,24 @@ const supportingItems = computed(() => [
                             </a>
                         </div>
                         <div class="flex flex-col gap-4">
+                            <VariantTabs
+                                v-if="section.variants?.length"
+                                :options="section.variants"
+                                :model-value="variantIndex(section.slug)"
+                                :aria-label="t('features.examplesLabel', { title: section.title })"
+                                @update:model-value="selectVariant(section.slug, $event)"
+                            />
                             <div
                                 v-if="section.variants?.length"
-                                role="tablist"
-                                :aria-label="t('features.examplesLabel', { title: section.title })"
-                                class="inline-flex self-start rounded-md bg-neutral-100 p-1 ring-1 ring-neutral-200 dark:bg-neutral-800/60 dark:ring-neutral-700"
+                                :key="`${section.slug}-${variantIndex(section.slug)}`"
+                                :class="variantAnimClass(section.slug)"
                             >
-                                <button
-                                    v-for="(v, i) in section.variants"
-                                    :key="v.label"
-                                    type="button"
-                                    role="tab"
-                                    :aria-selected="variantIndex(section.slug) === i"
-                                    :class="[
-                                        'rounded-sm px-3 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-                                        variantIndex(section.slug) === i
-                                            ? 'bg-white text-neutral-950 shadow-sm dark:bg-neutral-900 dark:text-white'
-                                            : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white',
-                                    ]"
-                                    @click="selectVariant(section.slug, i)"
-                                >
-                                    {{ v.label }}
-                                </button>
+                                <CodeBlock
+                                    :code="section.variants[variantIndex(section.slug)].code"
+                                    lang="lit"
+                                    :transformers="[tagTemplateAsHtml]"
+                                />
                             </div>
-                            <CodeBlock
-                                v-if="section.variants?.length"
-                                :code="section.variants[variantIndex(section.slug)].code"
-                                lang="lit"
-                                :transformers="[tagTemplateAsHtml]"
-                            />
                             <CodeBlock
                                 v-else-if="section.code"
                                 :code="section.code"
@@ -474,14 +460,41 @@ const supportingItems = computed(() => [
             bg="gray"
             class="!py-14 sm:!py-20"
         >
-            <BentoGrid :items="supportingItems" />
+            <dl
+                class="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2 lg:gap-x-16 lg:gap-y-12"
+            >
+                <div
+                    v-for="(key, idx) in supportingItemKeys"
+                    :key="key"
+                    class="flex gap-5"
+                >
+                    <span
+                        aria-hidden="true"
+                        class="pt-0.5 font-mono text-xs/6 tabular-nums text-neutral-400 dark:text-neutral-600"
+                    >
+                        {{ String(idx + 1).padStart(2, '0') }}
+                    </span>
+                    <div class="flex flex-col gap-1.5">
+                        <dt
+                            class="text-base/7 font-medium text-neutral-950 dark:text-white"
+                        >
+                            {{ t(`features.supportingItems.${key}.title`) }}
+                        </dt>
+                        <dd
+                            class="max-w-prose text-sm/7 text-pretty text-neutral-700 dark:text-neutral-400"
+                        >
+                            {{ t(`features.supportingItems.${key}.description`) }}
+                        </dd>
+                    </div>
+                </div>
+            </dl>
         </SiteSection>
 
         <SiteSection
             :eyebrow="t('features.migration.eyebrow')"
             :headline="t('features.migration.title')"
             :subheadline="t('features.migration.description')"
-            class="!py-14 sm:!py-20"
+            class="!py-16 sm:!py-24"
         >
             <ul class="flex max-w-2xl flex-col gap-3">
                 <li
@@ -507,8 +520,76 @@ const supportingItems = computed(() => [
                     {{ feature }}
                 </li>
             </ul>
+            <a
+                :href="docsUrl('/guide/migration-from-beefree')"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-6 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+            >
+                {{ t('features.migration.guideCta') }}
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="size-4"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                    />
+                </svg>
+            </a>
         </SiteSection>
 
-        <CtaSection />
+        <section class="bg-white py-20 sm:py-28 dark:bg-neutral-950">
+            <SiteContainer>
+                <div class="mb-12 flex max-w-2xl flex-col gap-3">
+                    <SiteEyebrow>{{ t('features.cta.eyebrow') }}</SiteEyebrow>
+                    <h2
+                        class="font-display text-3xl/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
+                    >
+                        {{ t('features.cta.headline') }}
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+                    <div
+                        v-for="path in [
+                            {
+                                key: 'install',
+                                href: URLS.docs,
+                            },
+                            {
+                                key: 'migrate',
+                                href: docsUrl('/guide/migration-from-beefree'),
+                            },
+                        ]"
+                        :key="path.key"
+                        class="group relative flex flex-col gap-5 rounded-2xl border border-neutral-200 bg-neutral-50/60 p-8 transition-colors hover:border-neutral-300 sm:p-10 dark:border-neutral-800 dark:bg-neutral-900/40 dark:hover:border-neutral-700"
+                    >
+                        <h3
+                            class="font-display text-2xl/8 tracking-tight text-neutral-950 sm:text-3xl/10 dark:text-white"
+                        >
+                            {{ t(`features.cta.${path.key}.title`) }}
+                        </h3>
+                        <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
+                            {{ t(`features.cta.${path.key}.description`) }}
+                        </p>
+                        <a
+                            :href="path.href"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mt-auto inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                        >
+                            {{ t(`features.cta.${path.key}.cta`) }}
+                            <ChevronRight class="size-4" />
+                        </a>
+                    </div>
+                </div>
+            </SiteContainer>
+        </section>
     </div>
 </template>
