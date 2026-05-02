@@ -60,7 +60,6 @@ const de: MessageSchema = {
                 'Auf MJML aufgebaut',
                 'FSL-1.1-MIT (auto-MIT)',
                 'Framework-neutral',
-                'Überall renderbar',
                 'Keine Telemetrie',
             ],
         },

@@ -58,7 +58,6 @@ export default {
                 'Built on MJML',
                 'FSL-1.1-MIT (auto-MIT)',
                 'Framework-neutral',
-                'Render anywhere',
                 'Zero telemetry',
             ],
         },
