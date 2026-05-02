@@ -8,9 +8,6 @@ export default {
         mobileMenu: 'Navigation menu',
         mainNav: 'Main',
         footerNav: 'Footer',
-        terminal: 'terminal',
-        yes: 'Yes',
-        no: 'No',
         codeExample: 'Code example',
     },
     nav: {
@@ -36,16 +33,11 @@ export default {
             'Templatical editor: drag-and-drop email builder with toolbar, canvas, and inspector panels',
     },
     footer: {
-        product: 'Product',
-        resources: 'Resources',
-        legal: 'Legal',
         features: 'Features',
         faq: 'FAQ',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
-        privacy: 'Privacy',
-        terms: 'Terms',
         copyright: '© {year} Templatical. Open source under FSL-1.1-MIT.',
     },
     home: {
@@ -55,8 +47,6 @@ export default {
                 'Embed an open-source drag-and-drop email editor in your app — MJML export, merge tags, custom blocks, full theming, and more.',
         },
         hero: {
-            badge: 'Now open source',
-            badgeCta: 'View on GitHub',
             headline: 'An open-source drag-and-drop email editor SDK.',
             subheadline:
                 'Custom blocks, full theming, merge tags, and display conditions — all built into the open-source SDK. Drop into any app with one init() call.',
@@ -71,77 +61,6 @@ export default {
                 'Render anywhere',
                 'Zero telemetry',
             ],
-        },
-        features: {
-            eyebrow: 'Power features',
-            headline: 'The features developers reach for first.',
-            subheadline:
-                'The features developers reach for first — custom blocks, merge tags, display conditions, theming, and defaults — all included in the SDK.',
-            supportingEyebrow: 'And the essentials',
-            supportingHeadline: 'Everything else you expect',
-        },
-        bentoItems: {
-            customBlocks: {
-                title: 'Custom blocks with API-backed data',
-                description:
-                    'Register your own block types — static templates or live data fetched from your API at preview time. Built into the open-source SDK.',
-            },
-            mergeTags: {
-                title: 'Merge tags with pluggable syntax',
-                description:
-                    'Handlebars, Liquid, JS template literals, or your own — with human-readable label replacement directly in the editor canvas. Build a CRM-aware tag picker in minutes.',
-            },
-            displayConditions: {
-                title: 'Display conditions',
-                description:
-                    'Show or hide blocks based on recipient attributes, with live preview in the editor. Built in, no extra service.',
-            },
-            theming: {
-                title: 'Full theming via design tokens',
-                description:
-                    '27 OKLch tokens, custom fonts, dark mode, complete theme overrides. No CSS hacking — your brand becomes the editor’s default.',
-            },
-            defaults: {
-                title: 'Template & block defaults',
-                description:
-                    'Define your brand once. New templates and new blocks pick up your defaults automatically — colors, fonts, padding, layout. Consistent without copy-paste.',
-            },
-            framework: {
-                title: 'Drop-in framework integration',
-                description:
-                    'One init() call to mount, one to unmount. First-class examples for React, Vue, Svelte, Angular, and vanilla JS. No framework lock-in.',
-            },
-            output: {
-                title: 'JSON in, MJML out',
-                description:
-                    'Templates are portable JSON. Output is MJML — render in the browser or on your server, send through any provider. No hosted render service required.',
-            },
-            cloud: {
-                title: 'Cloud (in development)',
-                description:
-                    'Real-time collaboration with block locking, AI rewrite, AI chat, comments, and snapshots — coming as the Templatical Cloud tier. The implementation is open code; you’ll be able to use the managed tier or self-host.',
-            },
-        },
-        steps: {
-            eyebrow: 'How it works',
-            headline: 'Three steps to a production email editor',
-            subheadline:
-                'Get from zero to a fully functional email editor in minutes, not months.',
-            install: {
-                title: 'Install the SDK',
-                description:
-                    'Add Templatical to your project with a single package install. Works with any JavaScript framework.',
-            },
-            configure: {
-                title: 'Mount the Editor',
-                description:
-                    'Initialize the editor with your configuration. Set up blocks, merge tags, theming, and event handlers.',
-            },
-            build: {
-                title: 'Export & Send',
-                description:
-                    'Your users build templates visually. Export as HTML or MJML and send via your preferred email service.',
-            },
         },
         comparison: {
             eyebrow: 'Why Templatical',
@@ -209,7 +128,6 @@ export default {
                     ],
                 },
             },
-            note: 'Open source. Self-hosted. No paywalls on core features.',
         },
         cta: {
             headline: 'Start building email templates today',
@@ -250,7 +168,6 @@ export default {
             headline: 'Ship an email editor this week',
             subheadline:
                 'One npm install. One init() call. JSON in, MJML out — render anywhere, free.',
-            installLabel: 'Install',
             copyLabel: 'Copy',
             copiedLabel: 'Copied',
             ctaPrimary: 'Open playground',
@@ -270,7 +187,6 @@ export default {
                 'Five power features and a clean set of essentials — all included, all open. Portable JSON in, MJML out, no usage tier in the way.',
             pricingPill: 'Open source · MIT · Free to self-host',
         },
-        docsLink: 'Read the docs',
         examplesLabel: '{title} examples',
         variants: {
             static: 'Static',
@@ -301,6 +217,7 @@ export default {
             features: [
                 'Built-in syntaxes plus a hook for your own',
                 'Human-readable labels rendered directly on the canvas',
+                'Inline autocomplete — type the syntax opener to surface matching tags',
                 'Optional onRequest hook to swap the picker for your CRM UI',
                 'Round-trip safe — JSON stores the canonical token',
             ],
@@ -422,7 +339,6 @@ export default {
             subheadline:
                 'Licensing, commercial use, framework support, migration paths, and the Cloud tier.',
         },
-        headline: 'Frequently asked questions',
         items: {
             free: {
                 question: 'Is Templatical really free?',

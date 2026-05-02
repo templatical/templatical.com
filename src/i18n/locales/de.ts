@@ -10,9 +10,6 @@ const de: MessageSchema = {
         mobileMenu: 'Navigationsmenü',
         mainNav: 'Hauptnavigation',
         footerNav: 'Fußzeile',
-        terminal: 'Terminal',
-        yes: 'Ja',
-        no: 'Nein',
         codeExample: 'Codebeispiel',
     },
     nav: {
@@ -38,16 +35,11 @@ const de: MessageSchema = {
             'Templatical-Editor: Drag-and-Drop-E-Mail-Builder mit Symbolleiste, Canvas und Inspektor-Bereichen',
     },
     footer: {
-        product: 'Produkt',
-        resources: 'Ressourcen',
-        legal: 'Rechtliches',
         features: 'Funktionen',
         faq: 'FAQ',
         documentation: 'Dokumentation',
         playground: 'Playground',
         github: 'GitHub',
-        privacy: 'Datenschutz',
-        terms: 'Nutzungsbedingungen',
         copyright: '© {year} Templatical. Open Source unter FSL-1.1-MIT.',
     },
     home: {
@@ -57,8 +49,6 @@ const de: MessageSchema = {
                 'Betten Sie einen Open-Source-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, vollständigem Theming und mehr.',
         },
         hero: {
-            badge: 'Jetzt Open Source',
-            badgeCta: 'Auf GitHub ansehen',
             headline: 'Ein Open-Source-Drag-and-Drop-E-Mail-Editor-SDK.',
             subheadline:
                 'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags und Anzeigebedingungen — alles im Open-Source-SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
@@ -73,77 +63,6 @@ const de: MessageSchema = {
                 'Überall renderbar',
                 'Keine Telemetrie',
             ],
-        },
-        features: {
-            eyebrow: 'Power-Features',
-            headline: 'Die Funktionen, nach denen Entwickler zuerst greifen.',
-            subheadline:
-                'Die Funktionen, nach denen Entwickler zuerst greifen — benutzerdefinierte Blöcke, Merge-Tags, Anzeigebedingungen, Theming und Standards — alles im SDK enthalten.',
-            supportingEyebrow: 'Und das Selbstverständliche',
-            supportingHeadline: 'Alles, was Sie sonst noch erwarten',
-        },
-        bentoItems: {
-            customBlocks: {
-                title: 'Benutzerdefinierte Blöcke mit API-Daten',
-                description:
-                    'Registrieren Sie eigene Blocktypen — statische Templates oder Live-Daten aus Ihrer API zur Preview-Zeit. Eingebaut im Open-Source-SDK.',
-            },
-            mergeTags: {
-                title: 'Merge-Tags mit flexibler Syntax',
-                description:
-                    'Handlebars, Liquid, JS Template Literals oder Ihre eigene Syntax — mit lesbarer Label-Ersetzung direkt im Editor. Bauen Sie in Minuten eine CRM-bewusste Tag-Auswahl.',
-            },
-            displayConditions: {
-                title: 'Anzeigebedingungen',
-                description:
-                    'Blöcke basierend auf Empfänger-Attributen ein- oder ausblenden, mit Live-Preview im Editor. Eingebaut, kein Zusatzdienst.',
-            },
-            theming: {
-                title: 'Vollständiges Theming via Design-Tokens',
-                description:
-                    '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Kein CSS-Hack — Ihre Marke wird zum Standard des Editors.',
-            },
-            defaults: {
-                title: 'Template- & Block-Standards',
-                description:
-                    'Definieren Sie Ihre Marke einmal. Neue Templates und Blöcke übernehmen Ihre Standards automatisch — Farben, Schriften, Abstände, Layout. Konsistent ohne Copy-Paste.',
-            },
-            framework: {
-                title: 'Framework-Integration ohne Aufwand',
-                description:
-                    'Ein init()-Aufruf zum Einbinden, einer zum Entfernen. Erstklassige Beispiele für React, Vue, Svelte, Angular und Vanilla JS. Kein Framework-Lock-in.',
-            },
-            output: {
-                title: 'JSON rein, MJML raus',
-                description:
-                    'Templates sind portables JSON. Ausgabe ist MJML — rendern Sie im Browser oder auf Ihrem Server, versenden Sie über jeden Anbieter. Kein gehosteter Render-Dienst erforderlich.',
-            },
-            cloud: {
-                title: 'Cloud (in Entwicklung)',
-                description:
-                    'Echtzeit-Zusammenarbeit mit Block-Locking, KI-Rewrite, KI-Chat, Kommentare und Snapshots — kommen als Templatical Cloud-Tarif. Die Implementierung ist offener Code; Sie können den Managed-Tarif nutzen oder selbst hosten.',
-            },
-        },
-        steps: {
-            eyebrow: 'So funktioniert es',
-            headline: 'In drei Schritten zum produktionsreifen E-Mail-Editor',
-            subheadline:
-                'Von null zum voll funktionsfähigen E-Mail-Editor in Minuten, nicht Monaten.',
-            install: {
-                title: 'SDK installieren',
-                description:
-                    'Fügen Sie Templatical mit einer einzigen Paketinstallation zu Ihrem Projekt hinzu. Funktioniert mit jedem JavaScript-Framework.',
-            },
-            configure: {
-                title: 'Editor einbinden',
-                description:
-                    'Initialisieren Sie den Editor mit Ihrer Konfiguration. Richten Sie Blöcke, Merge-Tags, Theming und Event-Handler ein.',
-            },
-            build: {
-                title: 'Exportieren & Senden',
-                description:
-                    'Ihre Nutzer erstellen Vorlagen visuell. Exportieren Sie als HTML oder MJML und versenden Sie über Ihren bevorzugten E-Mail-Dienst.',
-            },
         },
         comparison: {
             eyebrow: 'Warum Templatical',
@@ -211,7 +130,6 @@ const de: MessageSchema = {
                     ],
                 },
             },
-            note: 'Open Source. Selbst gehostet. Keine Bezahlschranken bei Kernfunktionen.',
         },
         cta: {
             headline: 'Starten Sie noch heute mit E-Mail-Vorlagen',
@@ -252,7 +170,6 @@ const de: MessageSchema = {
             headline: 'Diese Woche einen E-Mail-Editor ausliefern',
             subheadline:
                 'Ein npm install. Ein init()-Aufruf. JSON rein, MJML raus — überall rendern, kostenlos.',
-            installLabel: 'Installieren',
             copyLabel: 'Kopieren',
             copiedLabel: 'Kopiert',
             ctaPrimary: 'Playground öffnen',
@@ -272,7 +189,6 @@ const de: MessageSchema = {
                 'Fünf Power-Features und eine saubere Basis — alles enthalten, alles offen. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
             pricingPill: 'Open Source · MIT · Kostenlos selbst hosten',
         },
-        docsLink: 'Zur Dokumentation',
         examplesLabel: 'Beispiele für {title}',
         variants: {
             static: 'Statisch',
@@ -303,6 +219,7 @@ const de: MessageSchema = {
             features: [
                 'Eingebaute Syntaxen plus Hook für Ihre eigene',
                 'Lesbare Labels werden direkt im Editor gerendert',
+                'Inline-Autovervollständigung — tippen Sie das Syntax-Zeichen, um passende Tags vorzuschlagen',
                 'Optionaler onRequest-Hook ersetzt den Picker durch Ihre CRM-UI',
                 'Round-Trip-sicher — JSON speichert das kanonische Token',
             ],
@@ -424,7 +341,6 @@ const de: MessageSchema = {
             subheadline:
                 'Lizenzierung, kommerzielle Nutzung, Framework-Support, Migrationswege und die Cloud-Variante.',
         },
-        headline: 'Häufig gestellte Fragen',
         items: {
             free: {
                 question: 'Ist Templatical wirklich kostenlos?',
