@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { URLS } from '@/lib/urls';
-import { ChevronRight } from 'lucide-vue-next';
+import { Check, ChevronRight, Plus, X } from 'lucide-vue-next';
 import RevealOnScroll from './RevealOnScroll.vue';
 import SiteContainer from './SiteContainer.vue';
 import SiteEyebrow from './SiteEyebrow.vue';
@@ -45,6 +45,7 @@ function trailingLabel(slug: Slug): string {
                     <div
                         v-for="col in columns"
                         :key="col.slug"
+                        :aria-current="col.highlight ? 'true' : undefined"
                         :class="[
                             'relative flex flex-col gap-6 rounded-2xl p-6 sm:p-8',
                             col.highlight
@@ -61,6 +62,7 @@ function trailingLabel(slug: Slug): string {
                                         : 'text-neutral-950 dark:text-white',
                                 ]"
                             >
+                                <span v-if="col.highlight" class="sr-only">{{ t('home.comparison.recommendedLabel') }} —</span>
                                 {{ t(`home.comparison.columns.${col.slug}.title`) }}
                             </h3>
                             <p class="text-sm/6 text-pretty text-neutral-700 dark:text-neutral-300">
@@ -79,21 +81,11 @@ function trailingLabel(slug: Slug): string {
                                         :key="item"
                                         class="flex gap-2.5 text-sm/6 text-neutral-800 dark:text-neutral-200"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2.25"
+                                        <Check
+                                            :stroke-width="2.25"
                                             class="mt-0.5 size-4 shrink-0 text-primary"
                                             aria-hidden="true"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="m4.5 12.75 6 6 9-13.5"
-                                            />
-                                        </svg>
+                                        />
                                         {{ item }}
                                     </li>
                                 </ul>
@@ -113,21 +105,11 @@ function trailingLabel(slug: Slug): string {
                                         :key="item"
                                         class="flex gap-2.5 text-sm/6 text-neutral-700 dark:text-neutral-300"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2.25"
+                                        <Plus
+                                            :stroke-width="2.25"
                                             class="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400"
                                             aria-hidden="true"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M12 6v12m6-6H6"
-                                            />
-                                        </svg>
+                                        />
                                         {{ item }}
                                     </li>
                                 </ul>
@@ -154,21 +136,11 @@ function trailingLabel(slug: Slug): string {
                                         :key="item"
                                         class="flex gap-2.5 text-sm/6 text-neutral-600 dark:text-neutral-400"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2.25"
+                                        <X
+                                            :stroke-width="2.25"
                                             class="mt-0.5 size-4 shrink-0 text-rose-500/70 dark:text-rose-400/70"
                                             aria-hidden="true"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M6 18 18 6M6 6l12 12"
-                                            />
-                                        </svg>
+                                        />
                                         {{ item }}
                                     </li>
                                 </ul>

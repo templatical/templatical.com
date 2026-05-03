@@ -74,6 +74,7 @@ const de: MessageSchema = {
             cloudLabel: 'Mit Templatical Cloud kommend',
             cloudBadge: 'In Entwicklung',
             cloudMore: 'Mehr unter cloud.templatical.com',
+            recommendedLabel: 'Empfohlen',
             columns: {
                 diy: {
                     title: 'Selbst bauen',
@@ -140,8 +141,9 @@ const de: MessageSchema = {
         },
         migration: {
             text: 'Schon auf einem gehosteten E-Mail-Builder? Kostenlose Importer für Ihre bestehenden Vorlagen.',
-            cta: 'Migrationsanleitungen ansehen',
-            sources: 'BeeFree · Unlayer · MJML',
+            sourcesLabel: 'Migrationsanleitungen',
+            fromBeefree: 'Von BeeFree',
+            fromUnlayer: 'Von Unlayer',
         },
         homeFaq: {
             eyebrow: 'Häufige Fragen',
@@ -309,7 +311,8 @@ const de: MessageSchema = {
                 'Stile, Layouts und Merge-Tags beibehalten',
                 'Kostenlose und Open-Source Migrations-Tools',
             ],
-            guideCta: 'Zum Migrations-Guide',
+            guideCtaBeefree: 'Von BeeFree migrieren',
+            guideCtaUnlayer: 'Von Unlayer migrieren',
         },
         cta: {
             eyebrow: 'Loslegen',
@@ -324,7 +327,8 @@ const de: MessageSchema = {
                 title: 'Vorlagen migrieren',
                 description:
                     'Schon in einem Hosted-Editor? Importieren Sie bestehende Vorlagen und Konfigurationen — automatisches Block-Mapping, kein manuelles Nachbauen.',
-                cta: 'Zum Migrations-Guide',
+                ctaBeefree: 'Von BeeFree',
+                ctaUnlayer: 'Von Unlayer',
             },
         },
     },
@@ -332,7 +336,7 @@ const de: MessageSchema = {
         meta: {
             title: 'FAQ — Templatical',
             description:
-                'Antworten zu Lizenzierung, kommerzieller Nutzung, Framework-Support, BeeFree-Migration und der Cloud-Variante.',
+                'Antworten zu Lizenzierung, kommerzieller Nutzung, Framework-Support, Migrationswegen und der Cloud-Variante.',
         },
         hero: {
             eyebrow: 'FAQ',
@@ -351,7 +355,7 @@ const de: MessageSchema = {
             },
             packages: {
                 question: 'Welche Pakete sind MIT und welche FSL?',
-                answer: 'Drei der sechs Pakete sind heute reines MIT: Types, Renderer und der BeeFree-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
+                answer: 'Vier der sieben Pakete sind heute reines MIT: Types, Renderer sowie der BeeFree- und der Unlayer-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
             },
             branding: {
                 question: 'Muss ich „Powered by Templatical" anzeigen?',

@@ -1,6 +1,6 @@
 # templatical.com
 
-Marketing site for **Templatical** — the open-source, drag-and-drop email editor SDK. Positioned as the open-source alternative to BeeFree, with free migration tools.
+Marketing site for **Templatical** — the open-source, drag-and-drop email editor SDK. Positioned as the open-source alternative to hosted email-editor SaaS like BeeFree and Unlayer, with free migration tools.
 
 Deployed to Cloudflare Pages at [templatical.com](https://templatical.com).
 

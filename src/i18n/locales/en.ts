@@ -72,6 +72,7 @@ export default {
             cloudLabel: 'Coming with Templatical Cloud',
             cloudBadge: 'In development',
             cloudMore: 'More at cloud.templatical.com',
+            recommendedLabel: 'Recommended',
             columns: {
                 diy: {
                     title: 'Build it yourself',
@@ -138,8 +139,9 @@ export default {
         },
         migration: {
             text: 'Already on a hosted email builder? Free importers for your existing templates.',
-            cta: 'See migration guides',
-            sources: 'BeeFree · Unlayer · MJML',
+            sourcesLabel: 'Migration guides',
+            fromBeefree: 'From BeeFree',
+            fromUnlayer: 'From Unlayer',
         },
         homeFaq: {
             eyebrow: 'Common questions',
@@ -307,7 +309,8 @@ export default {
                 'Preserve styles, layouts, and merge tags',
                 'Free and open-source migration tools',
             ],
-            guideCta: 'See the migration guide',
+            guideCtaBeefree: 'Migrate from BeeFree',
+            guideCtaUnlayer: 'Migrate from Unlayer',
         },
         cta: {
             eyebrow: 'Get started',
@@ -322,7 +325,8 @@ export default {
                 title: 'Migrate your templates',
                 description:
                     'Already in a hosted editor? Import your existing templates and configurations — automatic block mapping, no manual rebuild.',
-                cta: 'See the migration guide',
+                ctaBeefree: 'From BeeFree',
+                ctaUnlayer: 'From Unlayer',
             },
         },
     },
@@ -330,7 +334,7 @@ export default {
         meta: {
             title: 'FAQ — Templatical',
             description:
-                'Answers about licensing, commercial use, framework support, BeeFree migration, and the Cloud tier.',
+                'Answers about licensing, commercial use, framework support, migration paths, and the Cloud tier.',
         },
         hero: {
             eyebrow: 'FAQ',
@@ -349,7 +353,7 @@ export default {
             },
             packages: {
                 question: 'Which packages are MIT vs FSL?',
-                answer: 'Three of the six packages are pure MIT today: types, renderer, and the BeeFree importer. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
+                answer: 'Four of the seven packages are pure MIT today: types, renderer, and the BeeFree and Unlayer importers. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
             },
             branding: {
                 question: 'Do I need to display "Powered by Templatical"?',

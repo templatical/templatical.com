@@ -17,19 +17,23 @@ const emit = defineEmits<{
 const tabRefs = ref<HTMLButtonElement[]>([]);
 const tablistRef = ref<HTMLDivElement | null>(null);
 const pillStyle = ref<Record<string, string>>({
-    transform: 'translateX(0)',
-    width: '0px',
+    clipPath: 'inset(0 100% 0 0 round 9999px)',
     opacity: '0',
 });
 
 const isSm = computed(() => props.size === 'sm');
+const PADDING = 4;
 
 function updatePill() {
     const btn = tabRefs.value[props.modelValue];
-    if (!btn) return;
+    const list = tablistRef.value;
+    if (!btn || !list) return;
+    const inner = list.clientWidth - PADDING * 2;
+    const left = btn.offsetLeft - PADDING;
+    const right = inner - left - btn.offsetWidth;
+    const radius = isSm.value ? '4px' : '9999px';
     pillStyle.value = {
-        transform: `translateX(${btn.offsetLeft}px)`,
-        width: `${btn.offsetWidth}px`,
+        clipPath: `inset(0 ${Math.max(0, right)}px 0 ${Math.max(0, left)}px round ${radius})`,
         opacity: '1',
     };
 }
@@ -93,8 +97,8 @@ watch(() => props.options.map((o) => o.label).join('|'), () => nextTick(updatePi
         <span
             aria-hidden="true"
             :class="[
-                'pointer-events-none absolute top-1 bottom-1 left-0 shadow-sm transition-[transform,width,opacity] duration-[380ms] ease-[var(--ease-spring)] will-change-transform motion-reduce:transition-none',
-                isSm ? 'rounded-sm bg-white dark:bg-neutral-900' : 'rounded-full bg-white dark:bg-neutral-950',
+                'pointer-events-none absolute inset-1 drop-shadow-sm transition-[clip-path,opacity] duration-[380ms] ease-[var(--ease-spring)] will-change-[clip-path] motion-reduce:transition-none',
+                isSm ? 'bg-white dark:bg-neutral-900' : 'bg-white dark:bg-neutral-950',
             ]"
             :style="pillStyle"
         />

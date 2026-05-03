@@ -7,7 +7,7 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import SiteText from '@/components/SiteText.vue';
-import { ChevronRight } from 'lucide-vue-next';
+import { ArrowRight, Check, ChevronRight } from 'lucide-vue-next';
 import { useHead } from '@unhead/vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -381,21 +381,10 @@ const supportingItemKeys = [
                                     :key="feature"
                                     class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
+                                    <Check
                                         class="mt-0.5 size-5 shrink-0 text-primary"
                                         aria-hidden="true"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="m4.5 12.75 6 6 9-13.5"
-                                        />
-                                    </svg>
+                                    />
                                     {{ feature }}
                                 </li>
                             </ul>
@@ -406,21 +395,7 @@ const supportingItemKeys = [
                                 class="mt-2 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 {{ section.docsLabel }}
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="2"
-                                    stroke="currentColor"
-                                    class="size-4"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                                    />
-                                </svg>
+                                <ArrowRight class="size-4" aria-hidden="true" />
                             </a>
                         </div>
                         <div class="flex flex-col gap-4">
@@ -502,47 +477,35 @@ const supportingItemKeys = [
                     :key="feature"
                     class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
+                    <Check
                         class="mt-0.5 size-5 shrink-0 text-primary"
                         aria-hidden="true"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m4.5 12.75 6 6 9-13.5"
-                        />
-                    </svg>
+                    />
                     {{ feature }}
                 </li>
             </ul>
-            <a
-                :href="docsUrl('/guide/migration-from-beefree')"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-6 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-            >
-                {{ t('features.migration.guideCta') }}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    class="size-4"
-                    aria-hidden="true"
+            <div class="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+                <a
+                    v-for="source in [
+                        {
+                            labelKey: 'features.migration.guideCtaBeefree',
+                            href: docsUrl('/guide/migration-from-beefree'),
+                        },
+                        {
+                            labelKey: 'features.migration.guideCtaUnlayer',
+                            href: docsUrl('/guide/migration-from-unlayer'),
+                        },
+                    ]"
+                    :key="source.href"
+                    :href="source.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                    />
-                </svg>
-            </a>
+                    {{ t(source.labelKey) }}
+                    <ArrowRight class="size-4" aria-hidden="true" />
+                </a>
+            </div>
         </SiteSection>
 
         <section class="bg-white py-20 sm:py-28 dark:bg-neutral-950">
@@ -560,11 +523,20 @@ const supportingItemKeys = [
                         v-for="path in [
                             {
                                 key: 'install',
-                                href: URLS.docs,
+                                links: [{ ctaKey: 'cta', href: URLS.docs }],
                             },
                             {
                                 key: 'migrate',
-                                href: docsUrl('/guide/migration-from-beefree'),
+                                links: [
+                                    {
+                                        ctaKey: 'ctaBeefree',
+                                        href: docsUrl('/guide/migration-from-beefree'),
+                                    },
+                                    {
+                                        ctaKey: 'ctaUnlayer',
+                                        href: docsUrl('/guide/migration-from-unlayer'),
+                                    },
+                                ],
                             },
                         ]"
                         :key="path.key"
@@ -578,15 +550,19 @@ const supportingItemKeys = [
                         <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
                             {{ t(`features.cta.${path.key}.description`) }}
                         </p>
-                        <a
-                            :href="path.href"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="mt-auto inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-                        >
-                            {{ t(`features.cta.${path.key}.cta`) }}
-                            <ChevronRight class="size-4" />
-                        </a>
+                        <div class="mt-auto flex flex-wrap gap-x-6 gap-y-2">
+                            <a
+                                v-for="link in path.links"
+                                :key="link.href"
+                                :href="link.href"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                            >
+                                {{ t(`features.cta.${path.key}.${link.ctaKey}`) }}
+                                <ChevronRight class="size-4" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </SiteContainer>

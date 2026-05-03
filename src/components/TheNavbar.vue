@@ -9,7 +9,7 @@ import AppLogoIcon from './AppLogoIcon.vue';
 import DarkModeToggle from './DarkModeToggle.vue';
 import LocaleSwitcher from './LocaleSwitcher.vue';
 import SiteButton from './SiteButton.vue';
-import { Github } from 'lucide-vue-next';
+import { Github, Menu, X } from 'lucide-vue-next';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -133,18 +133,7 @@ const linkClasses =
                         class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-neutral-950 hover:bg-neutral-950/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none lg:hidden dark:text-white dark:hover:bg-white/10"
                         @click="toggleMobileMenu(true)"
                     >
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="size-6"
-                            aria-hidden="true"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M3.748 8.248a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75ZM3.748 15.75a.75.75 0 0 1 .75-.751h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z"
-                                clip-rule="evenodd"
-                            />
-                        </svg>
+                        <Menu class="size-6" aria-hidden="true" />
                     </button>
                 </div>
             </div>
@@ -173,21 +162,7 @@ const linkClasses =
                                 class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-neutral-950 hover:bg-neutral-950/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-white dark:hover:bg-white/10"
                                 @click="toggleMobileMenu(false)"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="size-6"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M6 18 18 6M6 6l12 12"
-                                    />
-                                </svg>
+                                <X class="size-6" aria-hidden="true" />
                             </button>
                         </div>
                         <div class="mt-6 flex flex-col gap-6">
