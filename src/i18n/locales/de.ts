@@ -85,6 +85,7 @@ const de: MessageSchema = {
                         'Block-Level-Merge-Tag-Scoping',
                         'Anzeigebedingungen mit Live-Vorschau',
                         'Custom-Block-SDK mit API-gestützten Datenquellen',
+                        'Editor-zu-Medien-Bibliothek-Integration — Picker, Image-Block-Hook, Ersetzen-Flow',
                         'Dark-Mode-Vorschau-Parität zur gesendeten E-Mail',
                         'Theme-Tokens für konsistentes Branding',
                         'MJML-Output, überall renderbar',
@@ -118,6 +119,7 @@ const de: MessageSchema = {
                         'Custom Blocks mit API-gestützten Datenquellen',
                         'Block-Level-Merge-Tags mit Scoping',
                         'Anzeigebedingungen für dynamische Inhalte',
+                        'Pluggbare Medien-Bibliothek — eigener Speicher (S3, Cloudinary, Ihr CMS)',
                         'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
                         'Standardmäßig White-Label — Ihre UI, Ihre Marke',
                         'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
@@ -188,7 +190,7 @@ const de: MessageSchema = {
             eyebrow: 'Open-Source-SDK',
             headline: 'Was andere Editoren hinter Schranken halten — bei uns in Ihrem Repo. MIT-lizenziert.',
             subheadline:
-                'Fünf Power-Features und eine saubere Basis — alles enthalten, alles offen. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
+                'Sechs Power-Features und eine saubere Basis — alles enthalten, alles offen. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
             pricingPill: 'Open Source · MIT · Kostenlos selbst hosten',
         },
         examplesLabel: 'Beispiele für {title}',
@@ -254,6 +256,21 @@ const de: MessageSchema = {
                 'Tailwind 4 mit `tpl:`-Prefix — kein Preflight, keine Style-Leaks',
             ],
             docsLabel: 'Theming-Referenz',
+        },
+        mediaLibrary: {
+            eyebrow: 'Assets',
+            title: 'Pluggbare Medien-Bibliothek',
+            description:
+                'Ein einziger onRequestMedia-Hook lässt den Editor Ihren Medienbrowser öffnen — S3, Cloudinary, Ihr eigenes CMS, alles. Kein Anbieter-Speicher, keine Asset-Egress-Gebühren, kein Lock-in.',
+            outcome: 'Nutzen Sie die Asset-Pipeline, die Sie ohnehin betreiben — durchgängig.',
+            features: [
+                'Ein async-Hook gibt { url, alt } zurück — beliebiges Backend',
+                'Wird aus Bild-Blöcken, Bild-Feldern und der Toolbar ausgelöst',
+                'Kontextsensibler accept-Hinweis — der Editor sagt, was er erwartet',
+                'Kein Upload läuft über Templatical — Ihr Speicher, Ihre Auth',
+                'Cloud-Build ergänzt einen Managed-Medienbrowser auf Wunsch',
+            ],
+            docsLabel: 'Medien-Bibliothek-Referenz',
         },
         defaults: {
             eyebrow: 'Standards',

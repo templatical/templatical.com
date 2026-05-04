@@ -83,6 +83,7 @@ export default {
                         'Block-level merge tag scoping',
                         'Display conditions with live preview',
                         'Custom block SDK with API-backed data sources',
+                        'Editor-to-media-library glue — picker, image-block hook, replace flow',
                         'Dark-mode preview parity with sent email',
                         'Theme tokens for brand consistency',
                         'MJML output you can render anywhere',
@@ -116,6 +117,7 @@ export default {
                         'Custom blocks with API-backed data sources',
                         'Block-level merge tags with scoping',
                         'Display conditions for dynamic content',
+                        'Pluggable media library — bring your own storage (S3, Cloudinary, your CMS)',
                         'Full theming via design tokens, dark mode included',
                         'White-label by default — your UI, your brand',
                         'MJML output — render in browser, on your server, anywhere',
@@ -186,7 +188,7 @@ export default {
             eyebrow: 'Open-source SDK',
             headline: 'The features other editors gate. In your repo. MIT-licensed.',
             subheadline:
-                'Five power features and a clean set of essentials — all included, all open. Portable JSON in, MJML out, no usage tier in the way.',
+                'Six power features and a clean set of essentials — all included, all open. Portable JSON in, MJML out, no usage tier in the way.',
             pricingPill: 'Open source · MIT · Free to self-host',
         },
         examplesLabel: '{title} examples',
@@ -252,6 +254,21 @@ export default {
                 'Tailwind 4 with `tpl:` prefix — no preflight, no style leaks',
             ],
             docsLabel: 'Theming reference',
+        },
+        mediaLibrary: {
+            eyebrow: 'Assets',
+            title: 'Pluggable media library',
+            description:
+                'A single onRequestMedia hook lets the editor open your media browser — S3, Cloudinary, your own CMS, anything. No vendor storage, no asset egress fees, no lock-in.',
+            outcome: 'Reuse the asset pipeline you already run, end-to-end.',
+            features: [
+                'One async hook returns { url, alt } — bring any backend',
+                'Triggered from image blocks, image fields, and the toolbar',
+                'Context-aware accept hint — the editor tells you what it wants',
+                'No upload happens through Templatical — your storage, your auth',
+                'Cloud build adds a managed media browser when you opt in',
+            ],
+            docsLabel: 'Media-library reference',
         },
         defaults: {
             eyebrow: 'Defaults',

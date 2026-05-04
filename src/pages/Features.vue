@@ -252,6 +252,30 @@ const featureSections = computed<FeatureSection[]>(() => [
 })`,
     },
     {
+        slug: 'media-library',
+        docsPath: '/guide/media-library',
+        docsLabel: t('features.mediaLibrary.docsLabel'),
+        eyebrow: t('features.mediaLibrary.eyebrow'),
+        title: t('features.mediaLibrary.title'),
+        description: t('features.mediaLibrary.description'),
+        outcome: t('features.mediaLibrary.outcome'),
+        features: tm('features.mediaLibrary.features') as string[],
+        code: `const editor = await init({
+  container: '#editor',
+  // Editor calls onRequestMedia when the user picks an image —
+  // open your own asset browser (S3, Cloudinary, your CMS, etc.)
+  // and resolve with { url, alt } — or null on cancel.
+  async onRequestMedia({ accept } = {}) {
+    const picked = await openAssetBrowser({
+      accept,                 // e.g. ['images']
+      endpoint: '/api/assets',
+    })
+    if (!picked) return null
+    return { url: picked.url, alt: picked.alt }
+  },
+})`,
+    },
+    {
         slug: 'defaults',
         docsPath: '/guide/defaults',
         docsLabel: t('features.defaults.docsLabel'),
