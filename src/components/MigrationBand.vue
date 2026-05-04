@@ -15,6 +15,10 @@ const sources = [
         labelKey: 'home.migration.fromUnlayer',
         href: `${URLS.docs}/guide/migration-from-unlayer`,
     },
+    {
+        labelKey: 'home.migration.fromHtml',
+        href: `${URLS.docs}/guide/migration-from-html`,
+    },
 ];
 </script>
 

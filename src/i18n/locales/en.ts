@@ -138,10 +138,11 @@ export default {
             ctaTertiary: 'Sponsor',
         },
         migration: {
-            text: 'Already on a hosted email builder? Free importers for your existing templates.',
+            text: 'Already on a hosted email builder or shipping raw HTML? Free importers for your existing templates.',
             sourcesLabel: 'Migration guides',
             fromBeefree: 'From BeeFree',
             fromUnlayer: 'From Unlayer',
+            fromHtml: 'From HTML',
         },
         homeFaq: {
             eyebrow: 'Common questions',
@@ -302,15 +303,16 @@ export default {
             eyebrow: 'Painless migration',
             title: 'Already in another editor? Bring your templates with you.',
             description:
-                'Import existing templates and configurations from major hosted editors. Free, open-source migration tools — no manual rebuilding, no vendor lock-in.',
+                'Import existing templates from major hosted editors — or any HTML email you already have. Free, open-source migration tools, no manual rebuilding, no vendor lock-in.',
             features: [
                 'Import legacy JSON templates directly',
-                'Automatic block mapping and conversion',
-                'Preserve styles, layouts, and merge tags',
+                'Convert raw HTML emails — MJML, Mailchimp, SendGrid, hand-coded',
+                'Automatic block mapping and style preservation',
                 'Free and open-source migration tools',
             ],
             guideCtaBeefree: 'Migrate from BeeFree',
             guideCtaUnlayer: 'Migrate from Unlayer',
+            guideCtaHtml: 'Migrate from HTML',
         },
         cta: {
             eyebrow: 'Get started',
@@ -324,9 +326,10 @@ export default {
             migrate: {
                 title: 'Migrate your templates',
                 description:
-                    'Already in a hosted editor? Import your existing templates and configurations — automatic block mapping, no manual rebuild.',
+                    'Already in a hosted editor — or sitting on a folder of HTML emails? Import them with automatic block mapping, no manual rebuild.',
                 ctaBeefree: 'From BeeFree',
                 ctaUnlayer: 'From Unlayer',
+                ctaHtml: 'From HTML',
             },
         },
     },
@@ -365,7 +368,7 @@ export default {
             },
             migrate: {
                 question: 'How do I migrate from another editor?',
-                answer: 'We provide free, MIT-licensed migration tools for BeeFree, Unlayer, and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically. See the migration guides in the docs for each source format.',
+                answer: 'We provide free, MIT-licensed migration tools for BeeFree, Unlayer, raw HTML, and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically. See the migration guides in the docs for each source format.',
             },
             data: {
                 question: 'Where does my template data go?',

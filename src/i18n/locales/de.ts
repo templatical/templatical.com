@@ -140,10 +140,11 @@ const de: MessageSchema = {
             ctaTertiary: 'Sponsor',
         },
         migration: {
-            text: 'Schon auf einem gehosteten E-Mail-Builder? Kostenlose Importer für Ihre bestehenden Vorlagen.',
+            text: 'Schon auf einem gehosteten E-Mail-Builder oder mit rohem HTML unterwegs? Kostenlose Importer für Ihre bestehenden Vorlagen.',
             sourcesLabel: 'Migrationsanleitungen',
             fromBeefree: 'Von BeeFree',
             fromUnlayer: 'Von Unlayer',
+            fromHtml: 'Von HTML',
         },
         homeFaq: {
             eyebrow: 'Häufige Fragen',
@@ -304,15 +305,16 @@ const de: MessageSchema = {
             eyebrow: 'Schmerzlose Migration',
             title: 'Schon in einem anderen Editor? Bringen Sie Ihre Vorlagen mit.',
             description:
-                'Importieren Sie bestehende Vorlagen und Konfigurationen aus großen Hosted-Editoren. Kostenlose Open-Source-Migrations-Tools — kein manuelles Nachbauen, kein Vendor-Lock-in.',
+                'Importieren Sie bestehende Vorlagen aus großen Hosted-Editoren — oder jede HTML-E-Mail, die Sie schon haben. Kostenlose, quelloffene Migrations-Tools, kein manuelles Nachbauen, kein Vendor-Lock-in.',
             features: [
                 'Bestehende JSON-Vorlagen direkt importieren',
-                'Automatisches Block-Mapping und Konvertierung',
-                'Stile, Layouts und Merge-Tags beibehalten',
+                'Rohes HTML konvertieren — MJML, Mailchimp, SendGrid, handgeschrieben',
+                'Automatisches Block-Mapping und Stil-Erhalt',
                 'Kostenlose und Open-Source Migrations-Tools',
             ],
             guideCtaBeefree: 'Von BeeFree migrieren',
             guideCtaUnlayer: 'Von Unlayer migrieren',
+            guideCtaHtml: 'Von HTML migrieren',
         },
         cta: {
             eyebrow: 'Loslegen',
@@ -326,9 +328,10 @@ const de: MessageSchema = {
             migrate: {
                 title: 'Vorlagen migrieren',
                 description:
-                    'Schon in einem Hosted-Editor? Importieren Sie bestehende Vorlagen und Konfigurationen — automatisches Block-Mapping, kein manuelles Nachbauen.',
+                    'Schon in einem Hosted-Editor — oder mit einem Ordner voller HTML-E-Mails? Importieren Sie sie mit automatischem Block-Mapping, ohne manuelles Nachbauen.',
                 ctaBeefree: 'Von BeeFree',
                 ctaUnlayer: 'Von Unlayer',
+                ctaHtml: 'Von HTML',
             },
         },
     },
@@ -367,7 +370,7 @@ const de: MessageSchema = {
             },
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
-                answer: 'Wir bieten kostenlose, MIT-lizenzierte Migrations-Tools für BeeFree, Unlayer und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch. Migrationsanleitungen für jedes Quellformat finden Sie in der Dokumentation.',
+                answer: 'Wir bieten kostenlose, MIT-lizenzierte Migrations-Tools für BeeFree, Unlayer, rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch. Migrationsanleitungen für jedes Quellformat finden Sie in der Dokumentation.',
             },
             data: {
                 question: 'Wohin gehen meine Vorlagendaten?',

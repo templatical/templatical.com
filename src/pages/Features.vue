@@ -495,6 +495,10 @@ const supportingItemKeys = [
                             labelKey: 'features.migration.guideCtaUnlayer',
                             href: docsUrl('/guide/migration-from-unlayer'),
                         },
+                        {
+                            labelKey: 'features.migration.guideCtaHtml',
+                            href: docsUrl('/guide/migration-from-html'),
+                        },
                     ]"
                     :key="source.href"
                     :href="source.href"
@@ -535,6 +539,10 @@ const supportingItemKeys = [
                                     {
                                         ctaKey: 'ctaUnlayer',
                                         href: docsUrl('/guide/migration-from-unlayer'),
+                                    },
+                                    {
+                                        ctaKey: 'ctaHtml',
+                                        href: docsUrl('/guide/migration-from-html'),
                                     },
                                 ],
                             },
