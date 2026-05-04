@@ -31,6 +31,27 @@ export default {
         },
         previewAlt:
             'Templatical editor: drag-and-drop email builder with toolbar, canvas, and inspector panels',
+        mergeTagModal: {
+            title: 'Insert merge tag',
+            description:
+                'Wire the editor to your data via the onRequest callback. Pick one to insert.',
+            cancel: 'Cancel',
+            close: 'Close',
+            demoNote: 'Demo list — your app supplies the real values.',
+            consumerInfo:
+                'This modal lives in your app, not the SDK. The editor calls onRequest — you fetch tags from your API, render any UI, and resolve with the chosen tag.',
+            docsLink: 'Read the docs',
+        },
+        mergeTags: {
+            firstName: { label: 'First name', description: 'Recipient first name' },
+            lastName: { label: 'Last name', description: 'Recipient last name' },
+            email: { label: 'Email address', description: 'Recipient email' },
+            company: { label: 'Company', description: 'Workspace or company name' },
+            unsubscribeUrl: {
+                label: 'Unsubscribe URL',
+                description: 'Generated per-recipient unsubscribe link',
+            },
+        },
     },
     footer: {
         features: 'Features',

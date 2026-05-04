@@ -33,6 +33,27 @@ const de: MessageSchema = {
         },
         previewAlt:
             'Templatical-Editor: Drag-and-Drop-E-Mail-Builder mit Symbolleiste, Canvas und Inspektor-Bereichen',
+        mergeTagModal: {
+            title: 'Merge-Tag einfügen',
+            description:
+                'Verbinde den Editor über den onRequest-Callback mit deinen Daten. Wähle einen Tag aus.',
+            cancel: 'Abbrechen',
+            close: 'Schließen',
+            demoNote: 'Demo-Liste — deine App liefert die echten Werte.',
+            consumerInfo:
+                'Dieses Modal gehört zu deiner App, nicht zum SDK. Der Editor ruft onRequest auf — du holst Tags aus deiner API, zeigst beliebige UI und löst mit dem gewählten Tag auf.',
+            docsLink: 'Zur Dokumentation',
+        },
+        mergeTags: {
+            firstName: { label: 'Vorname', description: 'Vorname des Empfängers' },
+            lastName: { label: 'Nachname', description: 'Nachname des Empfängers' },
+            email: { label: 'E-Mail-Adresse', description: 'E-Mail des Empfängers' },
+            company: { label: 'Unternehmen', description: 'Workspace- oder Firmenname' },
+            unsubscribeUrl: {
+                label: 'Abmeldelink',
+                description: 'Pro Empfänger generierter Abmeldelink',
+            },
+        },
     },
     footer: {
         features: 'Funktionen',

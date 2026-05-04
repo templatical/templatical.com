@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { useIntersectionObserver, useMediaQuery } from '@vueuse/core';
-import { onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
+import { onClickOutside, onKeyStroke, useIntersectionObserver, useMediaQuery } from '@vueuse/core';
+import { computed, onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { ArrowUpRight, Info, X } from 'lucide-vue-next';
 import { useDarkMode } from '@/composables/useDarkMode';
-import { URLS } from '@/lib/urls';
+import { URLS, localizedUrl } from '@/lib/urls';
+
+type MergeTag = { label: string; value: string };
 
 const EDITOR_ESM_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.js';
 const EDITOR_CSS_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.css';
@@ -104,7 +107,59 @@ const isDesktop = useMediaQuery('(min-width: 1024px)');
 
 const root = useTemplateRef<HTMLDivElement>('root');
 const container = useTemplateRef<HTMLDivElement>('container');
+const modalPanel = useTemplateRef<HTMLDivElement>('modalPanel');
 const status = ref<'idle' | 'loading' | 'ready' | 'error'>('idle');
+
+const DEMO_TAG_KEYS = ['firstName', 'lastName', 'email', 'company', 'unsubscribeUrl'] as const;
+const DEMO_TAG_VALUES: Record<(typeof DEMO_TAG_KEYS)[number], string> = {
+    firstName: '{{first_name}}',
+    lastName: '{{last_name}}',
+    email: '{{email}}',
+    company: '{{company}}',
+    unsubscribeUrl: '{{unsubscribe_url}}',
+};
+
+const dynamicMergeTagsDocsUrl = computed(() =>
+    localizedUrl('dynamicMergeTagsDocs', locale.value),
+);
+
+const demoTags = computed(() =>
+    DEMO_TAG_KEYS.map((key) => ({
+        key,
+        label: t(`heroEditor.mergeTags.${key}.label`),
+        description: t(`heroEditor.mergeTags.${key}.description`),
+        value: DEMO_TAG_VALUES[key],
+    })),
+);
+
+const showMergeTagModal = ref(false);
+let resolveMergeTagSelection: ((tag: MergeTag | null) => void) | null = null;
+
+function requestMergeTag(): Promise<MergeTag | null> {
+    showMergeTagModal.value = true;
+    return new Promise((resolve) => {
+        resolveMergeTagSelection = resolve;
+    });
+}
+
+function selectMergeTag(tag: MergeTag) {
+    resolveMergeTagSelection?.(tag);
+    resolveMergeTagSelection = null;
+    showMergeTagModal.value = false;
+}
+
+function cancelMergeTag() {
+    resolveMergeTagSelection?.(null);
+    resolveMergeTagSelection = null;
+    showMergeTagModal.value = false;
+}
+
+onClickOutside(modalPanel, () => {
+    if (showMergeTagModal.value) cancelMergeTag();
+});
+onKeyStroke('Escape', () => {
+    if (showMergeTagModal.value) cancelMergeTag();
+});
 
 type EditorInstance = {
     unmount(): void;
@@ -142,10 +197,8 @@ async function mountEditor() {
                 branding: false,
                 content: heroContent,
                 mergeTags: {
-                    tags: [
-                        { label: 'First name', value: '{{first_name}}' },
-                        { label: 'Unsubscribe URL', value: '{{unsubscribe_url}}' },
-                    ],
+                    tags: demoTags.value.map(({ label, value }) => ({ label, value })),
+                    onRequest: requestMergeTag,
                 },
             }),
             timeout,
@@ -276,6 +329,101 @@ onBeforeUnmount(() => {
                 class="block h-auto w-full"
             />
         </div>
+
+        <Teleport to="body">
+            <Transition
+                enter-active-class="motion-safe:transition motion-safe:duration-150 motion-safe:ease-out"
+                leave-active-class="motion-safe:transition motion-safe:duration-100 motion-safe:ease-in"
+                enter-from-class="opacity-0"
+                leave-to-class="opacity-0"
+            >
+                <div
+                    v-if="showMergeTagModal"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/60 p-4 backdrop-blur-sm"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="merge-tag-modal-title"
+                >
+                    <div
+                        ref="modalPanel"
+                        class="w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/10 dark:bg-neutral-900 dark:ring-white/10"
+                    >
+                        <div class="flex items-start justify-between gap-4 border-b border-neutral-200 px-5 py-4 dark:border-neutral-800">
+                            <div>
+                                <h2
+                                    id="merge-tag-modal-title"
+                                    class="text-base font-semibold text-neutral-900 dark:text-neutral-100"
+                                >
+                                    {{ t('heroEditor.mergeTagModal.title') }}
+                                </h2>
+                                <p class="mt-1 text-xs text-neutral-600 dark:text-neutral-400">
+                                    {{ t('heroEditor.mergeTagModal.description') }}
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                class="-m-1 cursor-pointer rounded-md p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                                :aria-label="t('heroEditor.mergeTagModal.close')"
+                                @click="cancelMergeTag"
+                            >
+                                <X class="size-4" aria-hidden="true" />
+                            </button>
+                        </div>
+
+                        <div class="mx-5 mt-4 flex items-start gap-2 rounded-md border border-primary/20 bg-primary/5 px-3 py-2 text-[11px] leading-relaxed text-neutral-700 dark:border-primary/30 dark:bg-primary/10 dark:text-neutral-300">
+                            <Info class="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden="true" />
+                            <div class="space-y-1">
+                                <p>{{ t('heroEditor.mergeTagModal.consumerInfo') }}</p>
+                                <a
+                                    :href="dynamicMergeTagsDocsUrl"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-1 font-medium text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                                >
+                                    {{ t('heroEditor.mergeTagModal.docsLink') }}
+                                    <ArrowUpRight class="size-3" aria-hidden="true" />
+                                </a>
+                            </div>
+                        </div>
+
+                        <ul class="max-h-80 overflow-y-auto py-2">
+                            <li v-for="tag in demoTags" :key="tag.key">
+                                <button
+                                    type="button"
+                                    class="flex w-full cursor-pointer items-start justify-between gap-4 px-5 py-3 text-left transition hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:outline-none dark:hover:bg-neutral-800/60 dark:focus-visible:bg-neutral-800/60"
+                                    @click="selectMergeTag({ label: tag.label, value: tag.value })"
+                                >
+                                    <span class="flex flex-col">
+                                        <span class="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                                            {{ tag.label }}
+                                        </span>
+                                        <span class="text-xs text-neutral-500 dark:text-neutral-400">
+                                            {{ tag.description }}
+                                        </span>
+                                    </span>
+                                    <code class="shrink-0 rounded bg-neutral-100 px-2 py-0.5 font-mono text-xs text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+                                        {{ tag.value }}
+                                    </code>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="flex items-center justify-between gap-3 border-t border-neutral-200 px-5 py-3 dark:border-neutral-800">
+                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                {{ t('heroEditor.mergeTagModal.demoNote') }}
+                            </p>
+                            <button
+                                type="button"
+                                class="cursor-pointer rounded-md px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-300 dark:hover:bg-neutral-800"
+                                @click="cancelMergeTag"
+                            >
+                                {{ t('heroEditor.mergeTagModal.cancel') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Transition>
+        </Teleport>
     </div>
 </template>
 
