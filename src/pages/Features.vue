@@ -266,7 +266,6 @@ const featureSections = computed<FeatureSection[]>(() => [
   // inline badges on the canvas. Powered by the optional
   // peer @templatical/quality (lazy-loaded on first use).
   accessibility: {
-    locale: 'en',
     // Per-rule severity overrides — 'error' | 'warn' | 'info' | 'off'.
     rules: {
       'img-alt-missing':         'error',
