@@ -142,6 +142,7 @@ export default {
                         'Full theming via design tokens, dark mode included',
                         'White-label by default — your UI, your brand',
                         'MJML output — render in browser, on your server, anywhere',
+                        'Built-in WCAG accessibility linting with auto-fixes',
                     ],
                     cloud: [
                         'AI rewrite, AI chat, MCP integration',
@@ -275,6 +276,21 @@ export default {
                 'Tailwind 4 with `tpl:` prefix — no preflight, no style leaks',
             ],
             docsLabel: 'Theming reference',
+        },
+        accessibility: {
+            eyebrow: 'Quality',
+            title: 'Built-in accessibility linting',
+            description:
+                'Live WCAG checks while authoring — surfaced in a dedicated sidebar tab and as inline badges on the canvas. Deterministic rules, configurable severity, no AI guesswork.',
+            outcome: 'Catch alt-text, contrast, and structure issues before send — not after.',
+            features: [
+                'Live checks: errors, warnings, and info — grouped in the sidebar',
+                'Inline canvas badges with one-click jump and auto-fix where safe',
+                'Per-rule severity overrides and configurable thresholds (contrast, font size, touch targets)',
+                'Locale-aware vague-text dictionaries',
+                'Same engine runs standalone — validate templates in CI, on save, or in pre-send pipelines',
+            ],
+            docsLabel: 'Accessibility reference',
         },
         mediaLibrary: {
             eyebrow: 'Assets',

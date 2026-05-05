@@ -144,6 +144,7 @@ const de: MessageSchema = {
                         'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
                         'Standardmäßig White-Label — Ihre UI, Ihre Marke',
                         'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
+                        'Eingebaute WCAG-Barrierefreiheits-Prüfung mit Auto-Fixes',
                     ],
                     cloud: [
                         'KI-Umschreiben, KI-Chat, MCP-Integration',
@@ -277,6 +278,21 @@ const de: MessageSchema = {
                 'Tailwind 4 mit `tpl:`-Prefix — kein Preflight, keine Style-Leaks',
             ],
             docsLabel: 'Theming-Referenz',
+        },
+        accessibility: {
+            eyebrow: 'Qualität',
+            title: 'Eingebaute Barrierefreiheits-Prüfung',
+            description:
+                'Live-WCAG-Checks während der Bearbeitung — sichtbar in einem eigenen Sidebar-Tab und als Inline-Badges auf dem Canvas. Deterministische Regeln, konfigurierbare Schwere, kein KI-Raten.',
+            outcome: 'Alt-Text-, Kontrast- und Strukturprobleme vor dem Versand erkennen — nicht danach.',
+            features: [
+                'Live-Prüfungen: Fehler, Warnungen, Hinweise — in der Sidebar gruppiert',
+                'Inline-Badges auf dem Canvas mit Sprung-zu-Stelle und Auto-Fix wo sicher',
+                'Pro Regel Schwere überschreibbar, Schwellenwerte konfigurierbar (Kontrast, Schriftgröße, Touch-Targets)',
+                'Lokale-bewusste Wörterbücher für vagen Text',
+                'Dieselbe Engine läuft eigenständig — Templates in CI, beim Speichern oder vor dem Versand prüfen',
+            ],
+            docsLabel: 'Barrierefreiheits-Referenz',
         },
         mediaLibrary: {
             eyebrow: 'Assets',

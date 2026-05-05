@@ -252,6 +252,39 @@ const featureSections = computed<FeatureSection[]>(() => [
 })`,
     },
     {
+        slug: 'accessibility',
+        docsPath: '/quality/accessibility',
+        docsLabel: t('features.accessibility.docsLabel'),
+        eyebrow: t('features.accessibility.eyebrow'),
+        title: t('features.accessibility.title'),
+        description: t('features.accessibility.description'),
+        outcome: t('features.accessibility.outcome'),
+        features: tm('features.accessibility.features') as string[],
+        code: `const editor = await init({
+  container: '#editor',
+  // Live accessibility linting in the right sidebar +
+  // inline badges on the canvas. Powered by the optional
+  // peer @templatical/quality (lazy-loaded on first use).
+  accessibility: {
+    locale: 'en',
+    // Per-rule severity overrides — 'error' | 'warn' | 'info' | 'off'.
+    rules: {
+      'img-alt-missing':         'error',
+      'img-alt-filename-like':   'warn',
+      'link-target-blank-no-rel': 'off',
+    },
+    thresholds: {
+      contrastNormal:  4.5,
+      contrastLarge:   3,
+      minFontSize:     12,
+      minTouchTargetPx: 44,
+    },
+    // Or set disabled: true to skip the chunk entirely
+    // and hide the panel + inline badges.
+  },
+})`,
+    },
+    {
         slug: 'media-library',
         docsPath: '/guide/media-library',
         docsLabel: t('features.mediaLibrary.docsLabel'),
