@@ -79,6 +79,7 @@ export default {
                 'Built on MJML',
                 'FSL-1.1-MIT (auto-MIT)',
                 'Framework-neutral',
+                'Shadow DOM',
                 'Zero telemetry',
             ],
         },
@@ -110,6 +111,7 @@ export default {
                         'MJML output you can render anywhere',
                         'Email-client compatibility — Outlook 2007–365, Gmail clipping, Apple Mail',
                         'Accessibility — keyboard nav, ARIA, screen readers',
+                        'Style isolation — host CSS resets and design-system globals bleed into the editor',
                         'Ongoing maintenance — every email-client tweak is a regression risk',
                     ],
                 },
@@ -128,6 +130,7 @@ export default {
                         'Per-seat or per-end-user pricing scales with you',
                         'Closed source — cannot audit, fork, or extend',
                         'Output coupled to the vendor’s render API',
+                        'No CSS isolation — host styles can cascade into the embedded editor',
                     ],
                 },
                 templatical: {
@@ -143,6 +146,7 @@ export default {
                         'White-label by default — your UI, your brand',
                         'MJML output — render in browser, on your server, anywhere',
                         'Built-in WCAG accessibility linting with auto-fixes',
+                        'Style-isolated — Shadow DOM mount keeps host CSS out',
                     ],
                     cloud: [
                         'AI rewrite, AI chat, MCP integration',
@@ -276,6 +280,21 @@ export default {
                 'Tailwind 4 with `tpl:` prefix — no preflight, no style leaks',
             ],
             docsLabel: 'Theming reference',
+        },
+        cssIsolation: {
+            eyebrow: 'Integration',
+            title: 'Drop into any page — host CSS can\'t interfere',
+            description:
+                'The editor mounts inside a Shadow DOM by default. Your app\'s stylesheets, design system preflight, and CMS template resets stop at the boundary — they never cascade into the toolbar, sidebar, or canvas.',
+            outcome: 'Embed in any framework, CMS, or legacy app — no resets, no !important wars, no surprises after a design-system bump.',
+            features: [
+                'Shadow DOM mount by default — no host CSS leaks in',
+                'Editor styles can\'t leak out either (tpl: Tailwind prefix in light-DOM mode)',
+                'Project your brand across the shadow boundary via --tpl-user-* CSS variables',
+                'Opt out with shadowDom: false for light-DOM mount when you need it',
+                'Multi-instance safe — each editor gets its own shadow root',
+            ],
+            docsLabel: 'Style-isolation guide',
         },
         accessibility: {
             eyebrow: 'Quality',
@@ -427,6 +446,10 @@ export default {
             data: {
                 question: 'Where does my template data go?',
                 answer: 'Nowhere. The SDK runs entirely in the browser — no telemetry, no remote calls, no analytics. Your templates never leave your app unless you save them to your own backend.',
+            },
+            cssIsolation: {
+                question: 'Will the editor inherit my app\'s CSS?',
+                answer: 'No. The editor mounts inside a Shadow DOM by default, so host stylesheets stop at the boundary. Your body font-family, your design system\'s box-sizing reset, your framework\'s preflight — none of them reach the editor. If you want your theme to apply, set --tpl-user-* CSS variables on the container; they inherit across the shadow boundary. You can opt out with shadowDom: false if you need a light-DOM mount.',
             },
             paid: {
                 question: 'Is there a paid version, and is it required?',

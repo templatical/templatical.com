@@ -15,6 +15,10 @@ export const LOCALIZED_URLS = {
         en: 'https://docs.templatical.com/guide/merge-tags#dynamic-tag-loading',
         de: 'https://docs.templatical.com/de/guide/merge-tags#dynamisches-tag-laden',
     },
+    shadowDomDocs: {
+        en: 'https://docs.templatical.com/guide/shadow-dom',
+        de: 'https://docs.templatical.com/de/guide/shadow-dom',
+    },
 } as const;
 
 export function localizedUrl(

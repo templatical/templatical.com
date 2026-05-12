@@ -252,6 +252,33 @@ const featureSections = computed<FeatureSection[]>(() => [
 })`,
     },
     {
+        slug: 'cssIsolation',
+        docsPath: '/guide/shadow-dom',
+        docsLabel: t('features.cssIsolation.docsLabel'),
+        eyebrow: t('features.cssIsolation.eyebrow'),
+        title: t('features.cssIsolation.title'),
+        description: t('features.cssIsolation.description'),
+        outcome: t('features.cssIsolation.outcome'),
+        features: tm('features.cssIsolation.features') as string[],
+        code: `const editor = await init({
+  container: '#editor',
+  // Shadow DOM by default — host stylesheets stop at the boundary.
+  // Your design system's preflight, *{ box-sizing }, and body font
+  // can't cascade into the editor. Set to false for a light-DOM
+  // mount if you need to inspect editor nodes from host scripts.
+  shadowDom: true,
+
+  // To project your brand across the shadow boundary, set
+  // --tpl-user-* CSS variables on the container (or any ancestor).
+  // They inherit through the shadow root.
+  theme: {
+    '--tpl-user-color-primary': '#0d9488',
+    '--tpl-user-font-sans':     'Inter, system-ui, sans-serif',
+    '--tpl-user-radius':        '10px',
+  },
+})`,
+    },
+    {
         slug: 'accessibility',
         docsPath: '/quality/accessibility',
         docsLabel: t('features.accessibility.docsLabel'),

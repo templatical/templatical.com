@@ -32,6 +32,7 @@ const faqItems = computed(() =>
         'frameworks',
         'migrate',
         'data',
+        'cssIsolation',
         'paid',
     ].map((key) => ({
         question: t(`faq.items.${key}.question`),

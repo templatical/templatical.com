@@ -81,6 +81,7 @@ const de: MessageSchema = {
                 'Auf MJML aufgebaut',
                 'FSL-1.1-MIT (auto-MIT)',
                 'Framework-neutral',
+                'Shadow DOM',
                 'Keine Telemetrie',
             ],
         },
@@ -112,6 +113,7 @@ const de: MessageSchema = {
                         'MJML-Output, überall renderbar',
                         'E-Mail-Client-Kompatibilität — Outlook 2007–365, Gmail-Clipping, Apple Mail',
                         'Barrierefreiheit — Tastaturnavigation, ARIA, Screenreader',
+                        'Stil-Isolation — Host-CSS-Resets und Design-System-Globals dringen in den Editor ein',
                         'Laufende Wartung — jede E-Mail-Client-Änderung ist ein Regressions-Risiko',
                     ],
                 },
@@ -130,6 +132,7 @@ const de: MessageSchema = {
                         'Preise skalieren pro Sitz oder Endnutzer',
                         'Closed Source — kein Audit, Fork oder Erweitern',
                         'Output an die Render-API des Anbieters gekoppelt',
+                        'Keine CSS-Isolation — Host-Styles greifen in den eingebetteten Editor durch',
                     ],
                 },
                 templatical: {
@@ -145,6 +148,7 @@ const de: MessageSchema = {
                         'Standardmäßig White-Label — Ihre UI, Ihre Marke',
                         'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
                         'Eingebaute WCAG-Barrierefreiheits-Prüfung mit Auto-Fixes',
+                        'Style-isoliert — Shadow-DOM-Mount hält Host-CSS draußen',
                     ],
                     cloud: [
                         'KI-Umschreiben, KI-Chat, MCP-Integration',
@@ -278,6 +282,21 @@ const de: MessageSchema = {
                 'Tailwind 4 mit `tpl:`-Prefix — kein Preflight, keine Style-Leaks',
             ],
             docsLabel: 'Theming-Referenz',
+        },
+        cssIsolation: {
+            eyebrow: 'Integration',
+            title: 'In jede Seite einbinden — Host-CSS kann nicht eingreifen',
+            description:
+                'Der Editor wird standardmäßig in einem Shadow DOM gemountet. Die Stylesheets Ihrer App, das Preflight Ihres Design-Systems und CMS-Template-Resets enden an der Grenze — sie greifen nicht in Toolbar, Sidebar oder Canvas durch.',
+            outcome: 'In jedes Framework, CMS oder Legacy-Projekt einbetten — ohne Resets, ohne !important-Schlachten, ohne Überraschungen nach einem Design-System-Update.',
+            features: [
+                'Standardmäßig Shadow-DOM-Mount — kein Host-CSS dringt ein',
+                'Editor-Styles dringen auch nicht nach außen (tpl:-Tailwind-Prefix im Light-DOM-Modus)',
+                'Brand-Projektion über die Shadow-Grenze hinweg via --tpl-user-*-CSS-Variablen',
+                'Per shadowDom: false bei Bedarf auf Light-DOM-Mount umstellen',
+                'Multi-Instanz-sicher — jeder Editor erhält eine eigene Shadow Root',
+            ],
+            docsLabel: 'Stil-Isolations-Guide',
         },
         accessibility: {
             eyebrow: 'Qualität',
@@ -429,6 +448,10 @@ const de: MessageSchema = {
             data: {
                 question: 'Wohin gehen meine Vorlagendaten?',
                 answer: 'Nirgendwohin. Das SDK läuft vollständig im Browser — keine Telemetrie, keine Remote-Aufrufe, keine Analytics. Ihre Vorlagen verlassen Ihre App nur, wenn Sie sie an Ihr eigenes Backend speichern.',
+            },
+            cssIsolation: {
+                question: 'Übernimmt der Editor das CSS meiner App?',
+                answer: 'Nein. Der Editor wird standardmäßig in einem Shadow DOM gemountet, sodass Host-Stylesheets an der Grenze stoppen. Ihr body font-family, das box-sizing-Reset Ihres Design-Systems, das Preflight Ihres Frameworks — nichts davon erreicht den Editor. Wenn Ihr Theme angewendet werden soll, setzen Sie --tpl-user-*-CSS-Variablen am Container; sie werden über die Shadow-Grenze hinweg vererbt. Per shadowDom: false können Sie auf Light-DOM-Mount umstellen.',
             },
             paid: {
                 question: 'Gibt es eine kostenpflichtige Version, und ist sie erforderlich?',
