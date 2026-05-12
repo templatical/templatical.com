@@ -262,9 +262,8 @@ const featureSections = computed<FeatureSection[]>(() => [
         features: tm('features.accessibility.features') as string[],
         code: `const editor = await init({
   container: '#editor',
-  // Live accessibility linting in the right sidebar +
-  // inline badges on the canvas. Powered by the optional
-  // peer @templatical/quality (lazy-loaded on first use).
+  // Powered by the optional peer @templatical/quality.
+  // Lazy-loaded on first use
   accessibility: {
     // Per-rule severity overrides — 'error' | 'warn' | 'info' | 'off'.
     rules: {
@@ -278,8 +277,7 @@ const featureSections = computed<FeatureSection[]>(() => [
       minFontSize:     12,
       minTouchTargetPx: 44,
     },
-    // Or set disabled: true to skip the chunk entirely
-    // and hide the panel + inline badges.
+    // Or set disabled: true to disable all accessibility checks
   },
 })`,
     },

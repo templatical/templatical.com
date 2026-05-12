@@ -430,14 +430,14 @@ onBeforeUnmount(() => {
 <style scoped>
 .hero-editor-container {
     width: 100%;
-    height: 60vh;
-    min-height: 520px;
-    max-height: 740px;
+    height: 70vh;
+    min-height: 600px;
+    max-height: 840px;
 }
 @media (max-width: 640px) {
     .hero-editor-container {
-        height: 55vh;
-        min-height: 420px;
+        height: 65vh;
+        min-height: 480px;
     }
 }
 .hero-editor-skeleton {
