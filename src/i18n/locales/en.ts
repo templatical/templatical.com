@@ -305,7 +305,7 @@ export default {
             features: [
                 'Live checks: errors, warnings, and info — grouped in the sidebar',
                 'Inline canvas badges with one-click jump and auto-fix where safe',
-                'Per-rule severity overrides and configurable thresholds (contrast, font size, touch targets)',
+                'Per-rule severity overrides and configurable thresholds (alt length, font size, touch targets)',
                 'Locale-aware vague-text dictionaries',
                 'Same engine runs standalone — validate templates in CI, on save, or in pre-send pipelines',
             ],

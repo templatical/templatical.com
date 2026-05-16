@@ -291,20 +291,20 @@ const featureSections = computed<FeatureSection[]>(() => [
   container: '#editor',
   // Powered by the optional peer @templatical/quality.
   // Lazy-loaded on first use
-  accessibility: {
-    // Per-rule severity overrides — 'error' | 'warn' | 'info' | 'off'.
+  lint: {
+    // Per-rule severity overrides — 'error' | 'warning' | 'info' | 'off'.
     rules: {
-      'img-alt-missing':         'error',
-      'img-alt-filename-like':   'warn',
-      'link-target-blank-no-rel': 'off',
+      'a11y.img-missing-alt':          'error',
+      'a11y.img-alt-is-filename':      'warning',
+      'a11y.link-target-blank-no-rel': 'off',
     },
     thresholds: {
-      contrastNormal:  4.5,
-      contrastLarge:   3,
-      minFontSize:     12,
+      minFontSize:      12,
       minTouchTargetPx: 44,
+      altMaxLength:     125,
+      allCapsMinLength: 12,
     },
-    // Or set disabled: true to disable all accessibility checks
+    // Or set disabled: true to disable all lint checks
   },
 })`,
     },

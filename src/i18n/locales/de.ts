@@ -307,7 +307,7 @@ const de: MessageSchema = {
             features: [
                 'Live-Prüfungen: Fehler, Warnungen, Hinweise — in der Sidebar gruppiert',
                 'Inline-Badges auf dem Canvas mit Sprung-zu-Stelle und Auto-Fix wo sicher',
-                'Pro Regel Schwere überschreibbar, Schwellenwerte konfigurierbar (Kontrast, Schriftgröße, Touch-Targets)',
+                'Pro Regel Schwere überschreibbar, Schwellenwerte konfigurierbar (Alt-Text-Länge, Schriftgröße, Touch-Targets)',
                 'Lokale-bewusste Wörterbücher für vagen Text',
                 'Dieselbe Engine läuft eigenständig — Templates in CI, beim Speichern oder vor dem Versand prüfen',
             ],
