@@ -292,19 +292,23 @@ const featureSections = computed<FeatureSection[]>(() => [
   // Powered by the optional peer @templatical/quality.
   // Lazy-loaded on first use
   lint: {
-    // Per-rule severity overrides — 'error' | 'warning' | 'info' | 'off'.
-    rules: {
-      'a11y.img-missing-alt':          'error',
-      'a11y.img-alt-is-filename':      'warning',
-      'a11y.link-target-blank-no-rel': 'off',
+    accessibility: {
+      // Per-rule severity overrides — 'error' | 'warning' | 'info' | 'off'.
+      rules: {
+        'a11y.img-missing-alt':          'error',
+        'a11y.img-alt-is-filename':      'warning',
+        'a11y.link-target-blank-no-rel': 'off',
+      },
+      thresholds: {
+        minFontSize:      16,
+        minTouchTargetPx: 44,
+      },
     },
-    thresholds: {
-      minFontSize:      12,
-      minTouchTargetPx: 44,
-      altMaxLength:     125,
-      allCapsMinLength: 12,
+    links: {
+      nonProductionHosts: ['*.staging.*', '*.preview.*'],
     },
-    // Or set disabled: true to disable all lint checks
+    // Set any linter to false to skip it entirely — e.g. structure: false.
+    // Or set disabled: true to disable all lint checks.
   },
 })`,
     },
