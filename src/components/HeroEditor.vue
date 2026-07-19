@@ -16,6 +16,9 @@ const heroContent = {
     settings: {
         width: 600,
         backgroundColor: '#ffffff',
+        textColor: '#475569',
+        linkColor: '#2c85de',
+        linkUnderline: true,
         fontFamily: 'Helvetica, Arial, sans-serif',
         preheaderText: 'Your workspace is ready — here is what comes next.',
     },
@@ -51,7 +54,7 @@ const heroContent = {
             id: 'hero-intro',
             type: 'paragraph',
             content:
-                '<p style="text-align: center"><span style="color: #475569">Your workspace is ready. Pick up where you left off, or jump in fresh — we set up a quick tour for you.</span></p>',
+                '<p style="text-align: center">Your workspace is ready. Pick up where you left off, or jump in fresh — we set up a <a href="https://example.com/tour">quick tour</a> for you.</p>',
             styles: {
                 padding: { top: 0, right: 40, bottom: 24, left: 40 },
                 margin: noMargin,
