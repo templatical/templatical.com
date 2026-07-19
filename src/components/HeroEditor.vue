@@ -8,8 +8,8 @@ import { URLS, localizedUrl } from '@/lib/urls';
 
 type MergeTag = { label: string; value: string };
 
-const EDITOR_ESM_URL = 'https://cdn.jsdelivr.net/npm/@templatical/editor/dist/cdn/editor.js';
-const EDITOR_CSS_URL = 'https://cdn.jsdelivr.net/npm/@templatical/editor/dist/cdn/editor.css';
+const EDITOR_ESM_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.js';
+const EDITOR_CSS_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.css';
 
 const noMargin = { top: 0, right: 0, bottom: 0, left: 0 } as const;
 const heroContent = {

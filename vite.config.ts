@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 
-const BUNDLE_STATS_URL = 'https://cdn.jsdelivr.net/npm/@templatical/editor/dist/bundle-stats.json';
+const BUNDLE_STATS_URL = 'https://unpkg.com/@templatical/editor/dist/bundle-stats.json';
 
 async function fetchBundleSize(): Promise<string | null> {
     try {
