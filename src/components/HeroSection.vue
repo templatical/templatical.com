@@ -44,7 +44,12 @@ const { label: bundleLabel } = useBundleSize();
         </SiteContainer>
 
         <SiteContainer class="relative mt-12">
-            <div class="hero-editor-wrap motion-safe:animate-scale-in motion-safe:[animation-delay:300ms]">
+            <!-- No transform-based entrance (animate-scale-in / animate-fade-in
+                 both animate `transform`): a transform here makes the wrapper a
+                 containing block for the embedded editor's `fixed` overlays and
+                 drag ghost. The scroll-driven opacity parallax below is the only
+                 motion on this wrapper. -->
+            <div class="hero-editor-wrap">
                 <HeroEditor />
             </div>
         </SiteContainer>
@@ -120,9 +125,14 @@ const { label: bundleLabel } = useBundleSize();
     }
 }
 
+/* Opacity only — DO NOT add `transform`/`filter`/`perspective`/`will-change`
+   here or on `.hero-editor-wrap`. The @templatical/editor instance mounts
+   inside this wrapper, and any of those properties makes the wrapper a CSS
+   containing block for `position: fixed` — which mislocates the editor's
+   floating UI (color pickers, rich-text toolbars) and its drag ghost. This
+   is the reason the editor parallax is a fade, not a translate/scale. */
 @keyframes editor-parallax {
     to {
-        transform: translateY(-40px) scale(0.99);
         opacity: 0.95;
     }
 }
