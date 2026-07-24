@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ComparisonSection from '@/components/ComparisonSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
+import HomeAiSkillSection from '@/components/HomeAiSkillSection.vue';
 import HomeCloseSection from '@/components/HomeCloseSection.vue';
 import HomeFaqSection from '@/components/HomeFaqSection.vue';
 import MigrationBand from '@/components/MigrationBand.vue';
@@ -24,6 +25,8 @@ useHead({
 <template>
     <div>
         <HeroSection />
+
+        <HomeAiSkillSection />
 
         <ComparisonSection />
 

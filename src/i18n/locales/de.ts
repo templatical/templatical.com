@@ -159,6 +159,24 @@ const de: MessageSchema = {
                 },
             },
         },
+        aiSkill: {
+            eyebrow: 'Neu · Open Source',
+            headline: 'Gestalten Sie eine E-Mail, indem Sie sie beschreiben',
+            subheadline:
+                'Bringen Sie Templaticals quelloffenen Skill in Claude Code, Cursor oder einen beliebigen KI-Coding-Agenten. Beschreiben Sie die gewünschte Kampagne — er baut eine komplette E-Mail, die Sie im echten Editor ansehen und von Hand bearbeiten und anschließend als versandfertiges MJML oder HTML für jeden Anbieter exportieren. Kein Backend, kein API-Schlüssel, nichts wird an uns gesendet.',
+            examplePrompt:
+                '„Gib mir eine Produktlaunch-E-Mail für eine Outdoor-Marke — Hero-Bild, kurze Einleitung und einen ‚Jetzt shoppen‘-Button in Waldgrün.“',
+            commandCaption: 'In Claude Code hinzufügen',
+            copyLabel: 'Kopieren',
+            copiedLabel: 'Kopiert',
+            altInstall:
+                'Oder kopieren Sie den Skill-Ordner in einen beliebigen Agenten — Cursor, Claude Desktop und mehr.',
+            ctaPrimary: 'Zum Skill-Leitfaden',
+            ctaSecondary: 'Skill auf GitHub ansehen',
+            cloudNote:
+                'Lieber gehostete KI? Templatical Cloud bietet KI-Chat direkt im Editor und einen gehosteten MCP-Server.',
+            cloudNoteLink: 'Cloud entdecken',
+        },
         cta: {
             headline: 'Starten Sie noch heute mit E-Mail-Vorlagen',
             subheadline:

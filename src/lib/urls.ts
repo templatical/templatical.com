@@ -5,6 +5,7 @@ export const URLS = {
     github: 'https://github.com/templatical/sdk',
     discussions: 'https://github.com/templatical/sdk/discussions',
     siteRepo: 'https://github.com/templatical/templatical.com',
+    skillRepo: 'https://github.com/templatical/sdk/tree/main/skills/templatical-email',
     licenseFaq: 'https://docs.templatical.com/license-faq',
     showcase: 'https://docs.templatical.com/showcase',
     sponsor: 'https://github.com/sponsors/orkhanahmadov',
@@ -18,6 +19,10 @@ export const LOCALIZED_URLS = {
     shadowDomDocs: {
         en: 'https://docs.templatical.com/guide/shadow-dom',
         de: 'https://docs.templatical.com/de/guide/shadow-dom',
+    },
+    agentSkillDocs: {
+        en: 'https://docs.templatical.com/guide/agent-skill',
+        de: 'https://docs.templatical.com/de/guide/agent-skill',
     },
 } as const;
 

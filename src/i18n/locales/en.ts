@@ -157,6 +157,24 @@ export default {
                 },
             },
         },
+        aiSkill: {
+            eyebrow: 'New · Open source',
+            headline: 'Design an email by describing it',
+            subheadline:
+                'Bring Templatical’s open-source skill to Claude Code, Cursor, or any AI coding agent. Describe the campaign you want — it builds a complete email you preview and hand-edit in the real editor, then export as send-ready MJML or HTML for any provider. No backend, no API key, nothing sent to us.',
+            examplePrompt:
+                '“A product-launch email for an outdoors brand — hero image, a short intro, and a Shop now button in forest green.”',
+            commandCaption: 'Add it to Claude Code',
+            copyLabel: 'Copy',
+            copiedLabel: 'Copied',
+            altInstall:
+                'Or copy the skill folder into any agent — Cursor, Claude Desktop, and more.',
+            ctaPrimary: 'Read the skill guide',
+            ctaSecondary: 'View the skill on GitHub',
+            cloudNote:
+                'Prefer managed AI? Templatical Cloud adds in-editor AI chat and a hosted MCP server.',
+            cloudNoteLink: 'Explore Cloud',
+        },
         cta: {
             headline: 'Start building email templates today',
             subheadline:
