@@ -4,7 +4,7 @@ import en from './locales/en';
 
 export type MessageSchema = typeof en;
 
-export const i18n = createI18n<[MessageSchema], 'en' | 'de'>({
+export const i18n = createI18n<[MessageSchema], 'en' | 'de', false>({
     legacy: false,
     locale: 'en',
     fallbackLocale: 'en',
