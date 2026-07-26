@@ -54,7 +54,7 @@ function toggle(key: string) {
                 :id="entry.panelId"
                 role="region"
                 :aria-labelledby="entry.buttonId"
-                :inert="openKey !== entry.key ? '' : undefined"
+                :inert="openKey !== entry.key"
                 :class="[
                     'grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none',
                     openKey === entry.key
