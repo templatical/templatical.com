@@ -68,8 +68,14 @@ const faqItems = computed(() =>
             </SiteContainer>
         </section>
 
+        <!--
+            `relative` on the container, not the section: the hero aurora is absolutely
+            positioned and bleeds 160px past its own section, so it would otherwise paint
+            over the first question. Positioning the container lifts the content above the
+            aurora while leaving the section background beneath it, keeping the bleed.
+        -->
         <section class="bg-white py-16 sm:py-20 dark:bg-neutral-950">
-            <SiteContainer>
+            <SiteContainer class="relative">
                 <div class="mx-auto max-w-3xl">
                     <FaqSection :items="faqItems" />
                 </div>

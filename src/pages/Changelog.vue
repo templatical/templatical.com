@@ -104,8 +104,14 @@ const showingLatest = computed(() =>
             </SiteContainer>
         </section>
 
+        <!--
+            `relative` on the container, not the section: the hero aurora is absolutely
+            positioned and bleeds 160px past its own section, so it would otherwise paint
+            over the first entry. Positioning the container lifts the content above the
+            aurora while leaving the section background beneath it, keeping the bleed.
+        -->
         <section class="bg-white py-16 sm:py-20 dark:bg-neutral-950">
-            <SiteContainer>
+            <SiteContainer class="relative">
                 <div
                     v-if="isUnavailable"
                     class="mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl border border-neutral-200 bg-neutral-50/60 p-8 dark:border-neutral-800 dark:bg-neutral-900/40"
