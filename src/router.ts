@@ -11,4 +11,8 @@ export const routes = [
         path: '/faq',
         component: () => import('./pages/Faq.vue'),
     },
+    {
+        path: '/changelog',
+        component: () => import('./pages/Changelog.vue'),
+    },
 ];

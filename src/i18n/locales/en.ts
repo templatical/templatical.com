@@ -13,6 +13,7 @@ export default {
     nav: {
         features: 'Features',
         faq: 'FAQ',
+        changelog: 'Changelog',
         docs: 'Docs',
         playground: 'Playground',
         getStarted: 'Get Started',
@@ -56,6 +57,7 @@ export default {
     footer: {
         features: 'Features',
         faq: 'FAQ',
+        changelog: 'Changelog',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -481,6 +483,41 @@ export default {
                 'Ask the community on GitHub Discussions, or dive into the docs for the deeper API reference.',
             discussionsCta: 'Ask on GitHub Discussions',
             docsCta: 'Read the docs',
+        },
+    },
+    changelog: {
+        meta: {
+            title: 'Changelog — Templatical',
+            description:
+                'Every Templatical release: new features, fixes, and breaking changes, with the packages each one touched.',
+        },
+        hero: {
+            eyebrow: 'Changelog',
+            headline: 'What shipped, and when',
+            subheadline:
+                'Templatical ships often. Every release is listed here with the packages it changed — all packages share one version number.',
+        },
+        levels: {
+            major: 'Breaking',
+            minor: 'Feature',
+            patch: 'Fix',
+        },
+        emptyVersion: 'No user-facing changes — released to keep the packages in step.',
+        versionNotes: 'Read the full notes for {version}',
+        showingLatest: 'Showing the {count} most recent releases.',
+        fullHistory: {
+            eyebrow: 'Every release',
+            headline: 'Looking for an older version?',
+            description:
+                'The docs changelog carries the full history back to the first release, with the complete notes for every entry.',
+            docsCta: 'Full changelog',
+            releasesCta: 'GitHub Releases',
+        },
+        unavailable: {
+            headline: 'Changelog temporarily unavailable',
+            description:
+                'The release data could not be loaded when this page was built. The full changelog is always available in the docs.',
+            cta: 'Open the docs changelog',
         },
     },
 };

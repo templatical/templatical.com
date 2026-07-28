@@ -15,6 +15,7 @@ const de: MessageSchema = {
     nav: {
         features: 'Funktionen',
         faq: 'FAQ',
+        changelog: 'Changelog',
         docs: 'Dokumentation',
         playground: 'Playground',
         getStarted: 'Loslegen',
@@ -58,6 +59,7 @@ const de: MessageSchema = {
     footer: {
         features: 'Funktionen',
         faq: 'FAQ',
+        changelog: 'Changelog',
         documentation: 'Dokumentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -483,6 +485,42 @@ const de: MessageSchema = {
                 'Fragen Sie die Community auf GitHub Discussions oder tauchen Sie in die Dokumentation für die tiefere API-Referenz ein.',
             discussionsCta: 'Auf GitHub Discussions fragen',
             docsCta: 'Zur Dokumentation',
+        },
+    },
+    changelog: {
+        meta: {
+            title: 'Changelog — Templatical',
+            description:
+                'Jedes Templatical-Release: neue Funktionen, Fehlerbehebungen und Breaking Changes, jeweils mit den betroffenen Paketen.',
+        },
+        hero: {
+            eyebrow: 'Changelog',
+            headline: 'Was veröffentlicht wurde — und wann',
+            subheadline:
+                'Templatical erscheint in kurzen Abständen. Jedes Release steht hier mit den Paketen, die es verändert hat — alle Pakete teilen sich eine Versionsnummer.',
+        },
+        levels: {
+            major: 'Breaking',
+            minor: 'Funktion',
+            patch: 'Fix',
+        },
+        emptyVersion:
+            'Keine für Nutzer sichtbaren Änderungen — veröffentlicht, damit alle Pakete auf derselben Version bleiben.',
+        versionNotes: 'Vollständige Notizen zu {version} lesen',
+        showingLatest: 'Die {count} neuesten Releases.',
+        fullHistory: {
+            eyebrow: 'Alle Releases',
+            headline: 'Suchen Sie eine ältere Version?',
+            description:
+                'Das Changelog in der Dokumentation enthält die vollständige Historie bis zum ersten Release, jeweils mit den kompletten Notizen.',
+            docsCta: 'Vollständiges Changelog',
+            releasesCta: 'GitHub Releases',
+        },
+        unavailable: {
+            headline: 'Changelog derzeit nicht verfügbar',
+            description:
+                'Die Release-Daten konnten beim Erstellen dieser Seite nicht geladen werden. Das vollständige Changelog finden Sie jederzeit in der Dokumentation.',
+            cta: 'Changelog in der Dokumentation öffnen',
         },
     },
 };

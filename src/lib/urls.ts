@@ -8,6 +8,8 @@ export const URLS = {
     skillRepo: 'https://github.com/templatical/sdk/tree/main/skills/templatical-email',
     licenseFaq: 'https://docs.templatical.com/license-faq',
     showcase: 'https://docs.templatical.com/showcase',
+    changelog: 'https://docs.templatical.com/changelog',
+    releases: 'https://github.com/templatical/sdk/releases',
     sponsor: 'https://github.com/sponsors/orkhanahmadov',
 } as const;
 
