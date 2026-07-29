@@ -108,6 +108,7 @@ export default {
                         'Display conditions with live preview',
                         'Custom block SDK with API-backed data sources',
                         'Editor-to-media-library glue — picker, image-block hook, replace flow',
+                        'A saved-block library — pick, name, preview, insert at position',
                         'Dark-mode preview parity with sent email',
                         'Theme tokens for brand consistency',
                         'MJML output you can render anywhere',
@@ -129,6 +130,7 @@ export default {
                         'Custom merge-tag syntax (Liquid, Handlebars) paywalled',
                         'Template and block defaults gated to paid tiers',
                         'Pluggable media library — locked to vendor’s storage',
+                        'Reusable saved blocks gated to paid tiers — even self-hosted',
                         'Per-seat or per-end-user pricing scales with you',
                         'Closed source — cannot audit, fork, or extend',
                         'Output coupled to the vendor’s render API',
@@ -144,6 +146,7 @@ export default {
                         'Block-level merge tags with scoping',
                         'Display conditions for dynamic content',
                         'Pluggable media library — bring your own storage (S3, Cloudinary, your CMS)',
+                        'Saved blocks — users save block groups and reuse them, backed by your storage',
                         'Full theming via design tokens, dark mode included',
                         'White-label by default — your UI, your brand',
                         'MJML output — render in browser, on your server, anywhere',
@@ -243,6 +246,11 @@ export default {
             apiBacked: 'API-backed',
             predefined: 'Predefined',
             customPicker: 'Custom picker',
+            browserLocal: 'Browser-local',
+            tokens: 'Theme tokens',
+            brandDefaults: 'Brand defaults',
+            fromEditor: 'From the editor',
+            headless: 'Headless',
         },
         customBlocks: {
             eyebrow: 'Extensibility',
@@ -283,23 +291,25 @@ export default {
                 'Per-block show/hide rules from recipient attributes',
                 'Live preview while editing',
                 'allowCustom: true lets editors add conditions inline',
-                'Custom wrappers — your ESP evaluates Liquid at send time',
+                'Wrappers are opaque strings — any syntax your ESP evaluates at send time',
             ],
             docsLabel: 'Conditions guide',
         },
         theming: {
             eyebrow: 'Branding',
-            title: 'Full theming via design tokens',
+            title: 'Theming and brand defaults',
             description:
-                '27 OKLch tokens, custom fonts, dark mode, complete theme overrides. Every surface tokenized — not just the ones in the marketing screenshot.',
-            outcome: 'The editor looks like your product on day one.',
+                '27 OKLch tokens, custom fonts, dark mode, complete theme overrides. Every surface tokenized — and the same init() call sets the defaults every new template and block starts from.',
+            outcome: 'The editor looks like your product, and every new block starts on-brand.',
             features: [
                 '27 OKLch design tokens covering every surface',
                 'Light + dark theme overrides via the same theme.dark key',
                 'Custom fonts via --tpl-font-sans and --tpl-font-mono',
                 'Tailwind 4 with `tpl:` prefix — no preflight, no style leaks',
+                'Per-block-type defaults: button, divider, spacer, image, social',
+                'Template defaults: width, background, font family',
             ],
-            docsLabel: 'Theming reference',
+            docsLabel: 'Theming & defaults reference',
         },
         cssIsolation: {
             eyebrow: 'Integration',
@@ -318,18 +328,21 @@ export default {
         },
         accessibility: {
             eyebrow: 'Quality',
-            title: 'Built-in accessibility linting',
+            title: 'Built-in template linting',
             description:
-                'Live WCAG checks while authoring — surfaced in a dedicated sidebar tab and as inline badges on the canvas. Deterministic rules, configurable severity, no AI guesswork.',
-            outcome: 'Catch alt-text, contrast, and structure issues before send — not after.',
+                '30 deterministic rules run while authoring — surfaced in a dedicated sidebar tab and as inline badges on the canvas. Accessibility, structure, and links, with configurable severity and no AI guesswork.',
+            outcome: 'Catch alt text, contrast, broken links, and malformed structure before send — not after.',
             features: [
                 'Live checks: errors, warnings, and info — grouped in the sidebar',
                 'Inline canvas badges with one-click jump and auto-fix where safe',
-                'Per-rule severity overrides and configurable thresholds (alt length, font size, touch targets)',
+                '20 accessibility rules: alt text, contrast, heading order, touch targets',
+                '5 link rules: javascript: URLs, malformed mailto and tel, staging hosts',
+                '5 structure rules: duplicate ids, empty sections, column mismatches',
+                'Per-rule severity overrides and configurable thresholds',
                 'Locale-aware vague-text dictionaries',
                 'Same engine runs standalone — validate templates in CI, on save, or in pre-send pipelines',
             ],
-            docsLabel: 'Accessibility reference',
+            docsLabel: 'Linting reference',
         },
         mediaLibrary: {
             eyebrow: 'Assets',
@@ -346,34 +359,115 @@ export default {
             ],
             docsLabel: 'Media-library reference',
         },
-        defaults: {
-            eyebrow: 'Defaults',
-            title: 'Template & block defaults',
+        savedBlocks: {
+            eyebrow: 'Reuse',
+            title: 'Saved blocks, in your storage',
             description:
-                'Define your brand once. New templates and blocks pick up your defaults automatically — colors, fonts, padding, layout.',
-            outcome: 'Brand consistency without the copy-paste tax.',
+                'Users pick a group of blocks, name it, and drop it into any other template. The editor ships the whole experience — pick session, searchable library, live preview, insert at position. You implement four methods against your own API.',
+            outcome: 'A block library your users fill themselves, on your backend.',
             features: [
-                'Brand defaults set once at init() time',
-                'Per-block-type defaults: button, divider, spacer, image, social',
-                'Template-level defaults: width, background, font family',
-                'Override per-template via the templateDefaults field',
+                'Four-method provider — list, create, update, delete',
+                'Pass false instead of a function and the editor hides the control',
+                'Per-entry flags lock individual entries as read-only',
+                'Free-text categories, derived from whatever the entries carry',
+                'Search and category filters run in the editor, not your API',
+                'Bundled browser-local provider for demos — one line, no backend',
             ],
-            docsLabel: 'Defaults reference',
+            docsLabel: 'Saved-blocks reference',
+        },
+        agentSkill: {
+            eyebrow: 'AI',
+            title: 'Describe the email, get the template',
+            description:
+                'An open-source Agent Skill teaches Claude Code, Cursor, or any AI coding agent to build Templatical templates from a prompt — validated against the block schema before you ever see them. No backend, no API key, nothing sent to us.',
+            outcome: 'A first draft in one sentence, then edit it like any other template.',
+            features: [
+                'Runs on the agent you already use — the model is the inference',
+                'Every generated template is schema-validated and quality-linted',
+                'Live mode previews and hand-edits in the real editor, then reconciles',
+                'Imports existing Unlayer, BeeFree, or HTML templates',
+                'Zero install — dependencies are vendored, so a bare copy works offline',
+            ],
+            docsLabel: 'Agent Skill guide',
+            prompts: [
+                {
+                    label: 'From scratch',
+                    text: '“A product-launch email for our new Pro tier — hero, three feature callouts, and a button to the changelog.”',
+                },
+                {
+                    label: 'Migrate',
+                    text: '“Import this Unlayer export and rebuild the image-only header as real text.”',
+                },
+                {
+                    label: 'Refine live',
+                    text: '“Show it live. The CTA is too quiet — make it the accent colour and move it above the fold.”',
+                },
+                {
+                    label: 'Polish',
+                    text: '“Fix the accessibility warnings and shorten the preheader to 90 characters.”',
+                },
+            ],
+        },
+        logicTags: {
+            eyebrow: 'Dynamic content',
+            title: 'Loops and conditionals inside the copy',
+            description:
+                'Register your template language’s control flow — Liquid, Handlebars, whatever you already send — and authors insert it from a picker. Tags render as styled pills in the rich text and pass through to the output untouched.',
+            outcome: 'Authors write conditional copy without learning your syntax.',
+            features: [
+                'Wraps a phrase mid-sentence, where display conditions wrap a whole block',
+                'Standalone tags and open/close pairs, grouped in the picker',
+                'A pair wraps the current selection — no manual closing tag',
+                'Also available in inputs: button text, URLs, alt text',
+                'Passes through to the rendered MJML unchanged',
+                'Or hand off to your own picker with a single onRequest hook',
+            ],
+            docsLabel: 'Logic tags reference',
+        },
+        mjmlOutput: {
+            eyebrow: 'Output',
+            title: 'JSON in, MJML out',
+            description:
+                'Templates are portable JSON you store wherever you like. Output is MJML, rendered by a package you install — in the browser, on your server, in a queue worker. No hosted render service sits in the path.',
+            outcome: 'Own the output. Send through any provider, for as long as you like.',
+            features: [
+                'MJML is an open standard with implementations in several languages',
+                'Render in the browser, on your server, or in a background job',
+                'Custom blocks resolve through a callback you supply',
+                'Nothing calls home — no render API, no per-render pricing',
+                'The renderer is MIT-licensed and installed separately',
+            ],
+            docsLabel: 'How rendering works',
+        },
+        programmaticTemplates: {
+            eyebrow: 'Headless',
+            title: 'Build templates without the editor',
+            description:
+                'Every block type has a factory function in the types package — MIT, no editor, no DOM. Compose a template in a script, seed a starter library, or generate one per customer from your own data.',
+            outcome: 'Templates as data, produced by code as easily as by hand.',
+            features: [
+                'A factory per block type, each with sensible defaults',
+                'Factories generate the ids, so content is valid by construction',
+                'Runs anywhere — build script, server, queue worker, test',
+                'Produces the same JSON the editor reads and writes',
+                'MIT-licensed with no runtime dependencies',
+            ],
+            docsLabel: 'Programmatic templates guide',
         },
         supporting: {
             eyebrow: 'The essentials',
             headline: 'Everything else you expect — done right.',
             subheadline:
-                'Drop-in mount, portable JSON, MJML output, framework-agnostic. Plus the polish — dark mode, i18n, undo/redo.',
+                'Drop-in mount, framework-agnostic, every locale you need. Plus the polish — dark mode, undo/redo, responsive preview.',
         },
         supportingItems: {
+            blocks: {
+                title: 'Blocks out of the box',
+                description: 'Twelve block types ready to drag in — title, paragraph, image, button, section, divider, spacer, social icons, menu, table, video, and raw HTML — plus any custom types you register.',
+            },
             framework: {
                 title: 'Drop-in framework integration',
                 description: 'One init() call to mount, one to unmount. First-class examples for React, Vue, Svelte, Angular, and vanilla JS.',
-            },
-            output: {
-                title: 'JSON in, MJML out',
-                description: 'Templates are portable JSON. Output is MJML — render in the browser or on your server, send through any provider. No hosted render service required.',
             },
             darkMode: {
                 title: 'Dark mode',
@@ -381,7 +475,7 @@ export default {
             },
             i18n: {
                 title: 'Internationalization',
-                description: 'English and German built in. Load custom translations for any language.',
+                description: 'Five locales built in — English, German, Portuguese (BR), Spanish, and Catalan — across the editor and the media library. Drop in a file for any other language.',
             },
             undoRedo: {
                 title: 'Undo / Redo',

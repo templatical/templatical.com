@@ -38,6 +38,10 @@ interface CodeVariant {
     label: string;
     code: string;
 }
+interface PromptExample {
+    label: string;
+    text: string;
+}
 interface FeatureSection {
     slug: string;
     eyebrow: string;
@@ -47,11 +51,28 @@ interface FeatureSection {
     features: string[];
     code?: string;
     variants?: CodeVariant[];
+    // For features driven by what you say rather than what you configure, the
+    // right column shows example prompts instead of a code block.
+    prompts?: PromptExample[];
     docsPath: string;
     docsLabel: string;
 }
 
 const featureSections = computed<FeatureSection[]>(() => [
+    {
+        slug: 'agent-skill',
+        docsPath: '/guide/agent-skill',
+        docsLabel: t('features.agentSkill.docsLabel'),
+        eyebrow: t('features.agentSkill.eyebrow'),
+        title: t('features.agentSkill.title'),
+        description: t('features.agentSkill.description'),
+        outcome: t('features.agentSkill.outcome'),
+        features: tm('features.agentSkill.features') as string[],
+        prompts: (tm('features.agentSkill.prompts') as PromptExample[]).map((p) => ({
+            label: p.label,
+            text: p.text,
+        })),
+    },
     {
         slug: 'custom-blocks',
         docsPath: '/guide/custom-blocks',
@@ -189,6 +210,47 @@ const featureSections = computed<FeatureSection[]>(() => [
         ],
     },
     {
+        slug: 'saved-blocks',
+        docsPath: '/guide/saved-blocks',
+        docsLabel: t('features.savedBlocks.docsLabel'),
+        eyebrow: t('features.savedBlocks.eyebrow'),
+        title: t('features.savedBlocks.title'),
+        description: t('features.savedBlocks.description'),
+        outcome: t('features.savedBlocks.outcome'),
+        features: tm('features.savedBlocks.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.browserLocal'),
+                code: `import { createLocalStorageSavedBlocksProvider } from '@templatical/editor'
+
+const editor = await init({
+  container: '#editor',
+  // Stores entries in localStorage — no backend, good for demos.
+  savedBlocks: createLocalStorageSavedBlocksProvider(),
+})`,
+            },
+            {
+                label: t('features.variants.apiBacked'),
+                code: `const editor = await init({
+  container: '#editor',
+  savedBlocks: {
+    // Return everything this user may see — scope it per user, team or
+    // account here. The editor filters in the browser, so there is no
+    // search or category handling to implement.
+    list: () => fetch('/api/saved-blocks').then((r) => r.json()),
+
+    create: (input) => post('/api/saved-blocks', input),
+    update: (id, patch) => patchJson(\`/api/saved-blocks/\${id}\`, patch),
+
+    // Pass false instead of a function and the editor hides the control
+    // rather than letting the user try and fail.
+    delete: false,
+  },
+})`,
+            },
+        ],
+    },
+    {
         slug: 'display-conditions',
         docsPath: '/guide/display-conditions',
         docsLabel: t('features.displayConditions.docsLabel'),
@@ -209,12 +271,6 @@ const featureSections = computed<FeatureSection[]>(() => [
         description: 'Show only to VIP partner accounts',
       },
       {
-        label: 'Enterprise',
-        before: '{% if plan == "enterprise" %}',
-        after: '{% endif %}',
-        group: 'Audience',
-      },
-      {
         label: 'Early Bird',
         before: '{% if early_bird %}',
         after: '{% endif %}',
@@ -226,6 +282,55 @@ const featureSections = computed<FeatureSection[]>(() => [
 })`,
     },
     {
+        slug: 'logic-tags',
+        docsPath: '/guide/logic-tags',
+        docsLabel: t('features.logicTags.docsLabel'),
+        eyebrow: t('features.logicTags.eyebrow'),
+        title: t('features.logicTags.title'),
+        description: t('features.logicTags.description'),
+        outcome: t('features.logicTags.outcome'),
+        features: tm('features.logicTags.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.predefined'),
+                code: `const editor = await init({
+  container: '#editor',
+  logicTags: {
+    tags: [{ label: 'Else', value: '{% else %}', group: 'Conditions' }],
+    pairs: [
+      {
+        label: 'If VIP',
+        before: '{% if customer.vip %}',
+        after: '{% endif %}',
+        group: 'Conditions',
+        description: 'Show the wrapped copy only to VIP customers',
+      },
+      {
+        label: 'Loop items',
+        before: '{% for item in order.items %}',
+        after: '{% endfor %}',
+        group: 'Loops',
+      },
+    ],
+  },
+})`,
+            },
+            {
+                label: t('features.variants.customPicker'),
+                code: `const editor = await init({
+  container: '#editor',
+  logicTags: {
+    // Open your own picker instead of the built-in one.
+    onRequest: async () => {
+      const choice = await showMyLogicPicker()
+      return choice // LogicTag | LogicPair | null
+    },
+  },
+})`,
+            },
+        ],
+    },
+    {
         slug: 'theming',
         docsPath: '/guide/theming',
         docsLabel: t('features.theming.docsLabel'),
@@ -234,7 +339,10 @@ const featureSections = computed<FeatureSection[]>(() => [
         description: t('features.theming.description'),
         outcome: t('features.theming.outcome'),
         features: tm('features.theming.features') as string[],
-        code: `const editor = await init({
+        variants: [
+            {
+                label: t('features.variants.tokens'),
+                code: `const editor = await init({
   container: '#editor',
   uiTheme: 'auto',
   theme: {
@@ -250,6 +358,33 @@ const featureSections = computed<FeatureSection[]>(() => [
     },
   },
 })`,
+            },
+            {
+                label: t('features.variants.brandDefaults'),
+                code: `const editor = await init({
+  container: '#editor',
+  // What every newly inserted block starts from.
+  blockDefaults: {
+    button: {
+      backgroundColor: '#0f3460',
+      textColor: '#ffffff',
+      borderRadius: 2,
+      fontSize: 14,
+      buttonPadding: { top: 14, right: 28, bottom: 14, left: 28 },
+    },
+    divider: { color: '#e5e7eb', thickness: 1 },
+    spacer: { height: 24 },
+    image:  { align: 'center' },
+  },
+  // And what a brand-new template starts from.
+  templateDefaults: {
+    width: 640,
+    backgroundColor: '#f8f9fa',
+    fontFamily: 'Georgia, serif',
+  },
+})`,
+            },
+        ],
     },
     {
         slug: 'cssIsolation',
@@ -337,34 +472,63 @@ const featureSections = computed<FeatureSection[]>(() => [
 })`,
     },
     {
-        slug: 'defaults',
-        docsPath: '/guide/defaults',
-        docsLabel: t('features.defaults.docsLabel'),
-        eyebrow: t('features.defaults.eyebrow'),
-        title: t('features.defaults.title'),
-        description: t('features.defaults.description'),
-        outcome: t('features.defaults.outcome'),
-        features: tm('features.defaults.features') as string[],
-        code: `const editor = await init({
-  container: '#editor',
-  blockDefaults: {
-    button: {
-      backgroundColor: '#0f3460',
-      textColor: '#ffffff',
-      borderRadius: 2,
-      fontSize: 14,
-      buttonPadding: { top: 14, right: 28, bottom: 14, left: 28 },
-    },
-    divider: { color: '#e5e7eb', thickness: 1 },
-    spacer: { height: 24 },
-    image:  { align: 'center' },
-  },
-  templateDefaults: {
-    width: 640,
-    backgroundColor: '#f8f9fa',
-    fontFamily: 'Georgia, serif',
-  },
+        slug: 'mjml-output',
+        docsPath: '/getting-started/how-rendering-works',
+        docsLabel: t('features.mjmlOutput.docsLabel'),
+        eyebrow: t('features.mjmlOutput.eyebrow'),
+        title: t('features.mjmlOutput.title'),
+        description: t('features.mjmlOutput.description'),
+        outcome: t('features.mjmlOutput.outcome'),
+        features: tm('features.mjmlOutput.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.fromEditor'),
+                code: `const editor = await init({ container: '#editor' })
+
+// Loads the renderer on first call — custom blocks resolve automatically.
+const mjml = await editor.toMjml()
+
+// Compile MJML to HTML with whichever MJML library you prefer.
+const { html } = mjml2html(mjml)`,
+            },
+            {
+                label: t('features.variants.headless'),
+                code: `import { renderToMjml } from '@templatical/renderer'
+
+// No editor involved — render stored JSON on your server.
+const mjml = await renderToMjml(templateContent, {
+  renderCustomBlock: myCustomBlockRenderer,
 })`,
+            },
+        ],
+    },
+    {
+        slug: 'programmatic-templates',
+        docsPath: '/guide/programmatic-templates',
+        docsLabel: t('features.programmaticTemplates.docsLabel'),
+        eyebrow: t('features.programmaticTemplates.eyebrow'),
+        title: t('features.programmaticTemplates.title'),
+        description: t('features.programmaticTemplates.description'),
+        outcome: t('features.programmaticTemplates.outcome'),
+        features: tm('features.programmaticTemplates.features') as string[],
+        code: `import {
+  createDefaultTemplateContent,
+  createTitleBlock,
+  createParagraphBlock,
+  createButtonBlock,
+} from '@templatical/types'
+
+const content = createDefaultTemplateContent()
+
+// Each factory generates its own id, so the result is valid by construction.
+content.blocks = [
+  createTitleBlock({ content: '<h1>Welcome aboard</h1>' }),
+  createParagraphBlock({ content: '<p>Here is what to do first.</p>' }),
+  createButtonBlock({ text: 'Open your dashboard', url: 'https://example.com' }),
+]
+
+// Feed it to the editor, or straight to the renderer.
+await init({ container: '#editor', content })`,
     },
 ]);
 
@@ -387,8 +551,8 @@ function variantAnimClass(slug: string): string {
 }
 
 const supportingItemKeys = [
+    'blocks',
     'framework',
-    'output',
     'darkMode',
     'i18n',
     'undoRedo',
@@ -483,7 +647,14 @@ const supportingItemKeys = [
                                 <ArrowRight class="size-4" aria-hidden="true" />
                             </a>
                         </div>
-                        <div class="flex flex-col gap-4">
+                        <!-- Without variant tabs the example would start level with
+                             the eyebrow, which sits 3rem (text-sm/7 + gap-5) above the
+                             heading. Offset it so the example always begins at the
+                             heading's top edge; tabbed sections already land there. -->
+                        <div
+                            class="flex flex-col gap-4"
+                            :class="{ 'lg:mt-12': !section.variants?.length }"
+                        >
                             <VariantTabs
                                 v-if="section.variants?.length"
                                 :options="section.variants"
@@ -507,6 +678,30 @@ const supportingItemKeys = [
                                 :code="section.code"
                                 lang="javascript"
                             />
+                            <!-- Prompt-driven features have no config surface to
+                                 show, so the column lists what you'd actually say.
+                                 Same blockquote treatment as the homepage section. -->
+                            <ul
+                                v-else-if="section.prompts?.length"
+                                class="flex flex-col gap-4"
+                            >
+                                <li
+                                    v-for="prompt in section.prompts"
+                                    :key="prompt.label"
+                                    class="flex flex-col gap-1.5"
+                                >
+                                    <span
+                                        class="text-xs/5 font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-400"
+                                    >
+                                        {{ prompt.label }}
+                                    </span>
+                                    <blockquote
+                                        class="rounded-2xl border border-neutral-200 bg-neutral-50 px-5 py-4 text-base/7 text-pretty text-neutral-700 italic dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
+                                    >
+                                        {{ prompt.text }}
+                                    </blockquote>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </RevealOnScroll>

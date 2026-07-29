@@ -43,7 +43,14 @@ export const tagTemplateAsHtml: ShikiTransformer = {
         return code.replace(/(template\s*:\s*)`/g, '$1html`');
     },
     postprocess(html) {
-        return html.replace(/<span[^>]*>\s*html\s*<\/span>/g, '');
+        // Remove only the synthetic tag `preprocess` injected — it is always
+        // immediately followed by the template literal's opening backtick.
+        // Matching bare `html` anywhere would also delete a legitimate
+        // identifier, e.g. `const { html } = mjml2html(mjml)`.
+        return html.replace(
+            /<span[^>]*>\s*html\s*<\/span>(?=<span[^>]*>\s*`)/g,
+            '',
+        );
     },
 };
 

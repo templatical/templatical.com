@@ -110,6 +110,7 @@ const de: MessageSchema = {
                         'Anzeigebedingungen mit Live-Vorschau',
                         'Custom-Block-SDK mit API-gestützten Datenquellen',
                         'Editor-zu-Medien-Bibliothek-Integration — Picker, Image-Block-Hook, Ersetzen-Flow',
+                        'Eine Bibliothek gespeicherter Blöcke — auswählen, benennen, Vorschau, positioniert einfügen',
                         'Dark-Mode-Vorschau-Parität zur gesendeten E-Mail',
                         'Theme-Tokens für konsistentes Branding',
                         'MJML-Output, überall renderbar',
@@ -131,6 +132,7 @@ const de: MessageSchema = {
                         'Custom-Merge-Tag-Syntax (Liquid, Handlebars) hinter Bezahlschranke',
                         'Template- und Block-Defaults nur in höheren Tarifen',
                         'Medien-Bibliothek — an den Speicher des Anbieters gebunden',
+                        'Wiederverwendbare gespeicherte Blöcke nur in Bezahltarifen — auch selbst gehostet',
                         'Preise skalieren pro Sitz oder Endnutzer',
                         'Closed Source — kein Audit, Fork oder Erweitern',
                         'Output an die Render-API des Anbieters gekoppelt',
@@ -146,6 +148,7 @@ const de: MessageSchema = {
                         'Block-Level-Merge-Tags mit Scoping',
                         'Anzeigebedingungen für dynamische Inhalte',
                         'Pluggbare Medien-Bibliothek — eigener Speicher (S3, Cloudinary, Ihr CMS)',
+                        'Gespeicherte Blöcke — Nutzer speichern Blockgruppen und verwenden sie wieder, in Ihrem Speicher',
                         'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
                         'Standardmäßig White-Label — Ihre UI, Ihre Marke',
                         'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
@@ -245,6 +248,11 @@ const de: MessageSchema = {
             apiBacked: 'API-basiert',
             predefined: 'Vordefiniert',
             customPicker: 'Eigener Picker',
+            browserLocal: 'Browser-lokal',
+            tokens: 'Theme-Tokens',
+            brandDefaults: 'Marken-Standards',
+            fromEditor: 'Aus dem Editor',
+            headless: 'Headless',
         },
         customBlocks: {
             eyebrow: 'Erweiterbarkeit',
@@ -285,23 +293,25 @@ const de: MessageSchema = {
                 'Pro-Block-Regeln basierend auf Empfänger-Attributen',
                 'Live-Preview während der Bearbeitung',
                 'allowCustom: true erlaubt eigene Bedingungen inline',
-                'Eigene Wrapper — Ihr ESP wertet Liquid beim Versand aus',
+                'Wrapper sind beliebige Zeichenketten — jede Syntax, die Ihr ESP beim Versand auswertet',
             ],
             docsLabel: 'Bedingungen-Guide',
         },
         theming: {
             eyebrow: 'Branding',
-            title: 'Vollständiges Theming via Design-Tokens',
+            title: 'Theming und Marken-Standards',
             description:
-                '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Jede Oberfläche tokenisiert — nicht nur die im Marketing-Screenshot.',
-            outcome: 'Der Editor sieht ab Tag eins aus wie Ihr Produkt.',
+                '27 OKLch-Tokens, eigene Schriften, Dark Mode, komplette Theme-Overrides. Jede Oberfläche tokenisiert — und derselbe init()-Aufruf setzt die Standards, mit denen jede neue Vorlage und jeder neue Block startet.',
+            outcome: 'Der Editor sieht aus wie Ihr Produkt, und jeder neue Block startet markenkonform.',
             features: [
                 '27 OKLch-Design-Tokens für jede Oberfläche',
                 'Light- und Dark-Theme-Overrides über denselben theme.dark-Schlüssel',
                 'Eigene Schriften via --tpl-font-sans und --tpl-font-mono',
                 'Tailwind 4 mit `tpl:`-Prefix — kein Preflight, keine Style-Leaks',
+                'Standards pro Blocktyp: button, divider, spacer, image, social',
+                'Vorlagenstandards: Breite, Hintergrund, Schriftfamilie',
             ],
-            docsLabel: 'Theming-Referenz',
+            docsLabel: 'Theming- & Standards-Referenz',
         },
         cssIsolation: {
             eyebrow: 'Integration',
@@ -320,18 +330,21 @@ const de: MessageSchema = {
         },
         accessibility: {
             eyebrow: 'Qualität',
-            title: 'Eingebaute Barrierefreiheits-Prüfung',
+            title: 'Eingebaute Vorlagen-Prüfung',
             description:
-                'Live-WCAG-Checks während der Bearbeitung — sichtbar in einem eigenen Sidebar-Tab und als Inline-Badges auf dem Canvas. Deterministische Regeln, konfigurierbare Schwere, kein KI-Raten.',
-            outcome: 'Alt-Text-, Kontrast- und Strukturprobleme vor dem Versand erkennen — nicht danach.',
+                '30 deterministische Regeln laufen während der Bearbeitung — sichtbar in einem eigenen Sidebar-Tab und als Inline-Badges auf dem Canvas. Barrierefreiheit, Struktur und Links, mit konfigurierbarer Schwere und ohne KI-Raten.',
+            outcome: 'Alt-Texte, Kontrast, defekte Links und fehlerhafte Struktur vor dem Versand erkennen — nicht danach.',
             features: [
                 'Live-Prüfungen: Fehler, Warnungen, Hinweise — in der Sidebar gruppiert',
                 'Inline-Badges auf dem Canvas mit Sprung-zu-Stelle und Auto-Fix wo sicher',
-                'Pro Regel Schwere überschreibbar, Schwellenwerte konfigurierbar (Alt-Text-Länge, Schriftgröße, Touch-Targets)',
+                '20 Barrierefreiheits-Regeln: Alt-Texte, Kontrast, Überschriften-Reihenfolge, Touch-Targets',
+                '5 Link-Regeln: javascript:-URLs, fehlerhafte mailto und tel, Staging-Hosts',
+                '5 Struktur-Regeln: doppelte IDs, leere Sections, Spalten-Unstimmigkeiten',
+                'Pro Regel Schwere überschreibbar, Schwellenwerte konfigurierbar',
                 'Lokale-bewusste Wörterbücher für vagen Text',
                 'Dieselbe Engine läuft eigenständig — Templates in CI, beim Speichern oder vor dem Versand prüfen',
             ],
-            docsLabel: 'Barrierefreiheits-Referenz',
+            docsLabel: 'Prüfungs-Referenz',
         },
         mediaLibrary: {
             eyebrow: 'Assets',
@@ -348,34 +361,115 @@ const de: MessageSchema = {
             ],
             docsLabel: 'Medien-Bibliothek-Referenz',
         },
-        defaults: {
-            eyebrow: 'Standards',
-            title: 'Template- & Block-Standards',
+        savedBlocks: {
+            eyebrow: 'Wiederverwendung',
+            title: 'Gespeicherte Blöcke, in Ihrem Speicher',
             description:
-                'Definieren Sie Ihre Marke einmal. Neue Templates und Blöcke übernehmen Ihre Standards automatisch — Farben, Schriften, Abstände, Layout.',
-            outcome: 'Markenkonsistenz ohne Copy-Paste-Steuer.',
+                'Nutzer wählen eine Gruppe von Blöcken aus, benennen sie und fügen sie in jede andere Vorlage ein. Der Editor liefert das gesamte Erlebnis — Auswahl-Sitzung, durchsuchbare Bibliothek, Live-Vorschau, positioniertes Einfügen. Sie implementieren vier Methoden gegen Ihre eigene API.',
+            outcome: 'Eine Blockbibliothek, die Ihre Nutzer selbst füllen — in Ihrem Backend.',
             features: [
-                'Marken-Standards einmal beim init() setzen',
-                'Standards pro Blocktyp: button, divider, spacer, image, social',
-                'Vorlagenstandards: Breite, Hintergrund, Schriftfamilie',
-                'Pro Vorlage überschreiben via templateDefaults',
+                'Provider mit vier Methoden — list, create, update, delete',
+                'Statt einer Funktion false übergeben, und der Editor blendet das Bedienelement aus',
+                'Flags pro Eintrag sperren einzelne Einträge schreibgeschützt',
+                'Freitext-Kategorien, abgeleitet aus dem, was die Einträge tragen',
+                'Suche und Kategoriefilter laufen im Editor, nicht in Ihrer API',
+                'Mitgelieferter browserlokaler Provider für Demos — eine Zeile, kein Backend',
             ],
-            docsLabel: 'Standards-Referenz',
+            docsLabel: 'Referenz für gespeicherte Blöcke',
+        },
+        agentSkill: {
+            eyebrow: 'KI',
+            title: 'E-Mail beschreiben, Vorlage erhalten',
+            description:
+                'Ein Open-Source-Agent-Skill bringt Claude Code, Cursor oder jedem KI-Coding-Agenten bei, Templatical-Vorlagen aus einem Prompt zu bauen — gegen das Block-Schema validiert, bevor Sie sie überhaupt sehen. Kein Backend, kein API-Key, nichts wird an uns gesendet.',
+            outcome: 'Ein erster Entwurf in einem Satz, danach bearbeiten wie jede andere Vorlage.',
+            features: [
+                'Läuft auf dem Agenten, den Sie bereits nutzen — das Modell ist die Inferenz',
+                'Jede generierte Vorlage wird schema-validiert und qualitätsgeprüft',
+                'Der Live-Modus zeigt und bearbeitet im echten Editor und gleicht ab',
+                'Importiert bestehende Unlayer-, BeeFree- oder HTML-Vorlagen',
+                'Ohne Installation — Abhängigkeiten sind mitgeliefert, funktioniert offline',
+            ],
+            docsLabel: 'Agent-Skill-Guide',
+            prompts: [
+                {
+                    label: 'Von Null',
+                    text: '„Eine Produkt-Launch-E-Mail für unseren neuen Pro-Tarif — Hero, drei Feature-Abschnitte und ein Button zum Changelog."',
+                },
+                {
+                    label: 'Migrieren',
+                    text: '„Importiere diesen Unlayer-Export und baue die reine Bild-Kopfzeile als echten Text neu auf."',
+                },
+                {
+                    label: 'Live verfeinern',
+                    text: '„Zeig es live. Der CTA ist zu unauffällig — nimm die Akzentfarbe und rück ihn über die Falz."',
+                },
+                {
+                    label: 'Feinschliff',
+                    text: '„Behebe die Barrierefreiheits-Warnungen und kürze den Preheader auf 90 Zeichen."',
+                },
+            ],
+        },
+        logicTags: {
+            eyebrow: 'Dynamische Inhalte',
+            title: 'Schleifen und Bedingungen mitten im Text',
+            description:
+                'Registrieren Sie den Kontrollfluss Ihrer Template-Sprache — Liquid, Handlebars, was Sie ohnehin versenden — und Redakteure fügen ihn per Picker ein. Tags erscheinen als gestaltete Pills im Rich Text und gehen unverändert in die Ausgabe.',
+            outcome: 'Redakteure schreiben bedingte Texte, ohne Ihre Syntax zu lernen.',
+            features: [
+                'Umschließt einen Satzteil, während Anzeigebedingungen einen ganzen Block umschließen',
+                'Einzelne Tags und Paare zum Öffnen/Schließen, im Picker gruppiert',
+                'Ein Paar umschließt die aktuelle Auswahl — kein manuelles Schluss-Tag',
+                'Auch in Eingabefeldern: Button-Text, URLs, Alt-Texte',
+                'Geht unverändert in das gerenderte MJML',
+                'Oder per onRequest-Hook an Ihren eigenen Picker übergeben',
+            ],
+            docsLabel: 'Logik-Tags-Referenz',
+        },
+        mjmlOutput: {
+            eyebrow: 'Ausgabe',
+            title: 'JSON rein, MJML raus',
+            description:
+                'Vorlagen sind portables JSON, das Sie speichern, wo Sie möchten. Die Ausgabe ist MJML, gerendert von einem Paket, das Sie installieren — im Browser, auf Ihrem Server, in einem Queue-Worker. Kein gehosteter Render-Dienst liegt dazwischen.',
+            outcome: 'Die Ausgabe gehört Ihnen. Versenden Sie über jeden Anbieter, so lange Sie möchten.',
+            features: [
+                'MJML ist ein offener Standard mit Implementierungen in mehreren Sprachen',
+                'Rendern im Browser, auf Ihrem Server oder in einem Hintergrund-Job',
+                'Custom Blocks werden über einen Callback aufgelöst, den Sie bereitstellen',
+                'Nichts ruft nach Hause — keine Render-API, keine Kosten pro Rendering',
+                'Der Renderer ist MIT-lizenziert und wird separat installiert',
+            ],
+            docsLabel: 'So funktioniert das Rendering',
+        },
+        programmaticTemplates: {
+            eyebrow: 'Headless',
+            title: 'Vorlagen ohne Editor bauen',
+            description:
+                'Jeder Blocktyp hat eine Factory-Funktion im Types-Paket — MIT, kein Editor, kein DOM. Stellen Sie eine Vorlage im Skript zusammen, legen Sie eine Startbibliothek an oder generieren Sie eine pro Kunde aus Ihren eigenen Daten.',
+            outcome: 'Vorlagen als Daten — per Code so einfach erzeugt wie von Hand.',
+            features: [
+                'Eine Factory pro Blocktyp, jede mit sinnvollen Standardwerten',
+                'Die Factories erzeugen die IDs, der Inhalt ist also konstruktionsbedingt valide',
+                'Läuft überall — Build-Skript, Server, Queue-Worker, Test',
+                'Erzeugt dasselbe JSON, das der Editor liest und schreibt',
+                'MIT-lizenziert und ohne Laufzeit-Abhängigkeiten',
+            ],
+            docsLabel: 'Guide zu programmatischen Vorlagen',
         },
         supporting: {
             eyebrow: 'Die Essentials',
             headline: 'Alles andere, was Sie erwarten — richtig gemacht.',
             subheadline:
-                'Einsatzbereites Mounting, portables JSON, MJML-Ausgabe, framework-unabhängig. Plus die Politur — Dark Mode, i18n, Rückgängig/Wiederholen.',
+                'Einsatzbereites Mounting, framework-unabhängig, jede Sprache, die Sie brauchen. Plus die Politur — Dark Mode, Rückgängig/Wiederholen, responsive Vorschau.',
         },
         supportingItems: {
+            blocks: {
+                title: 'Blöcke von Anfang an',
+                description: 'Zwölf Blocktypen zum Hineinziehen — Titel, Absatz, Bild, Button, Section, Trennlinie, Abstand, Social-Icons, Menü, Tabelle, Video und rohes HTML — plus alle eigenen Typen, die Sie registrieren.',
+            },
             framework: {
                 title: 'Framework-Integration ohne Aufwand',
                 description: 'Ein init()-Aufruf zum Einbinden, einer zum Entfernen. Erstklassige Beispiele für React, Vue, Svelte, Angular und Vanilla JS.',
-            },
-            output: {
-                title: 'JSON rein, MJML raus',
-                description: 'Templates sind portables JSON. Ausgabe ist MJML — rendern Sie im Browser oder auf Ihrem Server, versenden Sie über jeden Anbieter. Kein gehosteter Render-Dienst erforderlich.',
             },
             darkMode: {
                 title: 'Dark Mode',
@@ -383,7 +477,7 @@ const de: MessageSchema = {
             },
             i18n: {
                 title: 'Internationalisierung',
-                description: 'Englisch und Deutsch eingebaut. Laden Sie eigene Übersetzungen für jede Sprache.',
+                description: 'Fünf Sprachen eingebaut — Englisch, Deutsch, Portugiesisch (BR), Spanisch und Katalanisch — im Editor und in der Medien-Bibliothek. Für jede weitere Sprache genügt eine Datei.',
             },
             undoRedo: {
                 title: 'Rückgängig / Wiederholen',
