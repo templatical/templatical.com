@@ -205,6 +205,11 @@ const showingLatest = computed(() =>
                                             v-if="segment.code"
                                             class="rounded bg-neutral-100 px-1 py-0.5 font-mono text-sm text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
                                         >{{ segment.text }}</code>
+                                        <strong
+                                            v-else-if="segment.strong"
+                                            class="font-semibold text-neutral-950 dark:text-white"
+                                        >{{ segment.text }}</strong>
+                                        <em v-else-if="segment.em" class="italic">{{ segment.text }}</em>
                                         <template v-else>{{ segment.text }}</template>
                                     </template>
                                 </p>
