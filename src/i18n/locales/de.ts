@@ -477,7 +477,7 @@ const de: MessageSchema = {
             },
             i18n: {
                 title: 'Internationalisierung',
-                description: 'Fünf Sprachen eingebaut — Englisch, Deutsch, Portugiesisch (BR), Spanisch und Katalanisch — im Editor und in der Medien-Bibliothek. Für jede weitere Sprache genügt eine Datei.',
+                description: 'Sieben Sprachen eingebaut — Englisch, Deutsch, Portugiesisch (BR), Spanisch, Katalanisch, Französisch und Niederländisch — im Editor und in der Medien-Bibliothek. Für jede weitere Sprache genügt eine Datei.',
             },
             undoRedo: {
                 title: 'Rückgängig / Wiederholen',

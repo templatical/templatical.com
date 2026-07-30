@@ -475,7 +475,7 @@ export default {
             },
             i18n: {
                 title: 'Internationalization',
-                description: 'Five locales built in — English, German, Portuguese (BR), Spanish, and Catalan — across the editor and the media library. Drop in a file for any other language.',
+                description: 'Seven locales built in — English, German, Portuguese (BR), Spanish, Catalan, French, and Dutch — across the editor and the media library. Drop in a file for any other language.',
             },
             undoRedo: {
                 title: 'Undo / Redo',
