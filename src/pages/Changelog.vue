@@ -204,6 +204,7 @@ const showingLatest = computed(() =>
                                         <code
                                             v-if="segment.code"
                                             class="rounded bg-neutral-100 px-1 py-0.5 font-mono text-sm text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
+                                            :class="{ 'font-semibold': segment.strong, italic: segment.em }"
                                         >{{ segment.text }}</code>
                                         <strong
                                             v-else-if="segment.strong"

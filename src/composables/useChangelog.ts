@@ -59,23 +59,64 @@ function emphasisSegments(text: string): TitleSegment[] {
 }
 
 /**
+ * Stands in for a code span while emphasis is matched, so the two passes can't
+ * see each other's delimiters. NUL never appears in a changeset summary; a title
+ * that somehow contains one skips masking rather than mis-slicing itself.
+ */
+const CODE_MASK = '\u0000';
+const MASKED_CODE = /\u0000(\d+)\u0000/g;
+
+/** Re-expands masked code spans, carrying any emphasis the run picked up. */
+function expandCodeMasks(segment: TitleSegment, codes: string[]): TitleSegment[] {
+    const segments: TitleSegment[] = [];
+    let cursor = 0;
+    for (const match of segment.text.matchAll(MASKED_CODE)) {
+        const start = match.index ?? 0;
+        if (start > cursor)
+            segments.push({ ...segment, text: segment.text.slice(cursor, start) });
+        segments.push({ ...segment, text: codes[Number(match[1])], code: true });
+        cursor = start + match[0].length;
+    }
+    if (cursor < segment.text.length)
+        segments.push({ ...segment, text: segment.text.slice(cursor) });
+    return segments;
+}
+
+/**
  * Splits an entry title into plain, inline-code, bold and italic runs.
  *
  * Titles come from changeset summaries, which reach for three inline-markdown
  * constructs: backtick-quoted identifiers, `**bold**` and `*italic*`. Rendering them
  * raw shows the delimiters as characters; a full markdown renderer would be a new
- * dependency for three constructs. Code is tokenised first, so asterisks inside a
- * backtick span stay literal the way markdown treats them. An unpaired delimiter
- * stays literal text rather than swallowing the rest of the title.
+ * dependency for three constructs.
+ *
+ * Code spans are masked before emphasis is matched rather than tokenised into
+ * separate segments. Masking keeps both rules that a single pass would break:
+ * asterisks inside a backtick span stay literal the way markdown treats them
+ * (they are hidden behind the mask), while emphasis wrapping or crossing a span
+ * still pairs — ``**`MergeTag.sample`**`` is one bold code run, not two literal
+ * `**` around a code pill. An unpaired delimiter stays literal text rather than
+ * swallowing the rest of the title. Nested emphasis (`***x***`) is not supported.
  */
 export function titleSegments(title: string): TitleSegment[] {
     const parts = title.split('`');
-    const codeAware: TitleSegment[] =
-        parts.length % 2 === 0
-            ? [{ text: title, code: false }]
-            : parts.map((text, index) => ({ text, code: index % 2 === 1 }));
-    return codeAware
-        .flatMap((segment) => (segment.code ? [segment] : emphasisSegments(segment.text)))
+    // An odd backtick leaves no way to tell where the span ends, so every
+    // backtick stays literal and only emphasis is matched.
+    if (parts.length % 2 === 0 || title.includes(CODE_MASK)) {
+        return emphasisSegments(title).filter((segment) => segment.text.length > 0);
+    }
+
+    const codes: string[] = [];
+    const masked = parts
+        .map((text, index) => {
+            if (index % 2 === 0) return text;
+            codes.push(text);
+            return `${CODE_MASK}${codes.length - 1}${CODE_MASK}`;
+        })
+        .join('');
+
+    return emphasisSegments(masked)
+        .flatMap((segment) => expandCodeMasks(segment, codes))
         .filter((segment) => segment.text.length > 0);
 }
 

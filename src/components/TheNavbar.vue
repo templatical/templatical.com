@@ -14,10 +14,7 @@ import { Github, Menu, X } from 'lucide-vue-next';
 const { t } = useI18n();
 const route = useRoute();
 const { y: scrollY } = useWindowScroll();
-const hasTransparentHero = computed(() => {
-    const path = route.path.replace(/\/$/, '');
-    return path === '' || path.endsWith('/features') || path.endsWith('/faq');
-});
+const hasTransparentHero = computed(() => route.meta.transparentHero === true);
 
 interface NavLink {
     label: string;
