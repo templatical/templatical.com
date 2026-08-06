@@ -6,7 +6,7 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
 import { URLS } from '@/lib/urls';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
 import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';

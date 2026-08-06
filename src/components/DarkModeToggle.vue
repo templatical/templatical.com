@@ -2,7 +2,7 @@
 import { useDarkMode } from '@/composables/useDarkMode';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Monitor, Moon, Sun } from 'lucide-vue-next';
+import { Monitor, Moon, Sun } from '@lucide/vue';
 
 const { t } = useI18n();
 const { mode, cycleMode } = useDarkMode();

@@ -9,7 +9,7 @@ import HeroEditor from './HeroEditor.vue';
 import HeroHeadline from './HeroHeadline.vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
 
 const { t, tm } = useI18n();
 const heroBadges = computed(() => tm('home.hero.badges') as string[]);

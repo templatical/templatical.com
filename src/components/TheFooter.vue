@@ -4,7 +4,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppLogoIcon from './AppLogoIcon.vue';
 import SiteContainer from './SiteContainer.vue';
-import { Github } from 'lucide-vue-next';
+import GithubIcon from './icons/GithubIcon.vue';
 
 const { t } = useI18n();
 
@@ -24,7 +24,7 @@ const links = computed<FooterLink[]>(() => [
 ]);
 
 const socialLinks = [
-    { label: 'GitHub', href: URLS.github, icon: Github },
+    { label: 'GitHub', href: URLS.github, icon: GithubIcon },
 ];
 </script>
 

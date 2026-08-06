@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { URLS } from '@/lib/urls';
-import { Check, ChevronRight, Plus, X } from 'lucide-vue-next';
+import { Check, ChevronRight, Plus, X } from '@lucide/vue';
 import RevealOnScroll from './RevealOnScroll.vue';
 import SiteContainer from './SiteContainer.vue';
 import SiteEyebrow from './SiteEyebrow.vue';

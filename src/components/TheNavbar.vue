@@ -9,7 +9,8 @@ import AppLogoIcon from './AppLogoIcon.vue';
 import DarkModeToggle from './DarkModeToggle.vue';
 import LocaleSwitcher from './LocaleSwitcher.vue';
 import SiteButton from './SiteButton.vue';
-import { Github, Menu, X } from 'lucide-vue-next';
+import GithubIcon from './icons/GithubIcon.vue';
+import { Menu, X } from '@lucide/vue';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -113,7 +114,7 @@ const linkClasses =
                         class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-neutral-500 transition-colors hover:text-neutral-950 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-neutral-400 dark:hover:text-white"
                         aria-label="GitHub"
                     >
-                        <Github class="size-5" />
+                        <GithubIcon class="size-5" />
                     </a>
                     <SiteButton
                         :href="URLS.docs"

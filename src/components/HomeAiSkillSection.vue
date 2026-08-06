@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
 import { URLS, localizedUrl } from '@/lib/urls';
 import RevealOnScroll from './RevealOnScroll.vue';
 import SiteButton from './SiteButton.vue';

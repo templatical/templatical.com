@@ -3,7 +3,7 @@ import { useClipboard } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { URLS } from '@/lib/urls';
 import CodeBlock from './CodeBlock.vue';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
 

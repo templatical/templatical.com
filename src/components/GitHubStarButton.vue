@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { URLS } from '@/lib/urls';
 import { useGitHubStars } from '@/composables/useGitHubStars';
-import { Github } from 'lucide-vue-next';
+import GithubIcon from './icons/GithubIcon.vue';
 
 const { t } = useI18n();
 const { stars: count } = useGitHubStars();
@@ -32,7 +32,7 @@ const ariaLabel = computed(() =>
             aria-hidden="true"
             class="inline-flex items-center gap-1.5 bg-neutral-950/5 px-2.5 py-1 text-neutral-950 group-hover:bg-neutral-950/10 dark:bg-white/5 dark:text-white dark:group-hover:bg-white/10"
         >
-            <Github class="size-3.5" />
+            <GithubIcon class="size-3.5" />
             {{ t('github.star') }}
         </span>
         <span

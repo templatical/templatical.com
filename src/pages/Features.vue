@@ -7,7 +7,7 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import SiteText from '@/components/SiteText.vue';
-import { ArrowRight, Check, ChevronRight } from 'lucide-vue-next';
+import { ArrowRight, Check, ChevronRight } from '@lucide/vue';
 import { useHead } from '@unhead/vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -172,12 +172,18 @@ const featureSections = computed<FeatureSection[]>(() => [
   container: '#editor',
   mergeTags: {
     syntax: 'liquid',
+    // An optional sample is what previews render in place of the label,
+    // so a preview reads like a delivered email instead of a list of
+    // field names. Set one and a Sample / Label switch appears; set
+    // none and the editor behaves exactly as it did before.
     tags: [
-      { label: 'First name',      value: '{{first_name}}' },
-      { label: 'Email',           value: '{{email}}' },
-      { label: 'Plan name',       value: '{{plan_name}}' },
-      { label: 'Order ID',        value: '{{order_id}}' },
-      { label: 'Order total',     value: '{{order_total}}' },
+      { label: 'First name',      value: '{{first_name}}',  sample: 'Ada' },
+      { label: 'Email',           value: '{{email}}',       sample: 'ada@example.com' },
+      { label: 'Plan name',       value: '{{plan_name}}',   sample: 'Pro' },
+      { label: 'Order ID',        value: '{{order_id}}',    sample: 'A-4417' },
+      { label: 'Order total',     value: '{{order_total}}', sample: '$128.00' },
+      // No sample — this one keeps its label and its highlight, so the
+      // remaining highlights double as a list of what's still missing.
       { label: 'Unsubscribe URL', value: '{{unsubscribe_url}}' },
     ],
   },
@@ -324,6 +330,105 @@ const editor = await init({
     onRequest: async () => {
       const choice = await showMyLogicPicker()
       return choice // LogicTag | LogicPair | null
+    },
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'preview-resolution',
+        docsPath: '/guide/preview-rendering',
+        docsLabel: t('features.previewResolution.docsLabel'),
+        eyebrow: t('features.previewResolution.eyebrow'),
+        title: t('features.previewResolution.title'),
+        description: t('features.previewResolution.description'),
+        outcome: t('features.previewResolution.outcome'),
+        features: tm('features.previewResolution.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.perRecipient'),
+                code: `const editor = await init({
+  container: '#editor',
+  // Called by preview surfaces only — never while editing. The
+  // test-email dialog passes the selected address as \`recipient\`;
+  // the editor's own preview mode has none.
+  resolvePreview: async ({ content, recipient }) => {
+    const data = recipient
+      ? await fetchSubscriber(recipient)
+      : await fetchSampleSubscriber()
+
+    // Whatever renders your sends renders your previews.
+    return renderWithMyEngine(content, data)
+  },
+})`,
+            },
+            {
+                label: t('features.variants.audiencePicker'),
+                code: `const editor = await init({
+  container: '#editor',
+  // The callback is async, so you can open your own UI inside it and
+  // resolve once the user has picked — free vs pro, trial vs churned,
+  // EU vs US. The preview shows its skeleton while your dialog is open.
+  resolvePreview: async ({ content }) => {
+    const audience = await openMyAudiencePicker()
+
+    // Dismissed. Returning the template unchanged shows it unresolved.
+    if (!audience) return content
+
+    return renderWithMyEngine(content, audience.data)
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'test-email',
+        docsPath: '/guide/test-email',
+        docsLabel: t('features.testEmail.docsLabel'),
+        eyebrow: t('features.testEmail.eyebrow'),
+        title: t('features.testEmail.title'),
+        description: t('features.testEmail.description'),
+        outcome: t('features.testEmail.outcome'),
+        features: tm('features.testEmail.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourEndpoint'),
+                code: `const editor = await init({
+  container: '#editor',
+  testEmail: {
+    // The whole integration. A Test button appears in the header, and
+    // the address the user picks is handed to you.
+    send: async ({ recipient, content }) => {
+      const res = await fetch('/api/test-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ recipient, content }),
+      })
+
+      // Your message reaches the user verbatim — write it for them.
+      if (res.status === 429) throw new Error('Too many test emails — try again in a minute.')
+      if (!res.ok) throw new Error('Could not send the test email.')
+    },
+  },
+})`,
+            },
+            {
+                label: t('features.variants.restrictedRecipients'),
+                code: `const editor = await init({
+  container: '#editor',
+  testEmail: {
+    // One entry renders a read-only field, several render a picker, an
+    // empty array hides the feature. It constrains the picker, nothing
+    // more — validate the recipient on your server every time.
+    allowedRecipients: [currentUser.email, 'qa@acme.com'],
+
+    // Adds a rendered \`mjml\` string to the payload so your endpoint
+    // doesn't have to render one. Needs the optional renderer package.
+    includeMjml: true,
+
+    send: async ({ recipient, mjml }) => {
+      await postJson('/api/test-email', { recipient, mjml })
     },
   },
 })`,

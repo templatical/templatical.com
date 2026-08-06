@@ -13,7 +13,7 @@ import {
 } from '@/composables/useChangelog';
 import { URLS } from '@/lib/urls';
 import { useHead } from '@unhead/vue';
-import { ChevronRight, Sparkles, TriangleAlert, Wrench } from 'lucide-vue-next';
+import { ChevronRight, Sparkles, TriangleAlert, Wrench } from '@lucide/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
