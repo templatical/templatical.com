@@ -12,9 +12,14 @@ const { t } = useI18n();
 const installCommand = 'npm install @templatical/editor @templatical/renderer';
 const { copy, copied, isSupported } = useClipboard({ source: installCommand });
 
+// The "no API key" comment is load-bearing, not decoration: it is the only place on
+// the page that makes the runtime-independence point against a real integration.
+// HomeIndependenceSection used to carry a second, smaller snippet for that; this one
+// absorbed the argument so the page is not showing two near-identical init() calls.
 const usageCode = `import { init } from '@templatical/editor'
 import '@templatical/editor/style.css'
 
+// No API key, no client ID — this is the whole integration
 const editor = await init({
   container: '#editor',
   onChange(content) {

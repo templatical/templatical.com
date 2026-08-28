@@ -28,6 +28,9 @@ const faqItems = computed(() =>
         'free',
         'commercial',
         'packages',
+        // Absorbed from the homepage FAQ when that section was removed — it was the
+        // one question there that /faq did not already answer.
+        'hosted',
         'branding',
         'frameworks',
         'migrate',

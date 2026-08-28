@@ -144,6 +144,14 @@ function trailingLabel(slug: Slug): string {
                                         {{ item }}
                                     </li>
                                 </ul>
+                                <router-link
+                                    v-if="col.slug === 'hosted'"
+                                    to="/alternatives/easy-email-pro"
+                                    class="inline-flex items-center gap-1 self-start text-xs/5 font-medium text-neutral-600 hover:underline dark:text-neutral-400"
+                                >
+                                    {{ t('home.comparison.compareLink') }}
+                                    <ChevronRight class="size-3.5" />
+                                </router-link>
                             </div>
                         </template>
                     </div>

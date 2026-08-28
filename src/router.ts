@@ -31,4 +31,39 @@ export const routes = [
         component: () => import('./pages/Changelog.vue'),
         meta: { transparentHero: true },
     },
+    {
+        path: '/alternatives/easy-email-pro',
+        component: () => import('./pages/AlternativeEasyEmailPro.vue'),
+        meta: { transparentHero: true },
+    },
+    {
+        path: '/alternatives/beefree',
+        component: () => import('./pages/AlternativeBeefree.vue'),
+        meta: { transparentHero: true },
+    },
+    {
+        path: '/alternatives/unlayer',
+        component: () => import('./pages/AlternativeUnlayer.vue'),
+        meta: { transparentHero: true },
+    },
+    {
+        path: '/alternatives/stripo',
+        component: () => import('./pages/AlternativeStripo.vue'),
+        meta: { transparentHero: true },
+    },
+    {
+        path: '/alternatives/topol',
+        component: () => import('./pages/AlternativeTopol.vue'),
+        meta: { transparentHero: true },
+    },
+    {
+        path: '/alternatives/chamaileon',
+        component: () => import('./pages/AlternativeChamaileon.vue'),
+        meta: { transparentHero: true },
+    },
+    {
+        path: '/alternatives/grapesjs',
+        component: () => import('./pages/AlternativeGrapesjs.vue'),
+        meta: { transparentHero: true },
+    },
 ];

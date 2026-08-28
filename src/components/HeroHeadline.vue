@@ -45,8 +45,20 @@ function computeTokens(text: string, accent?: string) {
     return words.map((w, i) => {
         if (/^\s+$/.test(w)) return { kind: 'space' as const, id: i };
         const isAccent = accent ? w.replace(/[.,]$/, '') === accent : false;
-        const chars = Array.from(w).map((c) => ({ c, i: charIndex++ }));
-        return { kind: 'word' as const, id: i, isAccent, chars };
+        // Split after each hyphen so a word becomes one or more atomic segments.
+        // Every character is its own inline-block, so the browser sees a run of boxes
+        // with no notion of "this one is a hyphen, prefer breaking here" — left to
+        // itself it breaks mid-syllable. Segmenting is what puts the break opportunity
+        // on the hyphen: `.hh__seg` is `white-space: pre` (never breaks inside), while
+        // `.hh__w` is `white-space: normal` (may break between segments). A word with
+        // no hyphen yields a single segment and behaves exactly as before.
+        // This exists for German compounds — `Open-Source-Drag-and-Drop-E-Mail-Editor-SDK.`
+        // is 1735px at the 80px hero size and scrolled the whole page sideways.
+        const segments = w.split(/(?<=-)/).map((seg, s) => ({
+            id: s,
+            chars: Array.from(seg).map((c) => ({ c, i: charIndex++ })),
+        }));
+        return { kind: 'word' as const, id: i, isAccent, segments };
     });
 }
 
@@ -183,8 +195,10 @@ watch(reducedMotion, (v) => {
                 :class="{ 'hh__w--accent': tok.isAccent }"
                 aria-hidden="true"
             >
-                <span v-for="ch in tok.chars" :key="ch.i" class="hh__c">
-                    {{ ch.c }}
+                <span v-for="seg in tok.segments" :key="seg.id" class="hh__seg">
+                    <span v-for="ch in seg.chars" :key="ch.i" class="hh__c">
+                        {{ ch.c }}
+                    </span>
                 </span>
             </span>
         </template>
@@ -195,13 +209,25 @@ watch(reducedMotion, (v) => {
 .hh {
     position: relative;
 }
+/* `normal`, not `pre`: this is the only place a long word is allowed to wrap, and it
+   wraps between `.hh__seg` boxes — i.e. on hyphens. See computeTokens(). */
 .hh__w {
+    display: inline-block;
+    white-space: normal;
+}
+.hh__seg {
     display: inline-block;
     white-space: pre;
 }
+/* Plain inline collapsible whitespace, NOT an inline-block with `white-space: pre`.
+   An inline-block space is an atomic box: it can't be collapsed or hung at a line
+   break, so when a line wraps at a space that box lands at the START of the new line
+   and indents it by one space width (measured: 18px at the 80px hero size). Real text
+   never does this because normal spaces are collapsible — this restores that. The
+   space still renders at full width mid-line; only the line-break case changes. */
 .hh__sp {
-    display: inline-block;
-    white-space: pre;
+    display: inline;
+    white-space: normal;
 }
 .hh__c {
     display: inline-block;

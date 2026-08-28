@@ -14,13 +14,47 @@ interface FooterLink {
     external?: boolean;
 }
 
-const links = computed<FooterLink[]>(() => [
-    { label: t('footer.features'), href: '/features' },
-    { label: t('footer.faq'), href: '/faq' },
-    { label: t('footer.changelog'), href: '/changelog' },
-    { label: t('footer.documentation'), href: URLS.docs, external: true },
-    { label: t('footer.playground'), href: URLS.playground, external: true },
-    { label: t('footer.github'), href: URLS.github, external: true },
+interface FooterGroup {
+    key: string;
+    heading: string;
+    links: FooterLink[];
+}
+
+// Grouped rather than one flat row so the comparison pages have a column of
+// their own to grow into — /alternatives/beefree and /alternatives/unlayer are
+// the next two, and a flat list would have buried them among the docs links.
+const groups = computed<FooterGroup[]>(() => [
+    {
+        key: 'product',
+        heading: t('footer.groups.product'),
+        links: [
+            { label: t('footer.features'), href: '/features' },
+            { label: t('footer.playground'), href: URLS.playground, external: true },
+        ],
+    },
+    {
+        key: 'resources',
+        heading: t('footer.groups.resources'),
+        links: [
+            { label: t('footer.documentation'), href: URLS.docs, external: true },
+            { label: t('footer.faq'), href: '/faq' },
+            { label: t('footer.changelog'), href: '/changelog' },
+            { label: t('footer.github'), href: URLS.github, external: true },
+        ],
+    },
+    {
+        key: 'compare',
+        heading: t('footer.groups.compare'),
+        links: [
+            { label: t('footer.comparisonBeefree'), href: '/alternatives/beefree' },
+            { label: t('footer.comparisonUnlayer'), href: '/alternatives/unlayer' },
+            { label: t('footer.comparisonStripo'), href: '/alternatives/stripo' },
+            { label: t('footer.comparisonTopol'), href: '/alternatives/topol' },
+            { label: t('footer.comparisonChamaileon'), href: '/alternatives/chamaileon' },
+            { label: t('footer.comparisonGrapesjs'), href: '/alternatives/grapesjs' },
+            { label: t('footer.comparison'), href: '/alternatives/easy-email-pro' },
+        ],
+    },
 ]);
 
 const socialLinks = [
@@ -31,12 +65,10 @@ const socialLinks = [
 <template>
     <footer class="border-t border-neutral-200 dark:border-neutral-800">
         <SiteContainer class="flex flex-col gap-8 py-12">
-            <div
-                class="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center"
-            >
+            <div class="flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-16">
                 <router-link
                     to="/"
-                    class="inline-flex items-center gap-2"
+                    class="inline-flex items-center gap-2 self-start"
                 >
                     <AppLogoIcon class="size-7" />
                     <span
@@ -48,25 +80,34 @@ const socialLinks = [
 
                 <nav
                     :aria-label="t('a11y.footerNav')"
-                    class="flex flex-wrap gap-x-6 gap-y-2 text-sm/7"
+                    class="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-12"
                 >
-                    <template v-for="link in links" :key="link.href">
-                        <a
-                            v-if="link.external"
-                            :href="link.href"
-                            rel="noopener noreferrer"
-                            class="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
+                    <div v-for="group in groups" :key="group.key" class="flex flex-col gap-3">
+                        <h2
+                            class="text-xs/5 font-medium tracking-wide text-neutral-950 uppercase dark:text-white"
                         >
-                            {{ link.label }}
-                        </a>
-                        <router-link
-                            v-else
-                            :to="link.href"
-                            class="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                        >
-                            {{ link.label }}
-                        </router-link>
-                    </template>
+                            {{ group.heading }}
+                        </h2>
+                        <ul class="flex flex-col gap-2 text-sm/6">
+                            <li v-for="link in group.links" :key="link.href">
+                                <a
+                                    v-if="link.external"
+                                    :href="link.href"
+                                    rel="noopener noreferrer"
+                                    class="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
+                                >
+                                    {{ link.label }}
+                                </a>
+                                <router-link
+                                    v-else
+                                    :to="link.href"
+                                    class="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
+                                >
+                                    {{ link.label }}
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
             </div>
 

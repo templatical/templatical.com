@@ -201,9 +201,23 @@ const showingLatest = computed(() =>
                                         v-for="(segment, index) in titleSegments(change.title)"
                                         :key="index"
                                     >
+                                        <!-- `wrap-anywhere`, not `break-words`: changeset titles
+                                             quote package names and identifiers with no break
+                                             opportunity, and only `overflow-wrap: anywhere` also
+                                             shrinks min-content, which is what stops the pill
+                                             pushing the page wider at mobile widths. Prose keeps
+                                             normal wrapping — this is scoped to code spans. -->
+                                        <a
+                                            v-if="segment.href"
+                                            :href="segment.href"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="font-medium text-primary underline-offset-2 hover:underline"
+                                            :class="{ 'font-semibold': segment.strong, italic: segment.em }"
+                                        >{{ segment.text }}</a>
                                         <code
-                                            v-if="segment.code"
-                                            class="rounded bg-neutral-100 px-1 py-0.5 font-mono text-sm text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
+                                            v-else-if="segment.code"
+                                            class="rounded bg-neutral-100 px-1 py-0.5 font-mono text-sm wrap-anywhere text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
                                             :class="{ 'font-semibold': segment.strong, italic: segment.em }"
                                         >{{ segment.text }}</code>
                                         <strong

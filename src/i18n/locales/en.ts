@@ -55,9 +55,21 @@ export default {
         },
     },
     footer: {
+        groups: {
+            product: 'Product',
+            resources: 'Resources',
+            compare: 'Compare',
+        },
         features: 'Features',
         faq: 'FAQ',
         changelog: 'Changelog',
+        comparisonBeefree: 'vs Beefree SDK',
+        comparisonUnlayer: 'vs Unlayer',
+        comparisonStripo: 'vs Stripo Plugin',
+        comparisonTopol: 'vs Topol Plugin',
+        comparisonChamaileon: 'vs Chamaileon SDK',
+        comparisonGrapesjs: 'vs GrapesJS',
+        comparison: 'vs Easy Email Pro',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -75,14 +87,14 @@ export default {
                 'Custom blocks, full theming, merge tags, and display conditions — all built into the open-source SDK. Drop into any app with one init() call.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Read the docs',
-            frameworkNote: 'Works in React, Svelte, Angular, Vue, and vanilla JS — one init() call, zero peer dependencies.',
+            frameworkNote: 'Works in React, Svelte, Angular, Vue, and vanilla JS — one init() call, zero runtime dependencies.',
             badges: [
                 'TypeScript-first',
                 'Built on MJML',
                 'FSL-1.1-MIT (auto-MIT)',
                 'Framework-neutral',
                 'Shadow DOM',
-                'Zero telemetry',
+                'No license key',
             ],
         },
         comparison: {
@@ -96,6 +108,7 @@ export default {
             cloudLabel: 'Coming with Templatical Cloud',
             cloudBadge: 'In development',
             cloudMore: 'More at cloud.templatical.com',
+            compareLink: 'Compared with Easy Email Pro',
             recommendedLabel: 'Recommended',
             columns: {
                 diy: {
@@ -136,6 +149,7 @@ export default {
                         'Per-seat or per-end-user pricing scales with you',
                         'Closed source — cannot audit, fork, or extend',
                         'Output coupled to the vendor’s render API',
+                        'License key validated against the vendor’s servers — features enabled remotely by plan',
                         'No CSS isolation — host styles can cascade into the embedded editor',
                     ],
                 },
@@ -156,6 +170,7 @@ export default {
                         'MJML output — render in browser, on your server, anywhere',
                         'Built-in WCAG accessibility linting with auto-fixes',
                         'Style-isolated — Shadow DOM mount keeps host CSS out',
+                        'No license key, no activation call — nothing we can switch off remotely',
                     ],
                     cloud: [
                         'AI rewrite, AI chat, MCP integration',
@@ -165,6 +180,18 @@ export default {
                     ],
                 },
             },
+        },
+        independence: {
+            eyebrow: 'Runtime independence',
+            headline: 'Nothing to activate. Nothing to revoke.',
+            subheadline:
+                'No license key, no client ID, no activation call. The open-source SDK never asks a server which features you are allowed to use — install it once and it keeps working, unchanged, including if this project disappears tomorrow.',
+            claims: [
+                'No license key or client ID anywhere in the API',
+                'No entitlement check — features are never enabled or revoked remotely',
+                'No telemetry, no analytics, no usage reporting',
+                'Your templates stay in your app until you send them to your own backend',
+            ],
         },
         aiSkill: {
             eyebrow: 'New · Open source',
@@ -199,28 +226,6 @@ export default {
             fromUnlayer: 'From Unlayer',
             fromHtml: 'From HTML',
         },
-        homeFaq: {
-            eyebrow: 'Common questions',
-            headline: 'Things developers ask first',
-            items: [
-                {
-                    question: 'What does FSL-1.1-MIT mean for commercial use?',
-                    answer:
-                        'You can use Templatical commercially, embed it in your product, charge customers for your product, and self-host it — all today, free. The only restriction is you can’t resell Templatical as a competing email-editor product. After two years, every release auto-converts to plain MIT.',
-                },
-                {
-                    question: 'How does this compare to a hosted SaaS email builder?',
-                    answer:
-                        'Hosted builders give you a turnkey editor and a stocked template catalog, but lock the editor behind their UI and pricing — custom blocks, white-label, advanced theming, and custom merge-tag syntax usually sit behind upgrade screens. Templatical is the embedded, self-hostable opposite: your customers see your brand, you pay nothing per seat, and you ship MJML you can render anywhere. If your product needs an editor that feels like part of your app, Templatical fits. If you mainly want a hosted editor with a large pre-built template library, a SaaS builder will be faster.',
-                },
-                {
-                    question: 'What does Templatical Cloud include vs the open-source SDK?',
-                    answer:
-                        'The open-source SDK has every editor feature — custom blocks, merge tags, display conditions, theming, MJML output — included and free to self-host. Templatical Cloud is a separate, paid managed subscription for infrastructure-dependent capabilities: real-time collaboration, AI rewrite and chat, snapshots, comments, multi-tenancy, hosted media. Those need backend services we run, so they ship as a managed tier rather than self-hostable code.',
-                },
-            ],
-            seeAll: 'See all questions',
-        },
         close: {
             headline: 'Ship an email editor this week',
             subheadline:
@@ -235,14 +240,14 @@ export default {
         meta: {
             title: 'Features — Templatical',
             description:
-                'Open-source drag-and-drop email editor SDK. Custom blocks, full theming, MJML output. Self-host free. MIT licensed.',
+                'Open-source drag-and-drop email editor SDK. Custom blocks, full theming, MJML output. Self-host free. FSL-1.1-MIT, becoming MIT two years after each release.',
         },
         hero: {
             eyebrow: 'Open-source SDK',
-            headline: 'The features other editors gate. In your repo. MIT-licensed.',
+            headline: 'The features other editors gate. In your repo. Open source.',
             subheadline:
                 'The power features, and a clean set of essentials — all included, all open. Portable JSON in, MJML out, no usage tier in the way.',
-            pricingPill: 'Open source · MIT · Free to self-host',
+            pricingPill: 'Open source · FSL-1.1-MIT · Free to self-host',
         },
         examplesLabel: '{title} examples',
         variants: {
@@ -561,6 +566,861 @@ export default {
             },
         },
     },
+    alternatives: {
+        topol: {
+            meta: {
+                title: 'An open-source Topol Plugin alternative — Templatical',
+                description:
+                    'A sourced side-by-side comparison: per-user pricing, domain-bound API keys, who runs the editor, and what the output is tied to.',
+            },
+            hero: {
+                eyebrow: 'Comparison',
+                headline: 'An open-source alternative to Topol Plugin',
+                subheadline:
+                    'Both put a drag-and-drop email editor inside your product. Topol is the most generous of the hosted builders on what it includes per plan — the differences that remain are who runs the editor, whether your bill grows with your users, and who owns the output. Everything below is checkable against public sources.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            table: {
+                heading: 'Templatical vs Topol Plugin',
+                colFeature: 'Feature',
+                colThem: 'Topol Plugin',
+                colUs: 'Templatical',
+                notDocumented: 'Not documented',
+                rows: {
+                    pricing: {
+                        label: 'Pricing',
+                        us: 'No fee, on any tier',
+                        them: '14-day trial, then $70, $140 or $300 per month',
+                    },
+                    users: {
+                        label: 'End-user limits',
+                        us: 'None. The editor does not know or count your users.',
+                        them: '50, 100 or 500 users included; beyond that $1.60, $1.40 or $0.70 per extra user per month',
+                    },
+                    domains: {
+                        label: 'Domain binding',
+                        us: 'None. Run it anywhere.',
+                        them: 'The API key is tied to given domains and will not work on another',
+                    },
+                    hosting: {
+                        label: 'Who runs the editor',
+                        us: 'You. The editor ships in your bundle and runs in your page',
+                        them: 'Topol. The npm package injects their loader script at runtime',
+                    },
+                    activation: {
+                        label: 'Runtime activation',
+                        us: 'None. No API key, no domain binding, no call to us.',
+                        them: 'An API key, bound to your registered domains',
+                    },
+                    whiteLabel: {
+                        label: 'White-labelling',
+                        us: 'Default. No branding to remove.',
+                        them: 'Included on every plan',
+                    },
+                    customBlocks: {
+                        label: 'Custom blocks',
+                        us: 'Unlimited, defined in your own code',
+                        them: 'Included on every plan',
+                    },
+                    storage: {
+                        label: 'Image storage',
+                        us: 'Yours. The editor calls your onRequestMedia hook.',
+                        them: 'Unlimited, hosted by them; your own cloud storage on higher plans',
+                    },
+                    frameworks: {
+                        label: 'Framework support',
+                        us: 'One init() call — React, Vue, Svelte, Angular and vanilla JS',
+                        them: 'Official React, Vue and Svelte packages',
+                    },
+                    source: {
+                        label: 'Source access',
+                        us: 'Full source in a public repository',
+                        them: 'The loader package is Apache-2.0; the editor it loads is not published',
+                    },
+                    licence: {
+                        label: 'Licence',
+                        us: 'FSL-1.1-MIT, converting to MIT two years after each release',
+                        them: 'Commercial subscription',
+                    },
+                    output: {
+                        label: 'Output format',
+                        us: 'MJML and JSON',
+                        them: 'HTML and their own JSON. MJML is their internal renderer, not something you receive',
+                    },
+                },
+            },
+            bestFit: {
+                eyebrow: 'Best fit',
+                headline: 'Which one you should pick',
+                subheadline:
+                    'The table is the detail; this is the decision. If a reason in the right column is a requirement for you, buy their product — it is the better fit and we would rather you knew.',
+                usTitle: 'Choose Templatical if',
+                themTitle: 'Choose Topol Plugin if',
+                us: {
+                    cost: 'You do not want the editor billed per end user. Templatical does not meter them.',
+                    domains: 'You run the editor on more than one domain, or on domains you cannot register in advance.',
+                    ownership: 'You want the editor running in your own bundle rather than injected from a vendor loader at runtime.',
+                    output: 'You want to own the artifact you export. Templatical hands you MJML, an open standard with an MIT implementation you can run yourself; Topol compiles through MJML internally but hands you HTML and its own JSON.',
+                    source: 'You want the full source, and a licence that becomes MIT two years after each release.',
+                },
+                them: {
+                    operated: 'You would rather someone else operated the editor, with hosting and uptime handled for you.',
+                    storage: 'You want image storage bundled in. Topol hosts it for you; Templatical has none and expects you to supply it.',
+                    comments: 'You want commenting on templates inside the editor. Topol includes it from the Business plan ($300/mo) up; our Cloud tier plans it but has not shipped.',
+                    templates: 'You want a ready-made template library your users can start from on day one.',
+                    support: 'You want a commercial vendor behind the editor, with email support during business hours, rather than an open-source project.',
+                },
+            },
+            close: {
+                headline: 'Try it before you weigh any of this',
+                body: 'The playground runs the real editor with no signup. If it does not fit your product, none of the rest matters.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            footnote: {
+                verified:
+                    'Verified on 8 August 2026 against {\'@\'}topol.io/editor 0.3.0 as published on npm, and the plans listed at topol.io on that date. Pricing and features change — check their site for current terms.',
+                notDocumented:
+                    '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
+                trademark:
+                    'Topol is a trademark of its respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                sourcesLabel: 'Sources',
+                stale: 'This page is a snapshot, not a standing claim — including what we say Topol Plugin does better. If anything here is out of date or wrong,',
+                staleCta: 'open an issue',
+            },
+        },
+        grapesjs: {
+            meta: {
+                title: 'Templatical vs GrapesJS — email editor or web builder framework',
+                description:
+                    'A sourced comparison of two open-source projects: a purpose-built email editor SDK against a general web builder framework with email plugins.',
+            },
+            hero: {
+                eyebrow: 'Comparison',
+                headline: 'Templatical and GrapesJS are both open source',
+                subheadline:
+                    'So this is not a comparison about licences or cost — both are free, both run in your own bundle, and both can output MJML. The real question is whether you want an email editor or a framework to build one on. Everything below is checkable against public sources.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            table: {
+                heading: 'Templatical vs GrapesJS',
+                colFeature: 'Feature',
+                colThem: 'GrapesJS',
+                colUs: 'Templatical',
+                notDocumented: 'Not documented',
+                rows: {
+                    cost: {
+                        label: 'Cost',
+                        us: 'Free',
+                        them: 'Free — the same',
+                    },
+                    licence: {
+                        label: 'Licence',
+                        us: 'FSL-1.1-MIT, converting to MIT two years after each release',
+                        them: 'BSD-3-Clause — more permissive than ours today, with no restriction and no waiting period',
+                    },
+                    runs: {
+                        label: 'Who runs the editor',
+                        us: 'You, in your own bundle',
+                        them: 'You, in your own bundle — the same',
+                    },
+                    source: {
+                        label: 'Source access',
+                        us: 'Full source in a public repository',
+                        them: 'Full source in a public repository — the same',
+                    },
+                    builtFor: {
+                        label: 'Built for',
+                        us: 'Email, and nothing else',
+                        them: 'General web building — pages, apps, any HTML document; newsletters are one of its advertised uses',
+                    },
+                    emailSupport: {
+                        label: 'Email support',
+                        us: 'Native. The block model is the email model.',
+                        them: 'Through grapesjs-mjml — an official plugin from the GrapesJS org, covering 20 MJML components',
+                    },
+                    output: {
+                        label: 'MJML output',
+                        us: 'Built in, via the MIT renderer',
+                        them: 'Available through the grapesjs-mjml plugin',
+                    },
+                    mergeTags: {
+                        label: 'Merge tags',
+                        us: 'Built in — picker, live labels, pluggable syntax',
+                        them: 'Yours to build',
+                    },
+                    conditions: {
+                        label: 'Display conditions',
+                        us: 'Built in, with live preview',
+                        them: 'Yours to build',
+                    },
+                    savedBlocks: {
+                        label: 'Reusable saved blocks',
+                        us: 'Built in, over a storage provider you supply',
+                        them: 'The Block Manager is a developer-defined palette; end users saving their own groups is yours to build',
+                    },
+                    testSend: {
+                        label: 'Test sending',
+                        us: 'Built in, over a provider you supply',
+                        them: 'Yours to build',
+                    },
+                    linting: {
+                        label: 'Template quality linting',
+                        us: '30 accessibility, structure and link rules, MIT',
+                        them: 'Yours to build',
+                    },
+                    clientCompat: {
+                        label: 'Email-client compatibility',
+                        us: 'Carried by MJML — Outlook, Gmail clipping, Apple Mail',
+                        them: 'The same, through grapesjs-mjml — it compiles with MJML too',
+                    },
+                },
+            },
+            bestFit: {
+                eyebrow: 'Best fit',
+                headline: 'Which one you should pick',
+                subheadline:
+                    'Neither of these is the cheap option — they are both free. This is a question of what you want to spend engineering time on. If a reason in the right column is a requirement for you, use GrapesJS; it is the better fit and we would rather you knew.',
+                usTitle: 'Choose Templatical if',
+                themTitle: 'Choose GrapesJS if',
+                us: {
+                    purpose: 'You are building an email editor specifically, and want the email-shaped features to already exist.',
+                    features: 'You want merge tags, display conditions, saved blocks, test sending and accessibility linting without building each one.',
+                    previews: 'You want email-shaped previews — mobile and desktop, dark mode, merge tags resolved to sample values — rather than a generic canvas preview.',
+                    dropIn: 'You want a drop-in init() call rather than a canvas to assemble an editor around.',
+                    defaults: 'You want email-sensible defaults out of the box rather than a blank framework to configure.',
+                },
+                them: {
+                    scope: 'You need more than email — landing pages, app screens, any HTML document. Templatical does email and nothing else.',
+                    freedom: 'You want layout freedom beyond what MJML allows — accepting that you then own email-client compatibility yourself, since the MJML plugin is what provides it.',
+                    licence: 'You need a more permissive licence. BSD-3-Clause has no non-compete restriction and no two-year wait; ours does.',
+                    control: 'You want to control the editor framework itself, not consume a finished product.',
+                    reuse: 'You already run GrapesJS elsewhere and would rather have one editor across every surface.',
+                },
+            },
+            close: {
+                headline: 'On grapesjs-mjml? Bring your templates',
+                body: 'If your GrapesJS setup already outputs MJML, that is the format Templatical works in natively — so an evaluation can start from your real designs.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            migration: {
+                label: 'Read the MJML migration guide',
+            },
+            footnote: {
+                verified:
+                    'Verified on 8 August 2026 against grapesjs 0.23.4 and grapesjs-mjml 1.0.8 as published on npm. This page compares the open-source framework; GrapesJS also sells Studio SDK, a commercial embedded editor whose pricing is quote-only and therefore not compared here.',
+                notDocumented:
+                    '“Yours to build” means the capability is not provided out of the box, not that it is hard or unsupported — GrapesJS is a framework, and building on it is the point.',
+                trademark:
+                    'GrapesJS is a trademark of its respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                sourcesLabel: 'Sources',
+                stale: 'This page is a snapshot, not a standing claim — including what we say GrapesJS does better. If anything here is out of date or wrong,',
+                staleCta: 'open an issue',
+            },
+        },
+        chamaileon: {
+            meta: {
+                title: 'An open-source Chamaileon SDK alternative — Templatical',
+                description:
+                    'A sourced side-by-side comparison: double metering on users and exports, an iframe-hosted editor, mandatory tokens, and what the output is tied to.',
+            },
+            hero: {
+                eyebrow: 'Comparison',
+                headline: 'An open-source alternative to Chamaileon SDK',
+                subheadline:
+                    'Both put a drag-and-drop email editor inside your product. Chamaileon runs its editor in an iframe it serves, meters both your users and your exports, and needs a token to start. Everything below is checkable against public sources.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            table: {
+                heading: 'Templatical vs Chamaileon SDK',
+                colFeature: 'Feature',
+                colThem: 'Chamaileon SDK',
+                colUs: 'Templatical',
+                notDocumented: 'Not documented',
+                rows: {
+                    pricing: {
+                        label: 'Pricing',
+                        us: 'No fee, on any tier',
+                        them: 'Free Starter, then $200 or $600 per month, plus Enterprise',
+                    },
+                    metering: {
+                        label: 'What is metered',
+                        us: 'Nothing. No counter on users, templates or exports.',
+                        them: 'Two counters at once — monthly active users and generator calls',
+                    },
+                    users: {
+                        label: 'Monthly active users',
+                        us: 'Unlimited',
+                        them: '10 on Starter, 200 on Standard, 1,000 on Scale',
+                    },
+                    exports: {
+                        label: 'Export limits',
+                        us: 'None. Render as often as you like.',
+                        them: 'Generator calls: 100, 500 or 15,000 per month. Each HTML export counts as one, and they budget 2–3 per campaign for review and QA',
+                    },
+                    mount: {
+                        label: 'How it mounts',
+                        us: 'In your page, in a shadow root you control',
+                        them: 'In an iframe they serve, after fetching config from their servers',
+                    },
+                    activation: {
+                        label: 'Runtime activation',
+                        us: 'None. No token, no config fetch, no call to us.',
+                        them: 'An access token you mint, refreshed roughly every 24 hours',
+                    },
+                    whiteLabel: {
+                        label: 'White-labelling',
+                        us: 'Default. No branding to remove.',
+                        them: 'Included on every plan',
+                    },
+                    headless: {
+                        label: 'Headless rendering',
+                        us: 'The MIT renderer runs anywhere, with no service and no limit',
+                        them: 'Available via their API; each export counts against generator calls',
+                    },
+                    source: {
+                        label: 'Source access',
+                        us: 'Full source in a public repository',
+                        them: 'The npm shim ships under their own terms; the editor it loads is not published',
+                    },
+                    licence: {
+                        label: 'Licence',
+                        us: 'FSL-1.1-MIT, converting to MIT two years after each release',
+                        them: 'Commercial subscription',
+                    },
+                    output: {
+                        label: 'Output format',
+                        us: 'MJML and JSON',
+                        them: 'HTML and their own JSON',
+                    },
+                },
+            },
+            bestFit: {
+                eyebrow: 'Best fit',
+                headline: 'Which one you should pick',
+                subheadline:
+                    'The table is the detail; this is the decision. If a reason in the right column is a requirement for you, buy their product — it is the better fit and we would rather you knew.',
+                usTitle: 'Choose Templatical if',
+                themTitle: 'Choose Chamaileon SDK if',
+                us: {
+                    metering: 'You do not want two meters running — one on how many people open the editor, another on how many times you export.',
+                    mount: 'You want the editor in your own page and stylable with your own tokens, rather than inside an iframe served by someone else.',
+                    ownership: 'You need the editor to start without a token and a config fetch from a third party.',
+                    output: 'You want portable output. Templatical exports MJML, an open standard with an MIT implementation you can run yourself.',
+                    source: 'You want the full source, and a licence that becomes MIT two years after each release.',
+                },
+                them: {
+                    modular: 'You want to embed the pieces separately — editor, preview, gallery, variable editor — rather than one editor component.',
+                    brand: 'You manage many brands and want a brand design system enforcing fonts, colours and logos across them.',
+                    operated: 'You would rather someone else operated the editor, with hosting and uptime handled for you.',
+                    gallery: 'You want an asset gallery shipped as part of the SDK. Chamaileon has one; Templatical expects you to supply the picker.',
+                    support: 'You want a commercial vendor with a named technical contact on their Enterprise tier rather than an open-source project.',
+                },
+            },
+            close: {
+                headline: 'Try it before you weigh any of this',
+                body: 'The playground runs the real editor with no signup. If it does not fit your product, none of the rest matters.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            footnote: {
+                verified:
+                    'Verified on 8 August 2026 against {\'@\'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms.',
+                notDocumented:
+                    '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
+                trademark:
+                    'Chamaileon is a trademark of its respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                sourcesLabel: 'Sources',
+                stale: 'This page is a snapshot, not a standing claim — including what we say Chamaileon SDK does better. If anything here is out of date or wrong,',
+                staleCta: 'open an issue',
+            },
+        },
+        stripo: {
+            meta: {
+                title: 'An open-source Stripo Plugin alternative — Templatical',
+                description:
+                    'A sourced side-by-side comparison: how Stripo meters usage, what is gated to which plan, who runs the editor, and what the output is tied to.',
+            },
+            hero: {
+                eyebrow: 'Comparison',
+                headline: 'An open-source alternative to Stripo Plugin',
+                subheadline:
+                    'Both put a drag-and-drop email editor inside your product. They differ on who runs the editor, and on what your bill is counted against — Stripo meters the emails your users design. Everything below is checkable against public sources.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            table: {
+                heading: 'Templatical vs Stripo Plugin',
+                colFeature: 'Feature',
+                colThem: 'Stripo Plugin',
+                colUs: 'Templatical',
+                notDocumented: 'Not documented',
+                rows: {
+                    pricing: {
+                        label: 'Pricing',
+                        us: 'No fee, on any tier',
+                        them: 'Free, then $100 or $550 per month, plus Enterprise',
+                    },
+                    metering: {
+                        label: 'What is metered',
+                        us: 'Nothing. No counter on templates, users or exports.',
+                        them: 'Unique emails designed per month: 100 free, 400 on Startup, 15,000 on Business',
+                    },
+                    overage: {
+                        label: 'Going over',
+                        us: 'Not applicable',
+                        them: '$0.50 per extra unique email on Startup, $0.10 on Business',
+                    },
+                    branding: {
+                        label: 'Branding removal',
+                        us: 'Default. No branding to remove.',
+                        them: 'From Startup ($100/mo) up; the free plan carries Stripo branding',
+                    },
+                    customBlocks: {
+                        label: 'Custom blocks',
+                        us: 'Unlimited, defined in your own code',
+                        them: 'From Business ($550/mo) up',
+                    },
+                    storage: {
+                        label: 'Image storage',
+                        us: 'Yours. The editor calls your onRequestMedia hook.',
+                        them: '30 GB free, 200 GB on Startup, unlimited from Business',
+                    },
+                    hosting: {
+                        label: 'Who runs the editor',
+                        us: 'You. The editor ships in your bundle and runs in your page',
+                        them: 'Stripo. Server components run on their infrastructure; self-hosting is an Enterprise option',
+                    },
+                    source: {
+                        label: 'Source access',
+                        us: 'Full source in a public repository',
+                        them: 'Not published',
+                    },
+                    licence: {
+                        label: 'Licence',
+                        us: 'FSL-1.1-MIT, converting to MIT two years after each release',
+                        them: 'Commercial subscription',
+                    },
+                    support: {
+                        label: 'Dedicated support',
+                        us: 'Community, via GitHub',
+                        them: 'Dedicated Slack channel on Enterprise',
+                    },
+                    output: {
+                        label: 'Output format',
+                        us: 'MJML and JSON',
+                        them: 'HTML and CSS, exchanged with your platform',
+                    },
+                },
+            },
+            bestFit: {
+                eyebrow: 'Best fit',
+                headline: 'Which one you should pick',
+                subheadline:
+                    'The table is the detail; this is the decision. If a reason in the right column is a requirement for you, buy their product — it is the better fit and we would rather you knew.',
+                usTitle: 'Choose Templatical if',
+                themTitle: 'Choose Stripo Plugin if',
+                us: {
+                    metering: 'You do not want a monthly counter on how many emails your users are allowed to design.',
+                    cost: 'You want custom blocks and unbranded output without those sitting behind separate paid tiers.',
+                    ownership: 'You want the editor running in your own bundle without an Enterprise contract to get it there.',
+                    output: 'You want portable output. Templatical exports MJML, an open standard with an MIT implementation you can run yourself.',
+                    source: 'You want the full source, and a licence that becomes MIT two years after each release.',
+                },
+                them: {
+                    templates: 'You want a large ready-made template library and premium designs your users can start from.',
+                    operated: 'You would rather someone else operated the editor, with hosting and storage handled for you.',
+                    modules: 'You want AMP and interactive modules maintained by a vendor rather than built in-house.',
+                    tooling: 'You want built-in image editing and stock content bundled with the editor.',
+                    support: 'You want a commercial vendor with a dedicated support channel rather than an open-source project.',
+                },
+            },
+            close: {
+                headline: 'Try it before you weigh any of this',
+                body: 'The playground runs the real editor with no signup. If it does not fit your product, none of the rest matters.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            footnote: {
+                verified:
+                    'Verified on 8 August 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms.',
+                notDocumented:
+                    '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
+                trademark:
+                    'Stripo is a trademark of its respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                sourcesLabel: 'Sources',
+                stale: 'This page is a snapshot, not a standing claim — including what we say Stripo Plugin does better. If anything here is out of date or wrong,',
+                staleCta: 'open an issue',
+            },
+        },
+        unlayer: {
+            meta: {
+                title: 'An open-source Unlayer alternative — Templatical',
+                description:
+                    'A sourced side-by-side comparison: hosting model, per-domain and per-tier caps, output portability, and how to migrate existing Unlayer templates.',
+            },
+            hero: {
+                eyebrow: 'Comparison',
+                headline: 'An open-source alternative to Unlayer',
+                subheadline:
+                    'Both put a drag-and-drop email editor inside your product. They differ on who runs the editor, how far you can extend it before hitting a cap, and whether the output is yours to render. Everything below is checkable against public sources.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            table: {
+                heading: 'Templatical vs Unlayer',
+                colFeature: 'Feature',
+                colThem: 'Unlayer',
+                colUs: 'Templatical',
+                notDocumented: 'Not documented',
+                rows: {
+                    pricing: {
+                        label: 'Pricing',
+                        us: 'No fee, on any tier',
+                        them: 'Free tier, then $250, $750 or $2,000 per month, plus Enterprise',
+                    },
+                    domains: {
+                        label: 'Domain limits',
+                        us: 'None. Run it on as many domains as you like.',
+                        them: '1 domain on Free and Launch, 3 on Scale and Optimize',
+                    },
+                    customTools: {
+                        label: 'Custom block types',
+                        us: 'Unlimited, defined in your own code',
+                        them: 'Capped custom tools: 1 on Launch, 3 on Scale, 5 on Optimize',
+                    },
+                    savedBlocks: {
+                        label: 'Reusable saved blocks',
+                        us: 'Unlimited, stored wherever you choose',
+                        them: 'Custom blocks from Scale ($750/mo) up',
+                    },
+                    whiteLabel: {
+                        label: 'White-labelling',
+                        us: 'Default. No branding to remove.',
+                        them: 'From Launch ($250/mo) up',
+                    },
+                    hosting: {
+                        label: 'Who runs the editor',
+                        us: 'You. The editor ships in your bundle and runs in your page',
+                        them: 'Unlayer. The embed loads the editor from their CDN; self-hosting is an Enterprise option',
+                    },
+                    activation: {
+                        label: 'Runtime activation',
+                        us: 'None. No project ID, no domain allowlist, no call to us.',
+                        them: 'A project ID with allowlisted domains for production use',
+                    },
+                    source: {
+                        label: 'Source access',
+                        us: 'Full source in a public repository',
+                        them: 'The React wrapper is MIT; the editor it loads is not published',
+                    },
+                    licence: {
+                        label: 'Licence',
+                        us: 'FSL-1.1-MIT, converting to MIT two years after each release',
+                        them: 'Commercial subscription',
+                    },
+                    scope: {
+                        label: 'Scope',
+                        us: 'Email only',
+                        them: 'Email, pages, popups and documents',
+                    },
+                    amp: {
+                        label: 'AMP email',
+                        us: 'Not supported, and not planned',
+                        them: 'From Optimize ($2,000/mo) up',
+                    },
+                    output: {
+                        label: 'Output format',
+                        us: 'MJML and JSON',
+                        them: 'HTML and their own design JSON',
+                    },
+                },
+            },
+            bestFit: {
+                eyebrow: 'Best fit',
+                headline: 'Which one you should pick',
+                subheadline:
+                    'The table is the detail; this is the decision. If a reason in the right column is a requirement for you, buy their product — it is the better fit and we would rather you knew.',
+                usTitle: 'Choose Templatical if',
+                themTitle: 'Choose Unlayer if',
+                us: {
+                    cost: 'You do not want the editor billed by tier or limited by how many domains you run it on.',
+                    extensibility: 'You expect to add more than a handful of custom block types. Templatical does not cap them; Unlayer allows 1 to 5 depending on plan.',
+                    ownership: 'You want the editor running in your own bundle without an Enterprise contract to get it there.',
+                    output: 'You want portable output. Templatical exports MJML, an open standard with an MIT implementation you can run yourself; an Unlayer template is their design JSON, rendered by their engine.',
+                    source: 'You want the full source, and a licence that becomes MIT two years after each release.',
+                },
+                them: {
+                    scope: 'You need pages, popups and documents as well as email. Templatical is email-only and intends to stay that way.',
+                    operated: 'You would rather someone else operated the editor, with hosting and uptime handled for you.',
+                    amp: 'You send AMP email. Templatical has no AMP support and no plans to add it.',
+                    tooling: 'You want a built-in image editor and stock images. Unlayer includes stock images on every plan and the image editor from Launch ($250/mo) up.',
+                    support: 'You want a commercial vendor behind the editor, with a dedicated customer success manager on their Enterprise tier.',
+                },
+            },
+            close: {
+                headline: 'Already on Unlayer? Bring your templates',
+                body: 'Templatical ships an MIT-licensed converter for Unlayer templates, so an evaluation starts from your real designs rather than a blank canvas.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            migration: {
+                label: 'Read the Unlayer migration guide',
+            },
+            footnote: {
+                verified:
+                    'Verified on 8 August 2026 against react-email-editor 2.0.0 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms.',
+                notDocumented:
+                    '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
+                trademark:
+                    'Unlayer is a trademark of its respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                sourcesLabel: 'Sources',
+                stale: 'This page is a snapshot, not a standing claim — including what we say Unlayer does better. If anything here is out of date or wrong,',
+                staleCta: 'open an issue',
+            },
+        },
+        beefree: {
+            meta: {
+                title: 'An open-source Beefree SDK alternative — Templatical',
+                description:
+                    'A sourced side-by-side comparison: hosting model, per-user pricing, what the editor needs at runtime, and how to migrate existing BeeFree templates.',
+            },
+            hero: {
+                eyebrow: 'Comparison',
+                headline: 'An open-source alternative to Beefree SDK',
+                subheadline:
+                    'Both put a drag-and-drop email editor inside your product. They differ on who runs the editor, what it needs to start, and whether your bill grows with your users. Everything below is checkable against public sources.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            table: {
+                heading: 'Templatical vs Beefree SDK',
+                colFeature: 'Feature',
+                colThem: 'Beefree SDK',
+                colUs: 'Templatical',
+                notDocumented: 'Not documented',
+                rows: {
+                    pricing: {
+                        label: 'Pricing',
+                        them: 'Free tier, then $400 to $6,000 per month',
+                        us: 'No fee, on any tier',
+                    },
+                    users: {
+                        label: 'End-user limits',
+                        them: 'Metered: 10 users on Free, 100 on Essentials, 800 on Core, unlimited above',
+                        us: 'None. The editor does not know or count your users.',
+                    },
+                    hosting: {
+                        label: 'Who runs the editor',
+                        them: 'Beefree. The npm package loads the editor from their CDN at runtime; self-hosting is an Enterprise option',
+                        us: 'You. The editor ships in your bundle and runs in your page',
+                    },
+                    activation: {
+                        label: 'Runtime activation',
+                        them: 'Required. Your backend exchanges a client ID and secret for a token that expires in 5 minutes; without it the editor does not start',
+                        us: 'None. No credentials, no token, no call to us.',
+                    },
+                    savedBlocks: {
+                        label: 'Reusable saved blocks',
+                        them: 'Metered “hosted rows”, absent below Core: 100, 250, then 1,000',
+                        us: 'Unlimited, stored wherever you choose',
+                    },
+                    htmlImport: {
+                        label: 'HTML import',
+                        them: '$2 per import, or $2,000 per year for unlimited, below the top tiers',
+                        us: 'Included, unlimited, MIT-licensed',
+                    },
+                    source: {
+                        label: 'Source access',
+                        them: 'The loader package is Apache-2.0; the editor it fetches is not published',
+                        us: 'Full source in a public repository',
+                    },
+                    licence: {
+                        label: 'Licence',
+                        them: 'Commercial subscription',
+                        us: 'FSL-1.1-MIT, converting to MIT two years after each release',
+                    },
+                    assets: {
+                        label: 'Asset management',
+                        them: 'Hosted file manager on every plan; your own storage behind it on paid plans; replacing the picker with your own UI needs the $3,000/mo tier',
+                        us: 'No file manager at all — the editor calls your onRequestMedia hook, so any picker and any storage, at no tier',
+                    },
+                    scope: {
+                        label: 'Scope',
+                        them: 'Email, landing pages and popups',
+                        us: 'Email only',
+                    },
+                    output: {
+                        label: 'Output format',
+                        them: 'HTML and JSON',
+                        us: 'MJML and JSON',
+                    },
+                },
+            },
+            bestFit: {
+                eyebrow: 'Best fit',
+                headline: 'Which one you should pick',
+                subheadline:
+                    'The table is the detail; this is the decision. If a reason in the right column is a requirement for you, buy their product — it is the better fit and we would rather you knew.',
+                usTitle: 'Choose Templatical if',
+                themTitle: 'Choose Beefree SDK if',
+                us: {
+                    cost: 'You do not want the editor to cost more as you add users. Templatical does not meter them.',
+                    runtime: 'You need the editor to start without a token from a third party — offline, air-gapped, or simply not dependent on someone else being up.',
+                    ownership: 'You want the editor running in your own bundle without an Enterprise contract to get it there.',
+                    source: 'You want the full source, and a licence that becomes MIT two years after each release.',
+                    output: 'You want portable output. Templatical exports MJML, an open standard with an MIT implementation you can run yourself; a Beefree template is their JSON, rendered by their engine.',
+                },
+                them: {
+                    scope: 'You need landing pages and popups as well as email. Templatical is email-only and intends to stay that way.',
+                    operated: 'You would rather someone else operated the editor — hosted, auto-scaling, with an uptime commitment behind it.',
+                    catalog: 'You want a large ready-made template catalog to offer your users on day one.',
+                    support: 'You want a commercial vendor with a paid support contract rather than an open-source project.',
+                    files: 'You want a file manager out of the box. Beefree ships one on every plan; Templatical has none and expects you to supply the picker.',
+                },
+            },
+            close: {
+                headline: 'Already on BeeFree? Bring your templates',
+                body: 'Templatical ships an MIT-licensed converter for BeeFree templates, so an evaluation starts from your real designs rather than a blank canvas.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            migration: {
+                label: 'Read the BeeFree migration guide',
+            },
+            footnote: {
+                verified:
+                    'Verified on 8 August 2026 against {\'@\'}beefree.io/sdk 11.6.1 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms.',
+                notDocumented:
+                    '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
+                trademark:
+                    'BeeFree and Beefree SDK are trademarks of their respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                sourcesLabel: 'Sources',
+                stale: 'This page is a snapshot, not a standing claim — including what we say Beefree SDK does better. If anything here is out of date or wrong,',
+                staleCta: 'open an issue',
+            },
+        },
+        easyEmailPro: {
+            meta: {
+                title: 'An open-source Easy Email Pro alternative — Templatical',
+                description:
+                    'A sourced side-by-side comparison: licensing, framework support, install footprint, and what each editor does at runtime.',
+            },
+            hero: {
+                eyebrow: 'Comparison',
+                headline: 'An open-source alternative to Easy Email Pro',
+                subheadline:
+                    'Both embed a drag-and-drop email editor in your product, and both output MJML. They differ on licensing, framework lock-in, and what the editor does at runtime. Everything below is checkable against public sources.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            table: {
+                heading: 'Templatical vs Easy Email Pro',
+                colFeature: 'Feature',
+                colThem: 'Easy Email Pro',
+                colUs: 'Templatical',
+                notDocumented: 'Not documented',
+                rows: {
+                    licensing: {
+                        label: 'Licensing',
+                        them: 'Commercial subscription, $99–$499 per month',
+                        us: 'FSL-1.1-MIT, converting to MIT two years after each release. No fee.',
+                    },
+                    source: {
+                        label: 'Source access',
+                        them: 'UI code repository on the Enterprise tier',
+                        us: 'Full source in a public repository',
+                    },
+                    framework: {
+                        label: 'Framework',
+                        them: 'React only',
+                        us: 'React, Vue, Svelte, Angular and vanilla JS',
+                    },
+                    uiFramework: {
+                        label: 'UI framework required',
+                        them: 'Peer dependency on {\'@\'}arco-design/web-react',
+                        us: 'None',
+                    },
+                    footprint: {
+                        label: 'Install footprint',
+                        them: 'About 62 MB unpacked across four packages',
+                        us: '10.3 MB, zero runtime dependencies',
+                    },
+                    activation: {
+                        label: 'Runtime activation',
+                        them: 'A client ID gates the feature set, checked at startup and carrying an expiry; features outside your plan raise an error',
+                        us: 'None. No license key, no client ID, no activation call.',
+                    },
+                    agents: {
+                        label: 'AI agent support',
+                        them: 'Developer MCP Service on the Enterprise tier',
+                        us: 'MCP server and Agent Skill, MIT, included',
+                    },
+                    linting: {
+                        label: 'Template quality linting',
+                        them: 'Not documented',
+                        us: '30 accessibility, structure and link rules, MIT',
+                    },
+                    importers: {
+                        label: 'Migration importers',
+                        them: 'Not documented',
+                        us: 'BeeFree, Unlayer and HTML converters, MIT',
+                    },
+                    isolation: {
+                        label: 'Style isolation',
+                        them: 'Not documented',
+                        us: 'Shadow DOM by default, both directions',
+                    },
+                    output: {
+                        label: 'Output format',
+                        them: 'MJML',
+                        us: 'MJML',
+                    },
+                },
+            },
+            bestFit: {
+                eyebrow: 'Best fit',
+                headline: 'Which one you should pick',
+                subheadline:
+                    'The table is the detail; this is the decision. If a reason in the right column is a requirement for you, buy their product — it is the better fit and we would rather you knew.',
+                usTitle: 'Choose Templatical if',
+                themTitle: 'Choose Easy Email Pro if',
+                us: {
+                    framework: 'Your app is not React, or you want one integration that survives changing framework later.',
+                    cost: 'You want the editor to cost nothing, with no per-seat or per-end-user metering as you grow.',
+                    runtime: 'You need the editor to run with no license key and no call to a vendor at startup — offline, air-gapped, or simply not dependent on us being around.',
+                    source: 'You want the full source, and a licence that becomes MIT two years after each release.',
+                },
+                them: {
+                    react: 'Your product is React, portability is not a concern, and you prefer an idiomatic hooks API to an imperative init() call.',
+                    blockStudio: 'Your users need to assemble their own blocks visually, without a developer writing code.',
+                    amp: 'You send AMP email. Templatical has no AMP support and no plans to add it.',
+                    support: 'You want a commercial vendor with a paid support contract behind the editor rather than an open-source project.',
+                },
+            },
+            close: {
+                headline: 'Try it before you weigh any of this',
+                body: 'The playground runs the real editor with no signup. If it does not fit your product, none of the rest matters.',
+                ctaPrimary: 'Open playground',
+                ctaSecondary: 'Read the docs',
+            },
+            footnote: {
+                verified:
+                    'Verified on 7 August 2026 against easy-email-pro-core 1.59.9 as published on npm, and the pricing listed at easyemail.pro on that date. Pricing and features change — check their site for current terms.',
+                notDocumented:
+                    '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
+                trademark:
+                    'Easy Email Pro is a trademark of its respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                sourcesLabel: 'Sources',
+                stale: 'This page is a snapshot, not a standing claim — including what we say Easy Email Pro does better. If anything here is out of date or wrong,',
+                staleCta: 'open an issue',
+            },
+        },
+    },
     faq: {
         meta: {
             title: 'FAQ — Templatical',
@@ -580,11 +1440,11 @@ export default {
             },
             commercial: {
                 question: 'Can I use it in commercial products?',
-                answer: 'Yes — paid SaaS, internal tools, on-premise software, agency builds, anything. The only restriction: you can\'t rebrand Templatical and sell it as a competing hosted email-editor SaaS. Embedding it in a CRM, transactional email API, newsletter tool, or any product where the editor is one feature among many is fully allowed.',
+                answer: 'Yes — paid SaaS, internal tools, on-premise software, agency builds, anything. The only restriction: you can\'t rebrand Templatical and sell it as a competing hosted email-editor SaaS. Embedding it in a CRM, transactional email API, newsletter tool, or any product where the editor is one feature among many is fully allowed. And the restriction expires: every release converts to plain MIT two years after it ships.',
             },
             packages: {
                 question: 'Which packages are MIT vs FSL?',
-                answer: 'Four of the seven packages are pure MIT today: types, renderer, and the BeeFree and Unlayer importers. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
+                answer: 'Six of the nine packages are pure MIT today: types, renderer, quality, and the BeeFree, Unlayer and HTML importers. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
             },
             branding: {
                 question: 'Do I need to display "Powered by Templatical"?',
@@ -605,6 +1465,11 @@ export default {
             cssIsolation: {
                 question: 'Will the editor inherit my app\'s CSS?',
                 answer: 'No. The editor mounts inside a Shadow DOM by default, so host stylesheets stop at the boundary. Your body font-family, your design system\'s box-sizing reset, your framework\'s preflight — none of them reach the editor. If you want your theme to apply, set --tpl-user-* CSS variables on the container; they inherit across the shadow boundary. You can opt out with shadowDom: false if you need a light-DOM mount.',
+            },
+            hosted: {
+                question: 'How does this compare to a hosted SaaS email builder?',
+                answer:
+                    'Hosted builders give you a turnkey editor and a stocked template catalog, but the editor sits behind their pricing — custom blocks, white-label, advanced theming and custom merge-tag syntax usually need a higher tier, and most meter your end users or your exports. Templatical is the embedded, self-hostable opposite: your customers see your brand, nothing is billed per seat, and you ship MJML you can render anywhere. If you mainly want a hosted editor with a large pre-built template library, a SaaS builder will be faster. Sourced side-by-side comparisons with Beefree SDK, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro and GrapesJS are linked in the footer.',
             },
             paid: {
                 question: 'Is there a paid version, and is it required?',

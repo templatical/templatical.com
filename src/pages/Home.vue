@@ -3,7 +3,7 @@ import ComparisonSection from '@/components/ComparisonSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
 import HomeAiSkillSection from '@/components/HomeAiSkillSection.vue';
 import HomeCloseSection from '@/components/HomeCloseSection.vue';
-import HomeFaqSection from '@/components/HomeFaqSection.vue';
+import HomeIndependenceSection from '@/components/HomeIndependenceSection.vue';
 import MigrationBand from '@/components/MigrationBand.vue';
 import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
@@ -30,9 +30,9 @@ useHead({
 
         <ComparisonSection />
 
-        <MigrationBand />
+        <HomeIndependenceSection />
 
-        <HomeFaqSection />
+        <MigrationBand />
 
         <HomeCloseSection />
     </div>

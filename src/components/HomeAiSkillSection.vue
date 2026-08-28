@@ -12,8 +12,10 @@ import SiteText from './SiteText.vue';
 
 const { t, locale } = useI18n();
 
-// Claude Code slash commands — kept out of i18n (the `@` in the plugin name is
-// reserved in vue-i18n message strings). The copy button copies both lines.
+// Claude Code slash commands — kept out of i18n because they are literal
+// commands, not translatable prose, and the copy button needs them verbatim.
+// (The `@` in the plugin name is not the reason: it escapes cleanly as `{'@'}`.
+// Braces are what genuinely cannot survive i18n — see CLAUDE.md.)
 const installCommand =
     '/plugin marketplace add templatical/sdk\n/plugin install templatical-email@templatical';
 const commandLines = installCommand.split('\n');

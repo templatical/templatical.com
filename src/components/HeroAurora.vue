@@ -1,3 +1,26 @@
+<!--
+    Callers pass `root-class="inset-x-0 top-0 -bottom-40"`, which puts 160px of this
+    overlay BELOW its own section — and `fadeClass` is fully opaque at that edge. The
+    root is `absolute`, so it also paints above the following section's in-flow text.
+
+    So the section directly after a hero owes two things, or it breaks visually with
+    nothing failing in typecheck, build or tests:
+
+      1. background `bg-white dark:bg-neutral-950` — the colours the fade ends on.
+         Anything else (e.g. `bg-neutral-50 dark:bg-neutral-900`) shows the overlap
+         as a hard band across its top ~160px.
+      2. `class="relative"` on its SiteContainer — puts the content in the same paint
+         step as this overlay, where later-in-DOM wins. Without it, this paints over
+         that section's first heading and swallows it.
+
+    Faq.vue and Changelog.vue do both; copy their post-hero section when adding a
+    page. Features.vue instead uses a taller hero (`pb-28 sm:pb-40`) to clear the
+    bleed. Alternating section backgrounds is the natural instinct and is what breaks
+    it — the alternation has to start one section later.
+
+    Confirm a suspected case by hit test, not by eye: document.elementFromPoint() at
+    the heading's own centre returns this overlay rather than the heading.
+-->
 <script setup lang="ts">
 import {
     useDevicePixelRatio,

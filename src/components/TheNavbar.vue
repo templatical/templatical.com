@@ -25,10 +25,10 @@ interface NavLink {
 
 const links = computed<NavLink[]>(() => [
     { label: t('nav.features'), href: '/features' },
-    { label: t('nav.faq'), href: '/faq' },
     { label: t('nav.changelog'), href: '/changelog' },
     { label: t('nav.docs'), href: URLS.docs, external: true },
     { label: t('nav.playground'), href: URLS.playground, external: true },
+    { label: t('nav.faq'), href: '/faq' },
 ]);
 
 const isMobileMenuOpen = ref(false);
