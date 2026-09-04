@@ -29,15 +29,20 @@ describe('createCommentsProvider', () => {
         const comment = await create(TEMPLATE_ID, { body: 'Tighten this', blockId: 'hero-cta' });
 
         expect(comment.id).toEqual(expect.any(String));
-        // Assert against what list() reads back rather than the return value
-        // alone, so a create() that returns a plausible object without ever
-        // persisting it would fail this test.
+        expect(comment.author).toEqual(VISITOR);
+        expect(comment.blockId).toBe('hero-cta');
+        expect(comment.parentId).toBeNull();
+        // Stamping updatedAt on creation makes every comment render "(edited)".
+        expect(comment.updatedAt).toBeUndefined();
+
+        // Assert against what list() reads back too, so a create() that
+        // returns a plausible object without ever persisting it would fail
+        // this test.
         const [stored] = await provider.list(TEMPLATE_ID);
         expect(stored?.id).toBe(comment.id);
         expect(stored?.author).toEqual(VISITOR);
         expect(stored?.blockId).toBe('hero-cta');
         expect(stored?.parentId).toBeNull();
-        // Stamping updatedAt on creation makes every comment render "(edited)".
         expect(stored?.updatedAt).toBeUndefined();
     });
 
@@ -51,6 +56,23 @@ describe('createCommentsProvider', () => {
         expect(threads).toHaveLength(1);
         expect(threads[0]?.replies).toHaveLength(1);
         expect(threads[0]?.replies?.[0]?.body).toBe('Reply');
+    });
+
+    it('create() replying to a reply flattens into the root thread, with parentId corrected to the root', async () => {
+        const { create, provider } = setup();
+        const root = await create(TEMPLATE_ID, { body: 'Root', blockId: 'hero-cta' });
+        const firstReply = await create(TEMPLATE_ID, { body: 'First reply', parentId: root.id });
+
+        // Reply to the reply, not to the root.
+        await create(TEMPLATE_ID, { body: 'Reply to a reply', parentId: firstReply.id });
+
+        const threads = await provider.list(TEMPLATE_ID);
+        expect(threads).toHaveLength(1);
+        expect(threads[0]?.replies).toHaveLength(2);
+        // The stored parentId must name the root it actually lives under,
+        // not the reply it was addressed to — otherwise the record points
+        // at a comment that isn't a top-level thread anywhere in the store.
+        expect(threads[0]?.replies?.[1]?.parentId).toBe(root.id);
     });
 
     it('update() sets updatedAt so the "(edited)" marker appears', async () => {

@@ -50,19 +50,30 @@ export function createCommentsProvider(
 
         create: async (_templateId, input) => {
             const threads = read();
+
+            // requireTarget resolves a reply's id to its containing root, so
+            // replying to a reply flattens into that root's thread. Resolve
+            // it before building the comment: the stored parentId must name
+            // the root it actually lives under, never the raw input value,
+            // or the record would point at a comment that isn't a top-level
+            // thread anywhere in the store.
+            let target: Comment | undefined;
+            if (input.parentId) {
+                target = requireTarget(threads, input.parentId).thread;
+            }
+
             const comment: Comment = {
                 id: nextId(),
                 body: input.body,
                 author,
                 createdAt: new Date().toISOString(),
                 blockId: input.blockId ?? null,
-                parentId: input.parentId ?? null,
+                parentId: target?.id ?? null,
                 resolvedAt: null,
             };
 
-            if (input.parentId) {
-                const { thread } = requireTarget(threads, input.parentId);
-                thread.replies = [...(thread.replies ?? []), comment];
+            if (target) {
+                target.replies = [...(target.replies ?? []), comment];
             } else {
                 threads.push(comment);
             }
