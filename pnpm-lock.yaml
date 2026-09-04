@@ -54,9 +54,6 @@ importers:
       '@templatical/types':
         specifier: ^0.30.0
         version: 0.30.0
-      '@types/node':
-        specifier: ^26.4.1
-        version: 26.4.1
       '@vitejs/plugin-vue':
         specifier: 6.0.8
         version: 6.0.8(vite@8.2.0(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3))
@@ -2179,6 +2176,7 @@ snapshots:
   '@types/node@26.4.1':
     dependencies:
       undici-types: 8.3.0
+    optional: true
 
   '@types/unist@3.0.3': {}
 
@@ -3063,7 +3061,8 @@ snapshots:
 
   ufo@1.6.4: {}
 
-  undici-types@8.3.0: {}
+  undici-types@8.3.0:
+    optional: true
 
   undici@7.29.0: {}
 
