@@ -76,25 +76,23 @@ export interface DemoStore {
 }
 
 export function createStore(storage: StorageLike = resolveStorage()): DemoStore {
-    // A storage that throws on every call still has to behave like a store, so
-    // the first failure swaps in memory for the rest of the session rather than
-    // re-throwing on each access.
-    let active = storage;
-    let swapped = false;
-
+    // Every call is guarded independently, and nothing is remembered between
+    // calls. `resolveStorage()` already probes with a real write+remove before
+    // handing back `sessionStorage`, so whatever reaches here worked a moment
+    // ago — a later throw (a quota rejection, an extension interfering) is
+    // transient, and the right response is to fail that one operation, not to
+    // give up on the storage for the rest of the session.
+    //
+    // An earlier version swapped `active` to a fresh, empty in-memory store on
+    // the first throw and kept using it thereafter. That silently orphaned
+    // everything already written to the real storage: a later `read()` for a
+    // key that was still sitting untouched in `sessionStorage` came back
+    // `null`, with no error and no way to notice short of losing data.
+    // Removing the swap deletes mutable state rather than adding any.
     function safely<T>(fn: (s: StorageLike) => T, fallback: T): T {
         try {
-            return fn(active);
+            return fn(storage);
         } catch {
-            if (!swapped) {
-                active = memoryStorage();
-                swapped = true;
-                try {
-                    return fn(active);
-                } catch {
-                    return fallback;
-                }
-            }
             return fallback;
         }
     }
@@ -112,7 +110,12 @@ export function createStore(storage: StorageLike = resolveStorage()): DemoStore 
             }
         },
         write<T>(key: string, value: T): T {
-            safely((s) => s.setItem(NS + key, JSON.stringify(value)), undefined);
+            // Serialized before and outside the guard: a circular reference or
+            // a BigInt in caller-supplied data is a bug in the data shape, not
+            // a storage failure, and must propagate to the caller instead of
+            // being swallowed as if the storage itself were unhealthy.
+            const serialized = JSON.stringify(value);
+            safely((s) => s.setItem(NS + key, serialized), undefined);
             return value;
         },
         reset(): void {
