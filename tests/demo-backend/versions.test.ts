@@ -48,7 +48,9 @@ describe('createVersionHistoryProvider', () => {
         const created = await history.create(TEMPLATE_ID, content('manual'));
 
         expect(created.isAutomatic).toBe(false);
+        expect(created.content).toEqual(content('manual'));
         expect(versions.read()).toHaveLength(1);
+        expect(versions.read()[0]?.isAutomatic).toBe(false);
     });
 
     it('restore() writes the old content back through templates.save', async () => {

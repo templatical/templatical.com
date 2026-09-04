@@ -26,6 +26,11 @@ export function createVersionHistoryProvider(
                     createdAt: version.createdAt,
                     isAutomatic: version.isAutomatic,
                 };
+                // Safe to alias rather than copy: store.read() re-parses from a
+                // JSON string on every call, so `version.content` is already a
+                // fresh, unaliased object. A parsed-object cache added to
+                // store.ts later would turn this into a live-reference leak
+                // into stored state.
                 if (index < HYDRATED_VERSIONS) entry.content = version.content;
                 return entry;
             }),
@@ -38,7 +43,7 @@ export function createVersionHistoryProvider(
             return {
                 id: version.id,
                 createdAt: version.createdAt,
-                isAutomatic: false,
+                isAutomatic: version.isAutomatic,
                 content: version.content,
             };
         },
