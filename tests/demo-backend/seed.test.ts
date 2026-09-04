@@ -17,6 +17,7 @@ const baseContent = (): TemplateContent =>
         blocks: [
             { id: 'hero-headline', type: 'title', content: 'Welcome' },
             { id: SEED_ANCHOR_BLOCK_ID, type: 'button', text: 'Open your dashboard', backgroundColor: '#0f172a' },
+            { id: 'hero-divider', type: 'divider', color: '#e5e7eb' },
         ],
     }) as unknown as TemplateContent;
 
@@ -65,6 +66,30 @@ describe('ensureSeeded', () => {
         for (const version of stored) {
             expect(version.content).not.toEqual(baseContent());
         }
+    });
+
+    it('removes the divider block from exactly one seeded version, keeping it in the rest', () => {
+        const { store, versions } = setup();
+
+        ensureSeeded(store, versions, baseContent(), COPY);
+
+        const blockIdsByVersion = versions.read().map((version) =>
+            version.content.blocks.map((block) => block.id),
+        );
+        const versionsWithoutDivider = blockIdsByVersion.filter(
+            (ids) => !ids.includes('hero-divider'),
+        );
+        const versionsWithDivider = blockIdsByVersion.filter((ids) =>
+            ids.includes('hero-divider'),
+        );
+
+        // withoutBlock is what produces this divergence. A regression that turns
+        // it into a no-op (e.g. an inverted predicate, or `return content`)
+        // would leave every version with the divider block and go undetected by
+        // the "differs from baseContent" check above, since withBlockPatch's
+        // text/color changes already satisfy that assertion on their own.
+        expect(versionsWithoutDivider).toHaveLength(1);
+        expect(versionsWithDivider).toHaveLength(blockIdsByVersion.length - 1);
     });
 
     it('seeds versions oldest-last with distinct timestamps', () => {

@@ -26,9 +26,7 @@ function withBlockPatch(
 ): TemplateContent {
     const clone = JSON.parse(JSON.stringify(content)) as { blocks: Block[] };
     clone.blocks = clone.blocks.map((block) =>
-        (block as unknown as { id: string }).id === blockId
-            ? ({ ...block, ...patch } as Block)
-            : block,
+        block.id === blockId ? ({ ...block, ...patch } as Block) : block,
     );
     return clone as unknown as TemplateContent;
 }
@@ -36,9 +34,7 @@ function withBlockPatch(
 /** A clone with one block removed. */
 function withoutBlock(content: TemplateContent, blockId: string): TemplateContent {
     const clone = JSON.parse(JSON.stringify(content)) as { blocks: Block[] };
-    clone.blocks = clone.blocks.filter(
-        (block) => (block as unknown as { id: string }).id !== blockId,
-    );
+    clone.blocks = clone.blocks.filter((block) => block.id !== blockId);
     return clone as unknown as TemplateContent;
 }
 
