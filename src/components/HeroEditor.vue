@@ -3,7 +3,9 @@ import { onClickOutside, onKeyStroke, useIntersectionObserver, useMediaQuery } f
 import { computed, onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { ArrowUpRight, Info, X } from '@lucide/vue';
+import type { TemplateContent } from '@templatical/types';
 import { useDarkMode } from '@/composables/useDarkMode';
+import { createDemoBackend } from '@/lib/demo-backend';
 import { URLS, localizedUrl } from '@/lib/urls';
 
 type MergeTag = { label: string; value: string };
@@ -108,6 +110,13 @@ const { isDark } = useDarkMode();
 const { t, locale } = useI18n();
 const isDesktop = useMediaQuery('(min-width: 1024px)');
 
+const demoBackend = createDemoBackend(heroContent as unknown as TemplateContent, {
+    visitorName: t('heroEditor.user.you'),
+    reviewerName: t('heroEditor.seed.reviewerName'),
+    threadBody: t('heroEditor.seed.threadBody'),
+    replyBody: t('heroEditor.seed.replyBody'),
+});
+
 const root = useTemplateRef<HTMLDivElement>('root');
 const container = useTemplateRef<HTMLDivElement>('container');
 const modalPanel = useTemplateRef<HTMLDivElement>('modalPanel');
@@ -167,6 +176,9 @@ onKeyStroke('Escape', () => {
 type EditorInstance = {
     unmount(): void;
     setTheme?(theme: 'light' | 'dark' | 'auto'): void;
+    toMjml(): Promise<string>;
+    load(id: string): Promise<unknown>;
+    create(input?: { name?: string; content?: unknown }): Promise<unknown>;
 };
 let editorInstance: EditorInstance | null = null;
 let cssLink: HTMLLinkElement | null = null;
@@ -192,7 +204,12 @@ async function mountEditor() {
             timeout,
         ]);
         if (!container.value) return;
-        editorInstance = await Promise.race([
+        // Typed explicitly: `mod` is untyped CDN output, so `mod.init(...)` is
+        // `any`, and assigning an `any`-typed expression to `editorInstance`
+        // (declared `EditorInstance | null`) does not narrow it — every read
+        // below would stay flagged as possibly null. A locally-typed const
+        // keeps the null check honest without a non-null assertion.
+        const instance: EditorInstance = await Promise.race([
             mod.init({
                 container: container.value,
                 uiTheme: isDark.value ? 'dark' : 'light',
@@ -203,14 +220,41 @@ async function mountEditor() {
                     tags: demoTags.value.map(({ label, value }) => ({ label, value })),
                     onRequest: requestMergeTag,
                 },
+                ...demoBackend.config,
             }),
             timeout,
         ]);
+        editorInstance = instance;
+        // Load-bearing, not incidental: the version-history control and the
+        // comments panel do not render until a template id is attached, and
+        // nothing errors if this is skipped — the two headline features are
+        // simply invisible. Reporting `ready` first would also lift the
+        // skeleton off a header about to grow two more controls.
+        if (demoBackend.hasStoredTemplate()) {
+            await instance.load(demoBackend.templateId);
+        } else {
+            await instance.create({
+                name: t('heroEditor.demo.templateName'),
+                content: heroContent,
+            });
+        }
         status.value = 'ready';
     } catch (e) {
         console.warn('Templatical editor failed to load', e);
         status.value = 'error';
     }
+}
+
+async function remount() {
+    try {
+        editorInstance?.unmount();
+    } catch {
+        // ignore
+    }
+    editorInstance = null;
+    status.value = 'idle';
+    demoBackend.reset();
+    await mountEditor();
 }
 
 watch(isDark, (dark) => {
