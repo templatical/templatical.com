@@ -7,6 +7,7 @@ import type { TemplateContent } from '@templatical/types';
 import { useDarkMode } from '@/composables/useDarkMode';
 import { createDemoBackend } from '@/lib/demo-backend';
 import { URLS, localizedUrl } from '@/lib/urls';
+import HeroProviderLegend from './HeroProviderLegend.vue';
 
 type MergeTag = { label: string; value: string };
 
@@ -225,6 +226,11 @@ async function mountEditor() {
             timeout,
         ]);
         editorInstance = instance;
+        // `load`/`create` below run outside the timeout race above. That is
+        // safe only because the demo backend's load()/create() are
+        // synchronous session-storage operations wrapped in `async` — a
+        // future async storage dependency here would not be bounded by
+        // LOAD_TIMEOUT_MS.
         // Load-bearing, not incidental: the version-history control and the
         // comments panel do not render until a template id is attached, and
         // nothing errors if this is skipped — the two headline features are
@@ -246,6 +252,16 @@ async function mountEditor() {
 }
 
 async function remount() {
+    // `mountEditor()`'s only re-entrancy guard is `status.value !== 'idle'`,
+    // which this function bypasses by design (it forces status back to
+    // `idle` so a fresh mount is allowed). Without this guard, a second call
+    // landing while a remount is already in flight would stomp `loading`
+    // back to `idle` mid-mount, letting `mountEditor()` pass its own guard
+    // and run again — two concurrent mounts against the same container,
+    // where whichever resolves last silently wins `editorInstance` and
+    // orphans the other. This holds regardless of how callers wire
+    // button-disabled state.
+    if (status.value === 'loading') return;
     try {
         editorInstance?.unmount();
     } catch {
@@ -255,6 +271,19 @@ async function remount() {
     status.value = 'idle';
     demoBackend.reset();
     await mountEditor();
+}
+
+const resetting = ref(false);
+const mjmlOpen = ref(false);
+
+async function handleReset() {
+    resetting.value = true;
+    mjmlOpen.value = false;
+    try {
+        await remount();
+    } finally {
+        resetting.value = false;
+    }
 }
 
 watch(isDark, (dark) => {
@@ -376,6 +405,14 @@ onBeforeUnmount(() => {
                 class="block h-auto w-full"
             />
         </div>
+
+        <HeroProviderLegend
+            v-if="status === 'ready'"
+            :resetting="resetting"
+            :mjml-open="mjmlOpen"
+            @reset="handleReset"
+            @toggle-mjml="mjmlOpen = !mjmlOpen"
+        />
 
         <Teleport to="body">
             <Transition
