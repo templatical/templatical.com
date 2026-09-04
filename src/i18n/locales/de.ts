@@ -55,6 +55,33 @@ const de: MessageSchema = {
                 description: 'Pro Empfänger generierter Abmeldelink',
             },
         },
+        user: {
+            you: 'Sie',
+        },
+        demo: {
+            templateName: 'Willkommens-E-Mail',
+            eyebrow: 'Mit einem Backend verbunden',
+            description:
+                'Jedes Bedienelement über der Arbeitsfläche ist ein Konfigurationsschlüssel, den Sie selbst implementieren. Hier laufen sie gegen den Session-Speicher Ihres Browsers — nichts verlässt diese Seite.',
+            chipsLabel: 'In dieser Demo verbundene Konfigurationsschlüssel',
+            docsLink: 'So funktionieren die Provider',
+            reset: 'Demo zurücksetzen',
+            resetting: 'Wird zurückgesetzt…',
+        },
+        mjml: {
+            show: 'MJML anzeigen',
+            hide: 'MJML ausblenden',
+            heading: 'Gerendertes Ergebnis',
+            note:
+                'Das Rendern zu MJML braucht überhaupt keinen Provider — es läuft im Browser. Einen Render-Provider ergänzen Sie für HTML-Ausgabe oder um die Umwandlung in Ihr Backend zu verlagern.',
+            error: 'Die Vorlage konnte gerade nicht gerendert werden.',
+        },
+        seed: {
+            reviewerName: 'Sam Okafor',
+            threadBody:
+                'Dieser Button trägt die ganze E-Mail — geht das direkter?',
+            replyBody: 'Sehe ich auch so. Etwas Auffordernderes, und in der Markenfarbe.',
+        },
     },
     footer: {
         groups: {

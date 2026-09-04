@@ -22,6 +22,9 @@ describe('locale parity', () => {
         const enKeys = keyPaths(en).sort();
         const deKeys = keyPaths(de).sort();
 
+        // Guard against both locales vacuously "matching" by both being empty.
+        expect(enKeys.length).toBeGreaterThan(0);
+
         const missingInDe = enKeys.filter((k) => !deKeys.includes(k));
         const missingInEn = deKeys.filter((k) => !enKeys.includes(k));
 

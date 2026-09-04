@@ -53,6 +53,33 @@ export default {
                 description: 'Generated per-recipient unsubscribe link',
             },
         },
+        user: {
+            you: 'You',
+        },
+        demo: {
+            templateName: 'Welcome email',
+            eyebrow: 'Wired to a backend',
+            description:
+                'Every control above the canvas is one config key you implement. Here they run against your browser’s session storage — nothing leaves this page.',
+            chipsLabel: 'Config keys wired in this demo',
+            docsLink: 'How the providers work',
+            reset: 'Reset demo',
+            resetting: 'Resetting…',
+        },
+        mjml: {
+            show: 'Show the MJML',
+            hide: 'Hide the MJML',
+            heading: 'Rendered output',
+            note:
+                'Rendering to MJML needs no provider at all — it runs in the browser. A render provider is what you add for HTML output, or to move the conversion to your backend.',
+            error: 'Could not render the template just now.',
+        },
+        seed: {
+            reviewerName: 'Sam Okafor',
+            threadBody:
+                'This button is doing the work of the whole email — can it be more direct?',
+            replyBody: 'Agreed. Something imperative, and give it the brand colour.',
+        },
     },
     footer: {
         groups: {
