@@ -466,7 +466,7 @@ const featureSections = computed<FeatureSection[]>(() => [
     },
     {
         slug: 'media-library',
-        docsPath: '/guide/media-library',
+        docsPath: '/cloud/media-library',
         docsLabel: t('features.mediaLibrary.docsLabel'),
         eyebrow: t('features.mediaLibrary.eyebrow'),
         title: t('features.mediaLibrary.title'),
@@ -728,7 +728,7 @@ const editor = await init({ container: '#editor', versionHistory })`,
     },
     {
         slug: 'saved-blocks',
-        docsPath: '/guide/saved-blocks',
+        docsPath: '/backend/saved-blocks',
         docsLabel: t('features.savedBlocks.docsLabel'),
         eyebrow: t('features.savedBlocks.eyebrow'),
         title: t('features.savedBlocks.title'),
@@ -769,7 +769,7 @@ const editor = await init({
     },
     {
         slug: 'test-email',
-        docsPath: '/guide/test-email',
+        docsPath: '/backend/test-email',
         docsLabel: t('features.testEmail.docsLabel'),
         eyebrow: t('features.testEmail.eyebrow'),
         title: t('features.testEmail.title'),
@@ -822,7 +822,7 @@ const editor = await init({
     },
     {
         slug: 'mjml-output',
-        docsPath: '/getting-started/how-rendering-works',
+        docsPath: '/backend/render',
         docsLabel: t('features.mjmlOutput.docsLabel'),
         eyebrow: t('features.mjmlOutput.eyebrow'),
         title: t('features.mjmlOutput.title'),
@@ -848,6 +848,22 @@ const { html } = mjml2html(mjml)`,
 const mjml = await renderToMjml(templateContent, {
   renderCustomBlock: myCustomBlockRenderer,
 })`,
+            },
+            {
+                label: t('features.variants.yourEndpoint'),
+                code: `const editor = await init({
+  container: '#editor',
+  render: {
+    // The SDK still renders the template to MJML in the browser and
+    // hands it to your endpoint — you only need to compile it to HTML.
+    compileMjml: async (mjml) => {
+      const res = await fetch('/api/mjml', { method: 'POST', body: mjml })
+      return res.text()
+    },
+  },
+})
+
+const html = await editor.toHtml()`,
             },
         ],
     },

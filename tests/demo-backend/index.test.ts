@@ -66,7 +66,7 @@ describe('createDemoBackend', () => {
         const backend = createDemoBackend(baseContent(), COPY);
 
         expect(await backend.config.comments.list(TEMPLATE_ID)).toHaveLength(1);
-        expect((await backend.config.versionHistory.list(TEMPLATE_ID)).versions.length).toBeGreaterThanOrEqual(3);
+        expect((await backend.config.versionHistory.list(TEMPLATE_ID)).versions.length).toBe(3);
     });
 
     it('hasStoredTemplate flips once create() has run', async () => {
@@ -99,6 +99,6 @@ describe('createDemoBackend', () => {
         // seeded thread, or more than 3 versions, would mean seeding stacked
         // on top of a reset that failed to clear it.
         expect(await backend.config.comments.list(TEMPLATE_ID)).toHaveLength(1);
-        expect((await backend.config.versionHistory.list(TEMPLATE_ID)).versions.length).toBeGreaterThanOrEqual(3);
+        expect((await backend.config.versionHistory.list(TEMPLATE_ID)).versions.length).toBe(3);
     });
 });

@@ -569,6 +569,7 @@ export default {
                 'Custom blocks resolve through a callback you supply',
                 'Nothing calls home — no render API, no per-render pricing',
                 'The renderer is MIT-licensed and installed separately',
+                'No `render` key needed for `toMjml()` — add one for `toHtml()`, or to move the conversion to your backend',
             ],
             docsLabel: 'How rendering works',
         },

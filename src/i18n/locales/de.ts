@@ -571,6 +571,7 @@ const de: MessageSchema = {
                 'Custom Blocks werden über einen Callback aufgelöst, den Sie bereitstellen',
                 'Nichts ruft nach Hause — keine Render-API, keine Kosten pro Rendering',
                 'Der Renderer ist MIT-lizenziert und wird separat installiert',
+                'Kein `render`-Schlüssel nötig für `toMjml()` — einen ergänzen Sie für `toHtml()` oder um die Umwandlung in Ihr Backend zu verlagern',
             ],
             docsLabel: 'So funktioniert das Rendering',
         },
