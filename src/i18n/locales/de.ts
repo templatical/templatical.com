@@ -293,6 +293,64 @@ const de: MessageSchema = {
             audiencePicker: 'Zielgruppen-Picker',
             yourEndpoint: 'Ihr Endpunkt',
             restrictedRecipients: 'Eingeschränkte Empfänger',
+            yourApi: 'Ihre API',
+            readOnly: 'Schreibgeschützt',
+            composedRestore: 'Kein atomares Restore',
+        },
+        backend: {
+            eyebrow: 'Ihr Backend anbinden',
+            headline: 'Sechs Schlüssel. Dieselbe Form. Fehlend, bis Sie einen übergeben.',
+            subheadline:
+                'Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand und Rendering sind jeweils ein Konfigurationsschlüssel mit Methoden, die Sie implementieren. Lassen Sie einen Schlüssel weg, und das Feature ist verschwunden — nicht deaktiviert, und seine UI wird nie geladen. Übergeben Sie false statt einer Methode, und der Editor blendet dieses Bedienelement aus, statt es nur auszugrauen.',
+        },
+        templates: {
+            eyebrow: 'Persistenz',
+            title: 'Speichern und Laden, gegen Ihren eigenen Speicher',
+            description:
+                'Geben Sie dem Editor einen Ort zum Speichern, und er bekommt die passende Oberfläche dazu: einen inline bearbeitbaren Namen, einen Speichern-Button, eine Statusanzeige, Cmd/Ctrl+S, optionales Autosave und eine Warnung vor dem Schließen des Tabs bei ungespeicherten Änderungen.',
+            outcome: 'Der komplette Lebenszyklus des Speicherns, mit Ihrer API als einzigem Speicher.',
+            features: [
+                'Drei Methoden sind die gesamte Integration — load, create, save',
+                'Debounced Autosave pausiert bei einem Undo, sodass ein Redo nie mit einem Schreibvorgang um die Wette läuft',
+                'Die Vorlagen-ID gehört Ihnen — ein Datenbankschlüssel, ein Slug, eine Dokument-ID',
+                'Diese ID ist der Verknüpfungsschlüssel: Versionsverlauf und Kommentare knüpfen daran an',
+                'onSaved trägt den Auslöser — manual, autosave, rename, restore oder api',
+                'Ein fehlgeschlagenes Speichern lässt den Editor-Zustand unangetastet; nichts wird als gespeichert markiert, was es nicht ist',
+                'Lassen Sie den Schlüssel weg, und speichern Sie stattdessen selbst über onChange',
+            ],
+            docsLabel: 'Speichern- & Laden-Referenz',
+        },
+        versionHistory: {
+            eyebrow: 'Verlauf',
+            title: 'Frühere Versionen durchsuchen, in der Vorschau ansehen und wiederherstellen',
+            description:
+                'Ein Verlaufs-Bedienelement im Header blättert durch frühere Zustände zurück, zeigt einen davon auf dem Canvas in der Vorschau — mit eigenem Banner — und stellt ihn hinter einer Bestätigung wieder her. Vier Methoden gegen Ihren eigenen Speicher.',
+            outcome: 'Ein Undo, das die Sitzung überdauert, ohne dass dafür eine eigene UI gebaut werden muss.',
+            features: [
+                'Provider mit vier Methoden — list, get, create, restore',
+                'Der Inhalt zu einer gelisteten Version ist ein Hinweis pro Eintrag: Liefern Sie ihn bei aktuellen Versionen gleich mit, beim Rest genügt ein Round-Trip',
+                'Kein atomarer restore-Endpunkt? Setzen Sie ihn aus get plus save zusammen',
+                'Die Bestätigung, bevor eine Wiederherstellung ungespeicherte Arbeit verwirft, ist Aufgabe des Editors, nicht Ihre',
+                'Automatische Versionen gehören dem, der save implementiert — der Seite, die weiß, was Speicher kostet',
+                'Übergeben Sie create: false, und das Bedienelement verschwindet, statt auszugrauen',
+            ],
+            docsLabel: 'Versionsverlauf-Referenz',
+        },
+        comments: {
+            eyebrow: 'Review',
+            title: 'Review in Threads, verankert an Blöcken',
+            description:
+                'Ein Review-Panel mit Threads und Antworten, ein Zähler-Badge auf jedem kommentierten Block, sowie Resolve/Reopen. Fünf Methoden, dazu der Schlüssel user auf oberster Ebene — denn ohne Autor meldet sich das Feature selbst als nicht verfügbar, statt einen anonymen Kommentar zu schreiben.',
+            outcome: 'Stakeholder-Review im Editor, auf Ihrem Speicher und mit Ihren eigenen Identitäten.',
+            features: [
+                'Provider mit fünf Methoden — list, create, update, delete, setResolved',
+                'user.id entscheidet, was eine Sitzung bearbeiten oder löschen darf',
+                'setResolved erhält den Zielzustand, keinen Toggle, sodass zwei Klicks ihn nicht invertieren können',
+                'Kommentare verankern sich an einem Block oder an der gesamten Vorlage',
+                'Ein optionales subscribe trägt einen Echtzeit-Transport, falls vorhanden — alles funktioniert auch ohne ihn',
+                'Übergeben Sie create: false für einen schreibgeschützten Review-Durchlauf',
+            ],
+            docsLabel: 'Kommentar-Referenz',
         },
         customBlocks: {
             eyebrow: 'Erweiterbarkeit',

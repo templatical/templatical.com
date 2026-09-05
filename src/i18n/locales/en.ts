@@ -291,6 +291,64 @@ export default {
             audiencePicker: 'Audience picker',
             yourEndpoint: 'Your endpoint',
             restrictedRecipients: 'Restricted recipients',
+            yourApi: 'Your API',
+            readOnly: 'Read-only',
+            composedRestore: 'No atomic restore',
+        },
+        backend: {
+            eyebrow: 'Connect your backend',
+            headline: 'Six keys. The same shape. Absent until you pass one.',
+            subheadline:
+                'Saving, version history, comments, saved blocks, test sends and rendering are each one config key holding methods you implement. Omit a key and the feature is gone — not disabled, and its UI is never downloaded. Pass false instead of a method and the editor hides that control rather than greying it out.',
+        },
+        templates: {
+            eyebrow: 'Persistence',
+            title: 'Saving and loading, against your own storage',
+            description:
+                'Give the editor somewhere to save and it grows the chrome that goes with it: an inline-editable name, a save button, a status indicator, Cmd/Ctrl+S, optional autosave, and a warning before the tab closes with unsaved work.',
+            outcome: 'The whole save lifecycle, with your API as the only storage.',
+            features: [
+                'Three methods are the entire integration — load, create, save',
+                'Debounced autosave that pauses during undo, so a redo never races a write',
+                'The template id is yours — a database key, a slug, a document id',
+                'That id is the join key: version history and comments attach to it',
+                'onSaved carries the trigger — manual, autosave, rename, restore or api',
+                'A failed save leaves editor state untouched; nothing is marked saved that wasn’t',
+                'Omit the key and persist from onChange yourself instead',
+            ],
+            docsLabel: 'Saving & loading reference',
+        },
+        versionHistory: {
+            eyebrow: 'History',
+            title: 'Browse, preview and restore past versions',
+            description:
+                'A history control in the header steps back through past states, previews one on the canvas with its own banner, and restores it behind a confirmation. Four methods against your own storage.',
+            outcome: 'Undo that outlives the session, without building the UI for it.',
+            features: [
+                'Four-method provider — list, get, create, restore',
+                'Content on a listed version is a per-entry hint: hydrate the recent ones, make the rest a round-trip',
+                'No atomic restore endpoint? Compose it from get plus save',
+                'The confirmation before a restore discards unsaved work is the editor’s job, not yours',
+                'Automatic versions belong to whoever implements save — the side that knows what storage costs',
+                'Pass create: false and the control disappears rather than greying out',
+            ],
+            docsLabel: 'Version-history reference',
+        },
+        comments: {
+            eyebrow: 'Review',
+            title: 'Threaded review, anchored to blocks',
+            description:
+                'A review panel with threads and replies, a count badge on every commented block, and resolve/reopen. Five methods, plus a top-level user — because without an author the feature reports itself unavailable rather than writing an anonymous comment.',
+            outcome: 'Stakeholder review inside the editor, on your storage and your identities.',
+            features: [
+                'Five-method provider — list, create, update, delete, setResolved',
+                'user.id decides what a session may edit or delete',
+                'setResolved takes the target state, not a toggle, so two clicks can’t invert it',
+                'Comments anchor to a block, or to the template as a whole',
+                'An optional subscribe carries a realtime transport if you have one — and everything works without it',
+                'Pass create: false for a read-only review pass',
+            ],
+            docsLabel: 'Comments reference',
         },
         customBlocks: {
             eyebrow: 'Extensibility',
