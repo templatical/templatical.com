@@ -194,7 +194,7 @@ const de: MessageSchema = {
                         'Gespeicherte Blöcke — Nutzer speichern Blockgruppen und verwenden sie wieder, in Ihrem Speicher',
                         'Speichern und Laden gegen Ihren eigenen Speicher — Autosave, Speicherstatus, Cmd/Ctrl+S',
                         'Versionsverlauf — durchsuchen, in der Vorschau ansehen und wiederherstellen, in Ihrem Speicher',
-                        'Kommentare in Threads, verankert an Blöcken, auf Ihrem Speicher und Ihren Identitäten',
+                        'Review-Kommentare in Threads, verankert an Blöcken, auf Ihrem Speicher und Ihren Identitäten',
                         'Testversand aus dem Editor — über Ihren ESP und Ihre Domain zugestellt',
                         'Vorschauen von Ihrem Backend aufgelöst — echte Daten, Logik-Zweige ausgewertet',
                         'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
