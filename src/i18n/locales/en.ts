@@ -190,6 +190,9 @@ export default {
                         'Display conditions for dynamic content',
                         'Pluggable media library — bring your own storage (S3, Cloudinary, your CMS)',
                         'Saved blocks — users save block groups and reuse them, backed by your storage',
+                        'Saving and loading against your own storage — autosave, save status, Cmd/Ctrl+S',
+                        'Version history — browse, preview and restore, backed by your storage',
+                        'Threaded review comments anchored to blocks, on your storage and identities',
                         'Test sends from the editor, delivered by your own ESP and your domain',
                         'Previews resolved by your backend — real data, logic branches evaluated',
                         'Full theming via design tokens, dark mode included',
@@ -202,7 +205,6 @@ export default {
                     cloud: [
                         'AI rewrite, AI chat, MCP integration',
                         'Real-time collaboration with block-level locking',
-                        'Snapshots and version history',
                         'Multi-tenancy and API access',
                     ],
                 },
@@ -752,7 +754,7 @@ export default {
                 them: {
                     operated: 'You would rather someone else operated the editor, with hosting and uptime handled for you.',
                     storage: 'You want image storage bundled in. Topol hosts it for you; Templatical has none and expects you to supply it.',
-                    comments: 'You want commenting on templates inside the editor. Topol includes it from the Business plan ($300/mo) up; our Cloud tier plans it but has not shipped.',
+                    comments: 'You want commenting on templates inside the editor with nothing to build. Topol includes it from the Business plan ($300/mo) up; Templatical ships comments as an open-source provider you implement against your own storage and identities — more setup than a plan feature you switch on.',
                     templates: 'You want a ready-made template library your users can start from on day one.',
                     support: 'You want a commercial vendor behind the editor, with email support during business hours, rather than an open-source project.',
                 },
@@ -1558,7 +1560,7 @@ export default {
             },
             paid: {
                 question: 'Is there a paid version, and is it required?',
-                answer: 'No, paid is not required. The open-source SDK is fully standalone — every editor feature (custom blocks, merge tags, display conditions, theming, MJML output) is included and free to self-host. Templatical Cloud is a separate, optional managed subscription that adds infrastructure-dependent capabilities — real-time collaboration, AI rewrite and chat, snapshots, comments, hosted media, multi-tenancy, API access. Those rely on backend services we run, so they ship as a paid managed tier rather than self-hostable code.',
+                answer: 'No, paid is not required. The open-source SDK is fully standalone — every editor feature (custom blocks, merge tags, display conditions, theming, MJML output) is included and free to self-host. Templatical Cloud is a separate, optional managed subscription that adds infrastructure-dependent capabilities — real-time collaboration, AI rewrite and chat, hosted media, multi-tenancy, API access. Those rely on backend services we run, so they ship as a paid managed tier rather than self-hostable code.',
             },
         },
         stillAsking: {

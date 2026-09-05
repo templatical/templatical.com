@@ -950,6 +950,7 @@ const supportingItemKeys = [
             :eyebrow="t('features.backend.eyebrow')"
             :headline="t('features.backend.headline')"
             :subheadline="t('features.backend.subheadline')"
+            bg="gray"
         />
         <section :class="['py-20 lg:py-28', section.bgClass]">
             <div
