@@ -8,6 +8,7 @@ import { useDarkMode } from '@/composables/useDarkMode';
 import { createDemoBackend } from '@/lib/demo-backend';
 import { URLS, localizedUrl } from '@/lib/urls';
 import HeroProviderLegend from './HeroProviderLegend.vue';
+import HeroMjmlPanel from './HeroMjmlPanel.vue';
 
 type MergeTag = { label: string; value: string };
 
@@ -24,6 +25,13 @@ const heroContent = {
         linkUnderline: true,
         fontFamily: 'Helvetica, Arial, sans-serif',
         preheaderText: 'Your workspace is ready — here is what comes next.',
+        // Required by `TemplateSettings` (BCP-47, drives the rendered
+        // `<html lang>`) and read unconditionally by `renderToMjml()`. Fixed
+        // to English rather than bound to the site's `locale` because the
+        // block copy below is hardcoded English regardless of UI language —
+        // tagging it `lang="de"` on the German site would mispronounce
+        // correct content for screen readers, not fix anything.
+        locale: 'en',
     },
     blocks: [
         {
@@ -204,7 +212,10 @@ async function mountEditor() {
             import(/* @vite-ignore */ EDITOR_ESM_URL),
             timeout,
         ]);
-        if (!container.value) return;
+        if (!container.value) {
+            status.value = 'idle';
+            return;
+        }
         // Typed explicitly: `mod` is untyped CDN output, so `mod.init(...)` is
         // `any`, and assigning an `any`-typed expression to `editorInstance`
         // (declared `EditorInstance | null`) does not narrow it — every read
@@ -284,6 +295,11 @@ async function handleReset() {
     } finally {
         resetting.value = false;
     }
+}
+
+function renderMjml(): Promise<string> {
+    if (!editorInstance) return Promise.reject(new Error('Editor is not mounted'));
+    return editorInstance.toMjml();
 }
 
 watch(isDark, (dark) => {
@@ -407,12 +423,13 @@ onBeforeUnmount(() => {
         </div>
 
         <HeroProviderLegend
-            v-if="status === 'ready'"
+            v-if="isDesktop && status === 'ready'"
             :resetting="resetting"
             :mjml-open="mjmlOpen"
             @reset="handleReset"
             @toggle-mjml="mjmlOpen = !mjmlOpen"
         />
+        <HeroMjmlPanel :open="isDesktop && mjmlOpen" :render="renderMjml" />
 
         <Teleport to="body">
             <Transition
