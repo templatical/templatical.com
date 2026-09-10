@@ -17,11 +17,11 @@ const baseContent = (): TemplateContent =>
     }) as unknown as TemplateContent;
 
 describe('createDemoBackend', () => {
-    it('exposes all five providers plus the user identity', () => {
+    it('exposes all six providers plus the user identity', () => {
         const { config } = createDemoBackend(baseContent(), COPY);
 
         expect(Object.keys(config).sort()).toEqual(
-            ['comments', 'savedBlocks', 'templates', 'testEmail', 'user', 'versionHistory'].sort(),
+            ['comments', 'media', 'savedBlocks', 'templates', 'testEmail', 'user', 'versionHistory'].sort(),
         );
     });
 
