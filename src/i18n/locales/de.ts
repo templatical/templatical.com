@@ -62,8 +62,7 @@ const de: MessageSchema = {
             templateName: 'Willkommens-E-Mail',
             eyebrow: 'Mit einem Backend verbunden',
             description:
-                'Jedes Bedienelement über der Arbeitsfläche ist ein Konfigurationsschlüssel, den Sie selbst implementieren. Hier laufen sie gegen den Session-Speicher Ihres Browsers — nichts verlässt diese Seite.',
-            chipsLabel: 'In dieser Demo verbundene Konfigurationsschlüssel',
+                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke und Testversand — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers, es verlässt also nichts diese Seite.',
             docsLink: 'So funktionieren die Provider',
             reset: 'Demo zurücksetzen',
             resetting: 'Wird zurückgesetzt…',

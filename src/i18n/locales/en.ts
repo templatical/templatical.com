@@ -60,8 +60,7 @@ export default {
             templateName: 'Welcome email',
             eyebrow: 'Wired to a backend',
             description:
-                'Every control above the canvas is one config key you implement. Here they run against your browser’s session storage — nothing leaves this page.',
-            chipsLabel: 'Config keys wired in this demo',
+                'Some of what you see here — saving, version history, comments, saved blocks and test sends — runs on a backend you implement. This demo uses your browser’s session storage, so nothing leaves the page.',
             docsLink: 'How the providers work',
             reset: 'Reset demo',
             resetting: 'Resetting…',
