@@ -2,7 +2,7 @@
 import { onClickOutside, onKeyStroke, useIntersectionObserver, useMediaQuery } from '@vueuse/core';
 import { computed, onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ArrowUpRight, Info, X } from '@lucide/vue';
+import { ArrowUpRight, Info, TriangleAlert, X } from '@lucide/vue';
 import type { TemplateContent } from '@templatical/types';
 import { useDarkMode } from '@/composables/useDarkMode';
 import { createDemoBackend } from '@/lib/demo-backend';
@@ -131,6 +131,32 @@ const container = useTemplateRef<HTMLDivElement>('container');
 const modalPanel = useTemplateRef<HTMLDivElement>('modalPanel');
 const status = ref<'idle' | 'loading' | 'ready' | 'error'>('idle');
 
+// No provider (media, comments, saved blocks, ...) has its own toast — the
+// SDK's media library, for example, forwards a rejected create() straight to
+// this callback with nothing rendered in its own UI (unlike its replace/
+// import-from-url flows, which do carry an inline error). Without wiring
+// onError here, a rejection like the 200 KB upload guard in
+// src/lib/demo-backend/media.ts throws a well-formed message that never
+// reaches the visitor — the promise just rejects silently. This is the one
+// place across every provider that catches whichever of them failed.
+const providerErrorMessage = ref<string | null>(null);
+let providerErrorTimeout: ReturnType<typeof setTimeout> | null = null;
+
+function showProviderError(error: Error) {
+    console.warn('Templatical editor reported a provider error', error);
+    providerErrorMessage.value = error.message;
+    if (providerErrorTimeout) clearTimeout(providerErrorTimeout);
+    providerErrorTimeout = setTimeout(() => {
+        providerErrorMessage.value = null;
+    }, 6000);
+}
+
+function dismissProviderError() {
+    if (providerErrorTimeout) clearTimeout(providerErrorTimeout);
+    providerErrorTimeout = null;
+    providerErrorMessage.value = null;
+}
+
 const DEMO_TAG_KEYS = ['firstName', 'lastName', 'email', 'company', 'unsubscribeUrl'] as const;
 const DEMO_TAG_VALUES: Record<(typeof DEMO_TAG_KEYS)[number], string> = {
     firstName: '{{first_name}}',
@@ -232,6 +258,7 @@ async function mountEditor() {
                     tags: demoTags.value.map(({ label, value }) => ({ label, value })),
                     onRequest: requestMergeTag,
                 },
+                onError: showProviderError,
                 ...demoBackend.config,
             }),
             timeout,
@@ -280,6 +307,7 @@ async function remount() {
     }
     editorInstance = null;
     status.value = 'idle';
+    dismissProviderError();
     demoBackend.reset();
     await mountEditor();
 }
@@ -324,6 +352,7 @@ onBeforeUnmount(() => {
         // ignore
     }
     cssLink?.remove();
+    if (providerErrorTimeout) clearTimeout(providerErrorTimeout);
 });
 </script>
 
@@ -409,6 +438,32 @@ onBeforeUnmount(() => {
                         </i18n-t>
                     </p>
                 </div>
+                <Transition
+                    enter-active-class="motion-safe:transition motion-safe:duration-150 motion-safe:ease-out"
+                    leave-active-class="motion-safe:transition motion-safe:duration-100 motion-safe:ease-in"
+                    enter-from-class="opacity-0 translate-y-1"
+                    leave-to-class="opacity-0"
+                >
+                    <div
+                        v-if="status === 'ready' && providerErrorMessage"
+                        role="alert"
+                        class="absolute inset-x-3 bottom-3 z-10 flex items-start gap-2 rounded-lg border border-destructive/30 bg-white px-3 py-2.5 text-xs text-neutral-700 shadow-lg dark:bg-neutral-900 dark:text-neutral-300"
+                    >
+                        <TriangleAlert
+                            class="mt-0.5 size-3.5 shrink-0 text-destructive"
+                            aria-hidden="true"
+                        />
+                        <p class="min-w-0 flex-1 break-words">{{ providerErrorMessage }}</p>
+                        <button
+                            type="button"
+                            class="-m-1 shrink-0 cursor-pointer rounded p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                            :aria-label="t('heroEditor.providerError.dismiss')"
+                            @click="dismissProviderError"
+                        >
+                            <X class="size-3.5" aria-hidden="true" />
+                        </button>
+                    </div>
+                </Transition>
             </template>
             <img
                 v-else

@@ -73,6 +73,9 @@ export default {
                 'Rendering to MJML needs no provider at all — it runs in the browser. A render provider is what you add for HTML output, or to move the conversion to your backend.',
             error: 'Could not render the template just now.',
         },
+        providerError: {
+            dismiss: 'Dismiss',
+        },
         seed: {
             reviewerName: 'Sam Okafor',
             threadBody:

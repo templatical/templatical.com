@@ -1,6 +1,7 @@
 import type {
     CommentsProvider,
     EditorUser,
+    MediaProvider,
     SavedBlocksProvider,
     TemplateContent,
     TemplatesProvider,
@@ -13,11 +14,7 @@ import { createTemplatesProvider, hasStoredTemplate } from './templates';
 import { createVersionHistoryProvider } from './versions';
 import { createCommentsProvider } from './comments';
 import { createSavedBlocksProvider } from './saved-blocks';
-// MediaProvider isn't published in @templatical/types yet — see the
-// temporary mirror block at the top of media.ts for why this imports from
-// here instead of '@templatical/types'.
 import { createMediaProvider } from './media';
-import type { MediaProvider } from './media';
 import { ensureSeeded } from './seed';
 import type { SeedCopy } from './seed';
 

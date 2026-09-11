@@ -1,89 +1,5 @@
+import type { MediaAsset, MediaCategory, MediaProvider } from '@templatical/types';
 import type { DemoStore } from './store';
-
-// ---------------------------------------------------------------------------
-// TEMPORARY MIRROR of @templatical/types' MediaProvider contract.
-//
-// Installed @templatical/types is 0.30.0, which predates this contract
-// entirely (zero "MediaProvider" matches in the published package). This
-// block mirrors packages/types/src/media.ts from the SDK's unmerged
-// `byo-media` branch (~/Sites/templatical-sdk). DELETE this whole block and
-// replace every reference below with an import from '@templatical/types'
-// once that branch publishes.
-//
-// Deliberately NOT mirrored: `MediaFoldersProvider`, `MediaUsageInfo`,
-// `MediaStorageInfo`, and MediaProvider's `extends MediaOptions` (optional
-// maxFileSize/mimeTypes/onCreated/onUpdated/onDeleted config+hooks this demo
-// never sets). This provider only ever assigns `false` to the members whose
-// "on" shape would need those three types, so `folders` / `checkUsage` /
-// `storage` below are narrowed to the literal `false` instead of the real
-// `false | X` union — see the comment on each.
-// ---------------------------------------------------------------------------
-
-type MediaCategory = 'images' | 'documents' | 'videos' | 'audio';
-
-export interface MediaAsset {
-    id: string;
-    url: string;
-    alt?: string;
-    filename?: string;
-    mimeType?: string;
-    width?: number;
-    height?: number;
-    size?: number;
-    thumbnailUrl?: string;
-    folderId?: string | null;
-    createdAt?: string;
-    updatedAt?: string;
-    canUpdate?: boolean;
-    canDelete?: boolean;
-}
-
-interface MediaListParams {
-    search?: string;
-    cursor?: string;
-    folderId?: string | null;
-    category?: MediaCategory;
-    templateId?: string;
-}
-
-interface MediaListPage {
-    items: MediaAsset[];
-    nextCursor?: string;
-}
-
-interface MediaCreateInput {
-    file: File;
-    folderId?: string | null;
-    alt?: string;
-    filename?: string;
-    templateId?: string;
-}
-
-interface MediaAssetPatch {
-    alt?: string;
-    filename?: string;
-}
-
-export interface MediaProvider {
-    list(params?: MediaListParams): Promise<MediaListPage>;
-    create: false | ((input: MediaCreateInput) => Promise<MediaAsset>);
-    update: false | ((id: string, patch: MediaAssetPatch) => Promise<MediaAsset>);
-    delete: false | ((ids: string[]) => Promise<void>);
-    /** Real contract: `false | MediaFoldersProvider`. Always `false` here — see block comment above. */
-    folders: false;
-    replace: false | ((id: string, file: File) => Promise<MediaAsset>);
-    importFromUrl:
-        | false
-        | ((url: string, folderId?: string | null, templateId?: string) => Promise<MediaAsset>);
-    /** Real contract: `false | ((ids: string[]) => Promise<Record<string, MediaUsageInfo>>)`. Always `false` here. */
-    checkUsage: false;
-    frequentlyUsed: false | (() => Promise<MediaAsset[]>);
-    /** Real contract: `false | (() => Promise<MediaStorageInfo | null>)`. Always `false` here. */
-    storage: false;
-}
-// ---------------------------------------------------------------------------
-// END temporary mirror of @templatical/types' MediaProvider.
-// ---------------------------------------------------------------------------
 
 const KEY = 'media';
 const MEDIA_SEEDED_KEY = 'media-seeded';
@@ -105,6 +21,22 @@ function nextId(): string {
  * signal is `mimeType`, so category is derived from it rather than stored
  * redundantly. Seeded assets are PNGs, so they resolve to 'images' without
  * needing any special-casing here.
+ *
+ * Confirmed load-bearing, not cosmetic (@templatical/sdk origin/main,
+ * verified 2026-09-11): `packages/media-library/src/composable.ts`'s
+ * `currentListParams()` sets `params.category` on every `list()` call once a
+ * category is active — either the user's own filter dropdown, or
+ * auto-applied the moment the modal opens for a constrained field
+ * (`MediaLibraryModal.vue` sets `categoryFilter.value = props.accept[0]`
+ * whenever `accept` narrows to exactly one category, which is what an image
+ * field passes). A provider that ignores `category`, as the SDK's own
+ * bundled `packages/core/src/media-local.ts` reference provider does, would
+ * leak non-image assets into an image field's picker the instant a
+ * non-image asset existed. This demo only ever seeds/uploads images today,
+ * so dropping the derivation wouldn't visibly break anything yet — but the
+ * contract is honoured correctly either way, and the category filter
+ * dropdown (always rendered — this provider sets no `mimeTypes`, so the
+ * modal falls back to all four categories) would silently no-op without it.
  */
 function categoryOf(asset: MediaAsset): MediaCategory | undefined {
     const mime = asset.mimeType ?? '';

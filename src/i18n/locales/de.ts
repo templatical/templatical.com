@@ -75,6 +75,9 @@ const de: MessageSchema = {
                 'Das Rendern zu MJML braucht überhaupt keinen Provider — es läuft im Browser. Einen Render-Provider ergänzen Sie für HTML-Ausgabe oder um die Umwandlung in Ihr Backend zu verlagern.',
             error: 'Die Vorlage konnte gerade nicht gerendert werden.',
         },
+        providerError: {
+            dismiss: 'Schließen',
+        },
         seed: {
             reviewerName: 'Sam Okafor',
             threadBody:
