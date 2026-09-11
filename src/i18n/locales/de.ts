@@ -62,7 +62,7 @@ const de: MessageSchema = {
             templateName: 'Willkommens-E-Mail',
             eyebrow: 'Mit einem Backend verbunden',
             description:
-                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke und Testversand — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers, es verlässt also nichts diese Seite.',
+                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand und Medien — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers, es verlässt also nichts diese Seite.',
             docsLink: 'So funktionieren die Provider',
             reset: 'Demo zurücksetzen',
             resetting: 'Wird zurückgesetzt…',
@@ -303,9 +303,9 @@ const de: MessageSchema = {
         },
         backend: {
             eyebrow: 'Ihr Backend anbinden',
-            headline: 'Sechs Schlüssel. Dieselbe Form. Fehlend, bis Sie einen übergeben.',
+            headline: 'Sieben Schlüssel. Dieselbe Form. Fehlend, bis Sie einen übergeben.',
             subheadline:
-                'Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand und Rendering sind jeweils ein Konfigurationsschlüssel mit Methoden, die Sie implementieren. Lassen Sie einen Schlüssel weg, und das Feature ist verschwunden — nicht deaktiviert, und seine UI wird nie geladen. Übergeben Sie false statt einer Methode, und der Editor blendet dieses Bedienelement aus, statt es nur auszugrauen.',
+                'Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien und Rendering sind jeweils ein Konfigurationsschlüssel mit Methoden, die Sie implementieren. Lassen Sie einen Schlüssel weg, und das Feature ist verschwunden — nicht deaktiviert, und seine UI wird nie geladen. Übergeben Sie false statt einer Methode, und der Editor blendet dieses Bedienelement aus, statt es nur auszugrauen.',
         },
         templates: {
             eyebrow: 'Persistenz',
@@ -560,6 +560,22 @@ const de: MessageSchema = {
                 'Mit einer Fehlermeldung abbrechen: sie erscheint inline, der Dialog bleibt für einen neuen Versuch offen',
             ],
             docsLabel: 'Testversand-Referenz',
+        },
+        media: {
+            eyebrow: 'Speicher',
+            title: 'Eine Medien-Bibliothek, in Ihrem eigenen Speicher',
+            description:
+                'Der Editor liefert den Picker — Durchsuchen auf Bildfeldern, Video-Vorschaubildern und Bildfeldern in Custom Blocks, Drag-and-Drop-Upload, Zuschneiden, Ordner, Suche. Den Speicher stellen Sie. `list` ist die einzige Pflichtmethode; die übrigen neun schalten Sie einzeln frei oder verweigern sie.',
+            outcome: 'Eine Medien-Bibliothek, die Ihre Nutzer füllen — vollständig in Ihrem eigenen Speicher.',
+            features: [
+                'Provider mit zehn Mitgliedern — nur `list` darf nicht `false` sein',
+                'Durchsuchen-Button erscheint auf Bildfeldern, Video-Vorschaubildern und Bildfeldern in Custom Blocks',
+                'Ein Drop ruft `create` direkt auf — das Modal öffnet sich nicht, und dessen Liste bleibt unangetastet',
+                'Bei jeder Mutation false übergeben, und der Editor blendet dieses Bedienelement aus, statt es zu deaktivieren',
+                'Ordner kommen als flache Liste zurück — die UI verschachtelt sie über `parentId`',
+                'Mitgelieferter browserlokaler Provider für Demos — eine Zeile, kein Backend',
+            ],
+            docsLabel: 'Medien-Referenz',
         },
         mjmlOutput: {
             eyebrow: 'Ausgabe',

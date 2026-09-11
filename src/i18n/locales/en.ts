@@ -60,7 +60,7 @@ export default {
             templateName: 'Welcome email',
             eyebrow: 'Wired to a backend',
             description:
-                'Some of what you see here — saving, version history, comments, saved blocks and test sends — runs on a backend you implement. This demo uses your browser’s session storage, so nothing leaves the page.',
+                'Some of what you see here — saving, version history, comments, saved blocks, test sends and media — runs on a backend you implement. This demo uses your browser’s session storage, so nothing leaves the page.',
             docsLink: 'How the providers work',
             reset: 'Reset demo',
             resetting: 'Resetting…',
@@ -301,9 +301,9 @@ export default {
         },
         backend: {
             eyebrow: 'Connect your backend',
-            headline: 'Six keys. The same shape. Absent until you pass one.',
+            headline: 'Seven keys. The same shape. Absent until you pass one.',
             subheadline:
-                'Saving, version history, comments, saved blocks, test sends and rendering are each one config key holding methods you implement. Omit a key and the feature is gone — not disabled, and its UI is never downloaded. Pass false instead of a method and the editor hides that control rather than greying it out.',
+                'Saving, version history, comments, saved blocks, test sends, media and rendering are each one config key holding methods you implement. Omit a key and the feature is gone — not disabled, and its UI is never downloaded. Pass false instead of a method and the editor hides that control rather than greying it out.',
         },
         templates: {
             eyebrow: 'Persistence',
@@ -558,6 +558,22 @@ export default {
                 'Throw with a message and it shows inline; the dialog stays open to retry',
             ],
             docsLabel: 'Test-email reference',
+        },
+        media: {
+            eyebrow: 'Storage',
+            title: 'A media library, in your own storage',
+            description:
+                'The editor owns the picker — browse on image fields, video thumbnails and custom-block fields, drag-and-drop upload, crop, folders, search. You own storage. `list` is the only required method; the other nine are yours to enable or withhold, one at a time.',
+            outcome: 'A media library your users browse and fill, entirely on your own storage.',
+            features: [
+                'Ten-member provider — `list` is the only one that can’t be `false`',
+                'Browse triggers on image fields, video thumbnails and custom-block image fields',
+                'Dropping a file calls `create` directly — the modal never opens, and its listing is untouched',
+                'Pass `false` on any mutation and the editor hides that control instead of disabling it',
+                'Folders come back as a flat list — the UI trees them via `parentId`',
+                'Bundled browser-local provider for demos — one line, no backend',
+            ],
+            docsLabel: 'Media reference',
         },
         mjmlOutput: {
             eyebrow: 'Output',

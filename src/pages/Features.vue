@@ -466,7 +466,7 @@ const featureSections = computed<FeatureSection[]>(() => [
     },
     {
         slug: 'media-library',
-        docsPath: '/cloud/media-library',
+        docsPath: '/guide/images',
         docsLabel: t('features.mediaLibrary.docsLabel'),
         eyebrow: t('features.mediaLibrary.eyebrow'),
         title: t('features.mediaLibrary.title'),
@@ -518,7 +518,7 @@ await init({ container: '#editor', content })`,
     },
 ]);
 
-// Six provider-backed features, grouped under the "Connect your backend"
+// Seven provider-backed features, grouped under the "Connect your backend"
 // band. Each key is optional and independent — passing one grows the
 // editor's chrome for that feature; omitting it leaves nothing downloaded.
 const backendSections = computed<FeatureSection[]>(() => [
@@ -815,6 +815,95 @@ const editor = await init({
     send: async ({ recipient, mjml }) => {
       await postJson('/api/test-email', { recipient, mjml })
     },
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'media',
+        docsPath: '/backend/media',
+        docsLabel: t('features.media.docsLabel'),
+        eyebrow: t('features.media.eyebrow'),
+        title: t('features.media.title'),
+        description: t('features.media.description'),
+        outcome: t('features.media.outcome'),
+        features: tm('features.media.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.browserLocal'),
+                code: `import { createLocalStorageMediaProvider } from '@templatical/editor'
+
+const editor = await init({
+  container: '#editor',
+  // Stores entries in localStorage — no backend, good for demos. Folders,
+  // replace, import, usage, frequently-used and quota are all false.
+  media: createLocalStorageMediaProvider(),
+})`,
+            },
+            {
+                label: t('features.variants.yourApi'),
+                code: `const editor = await init({
+  container: '#editor',
+  media: {
+    list: (params) => {
+      const query = new URLSearchParams()
+      if (params?.search) query.set('search', params.search)
+      if (params?.cursor) query.set('cursor', params.cursor)
+      if (params?.folderId) query.set('folderId', params.folderId)
+      if (params?.category) query.set('category', params.category)
+      return fetch(\`/api/media?\${query}\`).then((r) => r.json())
+    },
+
+    create: (input) => {
+      const body = new FormData()
+      body.append('file', input.file)
+      if (input.folderId) body.append('folderId', input.folderId)
+      return fetch('/api/media', { method: 'POST', body }).then((r) => r.json())
+    },
+
+    update: (id, patch) =>
+      fetch(\`/api/media/\${id}\`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patch),
+      }).then((r) => r.json()),
+
+    delete: (ids) =>
+      fetch('/api/media', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+      }).then(() => undefined),
+
+    // No folders, replace or import in this gallery — false hides each
+    // control instead of rendering it disabled.
+    folders: false,
+    replace: false,
+    importFromUrl: false,
+    checkUsage: false,
+    frequentlyUsed: false,
+    storage: false,
+  },
+})`,
+            },
+            {
+                label: t('features.variants.readOnly'),
+                code: `const editor = await init({
+  container: '#editor',
+  media: {
+    // Every mutation false: a curated gallery users browse, search and
+    // pick from — list is the one member that can't be disabled.
+    list: () => fetch('/api/media').then((r) => r.json()),
+    create: false,
+    update: false,
+    delete: false,
+    folders: false,
+    replace: false,
+    importFromUrl: false,
+    checkUsage: false,
+    frequentlyUsed: false,
+    storage: false,
   },
 })`,
             },
