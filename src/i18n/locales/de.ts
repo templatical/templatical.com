@@ -55,6 +55,35 @@ const de: MessageSchema = {
                 description: 'Pro Empfänger generierter Abmeldelink',
             },
         },
+        user: {
+            you: 'Sie',
+        },
+        demo: {
+            templateName: 'Willkommens-E-Mail',
+            eyebrow: 'Mit einem Backend verbunden',
+            description:
+                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand und Medien — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers, es verlässt also nichts diese Seite.',
+            docsLink: 'So funktionieren die Provider',
+            reset: 'Demo zurücksetzen',
+            resetting: 'Wird zurückgesetzt…',
+        },
+        mjml: {
+            show: 'MJML anzeigen',
+            hide: 'MJML ausblenden',
+            heading: 'Gerendertes Ergebnis',
+            note:
+                'Das Rendern zu MJML braucht überhaupt keinen Provider — es läuft im Browser. Einen Render-Provider ergänzen Sie für HTML-Ausgabe oder um die Umwandlung in Ihr Backend zu verlagern.',
+            error: 'Die Vorlage konnte gerade nicht gerendert werden.',
+        },
+        providerError: {
+            dismiss: 'Schließen',
+        },
+        seed: {
+            reviewerName: 'Sam Okafor',
+            threadBody:
+                'Dieser Button trägt die ganze E-Mail — geht das direkter?',
+            replyBody: 'Sehe ich auch so. Etwas Auffordernderes, und in der Markenfarbe.',
+        },
     },
     footer: {
         groups: {
@@ -165,6 +194,9 @@ const de: MessageSchema = {
                         'Anzeigebedingungen für dynamische Inhalte',
                         'Pluggbare Medien-Bibliothek — eigener Speicher (S3, Cloudinary, Ihr CMS)',
                         'Gespeicherte Blöcke — Nutzer speichern Blockgruppen und verwenden sie wieder, in Ihrem Speicher',
+                        'Speichern und Laden gegen Ihren eigenen Speicher — Autosave, Speicherstatus, Cmd/Ctrl+S',
+                        'Versionsverlauf — durchsuchen, in der Vorschau ansehen und wiederherstellen, in Ihrem Speicher',
+                        'Review-Kommentare in Threads, verankert an Blöcken, auf Ihrem Speicher und Ihren Identitäten',
                         'Testversand aus dem Editor — über Ihren ESP und Ihre Domain zugestellt',
                         'Vorschauen von Ihrem Backend aufgelöst — echte Daten, Logik-Zweige ausgewertet',
                         'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
@@ -177,7 +209,6 @@ const de: MessageSchema = {
                     cloud: [
                         'KI-Umschreiben, KI-Chat, MCP-Integration',
                         'Echtzeit-Kollaboration mit Block-Level-Sperrung',
-                        'Snapshots und Versionshistorie',
                         'Multi-Tenancy und API-Zugriff',
                     ],
                 },
@@ -266,6 +297,64 @@ const de: MessageSchema = {
             audiencePicker: 'Zielgruppen-Picker',
             yourEndpoint: 'Ihr Endpunkt',
             restrictedRecipients: 'Eingeschränkte Empfänger',
+            yourApi: 'Ihre API',
+            readOnly: 'Schreibgeschützt',
+            composedRestore: 'Kein atomares Restore',
+        },
+        backend: {
+            eyebrow: 'Ihr Backend anbinden',
+            headline: 'Sieben Schlüssel. Dieselbe Form. Fehlend, bis Sie einen übergeben.',
+            subheadline:
+                'Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien und Rendering sind jeweils ein Konfigurationsschlüssel mit Methoden, die Sie implementieren. Lassen Sie einen Schlüssel weg, und das Feature ist verschwunden — nicht deaktiviert, und seine UI wird nie geladen. Übergeben Sie false statt einer Methode, und der Editor blendet dieses Bedienelement aus, statt es nur auszugrauen.',
+        },
+        templates: {
+            eyebrow: 'Persistenz',
+            title: 'Speichern und Laden, gegen Ihren eigenen Speicher',
+            description:
+                'Geben Sie dem Editor einen Ort zum Speichern, und er bekommt die passende Oberfläche dazu: einen inline bearbeitbaren Namen, einen Speichern-Button, eine Statusanzeige, Cmd/Ctrl+S, optionales Autosave und eine Warnung vor dem Schließen des Tabs bei ungespeicherten Änderungen.',
+            outcome: 'Der komplette Lebenszyklus des Speicherns, mit Ihrer API als einzigem Speicher.',
+            features: [
+                'Drei Methoden sind die gesamte Integration — load, create, save',
+                'Debounced Autosave pausiert bei einem Undo, sodass ein Redo nie mit einem Schreibvorgang um die Wette läuft',
+                'Die Vorlagen-ID gehört Ihnen — ein Datenbankschlüssel, ein Slug, eine Dokument-ID',
+                'Diese ID ist der Verknüpfungsschlüssel: Versionsverlauf und Kommentare knüpfen daran an',
+                'onSaved trägt den Auslöser — manual, autosave, rename, restore oder api',
+                'Ein fehlgeschlagenes Speichern lässt den Editor-Zustand unangetastet; nichts wird als gespeichert markiert, was es nicht ist',
+                'Lassen Sie den Schlüssel weg, und speichern Sie stattdessen selbst über onChange',
+            ],
+            docsLabel: 'Speichern- & Laden-Referenz',
+        },
+        versionHistory: {
+            eyebrow: 'Verlauf',
+            title: 'Frühere Versionen durchsuchen, in der Vorschau ansehen und wiederherstellen',
+            description:
+                'Ein Verlaufs-Bedienelement im Header blättert durch frühere Zustände zurück, zeigt einen davon auf dem Canvas in der Vorschau — mit eigenem Banner — und stellt ihn hinter einer Bestätigung wieder her. Vier Methoden gegen Ihren eigenen Speicher.',
+            outcome: 'Ein Undo, das die Sitzung überdauert, ohne dass dafür eine eigene UI gebaut werden muss.',
+            features: [
+                'Provider mit vier Methoden — list, get, create, restore',
+                'Der Inhalt zu einer gelisteten Version ist ein Hinweis pro Eintrag: Liefern Sie ihn bei aktuellen Versionen gleich mit, beim Rest genügt ein Round-Trip',
+                'Kein atomarer restore-Endpunkt? Setzen Sie ihn aus get plus save zusammen',
+                'Die Bestätigung, bevor eine Wiederherstellung ungespeicherte Arbeit verwirft, ist Aufgabe des Editors, nicht Ihre',
+                'Automatische Versionen gehören dem, der save implementiert — der Seite, die weiß, was Speicher kostet',
+                'Übergeben Sie create: false, und das Bedienelement verschwindet, statt auszugrauen',
+            ],
+            docsLabel: 'Versionsverlauf-Referenz',
+        },
+        comments: {
+            eyebrow: 'Review',
+            title: 'Review in Threads, verankert an Blöcken',
+            description:
+                'Ein Review-Panel mit Threads und Antworten, ein Zähler-Badge auf jedem kommentierten Block, sowie Resolve/Reopen. Fünf Methoden, dazu der Schlüssel user auf oberster Ebene — denn ohne Autor meldet sich das Feature selbst als nicht verfügbar, statt einen anonymen Kommentar zu schreiben.',
+            outcome: 'Stakeholder-Review im Editor, auf Ihrem Speicher und mit Ihren eigenen Identitäten.',
+            features: [
+                'Provider mit fünf Methoden — list, create, update, delete, setResolved',
+                'user.id entscheidet, was eine Sitzung bearbeiten oder löschen darf',
+                'setResolved erhält den Zielzustand, keinen Toggle, sodass zwei Klicks ihn nicht invertieren können',
+                'Kommentare verankern sich an einem Block oder an der gesamten Vorlage',
+                'Ein optionales subscribe trägt einen Echtzeit-Transport, falls vorhanden — alles funktioniert auch ohne ihn',
+                'Übergeben Sie create: false für einen schreibgeschützten Review-Durchlauf',
+            ],
+            docsLabel: 'Kommentar-Referenz',
         },
         customBlocks: {
             eyebrow: 'Erweiterbarkeit',
@@ -472,6 +561,22 @@ const de: MessageSchema = {
             ],
             docsLabel: 'Testversand-Referenz',
         },
+        media: {
+            eyebrow: 'Speicher',
+            title: 'Eine Medien-Bibliothek, in Ihrem eigenen Speicher',
+            description:
+                'Der Editor liefert den Picker — Durchsuchen auf Bildfeldern, Video-Vorschaubildern und Bildfeldern in Custom Blocks, Drag-and-Drop-Upload, Zuschneiden, Ordner, Suche. Den Speicher stellen Sie. `list` ist die einzige Pflichtmethode; die übrigen neun schalten Sie einzeln frei oder verweigern sie.',
+            outcome: 'Eine Medien-Bibliothek, die Ihre Nutzer füllen — vollständig in Ihrem eigenen Speicher.',
+            features: [
+                'Provider mit zehn Mitgliedern — nur `list` darf nicht `false` sein',
+                'Durchsuchen-Button erscheint auf Bildfeldern, Video-Vorschaubildern und Bildfeldern in Custom Blocks',
+                'Ein Drop ruft `create` direkt auf — das Modal öffnet sich nicht, und dessen Liste bleibt unangetastet',
+                'Bei jeder Mutation false übergeben, und der Editor blendet dieses Bedienelement aus, statt es zu deaktivieren',
+                'Ordner kommen als flache Liste zurück — die UI verschachtelt sie über `parentId`',
+                'Mitgelieferter browserlokaler Provider für Demos — eine Zeile, kein Backend',
+            ],
+            docsLabel: 'Medien-Referenz',
+        },
         mjmlOutput: {
             eyebrow: 'Ausgabe',
             title: 'JSON rein, MJML raus',
@@ -484,6 +589,7 @@ const de: MessageSchema = {
                 'Custom Blocks werden über einen Callback aufgelöst, den Sie bereitstellen',
                 'Nichts ruft nach Hause — keine Render-API, keine Kosten pro Rendering',
                 'Der Renderer ist MIT-lizenziert und wird separat installiert',
+                'Kein `render`-Schlüssel nötig für `toMjml()` — einen ergänzen Sie für `toHtml()` oder um die Umwandlung in Ihr Backend zu verlagern',
             ],
             docsLabel: 'So funktioniert das Rendering',
         },
@@ -669,7 +775,7 @@ const de: MessageSchema = {
                 them: {
                     operated: 'Sie den Editor lieber von jemand anderem betreiben lassen, inklusive Hosting und Verfügbarkeit.',
                     storage: 'Sie Bildspeicher mitgeliefert haben wollen. Topol hostet ihn für Sie; Templatical hat keinen und erwartet, dass Sie ihn beisteuern.',
-                    comments: 'Sie Kommentare zu Vorlagen direkt im Editor wollen. Topol bietet das ab dem Business-Tarif (300 $/Monat); unsere Cloud-Stufe plant es, hat es aber noch nicht ausgeliefert.',
+                    comments: 'Sie Kommentare zu Vorlagen direkt im Editor wollen, ohne dafür etwas bauen zu müssen. Topol bietet das ab dem Business-Tarif (300 $/Monat); Templatical liefert Kommentare als Open-Source-Provider, den Sie gegen Ihren eigenen Speicher und Ihre Identitäten implementieren — mehr Aufwand als ein Tarif-Feature, das Sie einfach einschalten.',
                     templates: 'Sie eine fertige Vorlagen-Bibliothek wollen, mit der Ihre Nutzer sofort starten können.',
                     support: 'Sie einen kommerziellen Anbieter hinter dem Editor wollen, mit E-Mail-Support zu Geschäftszeiten, statt eines Open-Source-Projekts.',
                 },
@@ -1475,7 +1581,7 @@ const de: MessageSchema = {
             },
             paid: {
                 question: 'Gibt es eine kostenpflichtige Version, und ist sie erforderlich?',
-                answer: 'Nein, kostenpflichtig ist nicht erforderlich. Das Open-Source-SDK ist vollständig eigenständig — jede Editor-Funktion (Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output) ist enthalten und kostenlos selbst hostbar. Templatical Cloud ist ein separates, optionales Managed-Abo, das infrastrukturabhängige Funktionen ergänzt — Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, Snapshots, Kommentare, gehostete Medien, Multi-Tenancy, API-Zugriff. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als kostenpflichtiges Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
+                answer: 'Nein, kostenpflichtig ist nicht erforderlich. Das Open-Source-SDK ist vollständig eigenständig — jede Editor-Funktion (Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output) ist enthalten und kostenlos selbst hostbar. Templatical Cloud ist ein separates, optionales Managed-Abo, das infrastrukturabhängige Funktionen ergänzt — Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, gehostete Medien, Multi-Tenancy, API-Zugriff. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als kostenpflichtiges Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
             },
         },
         stillAsking: {

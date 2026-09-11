@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Check } from '@lucide/vue';
 import RevealOnScroll from './RevealOnScroll.vue';
@@ -14,7 +15,12 @@ const { t, tm } = useI18n();
 // integration examples on one page. The closer's snippet is the fuller one and makes
 // this section's point better anyway: it shows the whole integration, and there is no
 // API key in it.
-const claims = tm('home.independence.claims') as string[];
+// `computed`, not a bare `const`: `tm()` reads the locale once at call time, so a
+// plain const would freeze these four claims at the locale active when the component
+// was created — the SSG-prerendered 'en' — and a client-side locale switch would leave
+// them in English while every `t()` around them turned German. Same shape as
+// HeroSection.vue's `heroBadges`.
+const claims = computed(() => tm('home.independence.claims') as string[]);
 </script>
 
 <template>

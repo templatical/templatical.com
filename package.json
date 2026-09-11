@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite-ssg build",
-    "preview": "vite preview --port 4174"
+    "preview": "vite preview --port 4174",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@lucide/vue": "^1.35.0",
@@ -26,11 +28,13 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
+    "@templatical/types": "^0.36.0",
     "@vitejs/plugin-vue": "6.0.8",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
     "vite": "8.2.0",
     "vite-ssg": "28.3.0",
+    "vitest": "^4.1.11",
     "vue-tsc": "3.3.9"
   }
 }

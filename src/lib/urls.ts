@@ -70,6 +70,10 @@ export const LOCALIZED_URLS = {
         en: 'https://docs.templatical.com/guide/migration-from-mjml',
         de: 'https://docs.templatical.com/de/guide/migration-from-mjml',
     },
+    backendDocs: {
+        en: 'https://docs.templatical.com/backend/',
+        de: 'https://docs.templatical.com/de/backend/',
+    },
 } as const;
 
 export function localizedUrl(

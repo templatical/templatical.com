@@ -57,6 +57,12 @@ interface FeatureSection {
     docsPath: string;
     docsLabel: string;
 }
+// featureSections and backendSections render through the same section markup
+// (see pageSections below), so each entry also carries which alternating
+// background it takes within its own group.
+interface PageSection extends FeatureSection {
+    bgClass: string;
+}
 
 const featureSections = computed<FeatureSection[]>(() => [
     {
@@ -216,47 +222,6 @@ const featureSections = computed<FeatureSection[]>(() => [
         ],
     },
     {
-        slug: 'saved-blocks',
-        docsPath: '/guide/saved-blocks',
-        docsLabel: t('features.savedBlocks.docsLabel'),
-        eyebrow: t('features.savedBlocks.eyebrow'),
-        title: t('features.savedBlocks.title'),
-        description: t('features.savedBlocks.description'),
-        outcome: t('features.savedBlocks.outcome'),
-        features: tm('features.savedBlocks.features') as string[],
-        variants: [
-            {
-                label: t('features.variants.browserLocal'),
-                code: `import { createLocalStorageSavedBlocksProvider } from '@templatical/editor'
-
-const editor = await init({
-  container: '#editor',
-  // Stores entries in localStorage — no backend, good for demos.
-  savedBlocks: createLocalStorageSavedBlocksProvider(),
-})`,
-            },
-            {
-                label: t('features.variants.apiBacked'),
-                code: `const editor = await init({
-  container: '#editor',
-  savedBlocks: {
-    // Return everything this user may see — scope it per user, team or
-    // account here. The editor filters in the browser, so there is no
-    // search or category handling to implement.
-    list: () => fetch('/api/saved-blocks').then((r) => r.json()),
-
-    create: (input) => post('/api/saved-blocks', input),
-    update: (id, patch) => patchJson(\`/api/saved-blocks/\${id}\`, patch),
-
-    // Pass false instead of a function and the editor hides the control
-    // rather than letting the user try and fail.
-    delete: false,
-  },
-})`,
-            },
-        ],
-    },
-    {
         slug: 'display-conditions',
         docsPath: '/guide/display-conditions',
         docsLabel: t('features.displayConditions.docsLabel'),
@@ -383,59 +348,6 @@ const editor = await init({
         ],
     },
     {
-        slug: 'test-email',
-        docsPath: '/guide/test-email',
-        docsLabel: t('features.testEmail.docsLabel'),
-        eyebrow: t('features.testEmail.eyebrow'),
-        title: t('features.testEmail.title'),
-        description: t('features.testEmail.description'),
-        outcome: t('features.testEmail.outcome'),
-        features: tm('features.testEmail.features') as string[],
-        variants: [
-            {
-                label: t('features.variants.yourEndpoint'),
-                code: `const editor = await init({
-  container: '#editor',
-  testEmail: {
-    // The whole integration. A Test button appears in the header, and
-    // the address the user picks is handed to you.
-    send: async ({ recipient, content }) => {
-      const res = await fetch('/api/test-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ recipient, content }),
-      })
-
-      // Your message reaches the user verbatim — write it for them.
-      if (res.status === 429) throw new Error('Too many test emails — try again in a minute.')
-      if (!res.ok) throw new Error('Could not send the test email.')
-    },
-  },
-})`,
-            },
-            {
-                label: t('features.variants.restrictedRecipients'),
-                code: `const editor = await init({
-  container: '#editor',
-  testEmail: {
-    // One entry renders a read-only field, several render a picker, an
-    // empty array hides the feature. It constrains the picker, nothing
-    // more — validate the recipient on your server every time.
-    allowedRecipients: [currentUser.email, 'qa@acme.com'],
-
-    // Adds a rendered \`mjml\` string to the payload so your endpoint
-    // doesn't have to render one. Needs the optional renderer package.
-    includeMjml: true,
-
-    send: async ({ recipient, mjml }) => {
-      await postJson('/api/test-email', { recipient, mjml })
-    },
-  },
-})`,
-            },
-        ],
-    },
-    {
         slug: 'theming',
         docsPath: '/guide/theming',
         docsLabel: t('features.theming.docsLabel'),
@@ -554,7 +466,7 @@ const editor = await init({
     },
     {
         slug: 'media-library',
-        docsPath: '/guide/media-library',
+        docsPath: '/guide/images',
         docsLabel: t('features.mediaLibrary.docsLabel'),
         eyebrow: t('features.mediaLibrary.eyebrow'),
         title: t('features.mediaLibrary.title'),
@@ -575,37 +487,6 @@ const editor = await init({
     return { url: picked.url, alt: picked.alt }
   },
 })`,
-    },
-    {
-        slug: 'mjml-output',
-        docsPath: '/getting-started/how-rendering-works',
-        docsLabel: t('features.mjmlOutput.docsLabel'),
-        eyebrow: t('features.mjmlOutput.eyebrow'),
-        title: t('features.mjmlOutput.title'),
-        description: t('features.mjmlOutput.description'),
-        outcome: t('features.mjmlOutput.outcome'),
-        features: tm('features.mjmlOutput.features') as string[],
-        variants: [
-            {
-                label: t('features.variants.fromEditor'),
-                code: `const editor = await init({ container: '#editor' })
-
-// Loads the renderer on first call — custom blocks resolve automatically.
-const mjml = await editor.toMjml()
-
-// Compile MJML to HTML with whichever MJML library you prefer.
-const { html } = mjml2html(mjml)`,
-            },
-            {
-                label: t('features.variants.headless'),
-                code: `import { renderToMjml } from '@templatical/renderer'
-
-// No editor involved — render stored JSON on your server.
-const mjml = await renderToMjml(templateContent, {
-  renderCustomBlock: myCustomBlockRenderer,
-})`,
-            },
-        ],
     },
     {
         slug: 'programmatic-templates',
@@ -636,6 +517,467 @@ content.blocks = [
 await init({ container: '#editor', content })`,
     },
 ]);
+
+// Seven provider-backed features, grouped under the "Connect your backend"
+// band. Each key is optional and independent — passing one grows the
+// editor's chrome for that feature; omitting it leaves nothing downloaded.
+const backendSections = computed<FeatureSection[]>(() => [
+    {
+        slug: 'templates',
+        docsPath: '/backend/templates',
+        docsLabel: t('features.templates.docsLabel'),
+        eyebrow: t('features.templates.eyebrow'),
+        title: t('features.templates.title'),
+        description: t('features.templates.description'),
+        outcome: t('features.templates.outcome'),
+        features: tm('features.templates.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourApi'),
+                code: `const editor = await init({
+  container: '#editor',
+  templates: {
+    load: (id) =>
+      fetch(\`/api/templates/\${id}\`).then((r) => r.json()),
+
+    create: (input) =>
+      fetch('/api/templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      }).then((r) => r.json()),
+
+    save: (id, patch) =>
+      fetch(\`/api/templates/\${id}\`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patch),
+      }).then((r) => r.json()),
+
+    autoSave: true,
+    onSaved: (template, { trigger }) => {
+      if (trigger === 'manual') router.push(\`/templates/\${template.id}\`)
+    },
+  },
+})
+
+// Opening a template is imperative — your app decides which one.
+await editor.load('tpl_123')`,
+            },
+            {
+                label: t('features.variants.readOnly'),
+                code: `const editor = await init({
+  container: '#editor',
+  templates: {
+    load: (id) =>
+      fetch(\`/api/templates/\${id}\`).then((r) => r.json()),
+
+    // false, not a no-op function: the editor HIDES the save button and
+    // the name field rather than rendering them disabled.
+    create: false,
+    save: false,
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'version-history',
+        docsPath: '/backend/version-history',
+        docsLabel: t('features.versionHistory.docsLabel'),
+        eyebrow: t('features.versionHistory.eyebrow'),
+        title: t('features.versionHistory.title'),
+        description: t('features.versionHistory.description'),
+        outcome: t('features.versionHistory.outcome'),
+        features: tm('features.versionHistory.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourApi'),
+                code: `const editor = await init({
+  container: '#editor',
+  versionHistory: {
+    list: (templateId) =>
+      fetch(\`/api/templates/\${templateId}/versions\`).then((r) => r.json()),
+
+    // A listed version can omit content as a cache hint — the editor
+    // calls get() the first time it's opened, then caches the result.
+    get: (templateId, versionId) =>
+      fetch(\`/api/templates/\${templateId}/versions/\${versionId}\`)
+        .then((r) => r.json())
+        .then((v) => v.content),
+
+    create: (templateId, content) =>
+      fetch(\`/api/templates/\${templateId}/versions\`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content }),
+      }).then((r) => r.json()),
+
+    restore: (templateId, versionId) =>
+      fetch(\`/api/templates/\${templateId}/versions/\${versionId}/restore\`, {
+        method: 'POST',
+      }).then((r) => r.json()),
+  },
+})`,
+            },
+            {
+                label: t('features.variants.composedRestore'),
+                code: `const versionHistory = {
+  list: (templateId) =>
+    fetch(\`/api/templates/\${templateId}/versions\`).then((r) => r.json()),
+  get: (templateId, versionId) =>
+    fetch(\`/api/templates/\${templateId}/versions/\${versionId}\`)
+      .then((r) => r.json())
+      .then((v) => v.content),
+
+  // No endpoint of your own to record one on demand — history is only
+  // ever what save() writes.
+  create: false,
+
+  // No atomic restore endpoint either. Compose it from methods you
+  // already have: fetch the old content, then save it as current.
+  restore: async (templateId, versionId) => {
+    const content = await versionHistory.get(templateId, versionId)
+    return templates.save(templateId, { content })
+  },
+}
+
+const editor = await init({ container: '#editor', versionHistory })`,
+            },
+        ],
+    },
+    {
+        slug: 'comments',
+        docsPath: '/backend/comments',
+        docsLabel: t('features.comments.docsLabel'),
+        eyebrow: t('features.comments.eyebrow'),
+        title: t('features.comments.title'),
+        description: t('features.comments.description'),
+        outcome: t('features.comments.outcome'),
+        features: tm('features.comments.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourApi'),
+                code: `const editor = await init({
+  container: '#editor',
+  // A top-level key, not part of the provider — presence features will
+  // want the same answer. No user, and the panel reports itself
+  // unavailable rather than writing an anonymous comment.
+  user: { id: currentUser.id, name: currentUser.name },
+  comments: {
+    list: (templateId) =>
+      fetch(\`/api/templates/\${templateId}/comments\`).then((r) => r.json()),
+
+    create: (templateId, input) =>
+      fetch(\`/api/templates/\${templateId}/comments\`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      }).then((r) => r.json()),
+
+    update: (templateId, commentId, patch) =>
+      fetch(\`/api/templates/\${templateId}/comments/\${commentId}\`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patch),
+      }).then((r) => r.json()),
+
+    delete: (templateId, commentId) =>
+      fetch(\`/api/templates/\${templateId}/comments/\${commentId}\`, {
+        method: 'DELETE',
+      }).then(() => undefined),
+
+    // Takes the target state, not a toggle — two clicks in flight can't
+    // leave a thread inverted.
+    setResolved: (templateId, commentId, resolved) =>
+      fetch(\`/api/templates/\${templateId}/comments/\${commentId}/resolve\`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resolved }),
+      }).then((r) => r.json()),
+  },
+})`,
+            },
+            {
+                label: t('features.variants.readOnly'),
+                code: `const editor = await init({
+  container: '#editor',
+  user: { id: currentUser.id, name: currentUser.name },
+  comments: {
+    list: (templateId) =>
+      fetch(\`/api/templates/\${templateId}/comments\`).then((r) => r.json()),
+
+    // false, not a no-op function: the panel hides the reply box and
+    // every edit/delete action rather than rendering them disabled.
+    create: false,
+    update: false,
+    delete: false,
+
+    // Resolving is a review action, not authorship — leave it live so a
+    // reviewer can still close out threads during a read-only pass.
+    setResolved: (templateId, commentId, resolved) =>
+      fetch(\`/api/templates/\${templateId}/comments/\${commentId}/resolve\`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resolved }),
+      }).then((r) => r.json()),
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'saved-blocks',
+        docsPath: '/backend/saved-blocks',
+        docsLabel: t('features.savedBlocks.docsLabel'),
+        eyebrow: t('features.savedBlocks.eyebrow'),
+        title: t('features.savedBlocks.title'),
+        description: t('features.savedBlocks.description'),
+        outcome: t('features.savedBlocks.outcome'),
+        features: tm('features.savedBlocks.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.browserLocal'),
+                code: `import { createLocalStorageSavedBlocksProvider } from '@templatical/editor'
+
+const editor = await init({
+  container: '#editor',
+  // Stores entries in localStorage — no backend, good for demos.
+  savedBlocks: createLocalStorageSavedBlocksProvider(),
+})`,
+            },
+            {
+                label: t('features.variants.apiBacked'),
+                code: `const editor = await init({
+  container: '#editor',
+  savedBlocks: {
+    // Return everything this user may see — scope it per user, team or
+    // account here. The editor filters in the browser, so there is no
+    // search or category handling to implement.
+    list: () => fetch('/api/saved-blocks').then((r) => r.json()),
+
+    create: (input) => post('/api/saved-blocks', input),
+    update: (id, patch) => patchJson(\`/api/saved-blocks/\${id}\`, patch),
+
+    // Pass false instead of a function and the editor hides the control
+    // rather than letting the user try and fail.
+    delete: false,
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'test-email',
+        docsPath: '/backend/test-email',
+        docsLabel: t('features.testEmail.docsLabel'),
+        eyebrow: t('features.testEmail.eyebrow'),
+        title: t('features.testEmail.title'),
+        description: t('features.testEmail.description'),
+        outcome: t('features.testEmail.outcome'),
+        features: tm('features.testEmail.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourEndpoint'),
+                code: `const editor = await init({
+  container: '#editor',
+  testEmail: {
+    // The whole integration. A Test button appears in the header, and
+    // the address the user picks is handed to you.
+    send: async ({ recipient, content }) => {
+      const res = await fetch('/api/test-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ recipient, content }),
+      })
+
+      // Your message reaches the user verbatim — write it for them.
+      if (res.status === 429) throw new Error('Too many test emails — try again in a minute.')
+      if (!res.ok) throw new Error('Could not send the test email.')
+    },
+  },
+})`,
+            },
+            {
+                label: t('features.variants.restrictedRecipients'),
+                code: `const editor = await init({
+  container: '#editor',
+  testEmail: {
+    // One entry renders a read-only field, several render a picker, an
+    // empty array hides the feature. It constrains the picker, nothing
+    // more — validate the recipient on your server every time.
+    allowedRecipients: [currentUser.email, 'qa@acme.com'],
+
+    // Adds a rendered \`mjml\` string to the payload so your endpoint
+    // doesn't have to render one. Needs the optional renderer package.
+    includeMjml: true,
+
+    send: async ({ recipient, mjml }) => {
+      await postJson('/api/test-email', { recipient, mjml })
+    },
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'media',
+        docsPath: '/backend/media',
+        docsLabel: t('features.media.docsLabel'),
+        eyebrow: t('features.media.eyebrow'),
+        title: t('features.media.title'),
+        description: t('features.media.description'),
+        outcome: t('features.media.outcome'),
+        features: tm('features.media.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.browserLocal'),
+                code: `import { createLocalStorageMediaProvider } from '@templatical/editor'
+
+const editor = await init({
+  container: '#editor',
+  // Stores entries in localStorage — no backend, good for demos. Folders,
+  // replace, import, usage, frequently-used and quota are all false.
+  media: createLocalStorageMediaProvider(),
+})`,
+            },
+            {
+                label: t('features.variants.yourApi'),
+                code: `const editor = await init({
+  container: '#editor',
+  media: {
+    list: (params) => {
+      const query = new URLSearchParams()
+      if (params?.search) query.set('search', params.search)
+      if (params?.cursor) query.set('cursor', params.cursor)
+      if (params?.folderId) query.set('folderId', params.folderId)
+      if (params?.category) query.set('category', params.category)
+      return fetch(\`/api/media?\${query}\`).then((r) => r.json())
+    },
+
+    create: (input) => {
+      const body = new FormData()
+      body.append('file', input.file)
+      if (input.folderId) body.append('folderId', input.folderId)
+      return fetch('/api/media', { method: 'POST', body }).then((r) => r.json())
+    },
+
+    update: (id, patch) =>
+      fetch(\`/api/media/\${id}\`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patch),
+      }).then((r) => r.json()),
+
+    delete: (ids) =>
+      fetch('/api/media', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+      }).then(() => undefined),
+
+    // No folders, replace or import in this gallery — false hides each
+    // control instead of rendering it disabled.
+    folders: false,
+    replace: false,
+    importFromUrl: false,
+    checkUsage: false,
+    frequentlyUsed: false,
+    storage: false,
+  },
+})`,
+            },
+            {
+                label: t('features.variants.readOnly'),
+                code: `const editor = await init({
+  container: '#editor',
+  media: {
+    // Every mutation false: a curated gallery users browse, search and
+    // pick from — list is the one member that can't be disabled.
+    list: () => fetch('/api/media').then((r) => r.json()),
+    create: false,
+    update: false,
+    delete: false,
+    folders: false,
+    replace: false,
+    importFromUrl: false,
+    checkUsage: false,
+    frequentlyUsed: false,
+    storage: false,
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'mjml-output',
+        docsPath: '/backend/render',
+        docsLabel: t('features.mjmlOutput.docsLabel'),
+        eyebrow: t('features.mjmlOutput.eyebrow'),
+        title: t('features.mjmlOutput.title'),
+        description: t('features.mjmlOutput.description'),
+        outcome: t('features.mjmlOutput.outcome'),
+        features: tm('features.mjmlOutput.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.fromEditor'),
+                code: `const editor = await init({ container: '#editor' })
+
+// Loads the renderer on first call — custom blocks resolve automatically.
+const mjml = await editor.toMjml()
+
+// Compile MJML to HTML with whichever MJML library you prefer.
+const { html } = mjml2html(mjml)`,
+            },
+            {
+                label: t('features.variants.headless'),
+                code: `import { renderToMjml } from '@templatical/renderer'
+
+// No editor involved — render stored JSON on your server.
+const mjml = await renderToMjml(templateContent, {
+  renderCustomBlock: myCustomBlockRenderer,
+})`,
+            },
+            {
+                label: t('features.variants.yourEndpoint'),
+                code: `const editor = await init({
+  container: '#editor',
+  render: {
+    // The SDK still renders the template to MJML in the browser and
+    // hands it to your endpoint — you only need to compile it to HTML.
+    compileMjml: async (mjml) => {
+      const res = await fetch('/api/mjml', { method: 'POST', body: mjml })
+      return res.text()
+    },
+  },
+})
+
+const html = await editor.toHtml()`,
+            },
+        ],
+    },
+]);
+
+// Both section loops render through one shared block (see the template):
+// each entry is stamped with the alternating background it takes within
+// its own group, then the two groups are concatenated for a single v-for.
+// pageSections[backendBandIndex] is always 'templates' — the band header
+// renders immediately before it.
+function withBgClass(sections: FeatureSection[]): PageSection[] {
+    return sections.map((section, idx) => ({
+        ...section,
+        bgClass:
+            idx % 2 === 0
+                ? 'bg-white dark:bg-neutral-950'
+                : 'bg-neutral-50 dark:bg-neutral-900',
+    }));
+}
+
+const pageSections = computed<PageSection[]>(() => [
+    ...withBgClass(featureSections.value),
+    ...withBgClass(backendSections.value),
+]);
+const backendBandIndex = computed(() => featureSections.value.length);
 
 const activeVariant = ref<Record<string, number>>({});
 const variantDirection = ref<Record<string, 1 | -1>>({});
@@ -699,16 +1041,23 @@ const supportingItemKeys = [
             </SiteContainer>
         </section>
 
-        <section
-            v-for="(section, idx) in featureSections"
+        <template
+            v-for="(section, idx) in pageSections"
             :key="section.slug"
-            :class="[
-                'py-20 lg:py-28',
-                idx % 2 === 0
-                    ? 'bg-white dark:bg-neutral-950'
-                    : 'bg-neutral-50 dark:bg-neutral-900',
-            ]"
         >
+        <!-- Band header for the six provider-backed sections below — lands
+             immediately before the first one ('templates'). Copies the
+             features.supporting band's own eyebrow/headline/subheadline
+             shorthand so the heading compiles to an h2 (SiteSection's
+             default headlineAs), not a second h1. -->
+        <SiteSection
+            v-if="idx === backendBandIndex"
+            :eyebrow="t('features.backend.eyebrow')"
+            :headline="t('features.backend.headline')"
+            :subheadline="t('features.backend.subheadline')"
+            bg="gray"
+        />
+        <section :class="['py-20 lg:py-28', section.bgClass]">
             <div
                 class="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-7xl lg:px-10"
             >
@@ -812,6 +1161,7 @@ const supportingItemKeys = [
                 </RevealOnScroll>
             </div>
         </section>
+        </template>
 
         <SiteSection
             :eyebrow="t('features.supporting.eyebrow')"

@@ -53,6 +53,35 @@ export default {
                 description: 'Generated per-recipient unsubscribe link',
             },
         },
+        user: {
+            you: 'You',
+        },
+        demo: {
+            templateName: 'Welcome email',
+            eyebrow: 'Wired to a backend',
+            description:
+                'Some of what you see here — saving, version history, comments, saved blocks, test sends and media — runs on a backend you implement. This demo uses your browser’s session storage, so nothing leaves the page.',
+            docsLink: 'How the providers work',
+            reset: 'Reset demo',
+            resetting: 'Resetting…',
+        },
+        mjml: {
+            show: 'Show the MJML',
+            hide: 'Hide the MJML',
+            heading: 'Rendered output',
+            note:
+                'Rendering to MJML needs no provider at all — it runs in the browser. A render provider is what you add for HTML output, or to move the conversion to your backend.',
+            error: 'Could not render the template just now.',
+        },
+        providerError: {
+            dismiss: 'Dismiss',
+        },
+        seed: {
+            reviewerName: 'Sam Okafor',
+            threadBody:
+                'This button is doing the work of the whole email — can it be more direct?',
+            replyBody: 'Agreed. Something imperative, and give it the brand colour.',
+        },
     },
     footer: {
         groups: {
@@ -163,6 +192,9 @@ export default {
                         'Display conditions for dynamic content',
                         'Pluggable media library — bring your own storage (S3, Cloudinary, your CMS)',
                         'Saved blocks — users save block groups and reuse them, backed by your storage',
+                        'Saving and loading against your own storage — autosave, save status, Cmd/Ctrl+S',
+                        'Version history — browse, preview and restore, backed by your storage',
+                        'Threaded review comments anchored to blocks, on your storage and identities',
                         'Test sends from the editor, delivered by your own ESP and your domain',
                         'Previews resolved by your backend — real data, logic branches evaluated',
                         'Full theming via design tokens, dark mode included',
@@ -175,7 +207,6 @@ export default {
                     cloud: [
                         'AI rewrite, AI chat, MCP integration',
                         'Real-time collaboration with block-level locking',
-                        'Snapshots and version history',
                         'Multi-tenancy and API access',
                     ],
                 },
@@ -264,6 +295,64 @@ export default {
             audiencePicker: 'Audience picker',
             yourEndpoint: 'Your endpoint',
             restrictedRecipients: 'Restricted recipients',
+            yourApi: 'Your API',
+            readOnly: 'Read-only',
+            composedRestore: 'No atomic restore',
+        },
+        backend: {
+            eyebrow: 'Connect your backend',
+            headline: 'Seven keys. The same shape. Absent until you pass one.',
+            subheadline:
+                'Saving, version history, comments, saved blocks, test sends, media and rendering are each one config key holding methods you implement. Omit a key and the feature is gone — not disabled, and its UI is never downloaded. Pass false instead of a method and the editor hides that control rather than greying it out.',
+        },
+        templates: {
+            eyebrow: 'Persistence',
+            title: 'Saving and loading, against your own storage',
+            description:
+                'Give the editor somewhere to save and it grows the chrome that goes with it: an inline-editable name, a save button, a status indicator, Cmd/Ctrl+S, optional autosave, and a warning before the tab closes with unsaved work.',
+            outcome: 'The whole save lifecycle, with your API as the only storage.',
+            features: [
+                'Three methods are the entire integration — load, create, save',
+                'Debounced autosave that pauses during undo, so a redo never races a write',
+                'The template id is yours — a database key, a slug, a document id',
+                'That id is the join key: version history and comments attach to it',
+                'onSaved carries the trigger — manual, autosave, rename, restore or api',
+                'A failed save leaves editor state untouched; nothing is marked saved that wasn’t',
+                'Omit the key and persist from onChange yourself instead',
+            ],
+            docsLabel: 'Saving & loading reference',
+        },
+        versionHistory: {
+            eyebrow: 'History',
+            title: 'Browse, preview and restore past versions',
+            description:
+                'A history control in the header steps back through past states, previews one on the canvas with its own banner, and restores it behind a confirmation. Four methods against your own storage.',
+            outcome: 'Undo that outlives the session, without building the UI for it.',
+            features: [
+                'Four-method provider — list, get, create, restore',
+                'Content on a listed version is a per-entry hint: hydrate the recent ones, make the rest a round-trip',
+                'No atomic restore endpoint? Compose it from get plus save',
+                'The confirmation before a restore discards unsaved work is the editor’s job, not yours',
+                'Automatic versions belong to whoever implements save — the side that knows what storage costs',
+                'Pass create: false and the control disappears rather than greying out',
+            ],
+            docsLabel: 'Version-history reference',
+        },
+        comments: {
+            eyebrow: 'Review',
+            title: 'Threaded review, anchored to blocks',
+            description:
+                'A review panel with threads and replies, a count badge on every commented block, and resolve/reopen. Five methods, plus a top-level user — because without an author the feature reports itself unavailable rather than writing an anonymous comment.',
+            outcome: 'Stakeholder review inside the editor, on your storage and your identities.',
+            features: [
+                'Five-method provider — list, create, update, delete, setResolved',
+                'user.id decides what a session may edit or delete',
+                'setResolved takes the target state, not a toggle, so two clicks can’t invert it',
+                'Comments anchor to a block, or to the template as a whole',
+                'An optional subscribe carries a realtime transport if you have one — and everything works without it',
+                'Pass create: false for a read-only review pass',
+            ],
+            docsLabel: 'Comments reference',
         },
         customBlocks: {
             eyebrow: 'Extensibility',
@@ -470,6 +559,22 @@ export default {
             ],
             docsLabel: 'Test-email reference',
         },
+        media: {
+            eyebrow: 'Storage',
+            title: 'A media library, in your own storage',
+            description:
+                'The editor owns the picker — browse on image fields, video thumbnails and custom-block fields, drag-and-drop upload, crop, folders, search. You own storage. `list` is the only required method; the other nine are yours to enable or withhold, one at a time.',
+            outcome: 'A media library your users browse and fill, entirely on your own storage.',
+            features: [
+                'Ten-member provider — `list` is the only one that can’t be `false`',
+                'Browse triggers on image fields, video thumbnails and custom-block image fields',
+                'Dropping a file calls `create` directly — the modal never opens, and its listing is untouched',
+                'Pass `false` on any mutation and the editor hides that control instead of disabling it',
+                'Folders come back as a flat list — the UI trees them via `parentId`',
+                'Bundled browser-local provider for demos — one line, no backend',
+            ],
+            docsLabel: 'Media reference',
+        },
         mjmlOutput: {
             eyebrow: 'Output',
             title: 'JSON in, MJML out',
@@ -482,6 +587,7 @@ export default {
                 'Custom blocks resolve through a callback you supply',
                 'Nothing calls home — no render API, no per-render pricing',
                 'The renderer is MIT-licensed and installed separately',
+                'No `render` key needed for `toMjml()` — add one for `toHtml()`, or to move the conversion to your backend',
             ],
             docsLabel: 'How rendering works',
         },
@@ -667,7 +773,7 @@ export default {
                 them: {
                     operated: 'You would rather someone else operated the editor, with hosting and uptime handled for you.',
                     storage: 'You want image storage bundled in. Topol hosts it for you; Templatical has none and expects you to supply it.',
-                    comments: 'You want commenting on templates inside the editor. Topol includes it from the Business plan ($300/mo) up; our Cloud tier plans it but has not shipped.',
+                    comments: 'You want commenting on templates inside the editor with nothing to build. Topol includes it from the Business plan ($300/mo) up; Templatical ships comments as an open-source provider you implement against your own storage and identities — more setup than a plan feature you switch on.',
                     templates: 'You want a ready-made template library your users can start from on day one.',
                     support: 'You want a commercial vendor behind the editor, with email support during business hours, rather than an open-source project.',
                 },
@@ -1473,7 +1579,7 @@ export default {
             },
             paid: {
                 question: 'Is there a paid version, and is it required?',
-                answer: 'No, paid is not required. The open-source SDK is fully standalone — every editor feature (custom blocks, merge tags, display conditions, theming, MJML output) is included and free to self-host. Templatical Cloud is a separate, optional managed subscription that adds infrastructure-dependent capabilities — real-time collaboration, AI rewrite and chat, snapshots, comments, hosted media, multi-tenancy, API access. Those rely on backend services we run, so they ship as a paid managed tier rather than self-hostable code.',
+                answer: 'No, paid is not required. The open-source SDK is fully standalone — every editor feature (custom blocks, merge tags, display conditions, theming, MJML output) is included and free to self-host. Templatical Cloud is a separate, optional managed subscription that adds infrastructure-dependent capabilities — real-time collaboration, AI rewrite and chat, hosted media, multi-tenancy, API access. Those rely on backend services we run, so they ship as a paid managed tier rather than self-hostable code.',
             },
         },
         stillAsking: {

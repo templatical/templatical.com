@@ -2,9 +2,13 @@
 import { onClickOutside, onKeyStroke, useIntersectionObserver, useMediaQuery } from '@vueuse/core';
 import { computed, onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ArrowUpRight, Info, X } from '@lucide/vue';
+import { ArrowUpRight, Info, TriangleAlert, X } from '@lucide/vue';
+import type { TemplateContent } from '@templatical/types';
 import { useDarkMode } from '@/composables/useDarkMode';
+import { createDemoBackend } from '@/lib/demo-backend';
 import { URLS, localizedUrl } from '@/lib/urls';
+import HeroProviderLegend from './HeroProviderLegend.vue';
+import HeroMjmlPanel from './HeroMjmlPanel.vue';
 
 type MergeTag = { label: string; value: string };
 
@@ -21,6 +25,13 @@ const heroContent = {
         linkUnderline: true,
         fontFamily: 'Helvetica, Arial, sans-serif',
         preheaderText: 'Your workspace is ready — here is what comes next.',
+        // Required by `TemplateSettings` (BCP-47, drives the rendered
+        // `<html lang>`) and read unconditionally by `renderToMjml()`. Fixed
+        // to English rather than bound to the site's `locale` because the
+        // block copy below is hardcoded English regardless of UI language —
+        // tagging it `lang="de"` on the German site would mispronounce
+        // correct content for screen readers, not fix anything.
+        locale: 'en',
     },
     blocks: [
         {
@@ -108,10 +119,43 @@ const { isDark } = useDarkMode();
 const { t, locale } = useI18n();
 const isDesktop = useMediaQuery('(min-width: 1024px)');
 
+const demoBackend = createDemoBackend(heroContent as unknown as TemplateContent, {
+    visitorName: t('heroEditor.user.you'),
+    reviewerName: t('heroEditor.seed.reviewerName'),
+    threadBody: t('heroEditor.seed.threadBody'),
+    replyBody: t('heroEditor.seed.replyBody'),
+});
+
 const root = useTemplateRef<HTMLDivElement>('root');
 const container = useTemplateRef<HTMLDivElement>('container');
 const modalPanel = useTemplateRef<HTMLDivElement>('modalPanel');
 const status = ref<'idle' | 'loading' | 'ready' | 'error'>('idle');
+
+// No provider (media, comments, saved blocks, ...) has its own toast — the
+// SDK's media library, for example, forwards a rejected create() straight to
+// this callback with nothing rendered in its own UI (unlike its replace/
+// import-from-url flows, which do carry an inline error). Without wiring
+// onError here, a rejection like the 200 KB upload guard in
+// src/lib/demo-backend/media.ts throws a well-formed message that never
+// reaches the visitor — the promise just rejects silently. This is the one
+// place across every provider that catches whichever of them failed.
+const providerErrorMessage = ref<string | null>(null);
+let providerErrorTimeout: ReturnType<typeof setTimeout> | null = null;
+
+function showProviderError(error: Error) {
+    console.warn('Templatical editor reported a provider error', error);
+    providerErrorMessage.value = error.message;
+    if (providerErrorTimeout) clearTimeout(providerErrorTimeout);
+    providerErrorTimeout = setTimeout(() => {
+        providerErrorMessage.value = null;
+    }, 6000);
+}
+
+function dismissProviderError() {
+    if (providerErrorTimeout) clearTimeout(providerErrorTimeout);
+    providerErrorTimeout = null;
+    providerErrorMessage.value = null;
+}
 
 const DEMO_TAG_KEYS = ['firstName', 'lastName', 'email', 'company', 'unsubscribeUrl'] as const;
 const DEMO_TAG_VALUES: Record<(typeof DEMO_TAG_KEYS)[number], string> = {
@@ -167,6 +211,9 @@ onKeyStroke('Escape', () => {
 type EditorInstance = {
     unmount(): void;
     setTheme?(theme: 'light' | 'dark' | 'auto'): void;
+    toMjml(): Promise<string>;
+    load(id: string): Promise<unknown>;
+    create(input?: { name?: string; content?: unknown }): Promise<unknown>;
 };
 let editorInstance: EditorInstance | null = null;
 let cssLink: HTMLLinkElement | null = null;
@@ -191,8 +238,16 @@ async function mountEditor() {
             import(/* @vite-ignore */ EDITOR_ESM_URL),
             timeout,
         ]);
-        if (!container.value) return;
-        editorInstance = await Promise.race([
+        if (!container.value) {
+            status.value = 'idle';
+            return;
+        }
+        // Typed explicitly: `mod` is untyped CDN output, so `mod.init(...)` is
+        // `any`, and assigning an `any`-typed expression to `editorInstance`
+        // (declared `EditorInstance | null`) does not narrow it — every read
+        // below would stay flagged as possibly null. A locally-typed const
+        // keeps the null check honest without a non-null assertion.
+        const instance: EditorInstance = await Promise.race([
             mod.init({
                 container: container.value,
                 uiTheme: isDark.value ? 'dark' : 'light',
@@ -203,14 +258,76 @@ async function mountEditor() {
                     tags: demoTags.value.map(({ label, value }) => ({ label, value })),
                     onRequest: requestMergeTag,
                 },
+                onError: showProviderError,
+                ...demoBackend.config,
             }),
             timeout,
         ]);
+        editorInstance = instance;
+        // `load`/`create` below run outside the timeout race above. That is
+        // safe only because the demo backend's load()/create() are
+        // synchronous session-storage operations wrapped in `async` — a
+        // future async storage dependency here would not be bounded by
+        // LOAD_TIMEOUT_MS.
+        // Load-bearing, not incidental: the version-history control and the
+        // comments panel do not render until a template id is attached, and
+        // nothing errors if this is skipped — the two headline features are
+        // simply invisible. Reporting `ready` first would also lift the
+        // skeleton off a header about to grow two more controls.
+        if (demoBackend.hasStoredTemplate()) {
+            await instance.load(demoBackend.templateId);
+        } else {
+            await instance.create({
+                name: t('heroEditor.demo.templateName'),
+                content: heroContent,
+            });
+        }
         status.value = 'ready';
     } catch (e) {
         console.warn('Templatical editor failed to load', e);
         status.value = 'error';
     }
+}
+
+async function remount() {
+    // `mountEditor()`'s only re-entrancy guard is `status.value !== 'idle'`,
+    // which this function bypasses by design (it forces status back to
+    // `idle` so a fresh mount is allowed). Without this guard, a second call
+    // landing while a remount is already in flight would stomp `loading`
+    // back to `idle` mid-mount, letting `mountEditor()` pass its own guard
+    // and run again — two concurrent mounts against the same container,
+    // where whichever resolves last silently wins `editorInstance` and
+    // orphans the other. This holds regardless of how callers wire
+    // button-disabled state.
+    if (status.value === 'loading') return;
+    try {
+        editorInstance?.unmount();
+    } catch {
+        // ignore
+    }
+    editorInstance = null;
+    status.value = 'idle';
+    dismissProviderError();
+    demoBackend.reset();
+    await mountEditor();
+}
+
+const resetting = ref(false);
+const mjmlOpen = ref(false);
+
+async function handleReset() {
+    resetting.value = true;
+    mjmlOpen.value = false;
+    try {
+        await remount();
+    } finally {
+        resetting.value = false;
+    }
+}
+
+function renderMjml(): Promise<string> {
+    if (!editorInstance) return Promise.reject(new Error('Editor is not mounted'));
+    return editorInstance.toMjml();
 }
 
 watch(isDark, (dark) => {
@@ -235,6 +352,7 @@ onBeforeUnmount(() => {
         // ignore
     }
     cssLink?.remove();
+    if (providerErrorTimeout) clearTimeout(providerErrorTimeout);
 });
 </script>
 
@@ -320,6 +438,32 @@ onBeforeUnmount(() => {
                         </i18n-t>
                     </p>
                 </div>
+                <Transition
+                    enter-active-class="motion-safe:transition motion-safe:duration-150 motion-safe:ease-out"
+                    leave-active-class="motion-safe:transition motion-safe:duration-100 motion-safe:ease-in"
+                    enter-from-class="opacity-0 translate-y-1"
+                    leave-to-class="opacity-0"
+                >
+                    <div
+                        v-if="status === 'ready' && providerErrorMessage"
+                        role="alert"
+                        class="absolute inset-x-3 bottom-3 z-10 flex items-start gap-2 rounded-lg border border-destructive/30 bg-white px-3 py-2.5 text-xs text-neutral-700 shadow-lg dark:bg-neutral-900 dark:text-neutral-300"
+                    >
+                        <TriangleAlert
+                            class="mt-0.5 size-3.5 shrink-0 text-destructive"
+                            aria-hidden="true"
+                        />
+                        <p class="min-w-0 flex-1 break-words">{{ providerErrorMessage }}</p>
+                        <button
+                            type="button"
+                            class="-m-1 shrink-0 cursor-pointer rounded p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                            :aria-label="t('heroEditor.providerError.dismiss')"
+                            @click="dismissProviderError"
+                        >
+                            <X class="size-3.5" aria-hidden="true" />
+                        </button>
+                    </div>
+                </Transition>
             </template>
             <img
                 v-else
@@ -332,6 +476,15 @@ onBeforeUnmount(() => {
                 class="block h-auto w-full"
             />
         </div>
+
+        <HeroProviderLegend
+            v-if="isDesktop && status === 'ready'"
+            :resetting="resetting"
+            :mjml-open="mjmlOpen"
+            @reset="handleReset"
+            @toggle-mjml="mjmlOpen = !mjmlOpen"
+        />
+        <HeroMjmlPanel :open="isDesktop && mjmlOpen" :render="renderMjml" />
 
         <Teleport to="body">
             <Transition
