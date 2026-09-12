@@ -15,6 +15,7 @@ import { tagTemplateAsHtml } from '@/composables/useShikiHighlight';
 import CodeBlock from '@/components/CodeBlock.vue';
 import VariantTabs from '@/components/VariantTabs.vue';
 import { URLS } from '@/lib/urls';
+import { IMPORTERS } from '@/lib/importers';
 
 const { t, tm, locale, fallbackLocale } = useI18n();
 
@@ -1006,6 +1007,12 @@ const supportingItemKeys = [
     'responsivePreview',
 ] as const;
 
+// Names only, no per-importer links: /importers owns the detail, and this page would
+// otherwise be a second list to keep in step. The run still names all eight so someone
+// scanning for their own editor gets an answer without a click. Both come from the
+// shared list, so a ninth importer needs no edit here.
+const importerNames = IMPORTERS.map((importer) => importer.name);
+
 </script>
 
 <template>
@@ -1045,7 +1052,7 @@ const supportingItemKeys = [
             v-for="(section, idx) in pageSections"
             :key="section.slug"
         >
-        <!-- Band header for the six provider-backed sections below — lands
+        <!-- Band header for the provider-backed sections below — lands
              immediately before the first one ('templates'). Copies the
              features.supporting band's own eyebrow/headline/subheadline
              shorthand so the heading compiles to an h2 (SiteSection's
@@ -1219,31 +1226,26 @@ const supportingItemKeys = [
                     {{ feature }}
                 </li>
             </ul>
-            <div class="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-                <a
-                    v-for="source in [
-                        {
-                            labelKey: 'features.migration.guideCtaBeefree',
-                            href: docsUrl('/guide/migration-from-beefree'),
-                        },
-                        {
-                            labelKey: 'features.migration.guideCtaUnlayer',
-                            href: docsUrl('/guide/migration-from-unlayer'),
-                        },
-                        {
-                            labelKey: 'features.migration.guideCtaHtml',
-                            href: docsUrl('/guide/migration-from-html'),
-                        },
-                    ]"
-                    :key="source.href"
-                    :href="source.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
+            <div class="mt-8 flex max-w-2xl flex-col gap-5">
+                <p
+                    class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm/6 text-neutral-700 dark:text-neutral-300"
+                >
+                    <template v-for="(name, index) in importerNames" :key="name">
+                        <span
+                            v-if="index > 0"
+                            class="text-neutral-300 select-none dark:text-neutral-700"
+                            aria-hidden="true"
+                        >·</span>
+                        <span>{{ name }}</span>
+                    </template>
+                </p>
+                <router-link
+                    to="/importers"
                     class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    {{ t(source.labelKey) }}
+                    {{ t('features.migration.cta') }}
                     <ArrowRight class="size-4" aria-hidden="true" />
-                </a>
+                </router-link>
             </div>
         </SiteSection>
 
@@ -1264,22 +1266,12 @@ const supportingItemKeys = [
                                 key: 'install',
                                 links: [{ ctaKey: 'cta', href: URLS.docs }],
                             },
+                            // Points at /importers rather than repeating a subset of
+                            // the converters — that duplicate list is what went stale
+                            // when five new ones shipped.
                             {
                                 key: 'migrate',
-                                links: [
-                                    {
-                                        ctaKey: 'ctaBeefree',
-                                        href: docsUrl('/guide/migration-from-beefree'),
-                                    },
-                                    {
-                                        ctaKey: 'ctaUnlayer',
-                                        href: docsUrl('/guide/migration-from-unlayer'),
-                                    },
-                                    {
-                                        ctaKey: 'ctaHtml',
-                                        href: docsUrl('/guide/migration-from-html'),
-                                    },
-                                ],
+                                links: [{ ctaKey: 'cta', href: '/importers' }],
                             },
                         ]"
                         :key="path.key"
@@ -1294,17 +1286,28 @@ const supportingItemKeys = [
                             {{ t(`features.cta.${path.key}.description`) }}
                         </p>
                         <div class="mt-auto flex flex-wrap gap-x-6 gap-y-2">
-                            <a
+                            <!-- One card links out to the docs, the other to an
+                                 internal route, so the element has to switch: an
+                                 in-app path must go through router-link rather than
+                                 a full page load. -->
+                            <component
+                                :is="link.href.startsWith('/') ? 'router-link' : 'a'"
                                 v-for="link in path.links"
                                 :key="link.href"
-                                :href="link.href"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                v-bind="
+                                    link.href.startsWith('/')
+                                        ? { to: link.href }
+                                        : {
+                                              href: link.href,
+                                              target: '_blank',
+                                              rel: 'noopener noreferrer',
+                                          }
+                                "
                                 class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 {{ t(`features.cta.${path.key}.${link.ctaKey}`) }}
                                 <ChevronRight class="size-4" />
-                            </a>
+                            </component>
                         </div>
                     </div>
                 </div>

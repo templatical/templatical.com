@@ -22,6 +22,11 @@ export const routes = [
         meta: { transparentHero: true },
     },
     {
+        path: '/importers',
+        component: () => import('./pages/Importers.vue'),
+        meta: { transparentHero: true },
+    },
+    {
         path: '/faq',
         component: () => import('./pages/Faq.vue'),
         meta: { transparentHero: true },

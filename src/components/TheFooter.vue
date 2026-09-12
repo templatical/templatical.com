@@ -29,6 +29,7 @@ const groups = computed<FooterGroup[]>(() => [
         heading: t('footer.groups.product'),
         links: [
             { label: t('footer.features'), href: '/features' },
+            { label: t('footer.importers'), href: '/importers' },
             { label: t('footer.playground'), href: URLS.playground, external: true },
         ],
     },

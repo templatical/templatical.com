@@ -43,7 +43,10 @@ const classes = computed(() =>
 </script>
 
 <template>
-    <section :class="classes">
+    <!-- `inheritAttrs: false` drops everything but `class`, so `id` is forwarded
+         explicitly — a section that can be linked to needs the anchor on itself, not
+         on a wrapper. Callers that pass none get no attribute. -->
+    <section :id="attrs.id as string | undefined" :class="classes">
         <SiteContainer class="flex flex-col gap-10 sm:gap-16">
             <div v-if="headline" class="flex max-w-2xl flex-col gap-6">
                 <div class="flex flex-col gap-2">

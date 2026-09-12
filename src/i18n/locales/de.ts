@@ -14,6 +14,7 @@ const de: MessageSchema = {
     },
     nav: {
         features: 'Funktionen',
+        importers: 'Importer',
         faq: 'FAQ',
         changelog: 'Changelog',
         docs: 'Dokumentation',
@@ -92,6 +93,7 @@ const de: MessageSchema = {
             compare: 'Vergleich',
         },
         features: 'Funktionen',
+        importers: 'Importer',
         faq: 'FAQ',
         changelog: 'Changelog',
         comparisonBeefree: 'vs. Beefree SDK',
@@ -253,11 +255,8 @@ const de: MessageSchema = {
             ctaTertiary: 'Sponsor',
         },
         migration: {
-            text: 'Schon auf einem gehosteten E-Mail-Builder oder mit rohem HTML unterwegs? Kostenlose Importer für Ihre bestehenden Vorlagen.',
-            sourcesLabel: 'Migrationsanleitungen',
-            fromBeefree: 'Von BeeFree',
-            fromUnlayer: 'Von Unlayer',
-            fromHtml: 'Von HTML',
+            text: 'Schon auf einem gehosteten E-Mail-Builder oder mit rohem HTML unterwegs? {count} kostenlose, MIT-lizenzierte Importer für Ihre bestehenden Vorlagen.',
+            cta: 'Alle Importer ansehen',
         },
         close: {
             headline: 'Diese Woche einen E-Mail-Editor ausliefern',
@@ -303,9 +302,9 @@ const de: MessageSchema = {
         },
         backend: {
             eyebrow: 'Ihr Backend anbinden',
-            headline: 'Sieben Schlüssel. Dieselbe Form. Fehlend, bis Sie einen übergeben.',
+            headline: 'Ein Schlüssel je Fähigkeit. Dieselbe Form. Fehlend, bis Sie einen übergeben.',
             subheadline:
-                'Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien und Rendering sind jeweils ein Konfigurationsschlüssel mit Methoden, die Sie implementieren. Lassen Sie einen Schlüssel weg, und das Feature ist verschwunden — nicht deaktiviert, und seine UI wird nie geladen. Übergeben Sie false statt einer Methode, und der Editor blendet dieses Bedienelement aus, statt es nur auszugrauen.',
+                'Jede Backend-Fähigkeit ist ein Konfigurationsschlüssel mit Methoden, die Sie implementieren. Lassen Sie einen Schlüssel weg, und das Feature ist verschwunden — nicht deaktiviert, und seine UI wird nie geladen. Übergeben Sie false statt einer Methode, und der Editor blendet dieses Bedienelement aus, statt es nur auszugrauen.',
         },
         templates: {
             eyebrow: 'Persistenz',
@@ -644,16 +643,14 @@ const de: MessageSchema = {
             eyebrow: 'Schmerzlose Migration',
             title: 'Schon in einem anderen Editor? Bringen Sie Ihre Vorlagen mit.',
             description:
-                'Importieren Sie bestehende Vorlagen aus großen Hosted-Editoren — oder jede HTML-E-Mail, die Sie schon haben. Kostenlose, quelloffene Migrations-Tools, kein manuelles Nachbauen, kein Vendor-Lock-in.',
+                'Ein Importer je Quellformat — Hosted-Editoren plus rohes HTML und MJML. Kostenlos, quelloffen, MIT, kein manuelles Nachbauen und kein Vendor-Lock-in.',
             features: [
-                'Bestehende JSON-Vorlagen direkt importieren',
-                'Rohes HTML konvertieren — MJML, Mailchimp, SendGrid, handgeschrieben',
+                'Gespeicherte Editor-Dokumente direkt importieren, ohne Zwischenexport',
+                'Rohes HTML konvertieren — Mailchimp, SendGrid, handgeschrieben',
                 'Automatisches Block-Mapping und Stil-Erhalt',
-                'Kostenlose und Open-Source Migrations-Tools',
+                'Jeder Konverter meldet, was manuell geprüft werden sollte',
             ],
-            guideCtaBeefree: 'Von BeeFree migrieren',
-            guideCtaUnlayer: 'Von Unlayer migrieren',
-            guideCtaHtml: 'Von HTML migrieren',
+            cta: 'Alle Importer ansehen',
         },
         cta: {
             eyebrow: 'Loslegen',
@@ -668,10 +665,79 @@ const de: MessageSchema = {
                 title: 'Vorlagen migrieren',
                 description:
                     'Schon in einem Hosted-Editor — oder mit einem Ordner voller HTML-E-Mails? Importieren Sie sie mit automatischem Block-Mapping, ohne manuelles Nachbauen.',
-                ctaBeefree: 'Von BeeFree',
-                ctaUnlayer: 'Von Unlayer',
-                ctaHtml: 'Von HTML',
+                cta: 'Importer ansehen',
             },
+        },
+    },
+    importers: {
+        meta: {
+            title: 'Vorlagen-Importer — Templatical',
+            description:
+                'Kostenlose, MIT-lizenzierte Konverter von BeeFree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, rohem HTML und MJML nach Templatical-JSON.',
+        },
+        hero: {
+            eyebrow: 'Migration',
+            headline: 'Bringen Sie Ihre Vorlagen mit.',
+            subheadline:
+                'Kostenlose, MIT-lizenzierte Konverter — Hosted-Editoren plus rohes HTML und MJML. Jeder liest, was Ihr aktuelles Tool ohnehin gespeichert hat, und liefert Templatical-JSON samt Bericht über alles, was manuell geprüft werden sollte.',
+        },
+        shared: {
+            licence: {
+                title: 'MIT-lizenziert',
+                description:
+                    'Jeder Importer ist MIT-lizenziert. Nutzen Sie ihn im Build-Schritt, im Backend oder in einem einmaligen Migrationsskript.',
+            },
+            scoped: {
+                title: 'Ein Paket je Quelle',
+                description:
+                    'Installieren Sie nur den Konverter, den Sie brauchen. Keiner zieht den Editor mit.',
+            },
+            runtime: {
+                title: 'Browser oder Server',
+                description:
+                    'Kein DOM und keine Node-spezifischen APIs. Führen Sie einen Konverter im Migrationsskript aus, hinter einem Endpunkt oder im Browser, wenn ein Nutzer seinen Export hochlädt.',
+            },
+            report: {
+                title: 'Ein Bericht, nicht nur Ausgabe',
+                description:
+                    'Jeder liefert Ihre Vorlage plus einen Bericht darüber, was sauber konvertiert wurde, was angenähert wurde und was auf HTML zurückgefallen ist.',
+            },
+        },
+        groups: {
+            hosted: {
+                title: 'Aus einem Hosted-Editor',
+                description:
+                    'Diese lesen das Dokument, das Ihr aktueller Editor ohnehin speichert — kein Zwischenschritt zum Nachbauen.',
+            },
+            markup: {
+                title: 'Aus Markup',
+                description:
+                    'Sie haben die E-Mail bereits als Quelltext? Diese nehmen ihn direkt.',
+            },
+        },
+        guideCta: 'Migrationsanleitung',
+        copyLabel: 'Kopieren',
+        copiedLabel: 'Kopiert',
+        copyAriaLabel: 'Installationsbefehl für den {name}-Importer kopieren',
+        playground: {
+            eyebrow: 'Vor der Installation',
+            headline: 'Sie haben einen Export zur Hand?',
+            description:
+                'Der Playground führt alle {count} Konverter direkt im Browser aus, mit einem Tab je Quelle. Legen Sie Ihre Datei hinein und sehen Sie das Ergebnis, bevor Sie irgendwo ein Paket hinzufügen.',
+            cta: 'Playground öffnen',
+        },
+        missing: {
+            eyebrow: 'Etwas fehlt',
+            headline: 'Sie nutzen einen Editor, der hier fehlt?',
+            description:
+                'Eröffnen Sie eine Diskussion mit einem Beispiel-Export. Die Konverter sind MIT-lizenziert und liegen im SDK-Repository — einen weiteren beizusteuern ist ein Beitrag wie jeder andere.',
+            cta: 'Diskussion starten',
+        },
+        footnote: {
+            freshness:
+                'Die Konverter folgen dem SDK-Release, mit dem sie ausgeliefert werden. Quell-Editoren ändern ihre Exportformate mit der Zeit — wenn einer davon nicht mehr liest, was Ihr Editor erzeugt, eröffnen Sie ein Issue und wir korrigieren den Konverter.',
+            trademark:
+                '{products} sind Marken ihrer jeweiligen Inhaber. Templatical steht mit keinem von ihnen in Verbindung und wird von keinem unterstützt oder gesponsert — ihre Namen dienen hier allein dazu, das Quellformat zu benennen, das der jeweilige Konverter liest.',
         },
     },
     alternatives: {
@@ -785,6 +851,9 @@ const de: MessageSchema = {
                 body: 'Der Playground startet den echten Editor ohne Anmeldung. Wenn er nicht zu Ihrem Produkt passt, ist der Rest ohnehin belanglos.',
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
+            },
+            migration: {
+                label: 'Zur Topol-Migrationsanleitung',
             },
             footnote: {
                 verified:
@@ -1035,6 +1104,9 @@ const de: MessageSchema = {
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
             },
+            migration: {
+                label: 'Zur Chamaileon-Migrationsanleitung',
+            },
             footnote: {
                 verified:
                     'Geprüft am 8. August 2026 gegen {\'@\'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
@@ -1152,6 +1224,9 @@ const de: MessageSchema = {
                 body: 'Der Playground startet den echten Editor ohne Anmeldung. Wenn er nicht zu Ihrem Produkt passt, ist der Rest ohnehin belanglos.',
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
+            },
+            migration: {
+                label: 'Zur Stripo-Migrationsanleitung',
             },
             footnote: {
                 verified:
@@ -1476,7 +1551,7 @@ const de: MessageSchema = {
                     importers: {
                         label: 'Migrations-Importer',
                         them: 'Nicht dokumentiert',
-                        us: 'Konverter für BeeFree, Unlayer und HTML, MIT',
+                        us: 'Acht MIT-Konverter, darunter einer für Easy-Email-Pro-Vorlagen',
                     },
                     isolation: {
                         label: 'Stil-Isolation',
@@ -1516,6 +1591,9 @@ const de: MessageSchema = {
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
             },
+            migration: {
+                label: 'Zur Easy-Email-Pro-Migrationsanleitung',
+            },
             footnote: {
                 verified:
                     'Geprüft am 7. August 2026 gegen easy-email-pro-core 1.59.9 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf easyemail.pro angegebenen Preise. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
@@ -1552,7 +1630,7 @@ const de: MessageSchema = {
             },
             packages: {
                 question: 'Welche Pakete sind MIT und welche FSL?',
-                answer: 'Sechs der neun Pakete sind heute reines MIT: Types, Renderer, Quality sowie der BeeFree-, Unlayer- und HTML-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
+                answer: 'Elf der vierzehn Pakete sind heute reines MIT: Types, Renderer, Quality sowie alle acht Migrations-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
             },
             branding: {
                 question: 'Muss ich „Powered by Templatical" anzeigen?',
@@ -1564,7 +1642,7 @@ const de: MessageSchema = {
             },
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
-                answer: 'Wir bieten kostenlose, MIT-lizenzierte Migrations-Tools für BeeFree, Unlayer, rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch. Migrationsanleitungen für jedes Quellformat finden Sie in der Dokumentation.',
+                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für jeden großen Hosted-Editor sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Importer-Seite listet auf, was jeder einzelne annimmt; die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
             },
             data: {
                 question: 'Wohin gehen meine Vorlagendaten?',

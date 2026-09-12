@@ -64,6 +64,22 @@ export const LOCALIZED_URLS = {
         en: 'https://docs.templatical.com/guide/migration-from-unlayer',
         de: 'https://docs.templatical.com/de/guide/migration-from-unlayer',
     },
+    stripoMigrationDocs: {
+        en: 'https://docs.templatical.com/guide/migration-from-stripo',
+        de: 'https://docs.templatical.com/de/guide/migration-from-stripo',
+    },
+    topolMigrationDocs: {
+        en: 'https://docs.templatical.com/guide/migration-from-topol',
+        de: 'https://docs.templatical.com/de/guide/migration-from-topol',
+    },
+    chamaileonMigrationDocs: {
+        en: 'https://docs.templatical.com/guide/migration-from-chamaileon',
+        de: 'https://docs.templatical.com/de/guide/migration-from-chamaileon',
+    },
+    easyEmailProMigrationDocs: {
+        en: 'https://docs.templatical.com/guide/migration-from-easy-email-pro',
+        de: 'https://docs.templatical.com/de/guide/migration-from-easy-email-pro',
+    },
     // Used by the GrapesJS page: a grapesjs-mjml setup already produces MJML, which is
     // the format Templatical works in natively — so the MJML guide is the real path.
     mjmlMigrationDocs: {

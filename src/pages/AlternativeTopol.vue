@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import AlternativePage from '@/components/AlternativePage.vue';
-import { URLS } from '@/lib/urls';
+import SiteButton from '@/components/SiteButton.vue';
+import { URLS, localizedUrl } from '@/lib/urls';
+import { ChevronRight } from '@lucide/vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
 
 const ROW_KEYS = [
     'pricing',
@@ -27,7 +32,6 @@ const US_KEYS = ['cost', 'domains', 'ownership', 'output', 'source'] as const;
 // Keep this the same length as US_KEYS — see the note in AlternativeBeefree.vue.
 const THEM_KEYS = ['operated', 'storage', 'comments', 'templates', 'support'] as const;
 
-// No migration slot: there is no `@templatical/import-topol`.
 const SOURCES = [
     { label: 'topol.io/tariff-plugin', href: URLS.topolPluginPricing },
     { label: 'topol.io/plugin', href: URLS.topolPlugin },
@@ -42,5 +46,16 @@ const SOURCES = [
         :us-keys="US_KEYS"
         :them-keys="THEM_KEYS"
         :sources="SOURCES"
-    />
+    >
+        <template #migration>
+            <SiteButton
+                :href="localizedUrl('topolMigrationDocs', locale)"
+                variant="plain"
+                external
+            >
+                {{ t('alternatives.topol.migration.label') }}
+                <ChevronRight class="size-5" />
+            </SiteButton>
+        </template>
+    </AlternativePage>
 </template>

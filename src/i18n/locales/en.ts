@@ -12,6 +12,7 @@ export default {
     },
     nav: {
         features: 'Features',
+        importers: 'Importers',
         faq: 'FAQ',
         changelog: 'Changelog',
         docs: 'Docs',
@@ -90,6 +91,7 @@ export default {
             compare: 'Compare',
         },
         features: 'Features',
+        importers: 'Importers',
         faq: 'FAQ',
         changelog: 'Changelog',
         comparisonBeefree: 'vs Beefree SDK',
@@ -251,11 +253,8 @@ export default {
             ctaTertiary: 'Sponsor',
         },
         migration: {
-            text: 'Already on a hosted email builder or shipping raw HTML? Free importers for your existing templates.',
-            sourcesLabel: 'Migration guides',
-            fromBeefree: 'From BeeFree',
-            fromUnlayer: 'From Unlayer',
-            fromHtml: 'From HTML',
+            text: 'Already on a hosted email builder or shipping raw HTML? {count} free, MIT-licensed importers for your existing templates.',
+            cta: 'See all importers',
         },
         close: {
             headline: 'Ship an email editor this week',
@@ -301,9 +300,9 @@ export default {
         },
         backend: {
             eyebrow: 'Connect your backend',
-            headline: 'Seven keys. The same shape. Absent until you pass one.',
+            headline: 'One key per capability. The same shape. Absent until you pass one.',
             subheadline:
-                'Saving, version history, comments, saved blocks, test sends, media and rendering are each one config key holding methods you implement. Omit a key and the feature is gone — not disabled, and its UI is never downloaded. Pass false instead of a method and the editor hides that control rather than greying it out.',
+                'Each backend capability is one config key holding methods you implement. Omit a key and the feature is gone — not disabled, and its UI is never downloaded. Pass false instead of a method and the editor hides that control rather than greying it out.',
         },
         templates: {
             eyebrow: 'Persistence',
@@ -642,16 +641,14 @@ export default {
             eyebrow: 'Painless migration',
             title: 'Already in another editor? Bring your templates with you.',
             description:
-                'Import existing templates from major hosted editors — or any HTML email you already have. Free, open-source migration tools, no manual rebuilding, no vendor lock-in.',
+                'One importer per source format — hosted editors plus raw HTML and MJML. Free, open-source, MIT, no manual rebuilding and no vendor lock-in.',
             features: [
-                'Import legacy JSON templates directly',
-                'Convert raw HTML emails — MJML, Mailchimp, SendGrid, hand-coded',
+                'Import saved editor documents directly, no re-export step',
+                'Convert raw HTML emails — Mailchimp, SendGrid, hand-coded',
                 'Automatic block mapping and style preservation',
-                'Free and open-source migration tools',
+                'Every converter reports what needs a manual look',
             ],
-            guideCtaBeefree: 'Migrate from BeeFree',
-            guideCtaUnlayer: 'Migrate from Unlayer',
-            guideCtaHtml: 'Migrate from HTML',
+            cta: 'See all importers',
         },
         cta: {
             eyebrow: 'Get started',
@@ -666,10 +663,79 @@ export default {
                 title: 'Migrate your templates',
                 description:
                     'Already in a hosted editor — or sitting on a folder of HTML emails? Import them with automatic block mapping, no manual rebuild.',
-                ctaBeefree: 'From BeeFree',
-                ctaUnlayer: 'From Unlayer',
-                ctaHtml: 'From HTML',
+                cta: 'Browse the importers',
             },
+        },
+    },
+    importers: {
+        meta: {
+            title: 'Template importers — Templatical',
+            description:
+                'Free, MIT-licensed converters from BeeFree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, raw HTML and MJML into Templatical JSON.',
+        },
+        hero: {
+            eyebrow: 'Migration',
+            headline: 'Bring your templates with you.',
+            subheadline:
+                'Free, MIT-licensed converters — hosted editors plus raw HTML and MJML. Each one reads what your current tool already saved and returns Templatical JSON, alongside a report of anything that needs a manual look.',
+        },
+        shared: {
+            licence: {
+                title: 'MIT licensed',
+                description:
+                    'Every importer is MIT. Use one in a build step, a backend, or a one-off migration script.',
+            },
+            scoped: {
+                title: 'One package per source',
+                description:
+                    'Install only the converter you need. None of them pulls in the editor.',
+            },
+            runtime: {
+                title: 'Browser or server',
+                description:
+                    'No DOM and no Node-only APIs. Run one in a migration script, behind an endpoint, or in the browser when a user uploads their export.',
+            },
+            report: {
+                title: 'A report, not just output',
+                description:
+                    'Each returns your template plus a report marking what converted cleanly, what was approximated, and what fell back to HTML.',
+            },
+        },
+        groups: {
+            hosted: {
+                title: 'From a hosted editor',
+                description:
+                    'These read the document your current editor already stores, so there is no rebuild step in between.',
+            },
+            markup: {
+                title: 'From markup',
+                description:
+                    'Already holding the email as source? These take it directly.',
+            },
+        },
+        guideCta: 'Migration guide',
+        copyLabel: 'Copy',
+        copiedLabel: 'Copied',
+        copyAriaLabel: 'Copy the install command for the {name} importer',
+        playground: {
+            eyebrow: 'Before you install',
+            headline: 'Got an export handy?',
+            description:
+                'The playground runs all {count} converters in your browser, with a tab per source. Drop your file in and see what comes out before adding a package to anything.',
+            cta: 'Open the playground',
+        },
+        missing: {
+            eyebrow: 'Something missing',
+            headline: 'Using an editor that is not here?',
+            description:
+                'Open a discussion with a sample export. The converters are MIT and live in the SDK repository — adding one is a contribution like any other.',
+            cta: 'Start a discussion',
+        },
+        footnote: {
+            freshness:
+                'Converters track the SDK release they ship with. Source editors change their export formats over time — if one of these no longer reads what your editor produces, open an issue and we will fix the converter.',
+            trademark:
+                '{products} are trademarks of their respective owners. Templatical is not affiliated with, endorsed by, or sponsored by any of them — their names appear here only to identify the source format each converter reads.',
         },
     },
     alternatives: {
@@ -783,6 +849,9 @@ export default {
                 body: 'The playground runs the real editor with no signup. If it does not fit your product, none of the rest matters.',
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
+            },
+            migration: {
+                label: 'Read the Topol migration guide',
             },
             footnote: {
                 verified:
@@ -1033,6 +1102,9 @@ export default {
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
             },
+            migration: {
+                label: 'Read the Chamaileon migration guide',
+            },
             footnote: {
                 verified:
                     'Verified on 8 August 2026 against {\'@\'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms.',
@@ -1150,6 +1222,9 @@ export default {
                 body: 'The playground runs the real editor with no signup. If it does not fit your product, none of the rest matters.',
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
+            },
+            migration: {
+                label: 'Read the Stripo migration guide',
             },
             footnote: {
                 verified:
@@ -1474,7 +1549,7 @@ export default {
                     importers: {
                         label: 'Migration importers',
                         them: 'Not documented',
-                        us: 'BeeFree, Unlayer and HTML converters, MIT',
+                        us: 'Eight MIT converters, including one for Easy Email Pro templates',
                     },
                     isolation: {
                         label: 'Style isolation',
@@ -1514,6 +1589,9 @@ export default {
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
             },
+            migration: {
+                label: 'Read the Easy Email Pro migration guide',
+            },
             footnote: {
                 verified:
                     'Verified on 7 August 2026 against easy-email-pro-core 1.59.9 as published on npm, and the pricing listed at easyemail.pro on that date. Pricing and features change — check their site for current terms.',
@@ -1550,7 +1628,7 @@ export default {
             },
             packages: {
                 question: 'Which packages are MIT vs FSL?',
-                answer: 'Six of the nine packages are pure MIT today: types, renderer, quality, and the BeeFree, Unlayer and HTML importers. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
+                answer: 'Eleven of the fourteen packages are pure MIT today: types, renderer, quality, and all eight migration importers. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you\'d build into a backend or codegen pipeline is fully permissive from day one.',
             },
             branding: {
                 question: 'Do I need to display "Powered by Templatical"?',
@@ -1562,7 +1640,7 @@ export default {
             },
             migrate: {
                 question: 'How do I migrate from another editor?',
-                answer: 'We provide free, MIT-licensed migration tools for BeeFree, Unlayer, raw HTML, and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically. See the migration guides in the docs for each source format.',
+                answer: 'We provide free, MIT-licensed converters for every major hosted editor, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The importers page lists what each one accepts, and the docs carry a migration guide per source format.',
             },
             data: {
                 question: 'Where does my template data go?',

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import AlternativePage from '@/components/AlternativePage.vue';
-import { URLS } from '@/lib/urls';
+import SiteButton from '@/components/SiteButton.vue';
+import { URLS, localizedUrl } from '@/lib/urls';
+import { ChevronRight } from '@lucide/vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
 
 const ROW_KEYS = [
     'pricing',
@@ -31,7 +36,6 @@ const US_KEYS = ['metering', 'mount', 'ownership', 'output', 'source'] as const;
 // Keep this the same length as US_KEYS — see the note in AlternativeBeefree.vue.
 const THEM_KEYS = ['modular', 'brand', 'gallery', 'operated', 'support'] as const;
 
-// No migration slot: there is no `@templatical/import-chamaileon`.
 const SOURCES = [
     { label: 'chamaileon.io/sdk', href: URLS.chamaileonSdk },
     { label: 'npm: @chamaileon-sdk/plugins', href: URLS.chamaileonNpm },
@@ -45,5 +49,16 @@ const SOURCES = [
         :us-keys="US_KEYS"
         :them-keys="THEM_KEYS"
         :sources="SOURCES"
-    />
+    >
+        <template #migration>
+            <SiteButton
+                :href="localizedUrl('chamaileonMigrationDocs', locale)"
+                variant="plain"
+                external
+            >
+                {{ t('alternatives.chamaileon.migration.label') }}
+                <ChevronRight class="size-5" />
+            </SiteButton>
+        </template>
+    </AlternativePage>
 </template>

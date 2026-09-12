@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import AlternativePage from '@/components/AlternativePage.vue';
-import { URLS } from '@/lib/urls';
+import SiteButton from '@/components/SiteButton.vue';
+import { URLS, localizedUrl } from '@/lib/urls';
+import { ChevronRight } from '@lucide/vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
 
 const ROW_KEYS = [
     'licensing',
@@ -24,9 +29,6 @@ const US_KEYS = ['framework', 'cost', 'runtime', 'source'] as const;
 // AMP, commercial support), so they stay true regardless of what we ship.
 const THEM_KEYS = ['react', 'blockStudio', 'amp', 'support'] as const;
 
-// No migration slot: there is no `@templatical/import-easy-email-pro` yet. Add one
-// here — and a `migration` key to both locales — once the converter and its docs page
-// ship, matching the BeeFree and Unlayer pages.
 const SOURCES = [
     { label: 'easyemail.pro', href: URLS.easyEmailPro },
     { label: 'docs.easyemail.pro', href: URLS.easyEmailProQuickStart },
@@ -41,5 +43,16 @@ const SOURCES = [
         :us-keys="US_KEYS"
         :them-keys="THEM_KEYS"
         :sources="SOURCES"
-    />
+    >
+        <template #migration>
+            <SiteButton
+                :href="localizedUrl('easyEmailProMigrationDocs', locale)"
+                variant="plain"
+                external
+            >
+                {{ t('alternatives.easyEmailPro.migration.label') }}
+                <ChevronRight class="size-5" />
+            </SiteButton>
+        </template>
+    </AlternativePage>
 </template>
