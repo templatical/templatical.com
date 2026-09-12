@@ -6,7 +6,10 @@ import { createTemplatesProvider } from '@/lib/demo-backend/templates';
 import { createVersionHistoryProvider } from '@/lib/demo-backend/versions';
 
 const content = (marker: string): TemplateContent =>
-    ({ settings: {}, blocks: [{ id: marker, type: 'paragraph', content: marker }] }) as unknown as TemplateContent;
+    ({
+        settings: {},
+        blocks: [{ id: marker, type: 'paragraph', content: marker }],
+    }) as unknown as TemplateContent;
 
 function setup() {
     const store = createStore(memoryStorage());

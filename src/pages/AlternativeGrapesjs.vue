@@ -65,11 +65,7 @@ const SOURCES = [
              already emits MJML, which Templatical works in natively. The MJML guide is
              the honest path rather than a converter we do not ship. -->
         <template #migration>
-            <SiteButton
-                :href="localizedUrl('mjmlMigrationDocs', locale)"
-                variant="plain"
-                external
-            >
+            <SiteButton :href="localizedUrl('mjmlMigrationDocs', locale)" variant="plain" external>
                 {{ t('alternatives.grapesjs.migration.label') }}
                 <ChevronRight class="size-5" />
             </SiteButton>

@@ -1,0 +1,12 @@
+# Build output and caches — generated, never hand-edited.
+dist
+coverage
+node_modules
+
+# pnpm owns both of these. Prettier reformats YAML and JSON happily, which would
+# fight the package manager on every install.
+pnpm-lock.yaml
+package.json
+
+# Local-only, untracked: a personal settings file that is not ours to rewrite.
+.claude/settings.local.json

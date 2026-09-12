@@ -153,7 +153,9 @@ describe('swallowedSelectors', () => {
     it('passes a standalone `:global()`, nested or not', () => {
         expect(swallowedSelectors(':global(.tm-ghost) { position: absolute }')).toEqual([]);
         expect(
-            swallowedSelectors('@media (min-width: 640px) { :global(.tm-ghost) { font-size: 12px } }'),
+            swallowedSelectors(
+                '@media (min-width: 640px) { :global(.tm-ghost) { font-size: 12px } }',
+            ),
         ).toEqual([]);
     });
 

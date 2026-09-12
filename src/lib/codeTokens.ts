@@ -23,14 +23,7 @@
  */
 
 export type TokenKind =
-    | 'plain'
-    | 'key'
-    | 'string'
-    | 'number'
-    | 'literal'
-    | 'punct'
-    | 'tag'
-    | 'attr';
+    'plain' | 'key' | 'string' | 'number' | 'literal' | 'punct' | 'tag' | 'attr';
 
 export interface Token {
     t: string;

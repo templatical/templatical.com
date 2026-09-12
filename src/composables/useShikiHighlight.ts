@@ -9,10 +9,7 @@ let highlighterPromise: Promise<HighlighterCore> | null = null;
 export function getHighlighter(): Promise<HighlighterCore> {
     if (!highlighterPromise) {
         highlighterPromise = createHighlighterCore({
-            themes: [
-                import('@shikijs/themes/github-dark'),
-                import('@shikijs/themes/github-light'),
-            ],
+            themes: [import('@shikijs/themes/github-dark'), import('@shikijs/themes/github-light')],
             langs: [
                 import('@shikijs/langs/javascript'),
                 import('@shikijs/langs/html'),
@@ -47,10 +44,7 @@ export const tagTemplateAsHtml: ShikiTransformer = {
         // immediately followed by the template literal's opening backtick.
         // Matching bare `html` anywhere would also delete a legitimate
         // identifier, e.g. `const { html } = mjml2html(mjml)`.
-        return html.replace(
-            /<span[^>]*>\s*html\s*<\/span>(?=<span[^>]*>\s*`)/g,
-            '',
-        );
+        return html.replace(/<span[^>]*>\s*html\s*<\/span>(?=<span[^>]*>\s*`)/g, '');
     },
 };
 

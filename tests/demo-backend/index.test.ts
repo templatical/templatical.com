@@ -21,14 +21,24 @@ describe('createDemoBackend', () => {
         const { config } = createDemoBackend(baseContent(), COPY);
 
         expect(Object.keys(config).sort()).toEqual(
-            ['comments', 'media', 'savedBlocks', 'templates', 'testEmail', 'user', 'versionHistory'].sort(),
+            [
+                'comments',
+                'media',
+                'savedBlocks',
+                'templates',
+                'testEmail',
+                'user',
+                'versionHistory',
+            ].sort(),
         );
     });
 
     it('disables the unsaved-changes guard', () => {
         // A landing page must never trap a visitor's tab close behind a
         // beforeunload prompt. This defaults to ON, so it must be explicit.
-        expect(createDemoBackend(baseContent(), COPY).config.templates.unsavedChangesGuard).toBe(false);
+        expect(createDemoBackend(baseContent(), COPY).config.templates.unsavedChangesGuard).toBe(
+            false,
+        );
     });
 
     it('turns autosave on so history fills as the visitor types', () => {
@@ -71,7 +81,8 @@ describe('createDemoBackend', () => {
 
     it('hasStoredTemplate flips once create() has run', async () => {
         const backend = createDemoBackend(baseContent(), COPY);
-        if (typeof backend.config.templates.create !== 'function') throw new Error('create must be a function');
+        if (typeof backend.config.templates.create !== 'function')
+            throw new Error('create must be a function');
 
         expect(backend.hasStoredTemplate()).toBe(false);
         await backend.config.templates.create({ name: 'Welcome', content: baseContent() });
@@ -86,7 +97,8 @@ describe('createDemoBackend', () => {
     // correct post-reset state is the RE-SEEDED state.
     it('reset clears the template and re-seeds the history and comments exactly once', async () => {
         const backend = createDemoBackend(baseContent(), COPY);
-        if (typeof backend.config.templates.create !== 'function') throw new Error('create must be a function');
+        if (typeof backend.config.templates.create !== 'function')
+            throw new Error('create must be a function');
         await backend.config.templates.create({ name: 'Welcome', content: baseContent() });
 
         backend.reset();

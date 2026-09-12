@@ -62,7 +62,9 @@ function trailingLabel(slug: Slug): string {
                                         : 'text-neutral-950 dark:text-white',
                                 ]"
                             >
-                                <span v-if="col.highlight" class="sr-only">{{ t('home.comparison.recommendedLabel') }} —</span>
+                                <span v-if="col.highlight" class="sr-only"
+                                    >{{ t('home.comparison.recommendedLabel') }} —</span
+                                >
                                 {{ t(`home.comparison.columns.${col.slug}.title`) }}
                             </h3>
                             <p class="text-sm/6 text-pretty text-neutral-700 dark:text-neutral-300">
@@ -71,13 +73,19 @@ function trailingLabel(slug: Slug): string {
                         </div>
 
                         <template v-if="col.slug === 'templatical'">
-                            <div class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800">
-                                <h4 class="text-xs/5 font-medium tracking-wide text-primary uppercase">
+                            <div
+                                class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800"
+                            >
+                                <h4
+                                    class="text-xs/5 font-medium tracking-wide text-primary uppercase"
+                                >
                                     {{ t('home.comparison.sdkLabel') }}
                                 </h4>
                                 <ul class="flex flex-col gap-2.5">
                                     <li
-                                        v-for="item in listAt('home.comparison.columns.templatical.sdk')"
+                                        v-for="item in listAt(
+                                            'home.comparison.columns.templatical.sdk',
+                                        )"
                                         :key="item"
                                         class="flex gap-2.5 text-sm/6 text-neutral-800 dark:text-neutral-200"
                                     >
@@ -90,18 +98,26 @@ function trailingLabel(slug: Slug): string {
                                     </li>
                                 </ul>
                             </div>
-                            <div class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800">
+                            <div
+                                class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800"
+                            >
                                 <div class="flex flex-wrap items-center gap-2">
-                                    <h4 class="text-xs/5 font-medium tracking-wide text-neutral-500 uppercase dark:text-neutral-400">
+                                    <h4
+                                        class="text-xs/5 font-medium tracking-wide text-neutral-500 uppercase dark:text-neutral-400"
+                                    >
                                         {{ t('home.comparison.cloudLabel') }}
                                     </h4>
-                                    <span class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px]/4 font-semibold tracking-wide text-amber-900 uppercase dark:bg-amber-500/15 dark:text-amber-300">
+                                    <span
+                                        class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px]/4 font-semibold tracking-wide text-amber-900 uppercase dark:bg-amber-500/15 dark:text-amber-300"
+                                    >
                                         {{ t('home.comparison.cloudBadge') }}
                                     </span>
                                 </div>
                                 <ul class="flex flex-col gap-2.5">
                                     <li
-                                        v-for="item in listAt('home.comparison.columns.templatical.cloud')"
+                                        v-for="item in listAt(
+                                            'home.comparison.columns.templatical.cloud',
+                                        )"
                                         :key="item"
                                         class="flex gap-2.5 text-sm/6 text-neutral-700 dark:text-neutral-300"
                                     >
@@ -126,13 +142,19 @@ function trailingLabel(slug: Slug): string {
                         </template>
 
                         <template v-else>
-                            <div class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800">
-                                <h4 class="text-xs/5 font-medium tracking-wide text-rose-600 uppercase dark:text-rose-400">
+                            <div
+                                class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800"
+                            >
+                                <h4
+                                    class="text-xs/5 font-medium tracking-wide text-rose-600 uppercase dark:text-rose-400"
+                                >
                                     {{ trailingLabel(col.slug) }}
                                 </h4>
                                 <ul class="flex flex-col gap-2.5">
                                     <li
-                                        v-for="item in listAt(`home.comparison.columns.${col.slug}.tradeOffs`)"
+                                        v-for="item in listAt(
+                                            `home.comparison.columns.${col.slug}.tradeOffs`,
+                                        )"
                                         :key="item"
                                         class="flex gap-2.5 text-sm/6 text-neutral-600 dark:text-neutral-400"
                                     >

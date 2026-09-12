@@ -42,11 +42,21 @@ describe('createStore', () => {
 
     it('degrades without throwing when the storage accessor is hostile', () => {
         const hostile: StorageLike = {
-            get length(): number { throw new Error('blocked'); },
-            getItem() { throw new Error('blocked'); },
-            setItem() { throw new Error('blocked'); },
-            removeItem() { throw new Error('blocked'); },
-            key() { throw new Error('blocked'); },
+            get length(): number {
+                throw new Error('blocked');
+            },
+            getItem() {
+                throw new Error('blocked');
+            },
+            setItem() {
+                throw new Error('blocked');
+            },
+            removeItem() {
+                throw new Error('blocked');
+            },
+            key() {
+                throw new Error('blocked');
+            },
         };
         const store = createStore(hostile);
 

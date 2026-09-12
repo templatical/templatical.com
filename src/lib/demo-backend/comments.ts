@@ -8,10 +8,7 @@ export const COMMENTS_KEY = 'comments';
  * transport nothing to carry, and its absence demonstrates what the contract
  * promises: comments work identically without one.
  */
-export function createCommentsProvider(
-    store: DemoStore,
-    author: CommentAuthor,
-): CommentsProvider {
+export function createCommentsProvider(store: DemoStore, author: CommentAuthor): CommentsProvider {
     function read(): Comment[] {
         const stored = store.read<Comment[]>(COMMENTS_KEY);
         return Array.isArray(stored) ? stored : [];

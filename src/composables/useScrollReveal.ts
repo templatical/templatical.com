@@ -22,14 +22,9 @@ export function useScrollReveal(threshold = 0.15, rootMargin = '0px') {
         prepared.value = true;
     });
 
-    const isVisible = computed(
-        () => reducedMotion.value === 'reduce' || hasRevealed.value,
-    );
+    const isVisible = computed(() => reducedMotion.value === 'reduce' || hasRevealed.value);
     const shouldHide = computed(
-        () =>
-            reducedMotion.value !== 'reduce' &&
-            prepared.value &&
-            !hasRevealed.value,
+        () => reducedMotion.value !== 'reduce' && prepared.value && !hasRevealed.value,
     );
 
     return { sectionRef, isVisible, shouldHide };

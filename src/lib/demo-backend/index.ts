@@ -52,7 +52,10 @@ export interface DemoBackend {
     reset(): void;
 }
 
-export function createDemoBackend(baseContent: TemplateContent, copy: DemoBackendCopy): DemoBackend {
+export function createDemoBackend(
+    baseContent: TemplateContent,
+    copy: DemoBackendCopy,
+): DemoBackend {
     const store = createStore();
     const versionStore = createVersionStore(store);
     const visitor: EditorUser = { id: VISITOR_ID, name: copy.visitorName };

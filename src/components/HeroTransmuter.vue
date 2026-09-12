@@ -113,12 +113,7 @@ useIntersectionObserver(
 // control. Picking a source from the rail latches too — deliberately: the button
 // then reads Play, so the way back is visible.
 const cycling = computed(
-    () =>
-        !paused.value &&
-        !hovered.value &&
-        !focused.value &&
-        onScreen.value &&
-        !isReduced.value,
+    () => !paused.value && !hovered.value && !focused.value && onScreen.value && !isReduced.value,
 );
 
 function select(next: number): void {
@@ -231,15 +226,12 @@ function play(): void {
     // four segments: they are already laid out, so nothing here touches layout.
     if (bar.value) {
         settle(
-            bar.value.animate(
-                [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }],
-                {
-                    duration: 620,
-                    delay: PULSE_DELAY + 80,
-                    easing: SPRING,
-                    fill: 'both',
-                },
-            ),
+            bar.value.animate([{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], {
+                duration: 620,
+                delay: PULSE_DELAY + 80,
+                easing: SPRING,
+                fill: 'both',
+            }),
         );
     }
 }
@@ -256,16 +248,8 @@ watch(
 </script>
 
 <template>
-    <div
-        ref="root"
-        class="tm"
-        role="region"
-        :aria-label="t('importers.transmuter.label')"
-    >
-        <div
-            ref="panel"
-            class="tm-panel relative overflow-hidden rounded-2xl"
-        >
+    <div ref="root" class="tm" role="region" :aria-label="t('importers.transmuter.label')">
+        <div ref="panel" class="tm-panel relative overflow-hidden rounded-2xl">
             <div
                 class="tm-rail flex flex-wrap items-center gap-x-1 gap-y-1 px-3 py-2.5"
                 role="group"
@@ -349,29 +333,23 @@ watch(
                     />
                 </div>
                 <div class="flex items-start gap-3">
-                    <p
-                        class="flex flex-1 flex-wrap items-center gap-x-3 gap-y-1 text-[11px]/4"
-                    >
-                    <span class="tm-total">{{
-                        t('importers.transmuter.report.blocks', {
-                            count: active.sample.report.total,
-                        })
-                    }}</span>
-                    <span
-                        v-for="segment in segments"
-                        :key="segment.key"
-                        class="tm-legend"
-                    >
-                        <span
-                            :class="['tm-dot', `tm-seg--${segment.key}`]"
-                            aria-hidden="true"
-                        />
-                        {{
-                            t(`importers.transmuter.report.${segment.key}`, {
-                                count: segment.count,
+                    <p class="flex flex-1 flex-wrap items-center gap-x-3 gap-y-1 text-[11px]/4">
+                        <span class="tm-total">{{
+                            t('importers.transmuter.report.blocks', {
+                                count: active.sample.report.total,
                             })
-                        }}
-                    </span>
+                        }}</span>
+                        <span v-for="segment in segments" :key="segment.key" class="tm-legend">
+                            <span
+                                :class="['tm-dot', `tm-seg--${segment.key}`]"
+                                aria-hidden="true"
+                            />
+                            {{
+                                t(`importers.transmuter.report.${segment.key}`, {
+                                    count: segment.count,
+                                })
+                            }}
+                        </span>
                     </p>
                     <button
                         type="button"
@@ -401,13 +379,10 @@ watch(
                         <span>{{ active.sample.warning }}</span>
                     </template>
                     <template v-else>
-                        <span class="tm-clean">{{
-                            t('importers.transmuter.report.clean')
-                        }}</span>
+                        <span class="tm-clean">{{ t('importers.transmuter.report.clean') }}</span>
                     </template>
                 </p>
             </div>
-
         </div>
 
         <p class="mt-3 text-[11px]/5 text-neutral-500 dark:text-neutral-400">
@@ -676,7 +651,6 @@ watch(
     padding: 0 1px;
 }
 
-
 .tm-bridge {
     display: flex;
     align-items: center;
@@ -774,6 +748,4 @@ watch(
 .dark .tm-clean {
     color: oklch(66% 0.014 60);
 }
-
-
 </style>

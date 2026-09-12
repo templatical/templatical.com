@@ -37,7 +37,7 @@ const ariaLabel = computed(() =>
         </span>
         <span
             aria-hidden="true"
-            class="inline-flex min-w-[2.25rem] justify-center px-2.5 py-1 tabular-nums text-neutral-700 dark:text-neutral-200"
+            class="inline-flex min-w-[2.25rem] justify-center px-2.5 py-1 text-neutral-700 tabular-nums dark:text-neutral-200"
         >
             <span :class="count === null && 'invisible'">{{ format(count ?? 0) }}</span>
         </span>

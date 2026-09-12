@@ -4,7 +4,10 @@ import { createStore, memoryStorage } from '@/lib/demo-backend/store';
 import { createVersionStore } from '@/lib/demo-backend/version-store';
 
 const content = (marker: string): TemplateContent =>
-    ({ settings: {}, blocks: [{ id: marker, type: 'paragraph', content: marker }] }) as unknown as TemplateContent;
+    ({
+        settings: {},
+        blocks: [{ id: marker, type: 'paragraph', content: marker }],
+    }) as unknown as TemplateContent;
 
 describe('createVersionStore', () => {
     it('starts empty', () => {
@@ -45,7 +48,12 @@ describe('createVersionStore', () => {
         versions.append(content('old'), true);
 
         versions.replaceAll([
-            { id: 'v1', createdAt: '2026-09-01T00:00:00.000Z', isAutomatic: false, content: content('seeded') },
+            {
+                id: 'v1',
+                createdAt: '2026-09-01T00:00:00.000Z',
+                isAutomatic: false,
+                content: content('seeded'),
+            },
         ]);
 
         expect(versions.read()).toHaveLength(1);

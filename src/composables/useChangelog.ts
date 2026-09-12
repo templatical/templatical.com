@@ -90,8 +90,7 @@ function expandLinkMasks(
     let cursor = 0;
     for (const match of segment.text.matchAll(MASKED_LINK)) {
         const start = match.index ?? 0;
-        if (start > cursor)
-            segments.push({ ...segment, text: segment.text.slice(cursor, start) });
+        if (start > cursor) segments.push({ ...segment, text: segment.text.slice(cursor, start) });
         const link = links[Number(match[1])];
         segments.push({ ...segment, text: link.text, href: link.href });
         cursor = start + match[0].length;
@@ -107,8 +106,7 @@ function expandCodeMasks(segment: TitleSegment, codes: string[]): TitleSegment[]
     let cursor = 0;
     for (const match of segment.text.matchAll(MASKED_CODE)) {
         const start = match.index ?? 0;
-        if (start > cursor)
-            segments.push({ ...segment, text: segment.text.slice(cursor, start) });
+        if (start > cursor) segments.push({ ...segment, text: segment.text.slice(cursor, start) });
         segments.push({ ...segment, text: codes[Number(match[1])], code: true });
         cursor = start + match[0].length;
     }
@@ -174,9 +172,7 @@ export function titleSegments(title: string): TitleSegment[] {
         })
         .join('');
 
-    return expand(
-        emphasisSegments(masked).flatMap((segment) => expandCodeMasks(segment, codes)),
-    );
+    return expand(emphasisSegments(masked).flatMap((segment) => expandCodeMasks(segment, codes)));
 }
 
 export function useChangelog() {

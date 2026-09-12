@@ -46,9 +46,7 @@ const faqItems = computed(() =>
 
 <template>
     <div>
-        <section
-            class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950"
-        >
+        <section class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950">
             <HeroAurora
                 root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
@@ -59,10 +57,7 @@ const faqItems = computed(() =>
                         <SiteEyebrow>
                             {{ t('faq.hero.eyebrow') }}
                         </SiteEyebrow>
-                        <HeroHeadline
-                            :text="t('faq.hero.headline')"
-                            as="h1"
-                        />
+                        <HeroHeadline :text="t('faq.hero.headline')" as="h1" />
                     </div>
                     <SiteText class="text-pretty">
                         <p>{{ t('faq.hero.subheadline') }}</p>

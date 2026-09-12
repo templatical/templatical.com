@@ -96,9 +96,7 @@ const trademarkedNames = computed(() =>
 
 <template>
     <div>
-        <section
-            class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950"
-        >
+        <section class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950">
             <HeroAurora
                 root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
@@ -137,7 +135,7 @@ const trademarkedNames = computed(() =>
                         full-width section had.
                     -->
                     <dl
-                        class="grid grid-cols-1 gap-x-8 gap-y-6 [&>*:nth-child(1)]:border-t-0 [&>*:nth-child(1)]:pt-0 sm:grid-cols-2 sm:[&>*:nth-child(2)]:border-t-0 sm:[&>*:nth-child(2)]:pt-0"
+                        class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 [&>*:nth-child(1)]:border-t-0 [&>*:nth-child(1)]:pt-0 sm:[&>*:nth-child(2)]:border-t-0 sm:[&>*:nth-child(2)]:pt-0"
                     >
                         <div
                             v-for="key in sharedKeys"
@@ -157,7 +155,6 @@ const trademarkedNames = computed(() =>
                 <HeroTransmuter class="min-w-0" />
             </SiteContainer>
         </section>
-
 
         <!--
             First section after the hero, so it carries the two obligations the aurora
@@ -232,16 +229,15 @@ const trademarkedNames = computed(() =>
                             >
                                 <span
                                     class="mr-2 text-neutral-400 select-none dark:text-neutral-600"
-                                >$</span>
+                                    >$</span
+                                >
                                 {{ importer.install }}
                             </code>
                             <button
                                 v-if="isSupported"
                                 type="button"
                                 class="shrink-0 rounded-md p-1.5 text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
-                                :aria-label="
-                                    t('importers.copyAriaLabel', { name: importer.name })
-                                "
+                                :aria-label="t('importers.copyAriaLabel', { name: importer.name })"
                                 @click="copyInstall(importer.slug, importer.install)"
                             >
                                 <Check

@@ -10,8 +10,8 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), { size: 'md' });
 const emit = defineEmits<{
-    (e: 'update:modelValue', value: number): void
-    (e: 'change', value: number, direction: 1 | -1): void
+    (e: 'update:modelValue', value: number): void;
+    (e: 'change', value: number, direction: 1 | -1): void;
 }>();
 
 const tabRefs = ref<HTMLButtonElement[]>([]);
@@ -78,8 +78,14 @@ onBeforeUnmount(() => {
     if (rafId) cancelAnimationFrame(rafId);
 });
 
-watch(() => props.modelValue, () => nextTick(updatePill));
-watch(() => props.options.map((o) => o.label).join('|'), () => nextTick(updatePill));
+watch(
+    () => props.modelValue,
+    () => nextTick(updatePill),
+);
+watch(
+    () => props.options.map((o) => o.label).join('|'),
+    () => nextTick(updatePill),
+);
 </script>
 
 <template>
@@ -112,7 +118,9 @@ watch(() => props.options.map((o) => o.label).join('|'), () => nextTick(updatePi
             :tabindex="modelValue === i ? 0 : -1"
             :class="[
                 'relative z-10 inline-flex items-center justify-center font-medium transition-[color,transform] duration-200 ease-[var(--ease-spring)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100',
-                isSm ? 'rounded-sm px-3 py-1.5 text-sm' : 'min-h-11 rounded-full px-4 py-2 text-sm/6',
+                isSm
+                    ? 'rounded-sm px-3 py-1.5 text-sm'
+                    : 'min-h-11 rounded-full px-4 py-2 text-sm/6',
                 modelValue === i
                     ? 'text-neutral-950 dark:text-white'
                     : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white',

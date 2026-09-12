@@ -51,9 +51,9 @@ const mjml = await editor.toMjml()`;
                         class="flex items-center justify-between gap-3 px-4 py-3 font-mono text-sm/6"
                     >
                         <span class="truncate text-neutral-700 dark:text-neutral-300">
-                            <span
-                                class="mr-2 select-none text-neutral-400 dark:text-neutral-600"
-                            >$</span>
+                            <span class="mr-2 text-neutral-400 select-none dark:text-neutral-600"
+                                >$</span
+                            >
                             {{ installCommand }}
                         </span>
                         <button
@@ -73,12 +73,7 @@ const mjml = await editor.toMjml()`;
                     <SiteButton :href="URLS.playground" size="lg" external>
                         {{ t('home.close.ctaPrimary') }}
                     </SiteButton>
-                    <SiteButton
-                        :href="URLS.github"
-                        variant="plain"
-                        size="lg"
-                        external
-                    >
+                    <SiteButton :href="URLS.github" variant="plain" size="lg" external>
                         {{ t('home.close.ctaSecondary') }}
                         <ChevronRight class="size-5" />
                     </SiteButton>

@@ -13,7 +13,9 @@ const backendDocsUrl = computed(() => localizedUrl('backendDocs', locale.value))
 </script>
 
 <template>
-    <div class="mt-4 flex flex-col gap-3 rounded-lg border border-neutral-950/5 bg-white/60 px-4 py-3 backdrop-blur sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:bg-white/5">
+    <div
+        class="mt-4 flex flex-col gap-3 rounded-lg border border-neutral-950/5 bg-white/60 px-4 py-3 backdrop-blur sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:bg-white/5"
+    >
         <p class="max-w-2xl text-xs/5 text-pretty text-neutral-600 dark:text-neutral-400">
             {{ t('heroEditor.demo.description') }}
             <a
@@ -39,7 +41,7 @@ const backendDocsUrl = computed(() => localizedUrl('backendDocs', locale.value))
             </button>
             <button
                 type="button"
-                class="inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-300 dark:hover:bg-neutral-800"
+                class="inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60 dark:text-neutral-300 dark:hover:bg-neutral-800"
                 :disabled="resetting"
                 @click="$emit('reset')"
             >

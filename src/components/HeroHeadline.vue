@@ -23,16 +23,11 @@ const props = withDefaults(
 defineOptions({ inheritAttrs: false });
 
 const attrs = useAttrs();
-const baseClass =
-    'font-display tracking-tight text-balance text-neutral-950 dark:text-white';
+const baseClass = 'font-display tracking-tight text-balance text-neutral-950 dark:text-white';
 const sizeClass =
-    props.as === 'h1'
-        ? 'text-5xl/12 sm:text-[5rem]/20'
-        : 'text-3xl/10 sm:text-4xl/12';
+    props.as === 'h1' ? 'text-5xl/12 sm:text-[5rem]/20' : 'text-3xl/10 sm:text-4xl/12';
 
-const classes = computed(() =>
-    cn(baseClass, sizeClass, attrs.class as string),
-);
+const classes = computed(() => cn(baseClass, sizeClass, attrs.class as string));
 
 const root = ref<HTMLElement | null>(null);
 const enhanced = ref(false);
@@ -64,7 +59,10 @@ function computeTokens(text: string, accent?: string) {
 
 const reducedMotion = usePreferredReducedMotion();
 const coarsePointer = useMediaQuery('(pointer: coarse)');
-const { x: pointerX, y: pointerY } = useMouse({ type: 'client', initialValue: { x: -9999, y: -9999 } });
+const { x: pointerX, y: pointerY } = useMouse({
+    type: 'client',
+    initialValue: { x: -9999, y: -9999 },
+});
 
 const startDelay = 80;
 const perChar = 18;
@@ -97,8 +95,7 @@ const { pause: pauseRaf, resume: resumeRaf } = useRafFn(
             const f = (1 - d / radius) ** 2;
             const tx = -(dx / Math.max(d, 1)) * f * 4;
             const ty = -(dy / Math.max(d, 1)) * f * 4 - f * 2;
-            chars[i].style.transform =
-                `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px)`;
+            chars[i].style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px)`;
         }
     },
     { immediate: false },
@@ -175,18 +172,10 @@ watch(reducedMotion, (v) => {
 </script>
 
 <template>
-    <component
-        :is="as"
-        ref="root"
-        :class="[classes, 'hh', { 'hh--enhanced': enhanced }]"
-    >
+    <component :is="as" ref="root" :class="[classes, 'hh', { 'hh--enhanced': enhanced }]">
         <span class="sr-only">{{ text }}</span>
         <template v-for="tok in tokens" :key="tok.id">
-            <span
-                v-if="tok.kind === 'space'"
-                class="hh__sp"
-                aria-hidden="true"
-            >
+            <span v-if="tok.kind === 'space'" class="hh__sp" aria-hidden="true">
                 {{ ' ' }}
             </span>
             <span

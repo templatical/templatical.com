@@ -50,8 +50,7 @@ const heroContent = {
         {
             id: 'hero-headline',
             type: 'title',
-            content:
-                '<p>Welcome, <span data-merge-tag="{{first_name}}">First Name</span></p>',
+            content: '<p>Welcome, <span data-merge-tag="{{first_name}}">First Name</span></p>',
             level: 2,
             color: '#0f172a',
             textAlign: 'center',
@@ -166,9 +165,7 @@ const DEMO_TAG_VALUES: Record<(typeof DEMO_TAG_KEYS)[number], string> = {
     unsubscribeUrl: '{{unsubscribe_url}}',
 };
 
-const dynamicMergeTagsDocsUrl = computed(() =>
-    localizedUrl('dynamicMergeTagsDocs', locale.value),
-);
+const dynamicMergeTagsDocsUrl = computed(() => localizedUrl('dynamicMergeTagsDocs', locale.value));
 
 const demoTags = computed(() =>
     DEMO_TAG_KEYS.map((key) => ({
@@ -234,10 +231,7 @@ async function mountEditor() {
             document.head.appendChild(cssLink);
         }
 
-        const mod = await Promise.race([
-            import(/* @vite-ignore */ EDITOR_ESM_URL),
-            timeout,
-        ]);
+        const mod = await Promise.race([import(/* @vite-ignore */ EDITOR_ESM_URL), timeout]);
         if (!container.value) {
             status.value = 'idle';
             return;
@@ -369,21 +363,31 @@ onBeforeUnmount(() => {
                     aria-hidden="true"
                 >
                     <!-- Top bar -->
-                    <div class="flex items-center gap-3 border-b border-neutral-200 px-4 py-3 dark:border-neutral-800">
+                    <div
+                        class="flex items-center gap-3 border-b border-neutral-200 px-4 py-3 dark:border-neutral-800"
+                    >
                         <div class="size-7 rounded-md bg-neutral-200 dark:bg-neutral-800" />
                         <div class="h-3 w-24 rounded bg-neutral-200 dark:bg-neutral-800" />
                         <div class="ml-auto flex items-center gap-2">
                             <div class="h-7 w-20 rounded-md bg-neutral-200 dark:bg-neutral-800" />
-                            <div class="h-7 w-16 rounded-md bg-neutral-100 dark:bg-neutral-800/60" />
-                            <div class="h-7 w-16 rounded-md bg-neutral-100 dark:bg-neutral-800/60" />
-                            <div class="ml-3 size-7 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                            <div
+                                class="h-7 w-16 rounded-md bg-neutral-100 dark:bg-neutral-800/60"
+                            />
+                            <div
+                                class="h-7 w-16 rounded-md bg-neutral-100 dark:bg-neutral-800/60"
+                            />
+                            <div
+                                class="ml-3 size-7 rounded-md bg-neutral-200 dark:bg-neutral-800"
+                            />
                             <div class="size-7 rounded-md bg-neutral-200 dark:bg-neutral-800" />
                         </div>
                     </div>
 
                     <div class="flex flex-1 overflow-hidden">
                         <!-- Left rail -->
-                        <div class="flex w-14 flex-col items-center gap-3 border-r border-neutral-200 py-4 dark:border-neutral-800">
+                        <div
+                            class="flex w-14 flex-col items-center gap-3 border-r border-neutral-200 py-4 dark:border-neutral-800"
+                        >
                             <div
                                 v-for="i in 8"
                                 :key="i"
@@ -392,33 +396,60 @@ onBeforeUnmount(() => {
                         </div>
 
                         <!-- Canvas -->
-                        <div class="flex flex-1 justify-center bg-neutral-50 px-6 py-10 dark:bg-neutral-950/40">
-                            <div class="flex w-full max-w-md flex-col gap-4 rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-                                <div class="mx-auto h-5 w-32 rounded bg-neutral-200 dark:bg-neutral-800" />
-                                <div class="mx-auto h-3 w-48 rounded bg-neutral-200/80 dark:bg-neutral-800/80" />
-                                <div class="h-2 w-full rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
-                                <div class="h-2 w-5/6 rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
-                                <div class="h-2 w-2/3 rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
-                                <div class="mx-auto mt-2 h-9 w-40 rounded-md bg-neutral-300 dark:bg-neutral-700" />
+                        <div
+                            class="flex flex-1 justify-center bg-neutral-50 px-6 py-10 dark:bg-neutral-950/40"
+                        >
+                            <div
+                                class="flex w-full max-w-md flex-col gap-4 rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900"
+                            >
+                                <div
+                                    class="mx-auto h-5 w-32 rounded bg-neutral-200 dark:bg-neutral-800"
+                                />
+                                <div
+                                    class="mx-auto h-3 w-48 rounded bg-neutral-200/80 dark:bg-neutral-800/80"
+                                />
+                                <div
+                                    class="h-2 w-full rounded bg-neutral-200/70 dark:bg-neutral-800/70"
+                                />
+                                <div
+                                    class="h-2 w-5/6 rounded bg-neutral-200/70 dark:bg-neutral-800/70"
+                                />
+                                <div
+                                    class="h-2 w-2/3 rounded bg-neutral-200/70 dark:bg-neutral-800/70"
+                                />
+                                <div
+                                    class="mx-auto mt-2 h-9 w-40 rounded-md bg-neutral-300 dark:bg-neutral-700"
+                                />
                                 <div class="mt-2 h-px w-full bg-neutral-200 dark:bg-neutral-800" />
-                                <div class="mx-auto h-2 w-3/4 rounded bg-neutral-200/60 dark:bg-neutral-800/60" />
+                                <div
+                                    class="mx-auto h-2 w-3/4 rounded bg-neutral-200/60 dark:bg-neutral-800/60"
+                                />
                             </div>
                         </div>
 
                         <!-- Right sidebar -->
-                        <div class="hidden w-64 flex-col gap-4 border-l border-neutral-200 p-4 md:flex dark:border-neutral-800">
+                        <div
+                            class="hidden w-64 flex-col gap-4 border-l border-neutral-200 p-4 md:flex dark:border-neutral-800"
+                        >
                             <div class="flex gap-2">
-                                <div class="h-7 flex-1 rounded-md bg-neutral-200 dark:bg-neutral-800" />
-                                <div class="h-7 flex-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60" />
+                                <div
+                                    class="h-7 flex-1 rounded-md bg-neutral-200 dark:bg-neutral-800"
+                                />
+                                <div
+                                    class="h-7 flex-1 rounded-md bg-neutral-100 dark:bg-neutral-800/60"
+                                />
                             </div>
                             <div class="mt-6 flex flex-col items-center gap-3">
-                                <div class="size-10 rounded-md bg-neutral-200 dark:bg-neutral-800" />
+                                <div
+                                    class="size-10 rounded-md bg-neutral-200 dark:bg-neutral-800"
+                                />
                                 <div class="h-3 w-32 rounded bg-neutral-200 dark:bg-neutral-800" />
-                                <div class="h-2 w-40 rounded bg-neutral-200/70 dark:bg-neutral-800/70" />
+                                <div
+                                    class="h-2 w-40 rounded bg-neutral-200/70 dark:bg-neutral-800/70"
+                                />
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div
                     v-if="status === 'error'"
@@ -433,7 +464,8 @@ onBeforeUnmount(() => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="font-medium text-primary underline"
-                                >{{ t('heroEditor.error.playgroundLabel') }}</a>
+                                    >{{ t('heroEditor.error.playgroundLabel') }}</a
+                                >
                             </template>
                         </i18n-t>
                     </p>
@@ -504,7 +536,9 @@ onBeforeUnmount(() => {
                         ref="modalPanel"
                         class="w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/10 dark:bg-neutral-900 dark:ring-white/10"
                     >
-                        <div class="flex items-start justify-between gap-4 border-b border-neutral-200 px-5 py-4 dark:border-neutral-800">
+                        <div
+                            class="flex items-start justify-between gap-4 border-b border-neutral-200 px-5 py-4 dark:border-neutral-800"
+                        >
                             <div>
                                 <h2
                                     id="merge-tag-modal-title"
@@ -526,8 +560,13 @@ onBeforeUnmount(() => {
                             </button>
                         </div>
 
-                        <div class="mx-5 mt-4 flex items-start gap-2 rounded-md border border-primary/20 bg-primary/5 px-3 py-2 text-[11px] leading-relaxed text-neutral-700 dark:border-primary/30 dark:bg-primary/10 dark:text-neutral-300">
-                            <Info class="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden="true" />
+                        <div
+                            class="mx-5 mt-4 flex items-start gap-2 rounded-md border border-primary/20 bg-primary/5 px-3 py-2 text-[11px] leading-relaxed text-neutral-700 dark:border-primary/30 dark:bg-primary/10 dark:text-neutral-300"
+                        >
+                            <Info
+                                class="mt-0.5 size-3.5 shrink-0 text-primary"
+                                aria-hidden="true"
+                            />
                             <div class="space-y-1">
                                 <p>{{ t('heroEditor.mergeTagModal.consumerInfo') }}</p>
                                 <a
@@ -550,21 +589,29 @@ onBeforeUnmount(() => {
                                     @click="selectMergeTag({ label: tag.label, value: tag.value })"
                                 >
                                     <span class="flex flex-col">
-                                        <span class="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                                        <span
+                                            class="text-sm font-medium text-neutral-900 dark:text-neutral-100"
+                                        >
                                             {{ tag.label }}
                                         </span>
-                                        <span class="text-xs text-neutral-500 dark:text-neutral-400">
+                                        <span
+                                            class="text-xs text-neutral-500 dark:text-neutral-400"
+                                        >
                                             {{ tag.description }}
                                         </span>
                                     </span>
-                                    <code class="shrink-0 rounded bg-neutral-100 px-2 py-0.5 font-mono text-xs text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+                                    <code
+                                        class="shrink-0 rounded bg-neutral-100 px-2 py-0.5 font-mono text-xs text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+                                    >
                                         {{ tag.value }}
                                     </code>
                                 </button>
                             </li>
                         </ul>
 
-                        <div class="flex items-center justify-between gap-3 border-t border-neutral-200 px-5 py-3 dark:border-neutral-800">
+                        <div
+                            class="flex items-center justify-between gap-3 border-t border-neutral-200 px-5 py-3 dark:border-neutral-800"
+                        >
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
                                 {{ t('heroEditor.mergeTagModal.demoNote') }}
                             </p>

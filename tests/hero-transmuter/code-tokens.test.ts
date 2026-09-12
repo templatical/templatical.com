@@ -1,10 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { tokenize, type CodeLine } from '@/lib/codeTokens';
-import {
-    IMPORTER_SAMPLES,
-    SAMPLE_MAX_COLUMNS,
-    SAMPLE_PANE_LINES,
-} from '@/lib/importerSamples';
+import { IMPORTER_SAMPLES, SAMPLE_MAX_COLUMNS, SAMPLE_PANE_LINES } from '@/lib/importerSamples';
 import { IMPORTERS } from '@/lib/importers';
 
 /** The invariant every pane depends on: tokenizing never loses a byte. */
@@ -66,11 +62,7 @@ describe('tokenize', () => {
 
     it('keeps a run of prose in one token so it can carry a value whole', () => {
         const [line] = tokenize('<mj-preview>This week</mj-preview>', 'html');
-        expect(line.filter((t) => t.k === 'plain').map((t) => t.t)).toEqual([
-            'This',
-            ' ',
-            'week',
-        ]);
+        expect(line.filter((t) => t.k === 'plain').map((t) => t.t)).toEqual(['This', ' ', 'week']);
     });
 });
 
@@ -141,9 +133,7 @@ describe('the generated samples', () => {
             expect(flatten(tokenize(sample.source, sample.lang, sample.carried))).toBe(
                 sample.source,
             );
-            expect(flatten(tokenize(sample.target, 'json', sample.carried))).toBe(
-                sample.target,
-            );
+            expect(flatten(tokenize(sample.target, 'json', sample.carried))).toBe(sample.target);
         },
     );
 

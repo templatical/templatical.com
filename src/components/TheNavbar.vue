@@ -35,20 +35,16 @@ const links = computed<NavLink[]>(() => [
 const isMobileMenuOpen = ref(false);
 const toggleMobileMenu = useToggle(isMobileMenuOpen);
 const solid = computed(
-    () =>
-        !hasTransparentHero.value ||
-        scrollY.value > 40 ||
-        isMobileMenuOpen.value,
+    () => !hasTransparentHero.value || scrollY.value > 40 || isMobileMenuOpen.value,
 );
 const menuRef = ref<HTMLElement | null>(null);
 const menuTriggerRef = ref<HTMLElement | null>(null);
 const bodyScrollLock = useScrollLock(
     computed(() => (typeof document !== 'undefined' ? document.body : null)),
 );
-const { activate: activateTrap, deactivate: deactivateTrap } = useFocusTrap(
-    menuRef,
-    { immediate: false },
-);
+const { activate: activateTrap, deactivate: deactivateTrap } = useFocusTrap(menuRef, {
+    immediate: false,
+});
 
 watch(isMobileMenuOpen, async (open) => {
     if (open) {
@@ -72,19 +68,15 @@ const linkClasses =
             'site-nav sticky top-0 z-50 border-b transition-[background-color,backdrop-filter,border-color] duration-300 ease-out motion-reduce:transition-none',
             solid
                 ? 'border-neutral-200/50 bg-white/80 backdrop-blur-lg dark:border-neutral-800/50 dark:bg-neutral-950/80'
-                : 'border-transparent bg-transparent backdrop-blur-0',
+                : 'backdrop-blur-0 border-transparent bg-transparent',
         ]"
     >
         <nav :aria-label="t('a11y.mainNav')">
-            <div
-                class="mx-auto flex h-21 max-w-7xl items-center gap-4 px-6 lg:px-10"
-            >
+            <div class="mx-auto flex h-21 max-w-7xl items-center gap-4 px-6 lg:px-10">
                 <div class="flex flex-1 items-center">
                     <router-link to="/" class="inline-flex items-center gap-2">
                         <AppLogoIcon class="size-9" />
-                        <span
-                            class="text-base font-semibold text-neutral-950 dark:text-white"
-                        >
+                        <span class="text-base font-semibold text-neutral-950 dark:text-white">
                             Templatical
                         </span>
                     </router-link>
@@ -117,12 +109,7 @@ const linkClasses =
                     >
                         <GithubIcon class="size-5" />
                     </a>
-                    <SiteButton
-                        :href="URLS.docs"
-                        external
-                        size="md"
-                        class="max-sm:hidden"
-                    >
+                    <SiteButton :href="URLS.docs" external size="md" class="max-sm:hidden">
                         {{ t('nav.getStarted') }}
                     </SiteButton>
 

@@ -48,11 +48,7 @@ const SOURCES = [
         :sources="SOURCES"
     >
         <template #migration>
-            <SiteButton
-                :href="localizedUrl('topolMigrationDocs', locale)"
-                variant="plain"
-                external
-            >
+            <SiteButton :href="localizedUrl('topolMigrationDocs', locale)" variant="plain" external>
                 {{ t('alternatives.topol.migration.label') }}
                 <ChevronRight class="size-5" />
             </SiteButton>

@@ -24,11 +24,11 @@ pnpm run dev
 
 ## Scripts
 
-| Command            | Description                            |
-| ------------------ | -------------------------------------- |
-| `pnpm run dev`     | Start dev server                       |
-| `pnpm run build`   | Generate static HTML via vite-ssg      |
-| `pnpm run preview` | Preview the built site                 |
+| Command            | Description                       |
+| ------------------ | --------------------------------- |
+| `pnpm run dev`     | Start dev server                  |
+| `pnpm run build`   | Generate static HTML via vite-ssg |
+| `pnpm run preview` | Preview the built site            |
 
 ## Project Structure
 

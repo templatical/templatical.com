@@ -9,32 +9,36 @@
     "build": "vite-ssg build",
     "preview": "vite preview --port 4174",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "format": "prettier --write src tests vite.config.ts vitest.config.ts tsconfig.json README.md .claude",
+    "format:check": "prettier --check src tests vite.config.ts vitest.config.ts tsconfig.json README.md .claude"
   },
   "dependencies": {
-    "@lucide/vue": "^1.35.0",
+    "@lucide/vue": "^1.45.0",
     "@shikijs/langs": "^4.4.3",
     "@shikijs/themes": "^4.4.3",
-    "@unhead/vue": "3.3.1",
+    "@unhead/vue": "3.4.0",
     "@vueuse/core": "^14.4.0",
     "@vueuse/integrations": "^14.4.0",
     "clsx": "^2.1.1",
     "focus-trap": "8.2.2",
     "shiki": "^4.4.3",
     "tailwind-merge": "^3.6.0",
-    "vue": "3.5.41",
-    "vue-i18n": "11.4.8",
-    "vue-router": "5.2.0"
+    "vue": "3.5.42",
+    "vue-i18n": "11.4.10",
+    "vue-router": "5.3.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
-    "@templatical/types": "^0.36.0",
+    "@templatical/types": "^0.37.0",
     "@vitejs/plugin-vue": "6.0.8",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
-    "vite": "8.2.0",
+    "vite": "8.3.0",
     "vite-ssg": "28.3.0",
-    "vitest": "^4.1.11",
-    "vue-tsc": "3.3.9"
+    "vitest": "^5.0.0",
+    "vue-tsc": "3.3.11"
   }
 }

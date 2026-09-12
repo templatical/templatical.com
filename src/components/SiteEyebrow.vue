@@ -5,9 +5,7 @@ import { computed, useAttrs } from 'vue';
 defineOptions({ inheritAttrs: false });
 
 const attrs = useAttrs();
-const classes = computed(() =>
-    cn('text-sm/7 font-semibold text-primary', attrs.class as string),
-);
+const classes = computed(() => cn('text-sm/7 font-semibold text-primary', attrs.class as string));
 </script>
 
 <template>

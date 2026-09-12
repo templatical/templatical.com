@@ -38,8 +38,7 @@ withDefaults(
         rootClass?: string;
     }>(),
     {
-        fadeClass:
-            'bg-gradient-to-b from-transparent from-65% to-neutral-50 dark:to-neutral-950',
+        fadeClass: 'bg-gradient-to-b from-transparent from-65% to-neutral-50 dark:to-neutral-950',
         rootClass: 'inset-0',
     },
 );
@@ -207,11 +206,7 @@ function init() {
 
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(
-        gl.ARRAY_BUFFER,
-        new Float32Array([-1, -1, 3, -1, -1, 3]),
-        gl.STATIC_DRAW,
-    );
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     const loc = gl.getAttribLocation(p, 'a');
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
@@ -312,11 +307,7 @@ onBeforeUnmount(() => {
         aria-hidden="true"
         :class="['hero-aurora pointer-events-none absolute overflow-hidden', rootClass]"
     >
-        <canvas
-            v-show="supported"
-            ref="canvas"
-            class="absolute inset-0 size-full"
-        />
+        <canvas v-show="supported" ref="canvas" class="absolute inset-0 size-full" />
         <div v-if="!supported" class="hero-aurora-fallback absolute inset-0" />
         <div :class="['absolute inset-0', fadeClass]" />
     </div>
@@ -325,21 +316,9 @@ onBeforeUnmount(() => {
 <style scoped>
 .hero-aurora-fallback {
     background:
-        radial-gradient(
-            60% 50% at 30% 20%,
-            oklch(85% 0.08 55 / 0.55),
-            transparent 70%
-        ),
-        radial-gradient(
-            55% 45% at 75% 35%,
-            oklch(90% 0.06 80 / 0.45),
-            transparent 70%
-        ),
-        radial-gradient(
-            70% 60% at 50% 90%,
-            oklch(96% 0.02 60 / 0.6),
-            transparent 70%
-        );
+        radial-gradient(60% 50% at 30% 20%, oklch(85% 0.08 55 / 0.55), transparent 70%),
+        radial-gradient(55% 45% at 75% 35%, oklch(90% 0.06 80 / 0.45), transparent 70%),
+        radial-gradient(70% 60% at 50% 90%, oklch(96% 0.02 60 / 0.6), transparent 70%);
 }
 /* `.dark .x`, NOT `:global(.dark) .x`. Vue's scoped transform drops the
    descendant part of the latter and emits a bare `.dark`, which puts this
@@ -347,20 +326,8 @@ onBeforeUnmount(() => {
    dark mode. Standalone `:global()` is fine; `:global(X) Y` is not. */
 .dark .hero-aurora-fallback {
     background:
-        radial-gradient(
-            60% 50% at 30% 20%,
-            oklch(28% 0.08 55 / 0.7),
-            transparent 70%
-        ),
-        radial-gradient(
-            55% 45% at 75% 35%,
-            oklch(22% 0.06 80 / 0.6),
-            transparent 70%
-        ),
-        radial-gradient(
-            70% 60% at 50% 90%,
-            oklch(14.5% 0.008 60 / 0.95),
-            transparent 70%
-        );
+        radial-gradient(60% 50% at 30% 20%, oklch(28% 0.08 55 / 0.7), transparent 70%),
+        radial-gradient(55% 45% at 75% 35%, oklch(22% 0.06 80 / 0.6), transparent 70%),
+        radial-gradient(70% 60% at 50% 90%, oklch(14.5% 0.008 60 / 0.95), transparent 70%);
 }
 </style>

@@ -11,7 +11,8 @@ function setup() {
     if (typeof provider.create !== 'function') throw new Error('create must be a function');
     if (typeof provider.update !== 'function') throw new Error('update must be a function');
     if (typeof provider.delete !== 'function') throw new Error('delete must be a function');
-    if (typeof provider.setResolved !== 'function') throw new Error('setResolved must be a function');
+    if (typeof provider.setResolved !== 'function')
+        throw new Error('setResolved must be a function');
     return {
         store,
         provider,

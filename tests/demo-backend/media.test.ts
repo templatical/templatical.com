@@ -92,7 +92,10 @@ describe('createMediaProvider', () => {
     it('create() assigns the id and persists through the store', async () => {
         const { create, provider } = setup();
 
-        const asset = await create({ file: stubFile('photo.jpg', 'image/jpeg', 1024), alt: 'A photo' });
+        const asset = await create({
+            file: stubFile('photo.jpg', 'image/jpeg', 1024),
+            alt: 'A photo',
+        });
 
         expect(asset.id).toEqual(expect.any(String));
         expect(asset.url).toMatch(/^data:image\/jpeg;base64,/);

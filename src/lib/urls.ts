@@ -8,7 +8,7 @@ export const URLS = {
     // belong in this repo's tracker rather than the SDK's, which real bug reports use.
     siteIssues: 'https://github.com/templatical/templatical.com/issues',
     siteRepo: 'https://github.com/templatical/templatical.com',
-    skillRepo: 'https://github.com/templatical/sdk/tree/main/skills/templatical-email',
+    skillRepo: 'https://github.com/templatical/sdk/tree/main/skills/templatical',
     licenseFaq: 'https://docs.templatical.com/license-faq',
     showcase: 'https://docs.templatical.com/showcase',
     changelog: 'https://docs.templatical.com/changelog',
@@ -92,10 +92,7 @@ export const LOCALIZED_URLS = {
     },
 } as const;
 
-export function localizedUrl(
-    key: keyof typeof LOCALIZED_URLS,
-    locale: string,
-): string {
+export function localizedUrl(key: keyof typeof LOCALIZED_URLS, locale: string): string {
     const map = LOCALIZED_URLS[key];
     return (map as Record<string, string>)[locale] ?? map.en;
 }

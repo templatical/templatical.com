@@ -79,9 +79,7 @@ const showingLatest = computed(() =>
 
 <template>
     <div>
-        <section
-            class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950"
-        >
+        <section class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950">
             <HeroAurora
                 root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
@@ -92,10 +90,7 @@ const showingLatest = computed(() =>
                         <SiteEyebrow>
                             {{ t('changelog.hero.eyebrow') }}
                         </SiteEyebrow>
-                        <HeroHeadline
-                            :text="t('changelog.hero.headline')"
-                            as="h1"
-                        />
+                        <HeroHeadline :text="t('changelog.hero.headline')" as="h1" />
                     </div>
                     <SiteText class="text-pretty">
                         <p>{{ t('changelog.hero.subheadline') }}</p>
@@ -134,10 +129,7 @@ const showingLatest = computed(() =>
                     </a>
                 </div>
 
-                <div
-                    v-else
-                    class="mx-auto flex max-w-3xl flex-col gap-12"
-                >
+                <div v-else class="mx-auto flex max-w-3xl flex-col gap-12">
                     <article
                         v-for="version in versions"
                         :key="versionKey(version)"
@@ -165,10 +157,7 @@ const showingLatest = computed(() =>
                             {{ t('changelog.emptyVersion') }}
                         </p>
 
-                        <ul
-                            v-else
-                            class="flex flex-col gap-5"
-                        >
+                        <ul v-else class="flex flex-col gap-5">
                             <li
                                 v-for="change in version.changes"
                                 :key="change.hash"
@@ -213,18 +202,29 @@ const showingLatest = computed(() =>
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="font-medium text-primary underline-offset-2 hover:underline"
-                                            :class="{ 'font-semibold': segment.strong, italic: segment.em }"
-                                        >{{ segment.text }}</a>
+                                            :class="{
+                                                'font-semibold': segment.strong,
+                                                italic: segment.em,
+                                            }"
+                                            >{{ segment.text }}</a
+                                        >
                                         <code
                                             v-else-if="segment.code"
                                             class="rounded bg-neutral-100 px-1 py-0.5 font-mono text-sm wrap-anywhere text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
-                                            :class="{ 'font-semibold': segment.strong, italic: segment.em }"
-                                        >{{ segment.text }}</code>
+                                            :class="{
+                                                'font-semibold': segment.strong,
+                                                italic: segment.em,
+                                            }"
+                                            >{{ segment.text }}</code
+                                        >
                                         <strong
                                             v-else-if="segment.strong"
                                             class="font-semibold text-neutral-950 dark:text-white"
-                                        >{{ segment.text }}</strong>
-                                        <em v-else-if="segment.em" class="italic">{{ segment.text }}</em>
+                                            >{{ segment.text }}</strong
+                                        >
+                                        <em v-else-if="segment.em" class="italic">{{
+                                            segment.text
+                                        }}</em>
                                         <template v-else>{{ segment.text }}</template>
                                     </template>
                                 </p>

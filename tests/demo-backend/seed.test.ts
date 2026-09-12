@@ -3,20 +3,25 @@ import type { Comment, TemplateContent } from '@templatical/types';
 import { createStore, memoryStorage } from '@/lib/demo-backend/store';
 import { createVersionStore } from '@/lib/demo-backend/version-store';
 import { COMMENTS_KEY } from '@/lib/demo-backend/comments';
-import {
-    ensureSeeded,
-    SEED_ANCHOR_BLOCK_ID,
-    SEEDED_AUTHOR_ID,
-} from '@/lib/demo-backend/seed';
+import { ensureSeeded, SEED_ANCHOR_BLOCK_ID, SEEDED_AUTHOR_ID } from '@/lib/demo-backend/seed';
 
-const COPY = { reviewerName: 'Sam Okafor', threadBody: 'CTA reads weak', replyBody: 'Try imperative' };
+const COPY = {
+    reviewerName: 'Sam Okafor',
+    threadBody: 'CTA reads weak',
+    replyBody: 'Try imperative',
+};
 
 const baseContent = (): TemplateContent =>
     ({
         settings: { backgroundColor: '#ffffff' },
         blocks: [
             { id: 'hero-headline', type: 'title', content: 'Welcome' },
-            { id: SEED_ANCHOR_BLOCK_ID, type: 'button', text: 'Open your dashboard', backgroundColor: '#0f172a' },
+            {
+                id: SEED_ANCHOR_BLOCK_ID,
+                type: 'button',
+                text: 'Open your dashboard',
+                backgroundColor: '#0f172a',
+            },
             { id: 'hero-divider', type: 'divider', color: '#e5e7eb' },
         ],
     }) as unknown as TemplateContent;
@@ -73,15 +78,13 @@ describe('ensureSeeded', () => {
 
         ensureSeeded(store, versions, baseContent(), COPY);
 
-        const blockIdsByVersion = versions.read().map((version) =>
-            version.content.blocks.map((block) => block.id),
-        );
+        const blockIdsByVersion = versions
+            .read()
+            .map((version) => version.content.blocks.map((block) => block.id));
         const versionsWithoutDivider = blockIdsByVersion.filter(
             (ids) => !ids.includes('hero-divider'),
         );
-        const versionsWithDivider = blockIdsByVersion.filter((ids) =>
-            ids.includes('hero-divider'),
-        );
+        const versionsWithDivider = blockIdsByVersion.filter((ids) => ids.includes('hero-divider'));
 
         // withoutBlock is what produces this divergence. A regression that turns
         // it into a no-op (e.g. an inverted predicate, or `return content`)
@@ -119,7 +122,13 @@ describe('ensureSeeded', () => {
         const threads = store.read<Comment[]>(COMMENTS_KEY) ?? [];
         store.write(COMMENTS_KEY, [
             ...threads,
-            { id: 'mine', body: 'Mine', author: { id: 'you', name: 'You' }, createdAt: new Date().toISOString(), resolvedAt: null },
+            {
+                id: 'mine',
+                body: 'Mine',
+                author: { id: 'you', name: 'You' },
+                createdAt: new Date().toISOString(),
+                resolvedAt: null,
+            },
         ]);
 
         ensureSeeded(store, versions, baseContent(), COPY);

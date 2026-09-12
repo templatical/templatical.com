@@ -62,15 +62,17 @@ const rows = computed(() =>
     })),
 );
 
-const usReasons = computed(() => props.usKeys.map((key) => ({ key, text: t(k(`bestFit.us.${key}`)) })));
-const themReasons = computed(() => props.themKeys.map((key) => ({ key, text: t(k(`bestFit.them.${key}`)) })));
+const usReasons = computed(() =>
+    props.usKeys.map((key) => ({ key, text: t(k(`bestFit.us.${key}`)) })),
+);
+const themReasons = computed(() =>
+    props.themKeys.map((key) => ({ key, text: t(k(`bestFit.them.${key}`)) })),
+);
 </script>
 
 <template>
     <div>
-        <section
-            class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950"
-        >
+        <section class="relative -mt-21 bg-white pt-37 pb-20 sm:pt-41 sm:pb-28 dark:bg-neutral-950">
             <HeroAurora
                 root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
@@ -103,7 +105,11 @@ const themReasons = computed(() => props.themKeys.map((key) => ({ key, text: t(k
                 <SiteSubheading>{{ t(k('table.heading')) }}</SiteSubheading>
 
                 <table class="hidden w-full border-collapse text-left md:table">
-                    <caption class="sr-only">{{ t(k('table.heading')) }}</caption>
+                    <caption class="sr-only">
+                        {{
+                            t(k('table.heading'))
+                        }}
+                    </caption>
                     <thead>
                         <tr
                             class="border-b border-neutral-300 text-xs/5 font-medium tracking-wide uppercase dark:border-neutral-700"
@@ -113,10 +119,15 @@ const themReasons = computed(() => props.themKeys.map((key) => ({ key, text: t(k
                                  our card is the highlighted one. The three used to
                                  disagree, which made the reader remap column positions
                                  between sections. -->
-                            <th scope="col" class="py-3 pr-6 text-neutral-500 dark:text-neutral-400">
+                            <th
+                                scope="col"
+                                class="py-3 pr-6 text-neutral-500 dark:text-neutral-400"
+                            >
                                 {{ t(k('table.colFeature')) }}
                             </th>
-                            <th scope="col" class="py-3 pr-6 text-primary">{{ t(k('table.colUs')) }}</th>
+                            <th scope="col" class="py-3 pr-6 text-primary">
+                                {{ t(k('table.colUs')) }}
+                            </th>
                             <th scope="col" class="py-3 text-neutral-500 dark:text-neutral-400">
                                 {{ t(k('table.colThem')) }}
                             </th>
@@ -134,10 +145,14 @@ const themReasons = computed(() => props.themKeys.map((key) => ({ key, text: t(k
                             >
                                 {{ row.label }}
                             </th>
-                            <td class="py-4 pr-6 text-sm/6 text-pretty text-neutral-800 dark:text-neutral-200">
+                            <td
+                                class="py-4 pr-6 text-sm/6 text-pretty text-neutral-800 dark:text-neutral-200"
+                            >
                                 {{ row.us }}
                             </td>
-                            <td class="py-4 text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400">
+                            <td
+                                class="py-4 text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400"
+                            >
                                 {{ row.them }}
                             </td>
                         </tr>
@@ -155,7 +170,9 @@ const themReasons = computed(() => props.themKeys.map((key) => ({ key, text: t(k
                         </h3>
                         <!-- Same order as the desktop table: Templatical first. -->
                         <div class="flex flex-col gap-1">
-                            <span class="text-xs/5 font-medium tracking-wide text-primary uppercase">
+                            <span
+                                class="text-xs/5 font-medium tracking-wide text-primary uppercase"
+                            >
                                 {{ t(k('table.colUs')) }}
                             </span>
                             <p class="text-sm/6 text-pretty text-neutral-800 dark:text-neutral-200">
@@ -278,7 +295,8 @@ const themReasons = computed(() => props.themKeys.map((key) => ({ key, text: t(k
                             target="_blank"
                             rel="noopener nofollow"
                             class="underline hover:text-neutral-700 dark:hover:text-neutral-200"
-                        >{{ source.label }}</a>
+                            >{{ source.label }}</a
+                        >
                     </p>
                     <p>{{ t(k('footnote.trademark')) }}</p>
                     <p>
@@ -288,7 +306,8 @@ const themReasons = computed(() => props.themKeys.map((key) => ({ key, text: t(k
                             target="_blank"
                             rel="noopener"
                             class="font-medium text-primary hover:underline"
-                        >{{ t(k('footnote.staleCta')) }}</a>.
+                            >{{ t(k('footnote.staleCta')) }}</a
+                        >.
                     </p>
                 </div>
             </SiteContainer>

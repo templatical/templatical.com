@@ -58,23 +58,16 @@ const groups = computed<FooterGroup[]>(() => [
     },
 ]);
 
-const socialLinks = [
-    { label: 'GitHub', href: URLS.github, icon: GithubIcon },
-];
+const socialLinks = [{ label: 'GitHub', href: URLS.github, icon: GithubIcon }];
 </script>
 
 <template>
     <footer class="border-t border-neutral-200 dark:border-neutral-800">
         <SiteContainer class="flex flex-col gap-8 py-12">
             <div class="flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-16">
-                <router-link
-                    to="/"
-                    class="inline-flex items-center gap-2 self-start"
-                >
+                <router-link to="/" class="inline-flex items-center gap-2 self-start">
                     <AppLogoIcon class="size-7" />
-                    <span
-                        class="text-sm font-semibold text-neutral-950 dark:text-white"
-                    >
+                    <span class="text-sm font-semibold text-neutral-950 dark:text-white">
                         Templatical
                     </span>
                 </router-link>

@@ -17,25 +17,17 @@ const { label: bundleLabel } = useBundleSize();
 </script>
 
 <template>
-    <section
-        id="hero"
-        class="relative -mt-21 bg-neutral-50 pt-41 sm:pt-53 dark:bg-neutral-950"
-    >
+    <section id="hero" class="relative -mt-21 bg-neutral-50 pt-41 sm:pt-53 dark:bg-neutral-950">
         <HeroAurora
             root-class="inset-x-0 top-0 bottom-0"
             fade-class="bg-gradient-to-b from-transparent from-55% to-neutral-50 dark:to-neutral-950"
         />
 
-        <SiteContainer
-            class="relative flex flex-col items-center gap-8 text-center"
-        >
+        <SiteContainer class="relative flex flex-col items-center gap-8 text-center">
             <GitHubStarButton
                 class="motion-safe:animate-fade-in motion-safe:[animation-delay:50ms]"
             />
-            <HeroHeadline
-                :text="t('home.hero.headline')"
-                class="hero-headline max-w-4xl"
-            />
+            <HeroHeadline :text="t('home.hero.headline')" class="hero-headline max-w-4xl" />
             <div
                 class="flex max-w-2xl flex-col gap-4 text-lg/8 text-neutral-600 motion-safe:animate-fade-in motion-safe:[animation-delay:200ms] dark:text-neutral-400"
             >
@@ -63,12 +55,7 @@ const { label: bundleLabel } = useBundleSize();
                 <SiteButton :href="URLS.playground" size="lg" external>
                     {{ t('home.hero.ctaPrimary') }}
                 </SiteButton>
-                <SiteButton
-                    :href="URLS.docs"
-                    variant="plain"
-                    size="lg"
-                    external
-                >
+                <SiteButton :href="URLS.docs" variant="plain" size="lg" external>
                     {{ t('home.hero.ctaSecondary') }}
                     <ChevronRight class="size-5" />
                 </SiteButton>
@@ -81,11 +68,7 @@ const { label: bundleLabel } = useBundleSize();
             <ul
                 class="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs/5 text-neutral-500 motion-safe:animate-fade-in motion-safe:[animation-delay:500ms] dark:text-neutral-500"
             >
-                <li
-                    v-for="(badge, i) in heroBadges"
-                    :key="badge"
-                    class="flex items-center gap-2"
-                >
+                <li v-for="(badge, i) in heroBadges" :key="badge" class="flex items-center gap-2">
                     <span
                         class="rounded-full bg-white/60 px-2.5 py-1 font-mono ring-1 ring-neutral-950/5 backdrop-blur dark:bg-white/5 dark:ring-white/10"
                     >
@@ -95,7 +78,8 @@ const { label: bundleLabel } = useBundleSize();
                         v-if="i < heroBadges.length - 1 || bundleLabel"
                         class="text-neutral-300 dark:text-neutral-700"
                         aria-hidden="true"
-                    >·</span>
+                        >·</span
+                    >
                 </li>
                 <li v-if="bundleLabel" class="flex items-center gap-2">
                     <span

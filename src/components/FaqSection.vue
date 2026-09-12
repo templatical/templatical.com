@@ -37,9 +37,7 @@ function toggle(key: string) {
                 :aria-controls="entry.panelId"
                 @click="toggle(entry.key)"
             >
-                <span
-                    class="text-base/7 font-medium text-neutral-950 dark:text-white"
-                >
+                <span class="text-base/7 font-medium text-neutral-950 dark:text-white">
                     {{ entry.question }}
                 </span>
                 <ChevronDown

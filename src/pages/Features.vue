@@ -968,9 +968,7 @@ function withBgClass(sections: FeatureSection[]): PageSection[] {
     return sections.map((section, idx) => ({
         ...section,
         bgClass:
-            idx % 2 === 0
-                ? 'bg-white dark:bg-neutral-950'
-                : 'bg-neutral-50 dark:bg-neutral-900',
+            idx % 2 === 0 ? 'bg-white dark:bg-neutral-950' : 'bg-neutral-50 dark:bg-neutral-900',
     }));
 }
 
@@ -1012,14 +1010,11 @@ const supportingItemKeys = [
 // scanning for their own editor gets an answer without a click. Both come from the
 // shared list, so a ninth importer needs no edit here.
 const importerNames = IMPORTERS.map((importer) => importer.name);
-
 </script>
 
 <template>
     <div>
-        <section
-            class="relative -mt-21 bg-white pt-37 pb-28 sm:pt-41 sm:pb-40 dark:bg-neutral-950"
-        >
+        <section class="relative -mt-21 bg-white pt-37 pb-28 sm:pt-41 sm:pb-40 dark:bg-neutral-950">
             <HeroAurora
                 root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
@@ -1030,10 +1025,7 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
                         <SiteEyebrow>
                             {{ t('features.hero.eyebrow') }}
                         </SiteEyebrow>
-                        <HeroHeadline
-                            :text="t('features.hero.headline')"
-                            as="h1"
-                        />
+                        <HeroHeadline :text="t('features.hero.headline')" as="h1" />
                     </div>
                     <SiteText class="text-pretty">
                         <p>{{ t('features.hero.subheadline') }}</p>
@@ -1048,126 +1040,122 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
             </SiteContainer>
         </section>
 
-        <template
-            v-for="(section, idx) in pageSections"
-            :key="section.slug"
-        >
-        <!-- Band header for the provider-backed sections below — lands
+        <template v-for="(section, idx) in pageSections" :key="section.slug">
+            <!-- Band header for the provider-backed sections below — lands
              immediately before the first one ('templates'). Copies the
              features.supporting band's own eyebrow/headline/subheadline
              shorthand so the heading compiles to an h2 (SiteSection's
              default headlineAs), not a second h1. -->
-        <SiteSection
-            v-if="idx === backendBandIndex"
-            :eyebrow="t('features.backend.eyebrow')"
-            :headline="t('features.backend.headline')"
-            :subheadline="t('features.backend.subheadline')"
-            bg="gray"
-        />
-        <section :class="['py-20 lg:py-28', section.bgClass]">
-            <div
-                class="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-7xl lg:px-10"
-            >
-                <RevealOnScroll>
-                    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
-                        <div class="flex flex-col gap-5">
-                            <div class="text-sm/7 font-semibold text-primary">
-                                {{ section.eyebrow }}
-                            </div>
-                            <h2
-                                class="font-display text-3xl/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
-                            >
-                                {{ section.title }}
-                            </h2>
-                            <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
-                                {{ section.description }}
-                            </p>
-                            <p class="text-base/7 font-medium text-neutral-950 dark:text-white">
-                                {{ section.outcome }}
-                            </p>
-                            <ul class="mt-2 flex flex-col gap-3">
-                                <li
-                                    v-for="feature in section.features"
-                                    :key="feature"
-                                    class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
+            <SiteSection
+                v-if="idx === backendBandIndex"
+                :eyebrow="t('features.backend.eyebrow')"
+                :headline="t('features.backend.headline')"
+                :subheadline="t('features.backend.subheadline')"
+                bg="gray"
+            />
+            <section :class="['py-20 lg:py-28', section.bgClass]">
+                <div class="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-7xl lg:px-10">
+                    <RevealOnScroll>
+                        <div
+                            class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16"
+                        >
+                            <div class="flex flex-col gap-5">
+                                <div class="text-sm/7 font-semibold text-primary">
+                                    {{ section.eyebrow }}
+                                </div>
+                                <h2
+                                    class="font-display text-3xl/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
                                 >
-                                    <Check
-                                        class="mt-0.5 size-5 shrink-0 text-primary"
-                                        aria-hidden="true"
-                                    />
-                                    {{ feature }}
-                                </li>
-                            </ul>
-                            <a
-                                :href="docsUrl(section.docsPath)"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="mt-2 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-                            >
-                                {{ section.docsLabel }}
-                                <ArrowRight class="size-4" aria-hidden="true" />
-                            </a>
-                        </div>
-                        <!-- Without variant tabs the example would start level with
+                                    {{ section.title }}
+                                </h2>
+                                <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
+                                    {{ section.description }}
+                                </p>
+                                <p class="text-base/7 font-medium text-neutral-950 dark:text-white">
+                                    {{ section.outcome }}
+                                </p>
+                                <ul class="mt-2 flex flex-col gap-3">
+                                    <li
+                                        v-for="feature in section.features"
+                                        :key="feature"
+                                        class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
+                                    >
+                                        <Check
+                                            class="mt-0.5 size-5 shrink-0 text-primary"
+                                            aria-hidden="true"
+                                        />
+                                        {{ feature }}
+                                    </li>
+                                </ul>
+                                <a
+                                    :href="docsUrl(section.docsPath)"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="mt-2 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                                >
+                                    {{ section.docsLabel }}
+                                    <ArrowRight class="size-4" aria-hidden="true" />
+                                </a>
+                            </div>
+                            <!-- Without variant tabs the example would start level with
                              the eyebrow, which sits 3rem (text-sm/7 + gap-5) above the
                              heading. Offset it so the example always begins at the
                              heading's top edge; tabbed sections already land there. -->
-                        <div
-                            class="flex flex-col gap-4"
-                            :class="{ 'lg:mt-12': !section.variants?.length }"
-                        >
-                            <VariantTabs
-                                v-if="section.variants?.length"
-                                :options="section.variants"
-                                :model-value="variantIndex(section.slug)"
-                                :aria-label="t('features.examplesLabel', { title: section.title })"
-                                @update:model-value="selectVariant(section.slug, $event)"
-                            />
                             <div
-                                v-if="section.variants?.length"
-                                :key="`${section.slug}-${variantIndex(section.slug)}`"
-                                :class="variantAnimClass(section.slug)"
+                                class="flex flex-col gap-4"
+                                :class="{ 'lg:mt-12': !section.variants?.length }"
                             >
-                                <CodeBlock
-                                    :code="section.variants[variantIndex(section.slug)].code"
-                                    lang="lit"
-                                    :transformers="[tagTemplateAsHtml]"
+                                <VariantTabs
+                                    v-if="section.variants?.length"
+                                    :options="section.variants"
+                                    :model-value="variantIndex(section.slug)"
+                                    :aria-label="
+                                        t('features.examplesLabel', { title: section.title })
+                                    "
+                                    @update:model-value="selectVariant(section.slug, $event)"
                                 />
-                            </div>
-                            <CodeBlock
-                                v-else-if="section.code"
-                                :code="section.code"
-                                lang="javascript"
-                            />
-                            <!-- Prompt-driven features have no config surface to
+                                <div
+                                    v-if="section.variants?.length"
+                                    :key="`${section.slug}-${variantIndex(section.slug)}`"
+                                    :class="variantAnimClass(section.slug)"
+                                >
+                                    <CodeBlock
+                                        :code="section.variants[variantIndex(section.slug)].code"
+                                        lang="lit"
+                                        :transformers="[tagTemplateAsHtml]"
+                                    />
+                                </div>
+                                <CodeBlock
+                                    v-else-if="section.code"
+                                    :code="section.code"
+                                    lang="javascript"
+                                />
+                                <!-- Prompt-driven features have no config surface to
                                  show, so the column lists what you'd actually say.
                                  Same blockquote treatment as the homepage section. -->
-                            <ul
-                                v-else-if="section.prompts?.length"
-                                class="flex flex-col gap-4"
-                            >
-                                <li
-                                    v-for="prompt in section.prompts"
-                                    :key="prompt.label"
-                                    class="flex flex-col gap-1.5"
-                                >
-                                    <span
-                                        class="text-xs/5 font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-400"
+                                <ul v-else-if="section.prompts?.length" class="flex flex-col gap-4">
+                                    <li
+                                        v-for="prompt in section.prompts"
+                                        :key="prompt.label"
+                                        class="flex flex-col gap-1.5"
                                     >
-                                        {{ prompt.label }}
-                                    </span>
-                                    <blockquote
-                                        class="rounded-2xl border border-neutral-200 bg-neutral-50 px-5 py-4 text-base/7 text-pretty text-neutral-700 italic dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
-                                    >
-                                        {{ prompt.text }}
-                                    </blockquote>
-                                </li>
-                            </ul>
+                                        <span
+                                            class="text-xs/5 font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-400"
+                                        >
+                                            {{ prompt.label }}
+                                        </span>
+                                        <blockquote
+                                            class="rounded-2xl border border-neutral-200 bg-neutral-50 px-5 py-4 text-base/7 text-pretty text-neutral-700 italic dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
+                                        >
+                                            {{ prompt.text }}
+                                        </blockquote>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </RevealOnScroll>
-            </div>
-        </section>
+                    </RevealOnScroll>
+                </div>
+            </section>
         </template>
 
         <SiteSection
@@ -1177,24 +1165,16 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
             bg="gray"
             class="!py-14 sm:!py-20"
         >
-            <dl
-                class="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2 lg:gap-x-16 lg:gap-y-12"
-            >
-                <div
-                    v-for="(key, idx) in supportingItemKeys"
-                    :key="key"
-                    class="flex gap-5"
-                >
+            <dl class="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2 lg:gap-x-16 lg:gap-y-12">
+                <div v-for="(key, idx) in supportingItemKeys" :key="key" class="flex gap-5">
                     <span
                         aria-hidden="true"
-                        class="pt-0.5 font-mono text-xs/6 tabular-nums text-neutral-400 dark:text-neutral-600"
+                        class="pt-0.5 font-mono text-xs/6 text-neutral-400 tabular-nums dark:text-neutral-600"
                     >
                         {{ String(idx + 1).padStart(2, '0') }}
                     </span>
                     <div class="flex flex-col gap-1.5">
-                        <dt
-                            class="text-base/7 font-medium text-neutral-950 dark:text-white"
-                        >
+                        <dt class="text-base/7 font-medium text-neutral-950 dark:text-white">
                             {{ t(`features.supportingItems.${key}.title`) }}
                         </dt>
                         <dd
@@ -1215,14 +1195,11 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
         >
             <ul class="flex max-w-2xl flex-col gap-3">
                 <li
-                    v-for="feature in (tm('features.migration.features') as string[])"
+                    v-for="feature in tm('features.migration.features') as string[]"
                     :key="feature"
                     class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
                 >
-                    <Check
-                        class="mt-0.5 size-5 shrink-0 text-primary"
-                        aria-hidden="true"
-                    />
+                    <Check class="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
                     {{ feature }}
                 </li>
             </ul>
@@ -1235,7 +1212,8 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
                             v-if="index > 0"
                             class="text-neutral-300 select-none dark:text-neutral-700"
                             aria-hidden="true"
-                        >·</span>
+                            >·</span
+                        >
                         <span>{{ name }}</span>
                     </template>
                 </p>

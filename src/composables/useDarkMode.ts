@@ -20,8 +20,7 @@ function setMode(next: ThemeMode) {
 }
 
 function cycleMode() {
-    mode.value =
-        mode.value === 'auto' ? 'light' : mode.value === 'light' ? 'dark' : 'auto';
+    mode.value = mode.value === 'auto' ? 'light' : mode.value === 'light' ? 'dark' : 'auto';
 }
 
 function toggle() {
