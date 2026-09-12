@@ -341,7 +341,11 @@ onBeforeUnmount(() => {
             transparent 70%
         );
 }
-:global(.dark) .hero-aurora-fallback {
+/* `.dark .x`, NOT `:global(.dark) .x`. Vue's scoped transform drops the
+   descendant part of the latter and emits a bare `.dark`, which puts this
+   background on <html> and leaves the fallback painting its light gradients in
+   dark mode. Standalone `:global()` is fine; `:global(X) Y` is not. */
+.dark .hero-aurora-fallback {
     background:
         radial-gradient(
             60% 50% at 30% 20%,

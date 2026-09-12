@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HeroAurora from '@/components/HeroAurora.vue';
 import HeroHeadline from '@/components/HeroHeadline.vue';
+import HeroTransmuter from '@/components/HeroTransmuter.vue';
 import SiteButton from '@/components/SiteButton.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
@@ -102,55 +103,75 @@ const trademarkedNames = computed(() =>
                 root-class="inset-x-0 top-0 -bottom-40"
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
             />
-            <SiteContainer class="relative">
-                <div class="flex max-w-2xl flex-col gap-6">
-                    <div class="flex flex-col gap-2">
-                        <SiteEyebrow>{{ t('importers.hero.eyebrow') }}</SiteEyebrow>
-                        <HeroHeadline
-                            :text="t('importers.hero.headline', { count: IMPORTER_COUNT })"
-                            as="h1"
-                        />
+            <!--
+                Two columns from 1120px, the same measured breakpoint the card grid
+                below uses rather than `lg` — at 1024 the transmuter's widest line
+                (64 monospace chars) leaves the panel with no headroom, and the copy
+                column drops under 26rem, where the headline starts breaking badly.
+                Re-measure both if the headline size or the samples' width cap move.
+            -->
+            <SiteContainer
+                class="relative grid items-start gap-10 min-[1120px]:grid-cols-[minmax(0,1fr)_34rem] min-[1120px]:gap-12"
+            >
+                <div class="flex max-w-2xl flex-col gap-12 min-[1120px]:max-w-none">
+                    <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-2">
+                            <SiteEyebrow>{{ t('importers.hero.eyebrow') }}</SiteEyebrow>
+                            <HeroHeadline
+                                :text="t('importers.hero.headline')"
+                                as="h1"
+                                class="min-[1120px]:text-6xl/16"
+                            />
+                        </div>
+                        <SiteText class="max-w-2xl text-pretty">
+                            <p>{{ t('importers.hero.subheadline') }}</p>
+                        </SiteText>
                     </div>
-                    <SiteText class="text-pretty">
-                        <p>{{ t('importers.hero.subheadline') }}</p>
-                    </SiteText>
+
+                    <!--
+                        These four used to be their own section under the hero. They sit
+                        here instead because the transmuter makes the right column about
+                        twice the height of the copy — this fills that column rather than
+                        leaving a void, and drops a section from the page. Two columns,
+                        not four: the copy column is roughly half the width the old
+                        full-width section had.
+                    -->
+                    <dl
+                        class="grid grid-cols-1 gap-x-8 gap-y-6 [&>*:nth-child(1)]:border-t-0 [&>*:nth-child(1)]:pt-0 sm:grid-cols-2 sm:[&>*:nth-child(2)]:border-t-0 sm:[&>*:nth-child(2)]:pt-0"
+                    >
+                        <div
+                            v-for="key in sharedKeys"
+                            :key="key"
+                            class="flex flex-col gap-2 border-t border-neutral-200 pt-4 dark:border-neutral-800"
+                        >
+                            <dt class="text-sm/6 font-medium text-neutral-950 dark:text-white">
+                                {{ t(`importers.shared.${key}.title`) }}
+                            </dt>
+                            <dd class="text-sm/6 text-neutral-700 dark:text-neutral-400">
+                                {{ t(`importers.shared.${key}.description`) }}
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
+
+                <HeroTransmuter class="min-w-0" />
             </SiteContainer>
         </section>
+
 
         <!--
-            `relative` on the container, not the section: the hero aurora is absolutely
-            positioned and bleeds 160px past its own section, so it would otherwise paint
-            over the first heading. Positioning the container lifts the content above the
-            aurora while leaving the section background beneath it, keeping the bleed.
-            Background must stay bg-white/dark:bg-neutral-950 — the colours the aurora's
-            fade gradient ends on. See HeroAurora.vue.
+            First section after the hero, so it carries the two obligations the aurora
+            imposes — it inherited them when the shared-claims section moved up into the
+            hero. Background must stay bg-white/dark:bg-neutral-950 (the colours the
+            aurora's fade ends on) and the container must stay `relative`, or the
+            160px bleed paints over this heading. See HeroAurora.vue.
         -->
-        <section class="bg-white py-16 sm:py-20 dark:bg-neutral-950">
-            <SiteContainer class="relative">
-                <dl class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    <div
-                        v-for="key in sharedKeys"
-                        :key="key"
-                        class="flex flex-col gap-2 border-t border-neutral-200 pt-4 dark:border-neutral-800"
-                    >
-                        <dt class="text-sm/6 font-medium text-neutral-950 dark:text-white">
-                            {{ t(`importers.shared.${key}.title`) }}
-                        </dt>
-                        <dd class="text-sm/6 text-neutral-700 dark:text-neutral-400">
-                            {{ t(`importers.shared.${key}.description`) }}
-                        </dd>
-                    </div>
-                </dl>
-            </SiteContainer>
-        </section>
-
         <section
             v-for="group in groups"
             :key="group.key"
-            class="bg-white py-12 first-of-type:pt-0 sm:py-16 dark:bg-neutral-950"
+            class="bg-white py-12 first-of-type:pt-4 sm:py-16 sm:first-of-type:pt-8 dark:bg-neutral-950"
         >
-            <SiteContainer class="flex flex-col gap-8">
+            <SiteContainer class="relative flex flex-col gap-8">
                 <div class="flex max-w-2xl flex-col gap-2">
                     <h2
                         class="font-display text-2xl/8 tracking-tight text-pretty text-neutral-950 sm:text-3xl/10 dark:text-white"
