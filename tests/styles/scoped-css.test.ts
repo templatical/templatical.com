@@ -1,6 +1,3 @@
-import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { fileURLToPath, URL } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { compileStyle, parse } from 'vue/compiler-sfc';
 
@@ -29,14 +26,25 @@ import { compileStyle, parse } from 'vue/compiler-sfc';
     transform ever changes.
 */
 
-const SRC_DIR = fileURLToPath(new URL('../../src', import.meta.url));
 const SCOPE_ID = 'data-v-test';
 
-function vueFiles(): string[] {
-    return readdirSync(SRC_DIR, { recursive: true, encoding: 'utf8' })
-        .filter((entry) => entry.endsWith('.vue'))
-        .sort();
-}
+/**
+ * Every SFC source, read through Vite rather than node:fs — `@types/node` is not
+ * installed and tsconfig pins `types` to `vite/client`, so pulling in the
+ * builtins to walk a directory would cost a dependency and put node globals in
+ * scope across src/, where they do not belong.
+ */
+const SFC_SOURCES: Record<string, string> = Object.fromEntries(
+    Object.entries(
+        import.meta.glob('../../src/**/*.vue', {
+            query: '?raw',
+            import: 'default',
+            eager: true,
+        }) as Record<string, string>,
+    )
+        .map(([path, source]) => [path.replace('../../src/', ''), source] as const)
+        .sort(([a], [b]) => a.localeCompare(b)),
+);
 
 /** Split a selector list on its top-level commas, so `:is(a, b)` stays whole. */
 function splitSelectorList(prelude: string): string[] {
@@ -155,14 +163,16 @@ describe('swallowedSelectors', () => {
 });
 
 describe('src/**/*.vue', () => {
-    const scopedBlocks = vueFiles().flatMap((file) => {
-        const { descriptor } = parse(readFileSync(join(SRC_DIR, file), 'utf8'), { filename: file });
+    const scopedBlocks = Object.entries(SFC_SOURCES).flatMap(([file, source]) => {
+        const { descriptor } = parse(source, { filename: file });
         return descriptor.styles
             .filter((style) => style.scoped)
             .map((style) => ({ file, css: style.content }));
     });
 
     it('walks the scoped blocks it claims to', () => {
+        // A floor, not the exact count: adding an SFC must not fail this.
+        expect(Object.keys(SFC_SOURCES).length).toBeGreaterThan(40);
         expect(scopedBlocks.map((block) => block.file)).toEqual([
             'components/HeroAurora.vue',
             'components/HeroEditor.vue',

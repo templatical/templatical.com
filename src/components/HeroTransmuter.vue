@@ -8,17 +8,19 @@
     warning is the verbatim first warning. That is the whole point; if you find
     yourself hand-writing a value into this component, stop.
 
-    Three things are load-bearing and fail quietly:
+    Two things are load-bearing and fail quietly:
 
-      1. `carried` values drive the flight. A value is only in that array when it
-         appears verbatim in BOTH windows (tests assert this), so the animation
-         can never show a correspondence the conversion did not make.
-      2. Rects are measured for every flight BEFORE any animation starts. The
-         line-assembly animation translates the target lines, so measuring
-         lazily reads an already-displaced position and the flights land short.
-      3. The static render is the real fallback. vite-ssg prerenders this route,
+      1. `carried` values are what the highlight marks. A value is only in that
+         array when it appears verbatim in BOTH windows (tests assert this), so
+         the panel can never mark a correspondence the conversion did not make.
+      2. The static render is the real fallback. vite-ssg prerenders this route,
          the tokenizer is synchronous, and no animation is required to read the
          panel — which is exactly the no-JS and reduced-motion state.
+
+    The panel rotates on its own, stops while the pointer is over it or focus is
+    inside it, and can be stopped outright with the control in the report strip.
+    That control sits down there rather than on the rail on purpose: it is panel
+    chrome, and beside eight source names it read as a ninth tab.
 -->
 <script setup lang="ts">
 import { IMPORTERS } from '@/lib/importers';
@@ -37,13 +39,22 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const CYCLE_MS = 6400;
+/**
+ * The rotation and the intro are coupled: the intro now runs to roughly 2.4s, so
+ * a 3s cycle left well under a second to actually read the code. 6s gives ~3.6s
+ * of rest on each sample, which is the part that makes it legible.
+ */
+const CYCLE_MS = 6000;
 const SPRING = 'cubic-bezier(0.16, 1, 0.3, 1)';
-const LINE_STAGGER = 26;
-const LINE_DELAY = 140;
-const FLIGHT_DELAY = 300;
-const FLIGHT_STAGGER = 150;
-const FLIGHT_MS = 780;
+/** Source wipes in, then the target follows — the gap IS the argument, so it is
+ *  long enough to register as a pause rather than as a stagger. */
+const SOURCE_DELAY = 0;
+const TARGET_DELAY = 850;
+const STAGE_MS = 800;
+/** One synchronised pulse across both panes once the target has landed, so the
+ *  pairing reads as a pairing rather than as two tinted lists. */
+const PULSE_DELAY = TARGET_DELAY + STAGE_MS - 60;
+const PULSE_MS = 760;
 
 const entries = IMPORTERS.map((importer) => ({
     ...importer,
@@ -76,16 +87,16 @@ const segments = computed(() => {
 
 const root = ref<HTMLElement | null>(null);
 const panel = ref<HTMLElement | null>(null);
-const sourcePane = ref<HTMLElement | null>(null);
-const targetPane = ref<HTMLElement | null>(null);
-const flights = ref<HTMLElement | null>(null);
+const sourceStage = ref<HTMLElement | null>(null);
+const targetStage = ref<HTMLElement | null>(null);
+const bridge = ref<HTMLElement | null>(null);
 const bar = ref<HTMLElement | null>(null);
 
+const paused = ref(false);
 const reducedMotion = usePreferredReducedMotion();
 const isReduced = computed(() => reducedMotion.value === 'reduce');
 const hovered = useElementHover(root);
 const { focused } = useFocusWithin(root);
-const paused = ref(false);
 const onScreen = ref(false);
 
 useIntersectionObserver(
@@ -96,12 +107,18 @@ useIntersectionObserver(
     { threshold: 0.25 },
 );
 
-// Hover and focus only hold the cycle still while they last — a reader studying
-// one sample should not have it swapped out mid-read. `paused` is the explicit
-// control (WCAG 2.2.2), and picking a source from the rail sets it, so taking
-// manual control and pausing are the same gesture with one visible state.
+// Three ways the rotation stops, and they are not the same kind of thing. Hover
+// and focus hold it only while they last, so a reader studying one sample never
+// has it swapped out mid-read. `paused` latches, and is the explicit WCAG 2.2.2
+// control. Picking a source from the rail latches too — deliberately: the button
+// then reads Play, so the way back is visible.
 const cycling = computed(
-    () => !paused.value && !hovered.value && !focused.value && onScreen.value && !isReduced.value,
+    () =>
+        !paused.value &&
+        !hovered.value &&
+        !focused.value &&
+        onScreen.value &&
+        !isReduced.value,
 );
 
 function select(next: number): void {
@@ -126,156 +143,105 @@ watch(
     { immediate: true },
 );
 
-interface Flight {
-    ghost: HTMLElement;
-    from: HTMLElement;
-    to: HTMLElement;
-    dx: number;
-    dy: number;
-}
-
-/** A token clipped by its pane's horizontal scroll has no honest start or end
- *  point, so its flight is skipped rather than launched from a wrong place. */
-function isVisibleIn(element: HTMLElement, pane: HTMLElement): boolean {
-    const a = element.getBoundingClientRect();
-    const b = pane.getBoundingClientRect();
-    return a.left >= b.left - 1 && a.right <= b.right + 1;
-}
-
 /**
  * Drop a finished animation instead of leaving it filled.
  *
- * Two reasons, and the second one is not cosmetic. A filled animation holds the
- * element on its own composited layer for good — with `filter` in the keyframes
- * that layer can paint empty in a screenshot even though the DOM reports
- * `opacity: 1`. And `play()` runs on every cycle, so without this each pass
- * stacks another filled animation on the reused source tokens and they never go
- * away. Every keyframe list here ends on the element's resting style, so
- * cancelling at the end is visually a no-op.
+ * A filled animation holds the element on its own composited layer for good —
+ * with `filter` or `clip-path` in the keyframes that layer can paint empty in a
+ * screenshot even though the DOM reports `opacity: 1`. And `play()` runs on
+ * every cycle, so without this each pass stacks another filled animation on the
+ * same nodes and they never go away. Every keyframe list here ends on the
+ * element's resting style, so cancelling at the end is visually a no-op.
  */
 function settle(animation: Animation): void {
     animation.onfinish = () => animation.cancel();
 }
 
-function play(): void {
-    const panelEl = panel.value;
-    const sourceEl = sourcePane.value;
-    const targetEl = targetPane.value;
-    const layer = flights.value;
-    if (!panelEl || !sourceEl || !targetEl || !layer) return;
+/** Reveal and slide, stacked on one element: a left-edge wipe plus a short
+ *  travel from the left, so the pane arrives rather than just appearing. */
+function slideIn(element: HTMLElement, delay: number): void {
+    settle(
+        element.animate(
+            [
+                {
+                    opacity: 0,
+                    transform: 'translateX(-22px)',
+                    clipPath: 'inset(0 100% 0 0)',
+                },
+                {
+                    opacity: 1,
+                    transform: 'translateX(0px)',
+                    clipPath: 'inset(0 0% 0 0)',
+                },
+            ],
+            { duration: STAGE_MS, delay, easing: SPRING, fill: 'both' },
+        ),
+    );
+}
 
-    layer.replaceChildren();
+function play(): void {
+    const source = sourceStage.value;
+    const target = targetStage.value;
+    if (!source || !target) return;
     if (isReduced.value) return;
 
-    const lines = [...targetEl.querySelectorAll<HTMLElement>('.tm-line')];
-    const panelRect = panelEl.getBoundingClientRect();
+    // Source first, target after a beat. The pause between them is the whole
+    // point: one document goes in, the other comes out.
+    slideIn(source, SOURCE_DELAY);
+    if (bridge.value) slideIn(bridge.value, TARGET_DELAY - 180);
+    slideIn(target, TARGET_DELAY);
 
-    // Measure everything before animating: the line assembly below displaces the
-    // target tokens, so a rect read afterwards is the wrong one.
-    const planned: Flight[] = [];
-    active.value.sample.carried.forEach((_, carry) => {
-        const from = sourceEl.querySelector<HTMLElement>(`[data-carry="${carry}"]`);
-        const to = targetEl.querySelector<HTMLElement>(`[data-carry="${carry}"]`);
-        if (!from || !to) return;
-        if (!isVisibleIn(from, sourceEl) || !isVisibleIn(to, targetEl)) return;
+    // Carried values are already tinted at rest. This brightens them in BOTH
+    // panes at the same instant, once the target has landed — that simultaneity
+    // is what reads as "these two are the same value", with nothing flying.
+    //
+    // The two colours are READ from the computed style rather than written as
+    // `var(--tm-carry-bg)` in the keyframes: `element.animate()` does not
+    // substitute custom properties, so a `var()` keyframe is dropped silently
+    // and the pulse simply never happens. Reading them per run also means a
+    // theme switch is picked up without re-registering anything.
+    const panelStyle = getComputedStyle(panel.value ?? source);
+    const rest = panelStyle.getPropertyValue('--tm-carry-bg').trim();
+    const peak = panelStyle.getPropertyValue('--tm-carry-peak').trim();
+    if (rest && peak) {
+        const carried = [
+            ...source.querySelectorAll<HTMLElement>('[data-carry]'),
+            ...target.querySelectorAll<HTMLElement>('[data-carry]'),
+        ];
+        for (const token of carried) {
+            settle(
+                token.animate(
+                    [
+                        { backgroundColor: rest },
+                        { backgroundColor: peak, offset: 0.35 },
+                        { backgroundColor: rest },
+                    ],
+                    {
+                        duration: PULSE_MS,
+                        delay: PULSE_DELAY,
+                        easing: 'ease-in-out',
+                        fill: 'both',
+                    },
+                ),
+            );
+        }
+    }
 
-        const a = from.getBoundingClientRect();
-        const b = to.getBoundingClientRect();
-        const ghost = document.createElement('span');
-        ghost.className = 'tm-ghost';
-        ghost.textContent = from.textContent;
-        ghost.style.left = `${a.left - panelRect.left}px`;
-        ghost.style.top = `${a.top - panelRect.top}px`;
-        planned.push({ ghost, from, to, dx: b.left - a.left, dy: b.top - a.top });
-    });
-
-    for (const flight of planned) layer.appendChild(flight.ghost);
-
-    lines.forEach((line, i) => {
-        settle(
-            line.animate(
-                [
-                    { opacity: 0, transform: 'translateY(7px)', filter: 'blur(3px)' },
-                    { opacity: 1, transform: 'none', filter: 'blur(0px)' },
-                ],
-                {
-                    duration: 440,
-                    delay: LINE_DELAY + i * LINE_STAGGER,
-                    easing: SPRING,
-                    fill: 'both',
-                },
-            ),
-        );
-    });
-
-    // The report wipes in once the last flight has landed. A clip-path wipe, not
-    // four width transitions: the segments are already laid out, so nothing here
-    // touches layout.
+    // The report wipes in last. clip-path on the container, not width on the
+    // four segments: they are already laid out, so nothing here touches layout.
     if (bar.value) {
         settle(
             bar.value.animate(
                 [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }],
                 {
-                    duration: 520,
-                    delay: FLIGHT_DELAY + planned.length * FLIGHT_STAGGER + FLIGHT_MS * 0.5,
+                    duration: 620,
+                    delay: PULSE_DELAY + 80,
                     easing: SPRING,
                     fill: 'both',
                 },
             ),
         );
     }
-
-    planned.forEach((flight, i) => {
-        const delay = FLIGHT_DELAY + i * FLIGHT_STAGGER;
-        const { dx, dy } = flight;
-
-        flight.ghost.animate(
-            [
-                { transform: 'translate(0px, 0px) scale(1)', filter: 'blur(0px)' },
-                {
-                    transform: `translate(${dx * 0.52}px, ${dy * 0.4}px) scale(1.05)`,
-                    filter: 'blur(0.7px)',
-                    offset: 0.5,
-                },
-                {
-                    transform: `translate(${dx}px, ${dy}px) scale(1)`,
-                    filter: 'blur(0px)',
-                },
-            ],
-            { duration: FLIGHT_MS, delay, easing: SPRING, fill: 'both' },
-        );
-        // The ghost hands off to the real token rather than dissolving over it.
-        const fade = flight.ghost.animate(
-            [{ opacity: 1 }, { opacity: 1, offset: 0.88 }, { opacity: 0 }],
-            { duration: FLIGHT_MS, delay, easing: 'linear', fill: 'both' },
-        );
-        // The ghost has done its job once it has landed; removing it also drops
-        // its two animations, so a settled panel holds none at all.
-        fade.onfinish = () => flight.ghost.remove();
-        settle(
-            flight.to.animate([{ opacity: 0 }, { opacity: 0, offset: 0.86 }, { opacity: 1 }], {
-                duration: FLIGHT_MS,
-                delay,
-                easing: 'linear',
-                fill: 'both',
-            }),
-        );
-        // Dim on departure, restored on arrival: the value is genuinely present in
-        // both documents, so leaving the source copy faded would misreport it as
-        // having moved out. Ending on the resting value is also what lets settle()
-        // simply cancel the animation.
-        settle(
-            flight.from.animate(
-                [
-                    { opacity: 1, offset: 0 },
-                    { opacity: 0.35, offset: 0.3 },
-                    { opacity: 0.35, offset: 0.82 },
-                    { opacity: 1, offset: 1 },
-                ],
-                { duration: FLIGHT_MS, delay, easing: 'linear', fill: 'both' },
-            ),
-        );
-    });
 }
 
 watch(
@@ -316,66 +282,60 @@ watch(
                 >
                     {{ entry.name }}
                 </button>
-                <button
-                    type="button"
-                    class="tm-ctl ml-auto"
-                    :aria-label="
-                        paused
-                            ? t('importers.transmuter.play')
-                            : t('importers.transmuter.pause')
-                    "
-                    :aria-pressed="paused"
-                    @click="paused = !paused"
-                >
-                    <Play v-if="paused" class="size-3.5" aria-hidden="true" />
-                    <Pause v-else class="size-3.5" aria-hidden="true" />
-                </button>
             </div>
 
             <div class="flex flex-col gap-2 p-3 sm:gap-2.5 sm:p-4">
-                <p class="tm-cap">
-                    <!-- "What BeeFree saved" is right for a hosted editor and wrong
-                         for a format — nothing "saves" MJML, you write it. -->
-                    <span>{{
-                        active.group === 'markup'
-                            ? t('importers.transmuter.sourceCaptionMarkup', {
-                                  name: active.name,
-                              })
-                            : t('importers.transmuter.sourceCaption', { name: active.name })
-                    }}</span>
-                    <span class="tm-cap-meta">{{ active.sample.lang }}</span>
-                </p>
-                <pre ref="sourcePane" class="tm-pane"><code><span
-                    v-for="(line, l) in sourceLines"
-                    :key="l"
-                    class="tm-line"
-                ><span
-                    v-for="(token, k) in line"
-                    :key="k"
-                    :class="['tm-t', `tm-${token.k}`, token.carry !== undefined ? 'tm-carry' : '']"
-                    :data-carry="token.carry"
-                >{{ token.t }}</span>{{ '\n' }}</span></code></pre>
+                <!-- Caption and pane animate as ONE stage, so a label never arrives
+                     ahead of the code it labels. -->
+                <div ref="sourceStage" class="flex flex-col gap-2">
+                    <p class="tm-cap">
+                        <!-- "What BeeFree saved" is right for a hosted editor and
+                             wrong for a format — nothing "saves" MJML, you write it. -->
+                        <span>{{
+                            active.group === 'markup'
+                                ? t('importers.transmuter.sourceCaptionMarkup', {
+                                      name: active.name,
+                                  })
+                                : t('importers.transmuter.sourceCaption', {
+                                      name: active.name,
+                                  })
+                        }}</span>
+                        <span class="tm-cap-meta">{{ active.sample.lang }}</span>
+                    </p>
+                    <pre class="tm-pane"><code><span
+                        v-for="(line, l) in sourceLines"
+                        :key="l"
+                        class="tm-line"
+                    ><span
+                        v-for="(token, k) in line"
+                        :key="k"
+                        :class="['tm-t', `tm-${token.k}`, token.carry !== undefined ? 'tm-carry' : '']"
+                        :data-carry="token.carry"
+                    >{{ token.t }}</span>{{ '\n' }}</span></code></pre>
+                </div>
 
-                <div class="tm-bridge">
+                <div ref="bridge" class="tm-bridge">
                     <span class="tm-bridge-line" aria-hidden="true" />
                     <span class="tm-bridge-pkg">{{ active.sample.pkg }}</span>
                     <span class="tm-bridge-line" aria-hidden="true" />
                 </div>
 
-                <p class="tm-cap">
-                    <span>{{ t('importers.transmuter.targetCaption') }}</span>
-                    <span class="tm-cap-meta">json</span>
-                </p>
-                <pre ref="targetPane" class="tm-pane"><code><span
-                    v-for="(line, l) in targetLines"
-                    :key="`${index}-${l}`"
-                    class="tm-line"
-                ><span
-                    v-for="(token, k) in line"
-                    :key="k"
-                    :class="['tm-t', `tm-${token.k}`, token.carry !== undefined ? 'tm-carry' : '']"
-                    :data-carry="token.carry"
-                >{{ token.t }}</span>{{ '\n' }}</span></code></pre>
+                <div ref="targetStage" class="flex flex-col gap-2">
+                    <p class="tm-cap">
+                        <span>{{ t('importers.transmuter.targetCaption') }}</span>
+                        <span class="tm-cap-meta">json</span>
+                    </p>
+                    <pre class="tm-pane"><code><span
+                        v-for="(line, l) in targetLines"
+                        :key="`${index}-${l}`"
+                        class="tm-line"
+                    ><span
+                        v-for="(token, k) in line"
+                        :key="k"
+                        :class="['tm-t', `tm-${token.k}`, token.carry !== undefined ? 'tm-carry' : '']"
+                        :data-carry="token.carry"
+                    >{{ token.t }}</span>{{ '\n' }}</span></code></pre>
+                </div>
             </div>
 
             <div class="tm-report flex flex-col gap-2 px-3 py-2.5 sm:px-4">
@@ -388,7 +348,10 @@ watch(
                         aria-hidden="true"
                     />
                 </div>
-                <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]/4">
+                <div class="flex items-start gap-3">
+                    <p
+                        class="flex flex-1 flex-wrap items-center gap-x-3 gap-y-1 text-[11px]/4"
+                    >
                     <span class="tm-total">{{
                         t('importers.transmuter.report.blocks', {
                             count: active.sample.report.total,
@@ -409,7 +372,22 @@ watch(
                             })
                         }}
                     </span>
-                </p>
+                    </p>
+                    <button
+                        type="button"
+                        class="tm-ctl"
+                        :aria-label="
+                            paused
+                                ? t('importers.transmuter.play')
+                                : t('importers.transmuter.pause')
+                        "
+                        :aria-pressed="paused"
+                        @click="paused = !paused"
+                    >
+                        <Play v-if="paused" class="size-3" aria-hidden="true" />
+                        <Pause v-else class="size-3" aria-hidden="true" />
+                    </button>
+                </div>
                 <!--
                     Verbatim converter output, not site copy — so it stays in the
                     converter's own language, like the code above it. It is also the
@@ -430,11 +408,6 @@ watch(
                 </p>
             </div>
 
-            <div
-                ref="flights"
-                class="pointer-events-none absolute inset-0 z-10"
-                aria-hidden="true"
-            />
         </div>
 
         <p class="mt-3 text-[11px]/5 text-neutral-500 dark:text-neutral-400">
@@ -451,9 +424,8 @@ watch(
     Dark overrides are written `.dark .x`, NOT `:global(.dark) .x`. Vue's scoped
     transform turns the latter into a bare `.dark`, dropping the element entirely
     — which puts every token on <html> while the element keeps its own light
-    value, and the panel renders white in dark mode. Verified in the browser.
-    `:global(.tm-ghost)` below is different and correct: a standalone `:global()`
-    works, and the ghost needs it because JS creates it.
+    value, and the panel renders white in dark mode. Verified in the browser, and
+    `tests/styles/scoped-css.test.ts` now fails the build on it repo-wide.
 
     One hue family only — the warm primary at 55 and warm neutrals at 55–60. Code
     highlighting normally reaches for a second and third hue; here the kinds are
@@ -481,7 +453,7 @@ watch(
 
     --tm-carry-bg: oklch(70% 0.16 55 / 0.16);
     --tm-carry-rule: oklch(58% 0.15 50 / 0.55);
-    --tm-ghost-bg: oklch(70% 0.16 55 / 0.3);
+    --tm-carry-peak: oklch(70% 0.16 55 / 0.34);
 }
 .dark .tm {
     --tm-panel: oklch(17.5% 0.009 55);
@@ -500,7 +472,7 @@ watch(
 
     --tm-carry-bg: oklch(75% 0.15 55 / 0.2);
     --tm-carry-rule: oklch(80% 0.13 55 / 0.6);
-    --tm-ghost-bg: oklch(75% 0.15 55 / 0.34);
+    --tm-carry-peak: oklch(75% 0.15 55 / 0.4);
 }
 
 .tm-panel {
@@ -529,6 +501,7 @@ watch(
 }
 
 .tm-tab {
+    flex: 1 1 auto;
     border-radius: 6px;
     padding: 0.25rem 0.5rem;
     font-size: 11px;
@@ -578,6 +551,31 @@ watch(
 }
 .dark .tm-ctl {
     color: oklch(68% 0.014 60);
+}
+.dark .tm-ctl:hover {
+    background: oklch(24% 0.01 55);
+    color: oklch(92% 0.006 60);
+}
+
+.tm-ctl {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    margin-top: -1px;
+    border-radius: 5px;
+    padding: 0.25rem;
+    color: oklch(58% 0.016 60);
+    transition:
+        color 160ms ease,
+        background-color 160ms ease;
+}
+.tm-ctl:hover {
+    background: oklch(95% 0.005 60);
+    color: oklch(30% 0.015 60);
+}
+.dark .tm-ctl {
+    color: oklch(64% 0.014 60);
 }
 .dark .tm-ctl:hover {
     background: oklch(24% 0.01 55);
@@ -673,34 +671,11 @@ watch(
    so the static state carries the same information the flight does. */
 .tm-carry {
     border-radius: 3px;
-    background: var(--tm-carry-bg);
+    background-color: var(--tm-carry-bg);
     box-shadow: inset 0 -1px 0 0 var(--tm-carry-rule);
     padding: 0 1px;
 }
 
-/* `:global` is required, not stylistic: the ghost is created with
-   document.createElement in play(), so it never carries the scope attribute Vue
-   stamps on template nodes and every scoped rule would miss it — leaving it
-   `position: static` and laying it out at the top of the flight layer. */
-:global(.tm-ghost) {
-    position: absolute;
-    border-radius: 3px;
-    background: var(--tm-ghost-bg);
-    box-shadow: inset 0 -1px 0 0 var(--tm-carry-rule);
-    padding: 0 1px;
-    color: var(--tm-plain);
-    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-    font-size: 10px;
-    line-height: 1.125rem;
-    white-space: pre;
-    will-change: transform;
-}
-@media (min-width: 640px) {
-    :global(.tm-ghost) {
-        font-size: 12px;
-        line-height: 1.25rem;
-    }
-}
 
 .tm-bridge {
     display: flex;
