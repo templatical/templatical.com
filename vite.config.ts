@@ -107,5 +107,20 @@ export default defineConfig(async () => ({
             '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
     },
+    // `HomeCloseSection.vue` displays a sample integration snippet containing
+    // `import '@templatical/editor/style.css'`, because that is what a reader
+    // wiring up the SDK would actually write. The dependency scanner cannot tell
+    // a displayed import from a real one, and `@templatical/editor` is
+    // deliberately not a dependency here — the hero editor loads it from the
+    // unpkg CDN at runtime instead.
+    //
+    // Without this exclude the scanner fails to resolve it and aborts the WHOLE
+    // scan, starting the dev server with pre-bundling disabled for every
+    // dependency (17 optimized -> 0). It costs a slower cold start and prints one
+    // warning that scrolls past; the build is unaffected, so nothing else catches
+    // it. `tests/vite/dep-scan.test.ts` holds the invariant.
+    optimizeDeps: {
+        exclude: ['@templatical/editor'],
+    },
     plugins: [vue(), tailwindcss()],
 }));
