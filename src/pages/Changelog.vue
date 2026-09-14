@@ -1,23 +1,20 @@
 <script setup lang="ts">
 import HeroAurora from '@/components/HeroAurora.vue';
 import HeroHeadline from '@/components/HeroHeadline.vue';
+import ReleaseCadence from '@/components/ReleaseCadence.vue';
+import ReleaseEntry from '@/components/ReleaseEntry.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
-import {
-    docsAnchor,
-    titleSegments,
-    useChangelog,
-    type ChangelogLevel,
-    type ChangelogVersion,
-} from '@/composables/useChangelog';
+import { useChangelog } from '@/composables/useChangelog';
+import { buildCadence, daysBetween, spineGapRem } from '@/lib/releaseTimeline';
 import { URLS } from '@/lib/urls';
 import { useHead } from '@unhead/vue';
-import { ChevronRight, Sparkles, TriangleAlert, Wrench } from '@lucide/vue';
+import { ChevronRight } from '@lucide/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const { versions, isUnavailable } = useChangelog();
 
 useHead({
@@ -30,47 +27,28 @@ useHead({
     ],
 });
 
-const LEVEL_ICONS = {
-    major: TriangleAlert,
-    minor: Sparkles,
-    patch: Wrench,
-} satisfies Record<ChangelogLevel, unknown>;
+const cadence = computed(() => buildCadence(versions.value));
 
-const LEVEL_CLASSES = {
-    major: 'border-amber-300 text-amber-700 dark:border-amber-500/40 dark:text-amber-400',
-    minor: 'border-primary/30 text-primary-text',
-    patch: 'border-neutral-300 text-neutral-600 dark:border-neutral-700 dark:text-neutral-400',
-} satisfies Record<ChangelogLevel, string>;
-
-/** Falls back to `patch` styling for a level a future release might introduce. */
-function levelIcon(level: ChangelogLevel) {
-    return LEVEL_ICONS[level] ?? LEVEL_ICONS.patch;
-}
-
-function levelClass(level: ChangelogLevel): string {
-    return LEVEL_CLASSES[level] ?? LEVEL_CLASSES.patch;
-}
-
-function levelLabel(level: ChangelogLevel): string {
-    return t(`changelog.levels.${level in LEVEL_ICONS ? level : 'patch'}`);
-}
-
-/** Renders an ISO date in the active locale; returns null when there is no date. */
-function formatDate(date: string | null): string | null {
-    if (!date) return null;
-    const parsed = new Date(`${date}T00:00:00Z`);
-    if (Number.isNaN(parsed.getTime())) return null;
-    return new Intl.DateTimeFormat(locale.value, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        timeZone: 'UTC',
-    }).format(parsed);
-}
-
-function versionKey(version: ChangelogVersion): string {
-    return version.version;
-}
+/**
+ * Each entry carries the spacing that separates it from the release above.
+ *
+ * `versions` is newest-first, so entry `i`'s neighbour above is `i - 1` and the
+ * gap measures from this release forward to that one — always non-negative for a
+ * well-ordered feed, and clamped by `spineGapRem` if a feed ever arrives out of
+ * order. The newest release opens the rail and takes no gap at all.
+ */
+const entries = computed(() =>
+    versions.value.map((version, index) => {
+        const newer = index === 0 ? null : versions.value[index - 1];
+        const gapDays = newer ? daysBetween(version.date, newer.date) : null;
+        return {
+            version,
+            gap: index === 0 ? 0 : spineGapRem(gapDays),
+            gapDays: index === 0 ? null : gapDays,
+            latest: index === 0,
+        };
+    }),
+);
 
 const showingLatest = computed(() =>
     t('changelog.showingLatest', { count: versions.value.length }),
@@ -85,16 +63,27 @@ const showingLatest = computed(() =>
                 fade-class="bg-gradient-to-b from-transparent from-55% to-white dark:to-neutral-950"
             />
             <SiteContainer class="relative">
-                <div class="flex max-w-2xl flex-col gap-6">
-                    <div class="flex flex-col gap-2">
-                        <SiteEyebrow>
-                            {{ t('changelog.hero.eyebrow') }}
-                        </SiteEyebrow>
-                        <HeroHeadline :text="t('changelog.hero.headline')" as="h1" />
+                <div
+                    class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16"
+                >
+                    <div class="flex max-w-2xl flex-col gap-6">
+                        <div class="flex flex-col gap-2">
+                            <SiteEyebrow>
+                                {{ t('changelog.hero.eyebrow') }}
+                            </SiteEyebrow>
+                            <HeroHeadline :text="t('changelog.hero.headline')" as="h1" />
+                        </div>
+                        <SiteText class="text-pretty">
+                            <p>{{ t('changelog.hero.subheadline') }}</p>
+                        </SiteText>
                     </div>
-                    <SiteText class="text-pretty">
-                        <p>{{ t('changelog.hero.subheadline') }}</p>
-                    </SiteText>
+                    <!--
+                        The cadence plot, not a sentence: the hero used to assert
+                        "Templatical ships often", which nothing could check and a
+                        quiet month would quietly falsify. Omitted entirely when the
+                        feed is unavailable or too short to carry an axis.
+                    -->
+                    <ReleaseCadence v-if="cadence" :cadence="cadence" class="lg:pb-1.5" />
                 </div>
             </SiteContainer>
         </section>
@@ -129,119 +118,27 @@ const showingLatest = computed(() =>
                     </a>
                 </div>
 
-                <div v-else class="mx-auto flex max-w-3xl flex-col gap-12">
-                    <article
-                        v-for="version in versions"
-                        :key="versionKey(version)"
-                        class="flex flex-col gap-4 border-l border-neutral-200 pl-6 dark:border-neutral-800"
-                    >
-                        <header class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <h2
-                                class="font-display text-2xl/8 tracking-tight text-neutral-950 dark:text-white"
-                            >
-                                {{ version.version }}
-                            </h2>
-                            <time
-                                v-if="formatDate(version.date)"
-                                :datetime="version.date ?? undefined"
-                                class="text-sm/7 text-neutral-500 dark:text-neutral-500"
-                            >
-                                {{ formatDate(version.date) }}
-                            </time>
-                        </header>
+                <div v-else class="mx-auto max-w-3xl">
+                    <div class="spine">
+                        <!--
+                            Zero-height sticky flow child: it travels the length of the
+                            rail as the page scrolls and draws the reading head on it.
+                            Sticky rather than a scroll-driven animation on purpose —
+                            it is the one part of this that every browser gets, Firefox
+                            included, and it needs no fallback.
+                        -->
+                        <span class="spine__head" aria-hidden="true" />
+                        <ReleaseEntry
+                            v-for="entry in entries"
+                            :key="entry.version.version"
+                            :version="entry.version"
+                            :gap="entry.gap"
+                            :gap-days="entry.gapDays"
+                            :latest="entry.latest"
+                        />
+                    </div>
 
-                        <p
-                            v-if="version.changes.length === 0"
-                            class="text-base/7 text-neutral-600 dark:text-neutral-400"
-                        >
-                            {{ t('changelog.emptyVersion') }}
-                        </p>
-
-                        <ul v-else class="flex flex-col gap-5">
-                            <li
-                                v-for="change in version.changes"
-                                :key="change.hash"
-                                class="flex flex-col gap-2"
-                            >
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span
-                                        class="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs/5 font-medium"
-                                        :class="levelClass(change.level)"
-                                    >
-                                        <component
-                                            :is="levelIcon(change.level)"
-                                            class="size-3"
-                                            aria-hidden="true"
-                                        />
-                                        {{ levelLabel(change.level) }}
-                                    </span>
-                                    <span
-                                        v-for="pkg in change.packages"
-                                        :key="pkg"
-                                        class="rounded-md bg-neutral-100 px-1.5 py-0.5 font-mono text-xs/5 text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400"
-                                    >
-                                        {{ pkg }}
-                                    </span>
-                                </div>
-                                <p
-                                    class="text-base/7 text-pretty text-neutral-700 dark:text-neutral-300"
-                                >
-                                    <template
-                                        v-for="(segment, index) in titleSegments(change.title)"
-                                        :key="index"
-                                    >
-                                        <!-- `wrap-anywhere`, not `break-words`: changeset titles
-                                             quote package names and identifiers with no break
-                                             opportunity, and only `overflow-wrap: anywhere` also
-                                             shrinks min-content, which is what stops the pill
-                                             pushing the page wider at mobile widths. Prose keeps
-                                             normal wrapping — this is scoped to code spans. -->
-                                        <a
-                                            v-if="segment.href"
-                                            :href="segment.href"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="font-medium text-primary-text underline-offset-2 hover:underline"
-                                            :class="{
-                                                'font-semibold': segment.strong,
-                                                italic: segment.em,
-                                            }"
-                                            >{{ segment.text }}</a
-                                        >
-                                        <code
-                                            v-else-if="segment.code"
-                                            class="rounded bg-neutral-100 px-1 py-0.5 font-mono text-sm wrap-anywhere text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
-                                            :class="{
-                                                'font-semibold': segment.strong,
-                                                italic: segment.em,
-                                            }"
-                                            >{{ segment.text }}</code
-                                        >
-                                        <strong
-                                            v-else-if="segment.strong"
-                                            class="font-semibold text-neutral-950 dark:text-white"
-                                            >{{ segment.text }}</strong
-                                        >
-                                        <em v-else-if="segment.em" class="italic">{{
-                                            segment.text
-                                        }}</em>
-                                        <template v-else>{{ segment.text }}</template>
-                                    </template>
-                                </p>
-                            </li>
-                        </ul>
-
-                        <a
-                            :href="docsAnchor(version.version)"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-                        >
-                            {{ t('changelog.versionNotes', { version: version.version }) }}
-                            <ChevronRight class="size-4" />
-                        </a>
-                    </article>
-
-                    <p class="text-sm/7 text-neutral-500 dark:text-neutral-500">
+                    <p class="mt-12 text-sm/7 text-neutral-500 tabular-nums dark:text-neutral-400">
                         {{ showingLatest }}
                     </p>
                 </div>
@@ -288,3 +185,93 @@ const showingLatest = computed(() =>
         </section>
     </div>
 </template>
+
+<style scoped>
+/*
+    The rail is a time axis, not a decorative border: the space between two nodes
+    is proportional to the days between the releases (see `spineGapRem`), so a
+    week of daily shipping reads as a cluster and a quiet spell reads as air.
+
+    `--spine-eye` is the reading line — where the travelling head parks and where a
+    node is considered "current". `ReleaseEntry`'s `animation-range` carries its
+    complement (`100% - 44%`) because the two properties take different units and
+    cannot share one value. Move one, move both.
+*/
+.spine {
+    --spine-eye: 44%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.5rem;
+}
+
+/*
+    Masked at both ends rather than hard-stopped. A hairline that begins and ends
+    on a blunt edge reads as a border that ran out; fading it reads as an axis
+    continuing past the window, which is exactly what the archive does.
+*/
+.spine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    /*
+        A step darker than the `neutral-200` this list used as a plain left
+        border. At 1.09:1 on white that was a divider you stop seeing; the rail
+        now carries the page's argument and has to stay legible for 21 screens.
+    */
+    background: var(--color-neutral-300);
+    mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        #000 2.5rem,
+        #000 calc(100% - 5rem),
+        transparent
+    );
+}
+.dark .spine::before {
+    background: var(--color-neutral-800);
+}
+
+.spine__head {
+    position: sticky;
+    top: var(--spine-eye);
+    height: 0;
+    pointer-events: none;
+}
+
+/* The lit segment, centred on the 1px rail: 3px wide starting one pixel left. */
+.spine__head::after {
+    content: '';
+    position: absolute;
+    top: -2.75rem;
+    left: -1px;
+    width: 3px;
+    height: 5.5rem;
+    border-radius: 2px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--primary) 42%,
+        var(--primary) 58%,
+        transparent
+    );
+}
+
+/* A wider, much fainter bloom so the head has a falloff instead of an edge. */
+.spine__head::before {
+    content: '';
+    position: absolute;
+    top: -4.5rem;
+    left: -0.625rem;
+    width: 1.3125rem;
+    height: 9rem;
+    background: radial-gradient(
+        closest-side,
+        color-mix(in oklch, var(--primary) 20%, transparent),
+        transparent
+    );
+}
+</style>

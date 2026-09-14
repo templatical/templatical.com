@@ -230,6 +230,69 @@
     body {
         @apply bg-background text-foreground;
     }
+
+    /*
+        Text selection is a browser default that belongs to no design system, and
+        the stock blue was the last unthemed surface on this site.
+
+        The pair is not a free choice. `--primary` is a GROUND — that is its whole
+        job, and a selection highlight is exactly that. `--primary-foreground` is
+        the only token pinned to clear 4.5:1 ON `--primary` in BOTH themes, which
+        `contrast.test.ts` already asserts for the CTA; selection reuses that same
+        proof rather than needing a new one. Anything else here would be an
+        unmeasured colour sitting under arbitrary body copy.
+    */
+    ::selection {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    /*
+        Scrollbars. This site has eight local scroll containers and most of them
+        are code — Shiki blocks, the transmuter panes, the install-command rows —
+        so the default cold-grey thumb sits inside a warm-neutral code block on
+        nearly every page.
+
+        `neutral-500` in BOTH themes, which is not a shortcut: it is the only stop
+        that clears 3:1 against all four grounds a thumb can land on here — white
+        5.05 and neutral-100 4.49 in light, neutral-950 3.92 and neutral-900 3.50
+        in dark. Every darker dark-mode candidate fails (neutral-600 reaches only
+        2.48 on neutral-950), and every lighter light-mode one fails too
+        (neutral-400 reaches 2.57 on white).
+
+        3:1 is owed here precisely BECAUSE we are restyling. WCAG 1.4.11 exempts
+        controls "whose appearance is determined by the user agent and not modified
+        by the author" — which is why Chromium's own ~1.9:1 thumb is not a failure
+        and ours would be. Touching it takes on the obligation.
+
+        A transparent track lets each container keep its own ground, so one rule
+        works on white, on a code block and on the palette alike.
+
+        Deliberately NO `scrollbar-width: thin`. On macOS scrollbars are already
+        overlay and it changes nothing; on Windows and Linux it shrinks the one
+        control people actually use to scroll. Verified on this platform that
+        neither property forces a non-overlay scrollbar: the gutter stays 0px with
+        `scrollbar-color`, with `scrollbar-width`, and with both — so no code block
+        loses layout width to a permanent gutter.
+    */
+    html {
+        scrollbar-color: var(--color-neutral-500) transparent;
+    }
+
+    /*
+        The caret. Unlike selection, this was never broken — `caret-color: auto`
+        resolves to `currentColor`, so it already matched the text it sits in. This
+        is a deliberate accent on the one text input the site has (the Cmd-K
+        palette in `FeatureJump.vue`), not a fix.
+
+        `--primary-text`, never `--primary`: a caret is a foreground mark, and the
+        brand value is 2.80:1 on white — a caret nobody can see. `:where()` keeps
+        specificity at 0 so any component, including the CDN-loaded editor on the
+        home page, overrides it by simply having an opinion.
+    */
+    :where(input, textarea, [contenteditable]) {
+        caret-color: var(--primary-text);
+    }
 }
 
 @keyframes fade-in {

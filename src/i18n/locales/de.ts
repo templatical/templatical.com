@@ -1782,12 +1782,22 @@ const de: MessageSchema = {
             eyebrow: 'Changelog',
             headline: 'Was veröffentlicht wurde — und wann',
             subheadline:
-                'Templatical erscheint in kurzen Abständen. Jedes Release steht hier mit den Paketen, die es verändert hat — alle Pakete teilen sich eine Versionsnummer.',
+                'Jedes Release steht hier mit den Paketen, die es verändert hat — alle Pakete teilen sich eine Versionsnummer.',
         },
         levels: {
             major: 'Breaking',
             minor: 'Funktion',
             patch: 'Fix',
+        },
+        latest: 'Aktuell',
+        spine: {
+            gap: '{count} Tage',
+        },
+        cadence: {
+            summary: '{releases} Releases in {days} Tagen',
+            label: 'Release-Takt: {releases} Releases zwischen {first} und {last}.',
+            dayOne: '{date} — 1 Release',
+            dayMany: '{date} — {count} Releases',
         },
         emptyVersion:
             'Keine für Nutzer sichtbaren Änderungen — veröffentlicht, damit alle Pakete auf derselben Version bleiben.',

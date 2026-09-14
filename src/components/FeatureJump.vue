@@ -281,11 +281,11 @@ function onDialogClick(event: MouseEvent) {
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 0.375rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-neutral-300) transparent;
-}
-.dark .fj__list {
-    scrollbar-color: var(--color-neutral-700) transparent;
+    /* No scrollbar rules here: `app.css` styles the thumb once, on `html`, and it
+       inherits. This block used to set its own `neutral-300` / `neutral-700` pair,
+       which measured 1.51:1 and 1.84:1 against the panel — far under the 3:1 that
+       WCAG 1.4.11 owes once an author restyles a control. It also set
+       `scrollbar-width: thin`, deliberately dropped site-wide. */
 }
 
 .fj__row {

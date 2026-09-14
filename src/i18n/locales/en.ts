@@ -1770,12 +1770,22 @@ export default {
             eyebrow: 'Changelog',
             headline: 'What shipped, and when',
             subheadline:
-                'Templatical ships often. Every release is listed here with the packages it changed — all packages share one version number.',
+                'Every release is listed here with the packages it changed — all packages share one version number.',
         },
         levels: {
             major: 'Breaking',
             minor: 'Feature',
             patch: 'Fix',
+        },
+        latest: 'Latest',
+        spine: {
+            gap: '{count} days',
+        },
+        cadence: {
+            summary: '{releases} releases in {days} days',
+            label: 'Release cadence: {releases} releases between {first} and {last}.',
+            dayOne: '{date} — 1 release',
+            dayMany: '{date} — {count} releases',
         },
         emptyVersion: 'No user-facing changes — released to keep the packages in step.',
         versionNotes: 'Read the full notes for {version}',

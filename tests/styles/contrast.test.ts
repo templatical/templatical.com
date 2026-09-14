@@ -288,6 +288,114 @@ describe('--primary stays a non-text brand mark', () => {
     });
 });
 
+describe('text selection', () => {
+    /*
+        Selection reuses the CTA's proven pair rather than picking its own. The
+        ratio itself is already asserted above ("--primary-foreground clears AA
+        body text (4.5:1) on --primary", both themes); this pins the RULE to that
+        pair, so swapping either token here would have to be a deliberate change
+        with a new proof rather than a quiet restyle of every selection on the
+        site.
+    */
+    it('paints --primary-foreground on --primary', () => {
+        const rule = appCss.match(/::selection\s*\{([^}]*)\}/);
+        expect(rule).not.toBeNull();
+        expect(rule![1]).toMatch(/background-color:\s*var\(--primary\)/);
+        expect(rule![1]).toMatch(/color:\s*var\(--primary-foreground\)/);
+    });
+});
+
+/**
+ * `app.css` with its comments removed, for assertions about what the stylesheet
+ * DECLARES rather than what it says. The rules below are documented in prose
+ * that names the very properties they forbid — matching raw source, a comment
+ * reading "deliberately NO `scrollbar-width`" fails the test that forbids
+ * `scrollbar-width`. Caught exactly that way.
+ */
+const stripComments = (source: string) => source.replace(/\/\*[\s\S]*?\*\//g, '');
+
+const appCssRules = stripComments(appCss);
+
+/**
+ * Every SFC source. Read through Vite rather than node:fs for the same reason
+ * `scoped-css.test.ts` does: `@types/node` is not installed and tsconfig pins
+ * `types` to `vite/client`.
+ */
+const SFC_SOURCES: Record<string, string> = Object.fromEntries(
+    Object.entries(
+        import.meta.glob('../../src/**/*.vue', {
+            query: '?raw',
+            import: 'default',
+            eager: true,
+        }) as Record<string, string>,
+    ).map(([path, source]) => [path.replace('../../src/', ''), source] as const),
+);
+
+describe('the scrollbar thumb', () => {
+    /*
+        Restyling a scrollbar takes on a contrast obligation the default did not
+        have. WCAG 1.4.11 exempts controls "whose appearance is determined by the
+        user agent and not modified by the author", so Chromium's own ~1.9:1 thumb
+        is not a failure — and ours would be.
+
+        One token serves both themes because it is the only stop that can: every
+        darker dark-mode candidate and every lighter light-mode one falls under
+        3:1 on at least one ground. That makes `neutral-500` load-bearing rather
+        than chosen, which is exactly the kind of thing that gets "tidied" into a
+        per-theme pair later.
+    */
+    it.each([
+        ['light', false],
+        ['dark', true],
+    ] as const)('clears 3:1 on every %s ground it can land on', (theme, dark) => {
+        const thumb = token('--color-neutral-500', dark);
+        for (const [, ground] of SURFACES[theme]) {
+            expect(ratio(thumb, ground)).toBeGreaterThanOrEqual(3);
+        }
+    });
+
+    it('paints neutral-500 on a transparent track', () => {
+        expect(appCss).toMatch(/scrollbar-color:\s*var\(--color-neutral-500\)\s+transparent/);
+    });
+
+    it('never sets `scrollbar-width: thin`', () => {
+        /*
+            The obvious next "improvement", and the wrong one: macOS scrollbars are
+            already overlay so it buys nothing there, while on Windows and Linux it
+            shrinks the control people actually use to scroll.
+        */
+        expect(appCssRules).not.toMatch(/scrollbar-width/);
+    });
+
+    it('is the only scrollbar treatment in src/', () => {
+        /*
+            An app.css-only assertion is not the invariant — a component can restyle
+            its own scrollbar and win on specificity, and one did. `FeatureJump`'s
+            list carried its own `neutral-300` / `neutral-700` pair at 1.51:1 and
+            1.84:1 against the panel, well under 3:1, plus the `scrollbar-width:
+            thin` this file forbids. It was invisible to a test that only read
+            app.css, and only turned up by grepping the BUILT bundle.
+        */
+        // Comments stripped AND the match anchored to the start of a line: the
+        // rule that replaced FeatureJump's block names the very properties it
+        // removed, and prose must not read as a declaration. This bit twice.
+        const offenders = Object.entries(SFC_SOURCES)
+            .filter(([, source]) =>
+                /^\s*scrollbar-(color|width|gutter)\s*:/m.test(stripComments(source)),
+            )
+            .map(([file]) => file);
+        expect(offenders).toEqual([]);
+    });
+});
+
+describe('the caret', () => {
+    it('uses --primary-text, not the brand ground', () => {
+        // `--primary` is 2.80:1 on white — a caret nobody can see.
+        const rule = appCssRules.match(/caret-color:\s*var\((--[\w-]+)\)/);
+        expect(rule?.[1]).toBe('--primary-text');
+    });
+});
+
 describe('the global focus outline', () => {
     /*
         `* { @apply border-border outline-ring/50 }` was the shadcn default this

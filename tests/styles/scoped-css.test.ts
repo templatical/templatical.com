@@ -184,6 +184,9 @@ describe('src/**/*.vue', () => {
             'components/HeroHeadline.vue',
             'components/HeroSection.vue',
             'components/HeroTransmuter.vue',
+            'components/ReleaseCadence.vue',
+            'components/ReleaseEntry.vue',
+            'pages/Changelog.vue',
         ]);
     });
 
