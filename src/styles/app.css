@@ -1,5 +1,22 @@
 @import 'tailwindcss';
 
+/*
+    Tailwind scans every non-gitignored file in the project, which includes two
+    directories that hold no templates: `tests/` and the untracked `docs/` of
+    scratch plans and briefs. Between them they were emitting
+    `.text-primary{color:var(--primary)}` and `.outline-primary{...}` into the
+    compiled CSS, referenced by zero elements — `contrast.test.ts` has to NAME
+    those two classes to assert they appear nowhere in `src/`, and an old plan
+    doc quotes the markup it proposed.
+
+    Excluding both keeps the banned utilities from existing at all, which is the
+    stronger version of the ban, and matches `.prettierignore`'s reasoning: these
+    paths are not the project's to compile or rewrite. No class in either should
+    ever reach a page.
+*/
+@source not '../../tests';
+@source not '../../docs';
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -31,6 +48,7 @@
 
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
+    --color-primary-text: var(--primary-text);
 
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
@@ -112,11 +130,51 @@
     );
 }
 
+/*
+    Two accent tokens, and the split is load-bearing.
+
+    `--primary` is the pinned brand orange. At oklch(70% 0.16 55) it measures
+    2.80:1 on white, which is below EVERY threshold WCAG 2.1 AA defines — 4.5
+    for body text, 3.0 for large text, 3.0 for a focus ring or any other
+    informative non-text mark. So it is a GROUND or a FILL only: button and pill
+    backgrounds, the aurora tint, the section glow, a hairline. Never a
+    foreground.
+
+    `--primary-text` is the same hue carried down to oklch(55% 0.155 55), which
+    clears 4.5:1 on every light surface in this palette (5.10 on white, 4.88 on
+    neutral-50, 4.54 on neutral-100). It is the accent for anything in a
+    FOREGROUND role — text, and the icons sitting on a text line beside it, so
+    that one line never shows two different oranges. In dark mode the brand value
+    already measures 8.51:1 on neutral-950, so `--primary-text` is identical to
+    `--primary` there and dark renders unchanged.
+
+    Consequences worth knowing before editing any of this:
+
+    - `text-primary` is banned in src/. `tests/styles/contrast.test.ts` fails on
+      it, and also pins `--primary`'s literal value in both themes — because
+      darkening `--primary` is the obvious fix for a contrast complaint and it is
+      the wrong one: it restyles every hero, CTA and glow, and the brand pin is a
+      product decision, not a contrast patch.
+    - An accent link's hover must not fade. `hover:text-primary/80` used to be
+      the pattern and it made the hover state LESS legible than rest (2.26:1);
+      `--primary-text` at 80% only reaches 3.58. Accent links hover to an
+      underline instead, which is a non-colour cue and cheaper for 1.4.1 too.
+    - `--ring` tracks `--primary-text`, not `--primary`: a focus indicator is
+      non-text and owes 3:1, and the brand value missed even that. Keep the
+      `outline-ring` below free of an opacity modifier — the old `/50` was
+      unfixable by recolouring, since no value of this hue reaches 3:1 on white
+      at half alpha (the darkest one still readable as the brand tops out at
+      2.12).
+    - `--primary-foreground` is near-black in BOTH themes. Dark mode used to
+      paint white on the amber CTA for 2.32:1, which made the most prominent
+      button on the site the worst-contrast text on it.
+*/
 :root {
     --background: oklch(99.5% 0.002 60);
     --foreground: oklch(18% 0.01 60);
     --primary: oklch(70% 0.16 55);
     --primary-foreground: oklch(18% 0.01 60);
+    --primary-text: oklch(55% 0.155 55);
     --secondary: oklch(95% 0.04 55);
     --secondary-foreground: oklch(40% 0.12 55);
     --muted: oklch(96% 0.006 60);
@@ -129,7 +187,7 @@
     --inverse-foreground: oklch(98.5% 0.002 55);
     --border: oklch(92% 0.006 60);
     --input: oklch(86% 0.01 60);
-    --ring: oklch(70% 0.16 55);
+    --ring: oklch(55% 0.155 55);
     --radius: 10px;
 }
 
@@ -137,7 +195,8 @@
     --background: oklch(14.5% 0.008 60);
     --foreground: oklch(98.5% 0.002 60);
     --primary: oklch(75% 0.15 55);
-    --primary-foreground: oklch(100% 0 0);
+    --primary-foreground: oklch(18% 0.01 60);
+    --primary-text: oklch(75% 0.15 55);
     --secondary: oklch(22.2% 0.015 60);
     --secondary-foreground: oklch(98.5% 0.002 60);
     --muted: oklch(22.2% 0.015 60);
@@ -166,7 +225,7 @@
     }
 
     * {
-        @apply border-border outline-ring/50;
+        @apply border-border outline-ring;
     }
     body {
         @apply bg-background text-foreground;
@@ -350,5 +409,107 @@
     ::view-transition-new(root) {
         animation-duration: 1ms;
         animation-name: none;
+    }
+}
+
+/* ─── /features: pinned prose, and sections that settle ───────────────
+   Two independent aids to a 21,000px page, both deliberately additive: with
+   either rule deleted the page lays out exactly as it did before.
+
+   `.feature-col` pins a section's prose while its taller code block scrolls
+   past, closing up to 584px of dead column. The flag on the section is set by
+   `useFeatureNav`'s `shouldPinColumn`, which measures rather than assumes —
+   see the reasoning there for why a height media query cannot express this
+   correctly in both locales. The rule is inside a width query because below
+   `lg` the section is one column and there is nothing to pin beside.
+
+   `.feature-snap` nudges section tops into place. `proximity`, never
+   `mandatory`: eight of the eighteen sections are taller than a 900px viewport
+   and a mandatory snap area taller than the scrollport can strand the content
+   below its snap point. Proximity also leaves fast scrolling alone, which is
+   the whole reading mode this page is built for. */
+
+@media (min-width: 1024px) {
+    [data-feature-sticky] .feature-col {
+        position: sticky;
+        /* 104px — keep in step with COLUMN_STICK_TOP in useFeatureNav.ts. */
+        top: 6.5rem;
+    }
+}
+
+.feature-snap {
+    scroll-snap-type: y proximity;
+}
+/* `scroll-padding-top: 5.25rem` on <html> already offsets these for the sticky
+   navbar, so a snapped section lands exactly where a #feature- anchor does. */
+.feature-snap [data-feature-slug] {
+    scroll-snap-align: start;
+}
+/* Touch scrolling carries its own momentum and needs no help placing a section;
+   snapping it only fights the gesture, and iOS Safari's resizing toolbar makes
+   the combination unpredictable in a way this project cannot test. */
+@media (pointer: coarse) {
+    .feature-snap {
+        scroll-snap-type: none;
+    }
+}
+
+/* ─── Same-page feature jump ──────────────────────────────────────────
+   /features indexes itself: clicking a row in the index band or the jump
+   palette morphs that row's label into the real section heading it names,
+   which is what makes the page read as one object rather than a list of
+   links to elsewhere. `useFeatureNav` hands the name from the row to the
+   heading inside the transition callback, and flags <html> for as long as
+   it runs.
+
+   The flag exists because the route-change choreography above is wrong
+   here: blurring and sliding the whole page announces a navigation the
+   reader did not make. During a jump the page only cross-fades, and the
+   named element carries the eye. */
+
+html[data-feature-jump]::view-transition-old(root) {
+    animation: vt-jump-out 260ms var(--ease-spring) both;
+}
+html[data-feature-jump]::view-transition-new(root) {
+    animation: vt-jump-in 260ms var(--ease-spring) both;
+}
+
+@keyframes vt-jump-out {
+    to {
+        opacity: 0;
+    }
+}
+@keyframes vt-jump-in {
+    from {
+        opacity: 0;
+    }
+}
+
+::view-transition-group(feature-morph) {
+    animation-duration: 520ms;
+    animation-timing-function: var(--ease-spring);
+    z-index: 5;
+}
+/* `object-fit: contain` on both snapshots, not the default `fill`: the row
+   label and the heading are the same words at very different sizes, and a
+   filled snapshot stretches the smaller one's glyphs horizontally while the
+   group box grows. `plus-lighter` is the UA default for the cross-fade and
+   blows out dark text on a light ground, so both revert to normal. */
+::view-transition-old(feature-morph),
+::view-transition-new(feature-morph) {
+    animation-duration: 520ms;
+    animation-timing-function: var(--ease-spring);
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html[data-feature-jump]::view-transition-old(root),
+    html[data-feature-jump]::view-transition-new(root),
+    ::view-transition-group(feature-morph),
+    ::view-transition-old(feature-morph),
+    ::view-transition-new(feature-morph) {
+        animation-duration: 1ms;
     }
 }

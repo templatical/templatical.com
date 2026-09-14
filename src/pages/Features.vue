@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import FeatureIndex from '@/components/FeatureIndex.vue';
+import FeatureJump from '@/components/FeatureJump.vue';
+import FeatureRail from '@/components/FeatureRail.vue';
 import HeroAurora from '@/components/HeroAurora.vue';
 import HeroHeadline from '@/components/HeroHeadline.vue';
 import RevealOnScroll from '@/components/RevealOnScroll.vue';
@@ -11,6 +14,8 @@ import { ArrowRight, Check, ChevronRight } from '@lucide/vue';
 import { useHead } from '@unhead/vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { featureSectionId, useFeatureNav } from '@/composables/useFeatureNav';
+import type { FeatureNavItem } from '@/composables/useFeatureNav';
 import { tagTemplateAsHtml } from '@/composables/useShikiHighlight';
 import CodeBlock from '@/components/CodeBlock.vue';
 import VariantTabs from '@/components/VariantTabs.vue';
@@ -405,7 +410,7 @@ const featureSections = computed<FeatureSection[]>(() => [
         ],
     },
     {
-        slug: 'cssIsolation',
+        slug: 'css-isolation',
         docsPath: '/guide/shadow-dom',
         docsLabel: t('features.cssIsolation.docsLabel'),
         eyebrow: t('features.cssIsolation.eyebrow'),
@@ -1010,6 +1015,29 @@ const supportingItemKeys = [
 // scanning for their own editor gets an answer without a click. Both come from the
 // shared list, so a ninth importer needs no edit here.
 const importerNames = IMPORTERS.map((importer) => importer.name);
+
+// Every navigation surface on this page — the index band, the rail, the jump
+// palette — reads this one list, and this list is `pageSections` itself. A
+// nineteenth section is one entry in `featureSections` or `backendSections`
+// and nothing else: it gets an anchor, an index row, a rail tick and a palette
+// entry with no edit here and no locale edit in either language. The same
+// single-source rule `IMPORTERS` enforces for the converters, for the same
+// reason — the page used to state counts that nothing kept honest.
+const navItems = computed<FeatureNavItem[]>(() =>
+    pageSections.value.map((section, idx) => ({
+        slug: section.slug,
+        eyebrow: section.eyebrow,
+        title: section.title,
+        group: idx < backendBandIndex.value ? 'core' : 'backend',
+        keywords: section.features,
+    })),
+);
+
+const sectionStack = ref<HTMLElement | null>(null);
+const { activeSlug, progress, stackInView, paletteOpen, shortcutLabel, jumpTo } = useFeatureNav(
+    navItems,
+    sectionStack,
+);
 </script>
 
 <template>
@@ -1040,123 +1068,158 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
             </SiteContainer>
         </section>
 
-        <template v-for="(section, idx) in pageSections" :key="section.slug">
-            <!-- Band header for the provider-backed sections below — lands
+        <FeatureIndex
+            :items="navItems"
+            :jump="jumpTo"
+            :shortcut-label="shortcutLabel"
+            :open-palette="() => (paletteOpen = true)"
+        />
+
+        <div ref="sectionStack">
+            <template v-for="(section, idx) in pageSections" :key="section.slug">
+                <!-- Band header for the provider-backed sections below — lands
              immediately before the first one ('templates'). Copies the
              features.supporting band's own eyebrow/headline/subheadline
              shorthand so the heading compiles to an h2 (SiteSection's
              default headlineAs), not a second h1. -->
-            <SiteSection
-                v-if="idx === backendBandIndex"
-                :eyebrow="t('features.backend.eyebrow')"
-                :headline="t('features.backend.headline')"
-                :subheadline="t('features.backend.subheadline')"
-                bg="gray"
-            />
-            <section :class="['py-20 lg:py-28', section.bgClass]">
-                <div class="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-7xl lg:px-10">
-                    <RevealOnScroll>
-                        <div
-                            class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16"
-                        >
-                            <div class="flex flex-col gap-5">
-                                <div class="text-sm/7 font-semibold text-primary">
-                                    {{ section.eyebrow }}
-                                </div>
-                                <h2
-                                    class="font-display text-3xl/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
-                                >
-                                    {{ section.title }}
-                                </h2>
-                                <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
-                                    {{ section.description }}
-                                </p>
-                                <p class="text-base/7 font-medium text-neutral-950 dark:text-white">
-                                    {{ section.outcome }}
-                                </p>
-                                <ul class="mt-2 flex flex-col gap-3">
-                                    <li
-                                        v-for="feature in section.features"
-                                        :key="feature"
-                                        class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
+                <SiteSection
+                    v-if="idx === backendBandIndex"
+                    :eyebrow="t('features.backend.eyebrow')"
+                    :headline="t('features.backend.headline')"
+                    :subheadline="t('features.backend.subheadline')"
+                    bg="gray"
+                />
+                <section
+                    :id="featureSectionId(section.slug)"
+                    :data-feature-slug="section.slug"
+                    :class="['py-20 lg:py-28', section.bgClass]"
+                >
+                    <div class="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-7xl lg:px-10">
+                        <RevealOnScroll>
+                            <div
+                                data-feature-grid
+                                class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16"
+                            >
+                                <!-- `lg:items-start` stays: a grid item's containing
+                                 block is its grid AREA, not its own shrink-to-fit
+                                 box, so `position: sticky` still gets the full row
+                                 height to travel in. Verified in the browser before
+                                 relying on it. -->
+                                <div class="feature-col flex flex-col gap-5">
+                                    <div class="text-sm/7 font-semibold text-primary-text">
+                                        {{ section.eyebrow }}
+                                    </div>
+                                    <!-- tabindex="-1" so a jump can land focus here: a
+                                     keyboard reader continues from the section
+                                     they asked for, and a screen reader
+                                     announces it. No outline override — the
+                                     browser's focus-visible heuristic already
+                                     rings it after a keyboard jump and stays
+                                     quiet after a mouse click. -->
+                                    <h2
+                                        data-feature-heading
+                                        tabindex="-1"
+                                        class="font-display text-3xl/10 tracking-tight text-pretty text-neutral-950 sm:text-4xl/12 dark:text-white"
                                     >
-                                        <Check
-                                            class="mt-0.5 size-5 shrink-0 text-primary"
-                                            aria-hidden="true"
-                                        />
-                                        {{ feature }}
-                                    </li>
-                                </ul>
-                                <a
-                                    :href="docsUrl(section.docsPath)"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="mt-2 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-                                >
-                                    {{ section.docsLabel }}
-                                    <ArrowRight class="size-4" aria-hidden="true" />
-                                </a>
-                            </div>
-                            <!-- Without variant tabs the example would start level with
+                                        {{ section.title }}
+                                    </h2>
+                                    <p class="text-base/7 text-neutral-700 dark:text-neutral-400">
+                                        {{ section.description }}
+                                    </p>
+                                    <p
+                                        class="text-base/7 font-medium text-neutral-950 dark:text-white"
+                                    >
+                                        {{ section.outcome }}
+                                    </p>
+                                    <ul class="mt-2 flex flex-col gap-3">
+                                        <li
+                                            v-for="feature in section.features"
+                                            :key="feature"
+                                            class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
+                                        >
+                                            <Check
+                                                class="mt-0.5 size-5 shrink-0 text-primary-text"
+                                                aria-hidden="true"
+                                            />
+                                            {{ feature }}
+                                        </li>
+                                    </ul>
+                                    <a
+                                        :href="docsUrl(section.docsPath)"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="mt-2 inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                                    >
+                                        {{ section.docsLabel }}
+                                        <ArrowRight class="size-4" aria-hidden="true" />
+                                    </a>
+                                </div>
+                                <!-- Without variant tabs the example would start level with
                              the eyebrow, which sits 3rem (text-sm/7 + gap-5) above the
                              heading. Offset it so the example always begins at the
                              heading's top edge; tabbed sections already land there. -->
-                            <div
-                                class="flex flex-col gap-4"
-                                :class="{ 'lg:mt-12': !section.variants?.length }"
-                            >
-                                <VariantTabs
-                                    v-if="section.variants?.length"
-                                    :options="section.variants"
-                                    :model-value="variantIndex(section.slug)"
-                                    :aria-label="
-                                        t('features.examplesLabel', { title: section.title })
-                                    "
-                                    @update:model-value="selectVariant(section.slug, $event)"
-                                />
                                 <div
-                                    v-if="section.variants?.length"
-                                    :key="`${section.slug}-${variantIndex(section.slug)}`"
-                                    :class="variantAnimClass(section.slug)"
+                                    class="flex flex-col gap-4"
+                                    :class="{ 'lg:mt-12': !section.variants?.length }"
                                 >
-                                    <CodeBlock
-                                        :code="section.variants[variantIndex(section.slug)].code"
-                                        lang="lit"
-                                        :transformers="[tagTemplateAsHtml]"
+                                    <VariantTabs
+                                        v-if="section.variants?.length"
+                                        :options="section.variants"
+                                        :model-value="variantIndex(section.slug)"
+                                        :aria-label="
+                                            t('features.examplesLabel', { title: section.title })
+                                        "
+                                        @update:model-value="selectVariant(section.slug, $event)"
                                     />
-                                </div>
-                                <CodeBlock
-                                    v-else-if="section.code"
-                                    :code="section.code"
-                                    lang="javascript"
-                                />
-                                <!-- Prompt-driven features have no config surface to
+                                    <div
+                                        v-if="section.variants?.length"
+                                        :key="`${section.slug}-${variantIndex(section.slug)}`"
+                                        :class="variantAnimClass(section.slug)"
+                                    >
+                                        <CodeBlock
+                                            :code="
+                                                section.variants[variantIndex(section.slug)].code
+                                            "
+                                            lang="lit"
+                                            :transformers="[tagTemplateAsHtml]"
+                                        />
+                                    </div>
+                                    <CodeBlock
+                                        v-else-if="section.code"
+                                        :code="section.code"
+                                        lang="javascript"
+                                    />
+                                    <!-- Prompt-driven features have no config surface to
                                  show, so the column lists what you'd actually say.
                                  Same blockquote treatment as the homepage section. -->
-                                <ul v-else-if="section.prompts?.length" class="flex flex-col gap-4">
-                                    <li
-                                        v-for="prompt in section.prompts"
-                                        :key="prompt.label"
-                                        class="flex flex-col gap-1.5"
+                                    <ul
+                                        v-else-if="section.prompts?.length"
+                                        class="flex flex-col gap-4"
                                     >
-                                        <span
-                                            class="text-xs/5 font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-400"
+                                        <li
+                                            v-for="prompt in section.prompts"
+                                            :key="prompt.label"
+                                            class="flex flex-col gap-1.5"
                                         >
-                                            {{ prompt.label }}
-                                        </span>
-                                        <blockquote
-                                            class="rounded-2xl border border-neutral-200 bg-neutral-50 px-5 py-4 text-base/7 text-pretty text-neutral-700 italic dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
-                                        >
-                                            {{ prompt.text }}
-                                        </blockquote>
-                                    </li>
-                                </ul>
+                                            <span
+                                                class="text-xs/5 font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-400"
+                                            >
+                                                {{ prompt.label }}
+                                            </span>
+                                            <blockquote
+                                                class="rounded-2xl border border-neutral-200 bg-neutral-50 px-5 py-4 text-base/7 text-pretty text-neutral-700 italic dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
+                                            >
+                                                {{ prompt.text }}
+                                            </blockquote>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </RevealOnScroll>
-                </div>
-            </section>
-        </template>
+                        </RevealOnScroll>
+                    </div>
+                </section>
+            </template>
+        </div>
 
         <SiteSection
             :eyebrow="t('features.supporting.eyebrow')"
@@ -1199,7 +1262,7 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
                     :key="feature"
                     class="flex gap-3 text-sm/7 text-neutral-700 dark:text-neutral-400"
                 >
-                    <Check class="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+                    <Check class="mt-0.5 size-5 shrink-0 text-primary-text" aria-hidden="true" />
                     {{ feature }}
                 </li>
             </ul>
@@ -1219,7 +1282,7 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
                 </p>
                 <router-link
                     to="/importers"
-                    class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                    class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     {{ t('features.migration.cta') }}
                     <ArrowRight class="size-4" aria-hidden="true" />
@@ -1281,7 +1344,7 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
                                               rel: 'noopener noreferrer',
                                           }
                                 "
-                                class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                                class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 {{ t(`features.cta.${path.key}.${link.ctaKey}`) }}
                                 <ChevronRight class="size-4" />
@@ -1291,5 +1354,14 @@ const importerNames = IMPORTERS.map((importer) => importer.name);
                 </div>
             </SiteContainer>
         </section>
+
+        <FeatureRail
+            :items="navItems"
+            :active-slug="activeSlug"
+            :progress="progress"
+            :visible="stackInView"
+            :jump="jumpTo"
+        />
+        <FeatureJump v-model:open="paletteOpen" :items="navItems" :jump="jumpTo" />
     </div>
 </template>

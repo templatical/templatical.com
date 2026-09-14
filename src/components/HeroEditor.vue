@@ -463,7 +463,7 @@ onBeforeUnmount(() => {
                                     :href="URLS.playground"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="font-medium text-primary underline"
+                                    class="font-medium text-primary-text underline"
                                     >{{ t('heroEditor.error.playgroundLabel') }}</a
                                 >
                             </template>
@@ -488,7 +488,7 @@ onBeforeUnmount(() => {
                         <p class="min-w-0 flex-1 break-words">{{ providerErrorMessage }}</p>
                         <button
                             type="button"
-                            class="-m-1 shrink-0 cursor-pointer rounded p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                            class="-m-1 shrink-0 cursor-pointer rounded p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
                             :aria-label="t('heroEditor.providerError.dismiss')"
                             @click="dismissProviderError"
                         >
@@ -552,7 +552,7 @@ onBeforeUnmount(() => {
                             </div>
                             <button
                                 type="button"
-                                class="-m-1 cursor-pointer rounded-md p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                                class="-m-1 cursor-pointer rounded-md p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
                                 :aria-label="t('heroEditor.mergeTagModal.close')"
                                 @click="cancelMergeTag"
                             >
@@ -564,7 +564,7 @@ onBeforeUnmount(() => {
                             class="mx-5 mt-4 flex items-start gap-2 rounded-md border border-primary/20 bg-primary/5 px-3 py-2 text-[11px] leading-relaxed text-neutral-700 dark:border-primary/30 dark:bg-primary/10 dark:text-neutral-300"
                         >
                             <Info
-                                class="mt-0.5 size-3.5 shrink-0 text-primary"
+                                class="mt-0.5 size-3.5 shrink-0 text-primary-text"
                                 aria-hidden="true"
                             />
                             <div class="space-y-1">
@@ -573,7 +573,7 @@ onBeforeUnmount(() => {
                                     :href="dynamicMergeTagsDocsUrl"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="inline-flex items-center gap-1 font-medium text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                                    class="inline-flex items-center gap-1 font-medium text-primary-text hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                                 >
                                     {{ t('heroEditor.mergeTagModal.docsLink') }}
                                     <ArrowUpRight class="size-3" aria-hidden="true" />
@@ -617,7 +617,7 @@ onBeforeUnmount(() => {
                             </p>
                             <button
                                 type="button"
-                                class="cursor-pointer rounded-md px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-300 dark:hover:bg-neutral-800"
+                                class="cursor-pointer rounded-md px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring dark:text-neutral-300 dark:hover:bg-neutral-800"
                                 @click="cancelMergeTag"
                             >
                                 {{ t('heroEditor.mergeTagModal.cancel') }}

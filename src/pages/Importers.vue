@@ -242,7 +242,7 @@ const trademarkedNames = computed(() =>
                             >
                                 <Check
                                     v-if="copied && copiedSlug === importer.slug"
-                                    class="size-4 text-primary"
+                                    class="size-4 text-primary-text"
                                     aria-hidden="true"
                                 />
                                 <Copy v-else class="size-4" aria-hidden="true" />

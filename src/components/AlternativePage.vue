@@ -125,7 +125,7 @@ const themReasons = computed(() =>
                             >
                                 {{ t(k('table.colFeature')) }}
                             </th>
-                            <th scope="col" class="py-3 pr-6 text-primary">
+                            <th scope="col" class="py-3 pr-6 text-primary-text">
                                 {{ t(k('table.colUs')) }}
                             </th>
                             <th scope="col" class="py-3 text-neutral-500 dark:text-neutral-400">
@@ -171,7 +171,7 @@ const themReasons = computed(() =>
                         <!-- Same order as the desktop table: Templatical first. -->
                         <div class="flex flex-col gap-1">
                             <span
-                                class="text-xs/5 font-medium tracking-wide text-primary uppercase"
+                                class="text-xs/5 font-medium tracking-wide text-primary-text uppercase"
                             >
                                 {{ t(k('table.colUs')) }}
                             </span>
@@ -215,7 +215,7 @@ const themReasons = computed(() =>
                         <div
                             class="flex flex-col gap-4 rounded-2xl bg-white p-6 ring-2 ring-primary sm:p-8 dark:bg-neutral-950"
                         >
-                            <h3 class="font-display text-xl tracking-tight text-primary">
+                            <h3 class="font-display text-xl tracking-tight text-primary-text">
                                 {{ t(k('bestFit.usTitle')) }}
                             </h3>
                             <ul class="flex flex-col gap-2.5">
@@ -226,7 +226,7 @@ const themReasons = computed(() =>
                                 >
                                     <Check
                                         :stroke-width="2.25"
-                                        class="mt-0.5 size-4 shrink-0 text-primary"
+                                        class="mt-0.5 size-4 shrink-0 text-primary-text"
                                         aria-hidden="true"
                                     />
                                     {{ reason.text }}
@@ -305,7 +305,7 @@ const themReasons = computed(() =>
                             :href="URLS.siteIssues"
                             target="_blank"
                             rel="noopener"
-                            class="font-medium text-primary hover:underline"
+                            class="font-medium text-primary-text hover:underline"
                             >{{ t(k('footnote.staleCta')) }}</a
                         >.
                     </p>

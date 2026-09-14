@@ -43,7 +43,7 @@ const claims = computed(() => tm('home.independence.claims') as string[]);
                     >
                         <Check
                             :stroke-width="2.25"
-                            class="mt-1 size-5 shrink-0 text-primary"
+                            class="mt-1 size-5 shrink-0 text-primary-text"
                             aria-hidden="true"
                         />
                         {{ claim }}

@@ -40,7 +40,7 @@ const classes = computed(() =>
             props.color === 'white' &&
             'bg-white text-neutral-950 hover:bg-neutral-200 dark:bg-neutral-100 dark:hover:bg-white',
         props.variant === 'soft' &&
-            'bg-primary/10 text-primary hover:bg-primary/15 dark:hover:bg-primary/20',
+            'bg-primary/10 text-primary-text hover:bg-primary/12 dark:hover:bg-primary/20',
         props.variant === 'plain' &&
             props.color === 'dark/light' &&
             'text-neutral-950 hover:bg-neutral-950/10 dark:text-white dark:hover:bg-white/10',

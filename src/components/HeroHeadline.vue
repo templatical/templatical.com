@@ -226,7 +226,7 @@ watch(reducedMotion, (v) => {
     opacity: 0;
 }
 .hh__w--accent .hh__c {
-    color: var(--primary);
+    color: var(--primary-text);
 }
 @media (prefers-reduced-motion: reduce) {
     .hh--enhanced .hh__c {

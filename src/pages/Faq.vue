@@ -101,7 +101,7 @@ const faqItems = computed(() =>
                             :href="URLS.discussions"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="inline-flex items-center gap-1.5 text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                            class="inline-flex items-center gap-1.5 text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                         >
                             {{ t('faq.stillAsking.discussionsCta') }}
                             <ChevronRight class="size-4" />

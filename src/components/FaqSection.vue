@@ -32,7 +32,7 @@ function toggle(key: string) {
             <button
                 :id="entry.buttonId"
                 type="button"
-                class="flex w-full cursor-pointer items-center justify-between py-5 text-left transition-colors hover:text-primary"
+                class="flex w-full cursor-pointer items-center justify-between py-5 text-left transition-colors hover:text-primary-text"
                 :aria-expanded="openKey === entry.key"
                 :aria-controls="entry.panelId"
                 @click="toggle(entry.key)"

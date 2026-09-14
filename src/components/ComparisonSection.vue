@@ -58,7 +58,7 @@ function trailingLabel(slug: Slug): string {
                                 :class="[
                                     'font-display text-xl tracking-tight sm:text-2xl',
                                     col.highlight
-                                        ? 'text-primary'
+                                        ? 'text-primary-text'
                                         : 'text-neutral-950 dark:text-white',
                                 ]"
                             >
@@ -77,7 +77,7 @@ function trailingLabel(slug: Slug): string {
                                 class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800"
                             >
                                 <h4
-                                    class="text-xs/5 font-medium tracking-wide text-primary uppercase"
+                                    class="text-xs/5 font-medium tracking-wide text-primary-text uppercase"
                                 >
                                     {{ t('home.comparison.sdkLabel') }}
                                 </h4>
@@ -91,7 +91,7 @@ function trailingLabel(slug: Slug): string {
                                     >
                                         <Check
                                             :stroke-width="2.25"
-                                            class="mt-0.5 size-4 shrink-0 text-primary"
+                                            class="mt-0.5 size-4 shrink-0 text-primary-text"
                                             aria-hidden="true"
                                         />
                                         {{ item }}

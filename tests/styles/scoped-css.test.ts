@@ -176,6 +176,9 @@ describe('src/**/*.vue', () => {
         // A floor, not the exact count: adding an SFC must not fail this.
         expect(Object.keys(SFC_SOURCES).length).toBeGreaterThan(40);
         expect(scopedBlocks.map((block) => block.file)).toEqual([
+            'components/FeatureIndex.vue',
+            'components/FeatureJump.vue',
+            'components/FeatureRail.vue',
             'components/HeroAurora.vue',
             'components/HeroEditor.vue',
             'components/HeroHeadline.vue',

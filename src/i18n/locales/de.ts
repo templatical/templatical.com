@@ -285,6 +285,18 @@ const de: MessageSchema = {
                 'Die Power-Features und eine saubere Basis — alles enthalten, alles offen. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
             pricingPill: 'Open Source · FSL-1.1-MIT · Kostenlos selbst hosten',
         },
+        index: {
+            heading: 'Alles auf dieser Seite',
+            jump: 'Zu einem Feature springen',
+            groupCore: 'Im Editor',
+            railLabel: 'Feature-Abschnitte',
+            palette: {
+                label: 'Zu einem Feature springen',
+                placeholder: 'Features durchsuchen',
+                empty: 'Hier passt nichts zu „{query}“.',
+                hint: 'Pfeiltasten zum Wechseln · Enter zum Springen · Esc zum Schließen',
+            },
+        },
         examplesLabel: 'Beispiele für {title}',
         variants: {
             static: 'Statisch',
@@ -426,7 +438,7 @@ const de: MessageSchema = {
             docsLabel: 'Theming- & Standards-Referenz',
         },
         cssIsolation: {
-            eyebrow: 'Integration',
+            eyebrow: 'Isolierung',
             title: 'In jede Seite einbinden — Host-CSS kann nicht eingreifen',
             description:
                 'Der Editor wird standardmäßig in einem Shadow DOM gemountet. Die Stylesheets Ihrer App, das Preflight Ihres Design-Systems und CMS-Template-Resets enden an der Grenze — sie greifen nicht in Toolbar, Sidebar oder Canvas durch.',
@@ -442,7 +454,7 @@ const de: MessageSchema = {
             docsLabel: 'Stil-Isolations-Guide',
         },
         accessibility: {
-            eyebrow: 'Qualität',
+            eyebrow: 'Linting',
             title: 'Eingebaute Vorlagen-Prüfung',
             description:
                 '30 deterministische Regeln laufen während der Bearbeitung — sichtbar in einem eigenen Sidebar-Tab und als Inline-Badges auf dem Canvas. Barrierefreiheit, Struktur und Links, mit konfigurierbarer Schwere und ohne KI-Raten.',
@@ -462,7 +474,7 @@ const de: MessageSchema = {
         },
         mediaLibrary: {
             eyebrow: 'Assets',
-            title: 'Pluggbare Medien-Bibliothek',
+            title: 'Ihren eigenen Medienbrowser einbinden',
             description:
                 'Ein einziger onRequestMedia-Hook lässt den Editor Ihren Medienbrowser öffnen — S3, Cloudinary, Ihr eigenes CMS, alles. Kein Anbieter-Speicher, keine Asset-Egress-Gebühren, kein Lock-in.',
             outcome: 'Nutzen Sie die Asset-Pipeline, die Sie ohnehin betreiben — durchgängig.',
@@ -471,6 +483,7 @@ const de: MessageSchema = {
                 'Wird aus Bild-Blöcken, Bild-Feldern und der Toolbar ausgelöst',
                 'Kontextsensibler accept-Hinweis — der Editor sagt, was er erwartet',
                 'Kein Upload läuft über Templatical — Ihr Speicher, Ihre Auth',
+                'Gewinnt gegen einen media-Provider, wenn beide gesetzt sind — das eingebaute Modal öffnet sich nie',
                 'Cloud-Build ergänzt einen Managed-Medienbrowser auf Wunsch',
             ],
             docsLabel: 'Medien-Bibliothek-Referenz',
@@ -492,7 +505,7 @@ const de: MessageSchema = {
             docsLabel: 'Referenz für gespeicherte Blöcke',
         },
         agentSkill: {
-            eyebrow: 'KI',
+            eyebrow: 'Agent Skill',
             title: 'Ein Skill für die Vorlage und die Integration',
             description:
                 "Ein Open-Source-Agent-Skill, der jedem KI-Coding-Agenten beide Hälften der Arbeit beibringt: Templatical-Vorlagen aus einem Prompt zu schreiben — gegen das Block-Schema validiert, bevor Sie sie überhaupt sehen — und {'@'}templatical/editor in Ihre eigene Anwendung einzubinden. Er entscheidet bei jeder Anfrage selbst; Sie wählen nie einen Modus. Kein Backend, kein API-Key, nichts wird an uns gesendet.",
@@ -582,7 +595,7 @@ const de: MessageSchema = {
             docsLabel: 'Testversand-Referenz',
         },
         media: {
-            eyebrow: 'Speicher',
+            eyebrow: 'Medien',
             title: 'Eine Medien-Bibliothek, in Ihrem eigenen Speicher',
             description:
                 'Der Editor liefert den Picker — Durchsuchen auf Bildfeldern, Video-Vorschaubildern und Bildfeldern in Custom Blocks, Drag-and-Drop-Upload, Zuschneiden, Ordner, Suche. Den Speicher stellen Sie. `list` ist die einzige Pflichtmethode; die übrigen neun schalten Sie einzeln frei oder verweigern sie.',
@@ -595,6 +608,7 @@ const de: MessageSchema = {
                 'Bei jeder Mutation false übergeben, und der Editor blendet dieses Bedienelement aus, statt es zu deaktivieren',
                 'Ordner kommen als flache Liste zurück — die UI verschachtelt sie über `parentId`',
                 'Mitgelieferter browserlokaler Provider für Demos — eine Zeile, kein Backend',
+                '`onRequestMedia` ist eine eigene Schnittstelle, nicht dieser Speicher — sind beide gesetzt, gewinnt der Callback',
             ],
             docsLabel: 'Medien-Referenz',
         },

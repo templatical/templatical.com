@@ -38,7 +38,7 @@ const LEVEL_ICONS = {
 
 const LEVEL_CLASSES = {
     major: 'border-amber-300 text-amber-700 dark:border-amber-500/40 dark:text-amber-400',
-    minor: 'border-primary/30 text-primary',
+    minor: 'border-primary/30 text-primary-text',
     patch: 'border-neutral-300 text-neutral-600 dark:border-neutral-700 dark:text-neutral-400',
 } satisfies Record<ChangelogLevel, string>;
 
@@ -122,7 +122,7 @@ const showingLatest = computed(() =>
                     <a
                         :href="URLS.changelog"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                        class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                     >
                         {{ t('changelog.unavailable.cta') }}
                         <ChevronRight class="size-4" />
@@ -201,7 +201,7 @@ const showingLatest = computed(() =>
                                             :href="segment.href"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            class="font-medium text-primary underline-offset-2 hover:underline"
+                                            class="font-medium text-primary-text underline-offset-2 hover:underline"
                                             :class="{
                                                 'font-semibold': segment.strong,
                                                 italic: segment.em,
@@ -234,7 +234,7 @@ const showingLatest = computed(() =>
                         <a
                             :href="docsAnchor(version.version)"
                             rel="noopener noreferrer"
-                            class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                            class="inline-flex items-center gap-1.5 self-start text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                         >
                             {{ t('changelog.versionNotes', { version: version.version }) }}
                             <ChevronRight class="size-4" />
@@ -268,7 +268,7 @@ const showingLatest = computed(() =>
                         <a
                             :href="URLS.changelog"
                             rel="noopener noreferrer"
-                            class="inline-flex items-center gap-1.5 text-sm/7 font-medium text-primary transition-colors hover:text-primary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                            class="inline-flex items-center gap-1.5 text-sm/7 font-medium text-primary-text underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                         >
                             {{ t('changelog.fullHistory.docsCta') }}
                             <ChevronRight class="size-4" />

@@ -22,7 +22,7 @@ const backendDocsUrl = computed(() => localizedUrl('backendDocs', locale.value))
                 :href="backendDocsUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="ml-1 inline-flex items-center gap-0.5 font-medium text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                class="ml-1 inline-flex items-center gap-0.5 font-medium text-primary-text hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
                 {{ t('heroEditor.demo.docsLink') }}
                 <ArrowUpRight class="size-3" aria-hidden="true" />
@@ -32,7 +32,7 @@ const backendDocsUrl = computed(() => localizedUrl('backendDocs', locale.value))
         <div class="flex shrink-0 items-center gap-2">
             <button
                 type="button"
-                class="inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-neutral-300 dark:hover:bg-neutral-800"
+                class="inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring dark:text-neutral-300 dark:hover:bg-neutral-800"
                 :aria-expanded="mjmlOpen"
                 @click="$emit('toggleMjml')"
             >
@@ -41,7 +41,7 @@ const backendDocsUrl = computed(() => localizedUrl('backendDocs', locale.value))
             </button>
             <button
                 type="button"
-                class="inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                class="inline-flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-60 dark:text-neutral-300 dark:hover:bg-neutral-800"
                 :disabled="resetting"
                 @click="$emit('reset')"
             >

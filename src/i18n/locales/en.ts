@@ -282,6 +282,18 @@ export default {
                 'The power features, and a clean set of essentials — all included, all open. Portable JSON in, MJML out, no usage tier in the way.',
             pricingPill: 'Open source · FSL-1.1-MIT · Free to self-host',
         },
+        index: {
+            heading: 'Everything on this page',
+            jump: 'Jump to a feature',
+            groupCore: 'In the editor',
+            railLabel: 'Feature sections',
+            palette: {
+                label: 'Jump to a feature',
+                placeholder: 'Search features',
+                empty: 'Nothing here matches “{query}”.',
+                hint: 'Arrow keys to move · Enter to jump · Esc to close',
+            },
+        },
         examplesLabel: '{title} examples',
         variants: {
             static: 'Static',
@@ -417,7 +429,7 @@ export default {
             docsLabel: 'Theming & defaults reference',
         },
         cssIsolation: {
-            eyebrow: 'Integration',
+            eyebrow: 'Isolation',
             title: "Drop into any page — host CSS can't interfere",
             description:
                 "The editor mounts inside a Shadow DOM by default. Your app's stylesheets, design system preflight, and CMS template resets stop at the boundary — they never cascade into the toolbar, sidebar, or canvas.",
@@ -433,7 +445,7 @@ export default {
             docsLabel: 'Style-isolation guide',
         },
         accessibility: {
-            eyebrow: 'Quality',
+            eyebrow: 'Linting',
             title: 'Built-in template linting',
             description:
                 '30 deterministic rules run while authoring — surfaced in a dedicated sidebar tab and as inline badges on the canvas. Accessibility, structure, and links, with configurable severity and no AI guesswork.',
@@ -453,7 +465,7 @@ export default {
         },
         mediaLibrary: {
             eyebrow: 'Assets',
-            title: 'Pluggable media library',
+            title: 'Bring your own media browser',
             description:
                 'A single onRequestMedia hook lets the editor open your media browser — S3, Cloudinary, your own CMS, anything. No vendor storage, no asset egress fees, no lock-in.',
             outcome: 'Reuse the asset pipeline you already run, end-to-end.',
@@ -462,6 +474,7 @@ export default {
                 'Triggered from image blocks, image fields, and the toolbar',
                 'Context-aware accept hint — the editor tells you what it wants',
                 'No upload happens through Templatical — your storage, your auth',
+                'Wins over a media provider when both are set — the built-in modal never opens',
                 'Cloud build adds a managed media browser when you opt in',
             ],
             docsLabel: 'Media-library reference',
@@ -483,7 +496,7 @@ export default {
             docsLabel: 'Saved-blocks reference',
         },
         agentSkill: {
-            eyebrow: 'AI',
+            eyebrow: 'Agent Skill',
             title: 'One skill for the template and the integration',
             description:
                 "An open-source Agent Skill that gives any AI coding agent both halves of the job: writing Templatical templates from a prompt, validated against the block schema before you ever see them, and wiring {'@'}templatical/editor into your own application. It routes each request itself — you never pick a mode. No backend, no API key, nothing sent to us.",
@@ -573,7 +586,7 @@ export default {
             docsLabel: 'Test-email reference',
         },
         media: {
-            eyebrow: 'Storage',
+            eyebrow: 'Media',
             title: 'A media library, in your own storage',
             description:
                 'The editor owns the picker — browse on image fields, video thumbnails and custom-block fields, drag-and-drop upload, crop, folders, search. You own storage. `list` is the only required method; the other nine are yours to enable or withhold, one at a time.',
@@ -585,6 +598,7 @@ export default {
                 'Pass `false` on any mutation and the editor hides that control instead of disabling it',
                 'Folders come back as a flat list — the UI trees them via `parentId`',
                 'Bundled browser-local provider for demos — one line, no backend',
+                '`onRequestMedia` is a separate seam, not this store — set both and the callback wins',
             ],
             docsLabel: 'Media reference',
         },
