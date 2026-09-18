@@ -37,6 +37,7 @@ const faqItems = computed(() =>
         'data',
         'cssIsolation',
         'paid',
+        'contact',
     ].map((key) => ({
         question: t(`faq.items.${key}.question`),
         answer: t(`faq.items.${key}.answer`),

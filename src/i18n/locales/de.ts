@@ -1762,6 +1762,10 @@ const de: MessageSchema = {
                 question: 'Gibt es eine kostenpflichtige Version, und ist sie erforderlich?',
                 answer: 'Nein, kostenpflichtig ist nicht erforderlich. Das Open-Source-SDK ist vollständig eigenständig — jede Editor-Funktion (Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output) ist enthalten und kostenlos selbst hostbar. Templatical Cloud ist ein separates, optionales Managed-Abo, das infrastrukturabhängige Funktionen ergänzt — Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, gehostete Medien, Multi-Tenancy, API-Zugriff. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als kostenpflichtiges Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
             },
+            contact: {
+                question: 'Wie kann ich Kontakt aufnehmen?',
+                answer: "Für Fehler erstellen Sie ein Issue, für Fragen und Ideen eine Diskussion — beides auf GitHub, damit die Antwort für alle auffindbar bleibt, die später auf dasselbe stoßen. Für Lizenz- und kommerzielle Fragen oder alles, was Sie nicht öffentlich stellen möchten, schreiben Sie an hi{'@'}templatical.com. Für Sicherheitsmeldungen gibt es eigene private Kanäle, aufgeführt in SECURITY.md.",
+            },
         },
         stillAsking: {
             eyebrow: 'Noch Fragen?',

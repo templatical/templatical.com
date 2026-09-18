@@ -108,8 +108,16 @@ const socialLinks = [{ label: 'GitHub', href: URLS.github, icon: GithubIcon }];
             <div
                 class="flex flex-col items-start justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row sm:items-center dark:border-neutral-800"
             >
-                <div class="text-sm/7 text-neutral-600 dark:text-neutral-400">
-                    {{ t('footer.copyright', { year: new Date().getFullYear() }) }}
+                <div
+                    class="flex flex-col gap-1 text-sm/7 text-neutral-600 sm:flex-row sm:items-center sm:gap-3 dark:text-neutral-400"
+                >
+                    <span>{{ t('footer.copyright', { year: new Date().getFullYear() }) }}</span>
+                    <a
+                        href="mailto:hi@templatical.com"
+                        class="transition-colors hover:text-neutral-950 dark:hover:text-white"
+                    >
+                        hi@templatical.com
+                    </a>
                 </div>
                 <div class="flex items-center gap-1">
                     <a

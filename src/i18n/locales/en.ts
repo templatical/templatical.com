@@ -1750,6 +1750,10 @@ export default {
                 question: 'Is there a paid version, and is it required?',
                 answer: 'No, paid is not required. The open-source SDK is fully standalone — every editor feature (custom blocks, merge tags, display conditions, theming, MJML output) is included and free to self-host. Templatical Cloud is a separate, optional managed subscription that adds infrastructure-dependent capabilities — real-time collaboration, AI rewrite and chat, hosted media, multi-tenancy, API access. Those rely on backend services we run, so they ship as a paid managed tier rather than self-hostable code.',
             },
+            contact: {
+                question: 'How do I get in touch?',
+                answer: "For bugs, open an issue; for questions and ideas, open a discussion — both on GitHub, so the answer stays searchable for whoever hits the same thing next. Email hi{'@'}templatical.com for licensing and commercial questions, or anything you would rather not ask in public. Security reports have their own private channels, listed in SECURITY.md.",
+            },
         },
         stillAsking: {
             eyebrow: 'Still curious?',

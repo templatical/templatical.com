@@ -1,0 +1,13 @@
+# Templatical security contact
+# Full policy, scope and disclosure timeline:
+# https://github.com/templatical/sdk/blob/main/SECURITY.md
+
+# Listed in order of preference. A private GitHub advisory keeps the report
+# confidential and lets us coordinate the fix and disclosure in one place.
+Contact: https://github.com/templatical/sdk/security/advisories/new
+Contact: mailto:security@templatical.com
+
+Expires: 2027-09-01T00:00:00Z
+Preferred-Languages: en, de
+Canonical: https://templatical.com/.well-known/security.txt
+Policy: https://github.com/templatical/sdk/blob/main/SECURITY.md
