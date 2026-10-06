@@ -5,20 +5,14 @@ import HomeAiSkillSection from '@/components/HomeAiSkillSection.vue';
 import HomeCloseSection from '@/components/HomeCloseSection.vue';
 import HomeIndependenceSection from '@/components/HomeIndependenceSection.vue';
 import MigrationBand from '@/components/MigrationBand.vue';
+import { usePageMeta } from '@/composables/usePageMeta';
+import { SOFTWARE_APPLICATION } from '@/lib/seo';
 import { useHead } from '@unhead/vue';
-import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+usePageMeta('home.meta.title', 'home.meta.description');
 
 useHead({
-    title: computed(() => t('home.meta.title')),
-    meta: [
-        {
-            name: 'description',
-            content: computed(() => t('home.meta.description')),
-        },
-    ],
+    script: [{ type: 'application/ld+json', innerHTML: JSON.stringify(SOFTWARE_APPLICATION) }],
 });
 </script>
 

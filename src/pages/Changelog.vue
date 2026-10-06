@@ -7,9 +7,9 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
 import { useChangelog } from '@/composables/useChangelog';
+import { usePageMeta } from '@/composables/usePageMeta';
 import { buildCadence, daysBetween, spineGapRem } from '@/lib/releaseTimeline';
 import { URLS } from '@/lib/urls';
-import { useHead } from '@unhead/vue';
 import { ChevronRight } from '@lucide/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -17,15 +17,7 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const { versions, isUnavailable } = useChangelog();
 
-useHead({
-    title: computed(() => t('changelog.meta.title')),
-    meta: [
-        {
-            name: 'description',
-            content: computed(() => t('changelog.meta.description')),
-        },
-    ],
-});
+usePageMeta('changelog.meta.title', 'changelog.meta.description');
 
 const cadence = computed(() => buildCadence(versions.value));
 

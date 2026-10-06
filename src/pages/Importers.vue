@@ -6,6 +6,7 @@ import SiteButton from '@/components/SiteButton.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
+import { usePageMeta } from '@/composables/usePageMeta';
 import {
     IMPORTER_COUNT,
     IMPORTER_GROUP_ORDER,
@@ -16,7 +17,6 @@ import {
 import { URLS } from '@/lib/urls';
 import { Check, ChevronRight, Copy } from '@lucide/vue';
 import { useClipboard } from '@vueuse/core';
-import { useHead } from '@unhead/vue';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -28,15 +28,7 @@ function docsUrl(path: string): string {
     return `${URLS.docs}${prefix}${path}`;
 }
 
-useHead({
-    title: computed(() => t('importers.meta.title')),
-    meta: [
-        {
-            name: 'description',
-            content: computed(() => t('importers.meta.description')),
-        },
-    ],
-});
+usePageMeta('importers.meta.title', 'importers.meta.description');
 
 const groups = computed(() =>
     IMPORTER_GROUP_ORDER.map((group) => ({

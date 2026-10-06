@@ -7,9 +7,9 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSubheading from '@/components/SiteSubheading.vue';
 import SiteText from '@/components/SiteText.vue';
+import { usePageMeta } from '@/composables/usePageMeta';
 import { URLS } from '@/lib/urls';
 import { Check, ChevronRight } from '@lucide/vue';
-import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -48,10 +48,7 @@ const props = defineProps<{
 const { t } = useI18n();
 const k = (suffix: string) => `${props.ns}.${suffix}`;
 
-useHead({
-    title: computed(() => t(k('meta.title'))),
-    meta: [{ name: 'description', content: computed(() => t(k('meta.description'))) }],
-});
+usePageMeta(k('meta.title'), k('meta.description'));
 
 const rows = computed(() =>
     props.rowKeys.map((key) => ({

@@ -1,0 +1,29 @@
+# Templatical
+
+> Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with your own backend behind every storage feature. Source-available (FSL-1.1-MIT): free for commercial embedding, no license key, MIT two years after each release. Renderer, importers, types, quality linter and CLI are MIT today.
+
+- Install: `npm install @templatical/editor`
+- Agent Skill: `npx skills add templatical/sdk`
+
+## Documentation
+
+- [Docs index for agents](https://docs.templatical.com/llms.txt): every docs page with a one-line summary
+- [Full docs in one file](https://docs.templatical.com/llms-full.txt)
+- [Installation](https://docs.templatical.com/getting-started/installation)
+- [License FAQ](https://docs.templatical.com/license-faq)
+
+## Compare and migrate
+
+- [Importers](https://templatical.com/importers): Unlayer, Beefree, Stripo, Topol, Chamaileon, Easy Email Pro, MJML and HTML
+- [Unlayer alternative](https://templatical.com/alternatives/unlayer)
+- [Beefree SDK alternative](https://templatical.com/alternatives/beefree)
+- [Stripo Plugin alternative](https://templatical.com/alternatives/stripo)
+- [Topol Plugin alternative](https://templatical.com/alternatives/topol)
+- [Chamaileon SDK alternative](https://templatical.com/alternatives/chamaileon)
+- [Easy Email Pro alternative](https://templatical.com/alternatives/easy-email-pro)
+- [Templatical vs GrapesJS](https://templatical.com/alternatives/grapesjs)
+
+## Try it
+
+- [Playground](https://play.templatical.com)
+- [Source on GitHub](https://github.com/templatical/sdk)

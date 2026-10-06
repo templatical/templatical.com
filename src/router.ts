@@ -71,4 +71,15 @@ export const routes = [
         component: () => import('./pages/AlternativeGrapesjs.vue'),
         meta: { transparentHero: true },
     },
+    // Cloudflare Pages answers a path with no file by serving the prerendered
+    // /404 as dist/404.html with a 404 status. vite-ssg skips the catch-all (its
+    // path holds `:` and `*`), so that one only serves client-side navigation.
+    {
+        path: '/404',
+        component: () => import('./pages/NotFound.vue'),
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: () => import('./pages/NotFound.vue'),
+    },
 ];
