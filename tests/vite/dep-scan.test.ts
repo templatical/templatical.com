@@ -34,9 +34,10 @@ const SRC: Record<string, string> = Object.fromEntries(
     ).map(([path, source]) => [path.replace('../../src/', ''), source] as const),
 );
 
-// Read as text rather than imported: package.json would need resolveJsonModule,
-// and vite.config.ts runs network fetches at module scope (bundle size, changelog)
-// that a unit test must not trigger.
+// Both files are read as text. vite.config.ts in particular is never imported: its default
+// export is an async factory whose body fetches the bundle size and the changelog, and the
+// `optimizeDeps` block lives on the object that factory resolves to, so a unit test that
+// wanted the block would trigger those fetches.
 const PACKAGE_JSON = (
     import.meta.glob('../../package.json', {
         query: '?raw',
@@ -95,7 +96,7 @@ function declaredDependencies(): Set<string> {
 
 /**
  * The `optimizeDeps.exclude` array, read out of the config text. Crude on
- * purpose: importing the config would run its network fetches, and only the
+ * purpose: resolving the config would run its network fetches, and only the
  * literal list matters here.
  */
 function excludedFromScan(): Set<string> {

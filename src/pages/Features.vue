@@ -11,11 +11,11 @@ import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSection from '@/components/SiteSection.vue';
 import SiteText from '@/components/SiteText.vue';
 import { ArrowRight, Check, ChevronRight } from '@lucide/vue';
-import { useHead } from '@unhead/vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { featureSectionId, useFeatureNav } from '@/composables/useFeatureNav';
 import type { FeatureNavItem } from '@/composables/useFeatureNav';
+import { usePageMeta } from '@/composables/usePageMeta';
 import { tagTemplateAsHtml } from '@/composables/useShikiHighlight';
 import CodeBlock from '@/components/CodeBlock.vue';
 import VariantTabs from '@/components/VariantTabs.vue';
@@ -30,15 +30,7 @@ function docsUrl(path: string): string {
     return `${URLS.docs}${prefix}${path}`;
 }
 
-useHead({
-    title: computed(() => t('features.meta.title')),
-    meta: [
-        {
-            name: 'description',
-            content: computed(() => t('features.meta.description')),
-        },
-    ],
-});
+usePageMeta('features.meta.title', 'features.meta.description');
 
 interface CodeVariant {
     label: string;

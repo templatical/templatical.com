@@ -1,8 +1,9 @@
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
+import { auditPages, buildSitemap, type RenderedPage } from './src/lib/seo.ts';
 
 const BUNDLE_STATS_URL = 'https://unpkg.com/@templatical/editor/dist/bundle-stats.json';
 
@@ -97,6 +98,9 @@ async function fetchChangelog(): Promise<ChangelogVersion[] | null> {
     }
 }
 
+/** Every prerendered page, collected by ssgOptions.onPageRendered and audited once all are written. */
+const renderedPages: RenderedPage[] = [];
+
 export default defineConfig(async () => ({
     define: {
         __BUNDLE_SIZE__: JSON.stringify(await fetchBundleSize()),
@@ -121,6 +125,24 @@ export default defineConfig(async () => ({
     // it. `tests/vite/dep-scan.test.ts` holds the invariant.
     optimizeDeps: {
         exclude: ['@templatical/editor'],
+    },
+    ssgOptions: {
+        onPageRendered(route: string, html: string) {
+            renderedPages.push({ route, html });
+            return html;
+        },
+        async onFinished() {
+            const problems = auditPages(renderedPages);
+            if (problems.length > 0) {
+                throw new Error(
+                    `[seo] the prerendered pages would ship broken head tags:\n${problems.join('\n')}`,
+                );
+            }
+            await writeFile(
+                new URL('./dist/sitemap.xml', import.meta.url),
+                buildSitemap(renderedPages.map(({ route }) => route)),
+            );
+        },
     },
     plugins: [vue(), tailwindcss()],
 }));

@@ -2,11 +2,29 @@
 import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
 import { useViewTransitions } from '@/composables/useViewTransitions';
+import { SITE_ORIGIN } from '@/lib/seo';
+import { useHead } from '@unhead/vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
 useViewTransitions();
+
+const OG_IMAGE = `${SITE_ORIGIN}/og.png`;
+
+// Site-wide head tags. Pages add their title, description and canonical
+// through usePageMeta, and index.html carries none of these, so unhead is the
+// only writer and deduplicates every tag in one place.
+useHead({
+    meta: [
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: OG_IMAGE },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:image', content: OG_IMAGE },
+    ],
+});
 </script>
 
 <template>

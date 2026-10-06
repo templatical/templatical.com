@@ -5,23 +5,15 @@ import HeroHeadline from '@/components/HeroHeadline.vue';
 import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
+import { usePageMeta } from '@/composables/usePageMeta';
 import { URLS } from '@/lib/urls';
 import { ChevronRight } from '@lucide/vue';
-import { useHead } from '@unhead/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-useHead({
-    title: computed(() => t('faq.meta.title')),
-    meta: [
-        {
-            name: 'description',
-            content: computed(() => t('faq.meta.description')),
-        },
-    ],
-});
+usePageMeta('faq.meta.title', 'faq.meta.description');
 
 const faqItems = computed(() =>
     [

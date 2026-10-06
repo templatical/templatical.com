@@ -104,18 +104,18 @@ const de: MessageSchema = {
         documentation: 'Dokumentation',
         playground: 'Playground',
         github: 'GitHub',
-        copyright: '© {year} Templatical. Open Source unter FSL-1.1-MIT.',
+        copyright: '© {year} Templatical. Source-Available unter FSL-1.1-MIT.',
     },
     home: {
         meta: {
-            title: 'Templatical — Open-Source E-Mail-Editor SDK',
+            title: 'Templatical — Einbettbares E-Mail-Editor-SDK',
             description:
-                'Betten Sie einen Open-Source-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, vollständigem Theming und mehr.',
+                'Betten Sie einen Source-Available-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, vollständigem Theming und mehr.',
         },
         hero: {
-            headline: 'Ein Open-Source-Drag-and-Drop-E-Mail-Editor-SDK.',
+            headline: 'Ein Drag-and-Drop-E-Mail-Editor für Ihre App.',
             subheadline:
-                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags und Anzeigebedingungen — alles im Open-Source-SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
+                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags und Anzeigebedingungen — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Dokumentation lesen',
             frameworkNote:
@@ -133,10 +133,10 @@ const de: MessageSchema = {
             eyebrow: 'Warum Templatical',
             headline: 'Alles enthalten, nichts hinter Bezahlschranken',
             subheadline:
-                'Selbst bauen kostet ein Quartal Engineering. SaaS-Builder verlangen pro Sitz und sperren die wichtigen Features hinter Upgrades. Templatical enthält sie — Open Source, selbst gehostet, sofort einbettbar.',
+                'Selbst bauen kostet ein Quartal Engineering. SaaS-Builder verlangen pro Sitz und sperren die wichtigen Features hinter Upgrades. Templatical enthält sie — Source-Available, selbst gehostet, sofort einbettbar.',
             youBuildLabel: 'Müssten Sie selbst bauen',
             paywalledLabel: 'Hinter Bezahlschranke oder eingeschränkt',
-            sdkLabel: 'Im Open-Source-SDK enthalten',
+            sdkLabel: 'Im SDK enthalten',
             cloudLabel: 'Mit Templatical Cloud kommend',
             cloudBadge: 'In Entwicklung',
             cloudMore: 'Mehr unter cloud.templatical.com',
@@ -188,7 +188,7 @@ const de: MessageSchema = {
                 templatical: {
                     title: 'Templatical',
                     description:
-                        'Ein speziell entwickeltes Open-Source-SDK für E-Mail-Editoren. Erlebnis besitzen, in Tagen statt Quartalen ausliefern, niemals an einer Bezahlschranke für Kernfunktionen anstoßen.',
+                        'Ein speziell entwickeltes Source-Available-SDK für E-Mail-Editoren. Erlebnis besitzen, in Tagen statt Quartalen ausliefern, niemals an einer Bezahlschranke für Kernfunktionen anstoßen.',
                     sdk: [
                         'Custom Blocks mit API-gestützten Datenquellen',
                         'Block-Level-Merge-Tags mit Scoping',
@@ -219,7 +219,7 @@ const de: MessageSchema = {
             eyebrow: 'Unabhängig zur Laufzeit',
             headline: 'Nichts zu aktivieren. Nichts zu widerrufen.',
             subheadline:
-                'Kein Lizenzschlüssel, keine Client-ID, kein Aktivierungsaufruf. Das Open-Source-SDK fragt nie einen Server, welche Funktionen Sie nutzen dürfen — einmal installiert, läuft es unverändert weiter, auch wenn dieses Projekt morgen verschwindet.',
+                'Kein Lizenzschlüssel, keine Client-ID, kein Aktivierungsaufruf. Das SDK fragt nie einen Server, welche Funktionen Sie nutzen dürfen — einmal installiert, läuft es unverändert weiter, auch wenn dieses Projekt morgen verschwindet.',
             claims: [
                 'Kein Lizenzschlüssel und keine Client-ID in der gesamten API',
                 'Keine Berechtigungsprüfung — Funktionen werden nie aus der Ferne freigeschaltet oder entzogen',
@@ -252,7 +252,7 @@ const de: MessageSchema = {
         cta: {
             headline: 'Starten Sie noch heute mit E-Mail-Vorlagen',
             subheadline:
-                'Open Source. Für immer kostenlos. Heute selbst hosten, später optional in den Managed-Tarif wechseln.',
+                'Source-Available und kostenlos einbettbar. Heute selbst hosten, später optional in den Managed-Tarif wechseln.',
             ctaPrimary: 'Loslegen',
             ctaSecondary: 'Auf GitHub ansehen',
             ctaTertiary: 'Sponsor',
@@ -275,15 +275,15 @@ const de: MessageSchema = {
         meta: {
             title: 'Funktionen — Templatical',
             description:
-                'Open-Source-Drag-and-Drop-E-Mail-Editor-SDK. Eigene Blöcke, vollständiges Theming, MJML-Ausgabe. Selbst hosten — kostenlos. FSL-1.1-MIT, nach zwei Jahren MIT.',
+                'Source-Available-Drag-and-Drop-E-Mail-Editor-SDK. Eigene Blöcke, vollständiges Theming, MJML-Ausgabe. Selbst hosten — kostenlos. FSL-1.1-MIT, nach zwei Jahren MIT.',
         },
         hero: {
-            eyebrow: 'Open-Source-SDK',
+            eyebrow: 'Source-Available-SDK',
             headline:
-                'Was andere Editoren hinter Schranken halten — bei uns in Ihrem Repo. Open Source.',
+                'Was andere Editoren hinter Schranken halten — bei uns in Ihrem Repo. Kostenlos einbettbar.',
             subheadline:
-                'Die Power-Features und eine saubere Basis — alles enthalten, alles offen. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
-            pricingPill: 'Open Source · FSL-1.1-MIT · Kostenlos selbst hosten',
+                'Die Power-Features und eine saubere Basis — alles enthalten, nichts gesperrt. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
+            pricingPill: 'Source-Available · FSL-1.1-MIT · Kostenlos selbst hosten',
         },
         index: {
             heading: 'Alles auf dieser Seite',
@@ -804,13 +804,13 @@ const de: MessageSchema = {
     alternatives: {
         topol: {
             meta: {
-                title: 'Eine Open-Source-Alternative zu Topol Plugin — Templatical',
+                title: 'Eine Source-Available-Alternative zu Topol Plugin — Templatical',
                 description:
                     'Ein belegter Direktvergleich: Preise pro Nutzer, domaingebundene API-Schlüssel, wer den Editor betreibt und woran die Ausgabe hängt.',
             },
             hero: {
                 eyebrow: 'Vergleich',
-                headline: 'Eine Open-Source-Alternative zu Topol Plugin',
+                headline: 'Eine Source-Available-Alternative zu Topol Plugin',
                 subheadline:
                     'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Topol ist unter den gehosteten Buildern am großzügigsten dabei, was pro Tarif enthalten ist — es bleiben die Fragen, wer den Editor betreibt, ob Ihre Rechnung mit Ihren Nutzern wächst und wem die Ausgabe gehört. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
@@ -907,11 +907,11 @@ const de: MessageSchema = {
                     storage:
                         'Sie Bildspeicher mitgeliefert haben wollen. Topol hostet ihn für Sie; Templatical hat keinen und erwartet, dass Sie ihn beisteuern.',
                     comments:
-                        'Sie Kommentare zu Vorlagen direkt im Editor wollen, ohne dafür etwas bauen zu müssen. Topol bietet das ab dem Business-Tarif (300 $/Monat); Templatical liefert Kommentare als Open-Source-Provider, den Sie gegen Ihren eigenen Speicher und Ihre Identitäten implementieren — mehr Aufwand als ein Tarif-Feature, das Sie einfach einschalten.',
+                        'Sie Kommentare zu Vorlagen direkt im Editor wollen, ohne dafür etwas bauen zu müssen. Topol bietet das ab dem Business-Tarif (300 $/Monat); Templatical liefert Kommentare als Provider, den Sie gegen Ihren eigenen Speicher und Ihre Identitäten implementieren — mehr Aufwand als ein Tarif-Feature, das Sie einfach einschalten.',
                     templates:
                         'Sie eine fertige Vorlagen-Bibliothek wollen, mit der Ihre Nutzer sofort starten können.',
                     support:
-                        'Sie einen kommerziellen Anbieter hinter dem Editor wollen, mit E-Mail-Support zu Geschäftszeiten, statt eines Open-Source-Projekts.',
+                        'Sie einen kommerziellen Anbieter hinter dem Editor wollen, mit E-Mail-Support zu Geschäftszeiten, statt eines Source-Available-Projekts.',
                 },
             },
             close: {
@@ -939,13 +939,13 @@ const de: MessageSchema = {
             meta: {
                 title: 'Templatical vs. GrapesJS — E-Mail-Editor oder Web-Builder-Framework',
                 description:
-                    'Ein belegter Vergleich zweier Open-Source-Projekte: ein spezialisiertes E-Mail-Editor-SDK gegen ein allgemeines Web-Builder-Framework mit E-Mail-Plugins.',
+                    'Ein belegter Vergleich eines Source-Available-E-Mail-Editor-SDKs mit einem Open-Source-Web-Builder-Framework mit E-Mail-Plugins.',
             },
             hero: {
                 eyebrow: 'Vergleich',
-                headline: 'Templatical und GrapesJS sind beide Open Source',
+                headline: 'Templatical und GrapesJS veröffentlichen beide ihren Quellcode',
                 subheadline:
-                    'Es geht hier also nicht um Lizenzen oder Kosten — beide sind kostenlos, beide laufen in Ihrem eigenen Bundle, und beide können MJML ausgeben. Die eigentliche Frage ist, ob Sie einen E-Mail-Editor wollen oder ein Framework, auf dem Sie einen bauen. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
+                    'Beide sind kostenlos, beide laufen in Ihrem eigenen Bundle, und beide können MJML ausgeben; die Lizenzen unterscheiden sich, wie die Tabelle zeigt. Die eigentliche Frage ist, ob Sie einen E-Mail-Editor wollen oder ein Framework, auf dem Sie einen bauen. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
             },
@@ -1075,13 +1075,13 @@ const de: MessageSchema = {
         },
         chamaileon: {
             meta: {
-                title: 'Eine Open-Source-Alternative zu Chamaileon SDK — Templatical',
+                title: 'Eine Source-Available-Alternative zu Chamaileon SDK — Templatical',
                 description:
                     'Ein belegter Direktvergleich: doppelte Abrechnung nach Nutzern und Exporten, ein Editor im iframe, Pflicht-Token und woran die Ausgabe hängt.',
             },
             hero: {
                 eyebrow: 'Vergleich',
-                headline: 'Eine Open-Source-Alternative zu Chamaileon SDK',
+                headline: 'Eine Source-Available-Alternative zu Chamaileon SDK',
                 subheadline:
                     'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Chamaileon betreibt seinen Editor in einem iframe, den es selbst ausliefert, rechnet Nutzer und Exporte gleichzeitig ab und braucht zum Start ein Token. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
@@ -1176,7 +1176,7 @@ const de: MessageSchema = {
                     gallery:
                         'Sie eine Asset-Galerie als Teil des SDK wollen. Chamaileon bringt eine mit; Templatical erwartet, dass Sie den Picker stellen.',
                     support:
-                        'Sie einen kommerziellen Anbieter mit benanntem technischem Ansprechpartner in deren Enterprise-Tarif wollen statt eines Open-Source-Projekts.',
+                        'Sie einen kommerziellen Anbieter mit benanntem technischem Ansprechpartner in deren Enterprise-Tarif wollen statt eines Source-Available-Projekts.',
                 },
             },
             close: {
@@ -1202,13 +1202,13 @@ const de: MessageSchema = {
         },
         stripo: {
             meta: {
-                title: 'Eine Open-Source-Alternative zu Stripo Plugin — Templatical',
+                title: 'Eine Source-Available-Alternative zu Stripo Plugin — Templatical',
                 description:
                     'Ein belegter Direktvergleich: Wie Stripo die Nutzung abrechnet, was an welchen Tarif gebunden ist, wer den Editor betreibt und woran die Ausgabe hängt.',
             },
             hero: {
                 eyebrow: 'Vergleich',
-                headline: 'Eine Open-Source-Alternative zu Stripo Plugin',
+                headline: 'Eine Source-Available-Alternative zu Stripo Plugin',
                 subheadline:
                     'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Sie unterscheiden sich darin, wer den Editor betreibt und woran Ihre Rechnung hängt — Stripo zählt die E-Mails, die Ihre Nutzer gestalten. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
@@ -1304,7 +1304,7 @@ const de: MessageSchema = {
                     tooling:
                         'Sie eingebaute Bildbearbeitung und Stock-Inhalte zusammen mit dem Editor wollen.',
                     support:
-                        'Sie einen kommerziellen Anbieter mit dediziertem Support-Kanal wollen statt eines Open-Source-Projekts.',
+                        'Sie einen kommerziellen Anbieter mit dediziertem Support-Kanal wollen statt eines Source-Available-Projekts.',
                 },
             },
             close: {
@@ -1330,13 +1330,13 @@ const de: MessageSchema = {
         },
         unlayer: {
             meta: {
-                title: 'Eine Open-Source-Alternative zu Unlayer — Templatical',
+                title: 'Eine Source-Available-Alternative zu Unlayer — Templatical',
                 description:
                     'Ein belegter Direktvergleich: Hosting-Modell, Domain- und Tarif-Grenzen, Portabilität der Ausgabe und wie Sie bestehende Unlayer-Vorlagen migrieren.',
             },
             hero: {
                 eyebrow: 'Vergleich',
-                headline: 'Eine Open-Source-Alternative zu Unlayer',
+                headline: 'Eine Source-Available-Alternative zu Unlayer',
                 subheadline:
                     'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Sie unterscheiden sich darin, wer den Editor betreibt, wie weit Sie ihn erweitern können, bevor eine Grenze greift, und ob die Ausgabe Ihnen gehört. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
@@ -1461,13 +1461,13 @@ const de: MessageSchema = {
         },
         beefree: {
             meta: {
-                title: 'Eine Open-Source-Alternative zu Beefree SDK — Templatical',
+                title: 'Eine Source-Available-Alternative zu Beefree SDK — Templatical',
                 description:
                     'Ein belegter Direktvergleich: Hosting-Modell, Preise pro Nutzer, was der Editor zur Laufzeit braucht und wie Sie bestehende BeeFree-Vorlagen migrieren.',
             },
             hero: {
                 eyebrow: 'Vergleich',
-                headline: 'Eine Open-Source-Alternative zu Beefree SDK',
+                headline: 'Eine Source-Available-Alternative zu Beefree SDK',
                 subheadline:
                     'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Sie unterscheiden sich darin, wer den Editor betreibt, was er zum Start braucht und ob Ihre Rechnung mit Ihren Nutzern wächst. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
@@ -1560,7 +1560,7 @@ const de: MessageSchema = {
                     catalog:
                         'Sie Ihren Nutzern von Tag eins an einen großen Katalog fertiger Vorlagen anbieten wollen.',
                     support:
-                        'Sie einen kommerziellen Anbieter mit bezahltem Support-Vertrag wollen statt eines Open-Source-Projekts.',
+                        'Sie einen kommerziellen Anbieter mit bezahltem Support-Vertrag wollen statt eines Source-Available-Projekts.',
                     files: 'Sie einen File Manager ab Werk wollen. Beefree liefert ihn in jedem Tarif mit; Templatical hat keinen und erwartet, dass Sie den Picker beisteuern.',
                 },
             },
@@ -1587,13 +1587,13 @@ const de: MessageSchema = {
         },
         easyEmailPro: {
             meta: {
-                title: 'Eine Open-Source-Alternative zu Easy Email Pro — Templatical',
+                title: 'Eine Source-Available-Alternative zu Easy Email Pro — Templatical',
                 description:
                     'Ein belegter Direktvergleich: Lizenzierung, Framework-Unterstützung, Installationsgröße und was jeder Editor zur Laufzeit tut.',
             },
             hero: {
                 eyebrow: 'Vergleich',
-                headline: 'Eine Open-Source-Alternative zu Easy Email Pro',
+                headline: 'Eine Source-Available-Alternative zu Easy Email Pro',
                 subheadline:
                     'Beide binden einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt ein, beide erzeugen MJML. Sie unterscheiden sich bei Lizenzierung, Framework-Bindung und dem, was der Editor zur Laufzeit tut. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
@@ -1684,7 +1684,7 @@ const de: MessageSchema = {
                         'Ihre Nutzer eigene Blöcke visuell zusammenstellen sollen, ohne dass Entwickler Code schreiben.',
                     amp: 'Sie AMP-E-Mails versenden. Templatical unterstützt AMP nicht und hat es auch nicht vor.',
                     support:
-                        'Sie einen kommerziellen Anbieter mit bezahltem Support-Vertrag hinter dem Editor wollen statt eines Open-Source-Projekts.',
+                        'Sie einen kommerziellen Anbieter mit bezahltem Support-Vertrag hinter dem Editor wollen statt eines Source-Available-Projekts.',
                 },
             },
             close: {
@@ -1732,7 +1732,7 @@ const de: MessageSchema = {
             },
             packages: {
                 question: 'Welche Pakete sind MIT und welche FSL?',
-                answer: 'Elf der vierzehn Pakete sind heute reines MIT: Types, Renderer, Quality sowie alle acht Migrations-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
+                answer: 'Jedes Paket außer Editor, Core und Media-Library ist heute reines MIT: Types, Renderer, Quality, Template-Tools und jeder Migrations-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
             },
             branding: {
                 question: 'Muss ich „Powered by Templatical" anzeigen?',
@@ -1760,7 +1760,7 @@ const de: MessageSchema = {
             },
             paid: {
                 question: 'Gibt es eine kostenpflichtige Version, und ist sie erforderlich?',
-                answer: 'Nein, kostenpflichtig ist nicht erforderlich. Das Open-Source-SDK ist vollständig eigenständig — jede Editor-Funktion (Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output) ist enthalten und kostenlos selbst hostbar. Templatical Cloud ist ein separates, optionales Managed-Abo, das infrastrukturabhängige Funktionen ergänzt — Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, gehostete Medien, Multi-Tenancy, API-Zugriff. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als kostenpflichtiges Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
+                answer: 'Nein, kostenpflichtig ist nicht erforderlich. Das SDK ist vollständig eigenständig — jede Editor-Funktion (Custom Blocks, Merge-Tags, Anzeigebedingungen, Theming, MJML-Output) ist enthalten und kostenlos selbst hostbar. Templatical Cloud ist ein separates, optionales Managed-Abo, das infrastrukturabhängige Funktionen ergänzt — Echtzeit-Kollaboration, KI-Umschreiben und KI-Chat, gehostete Medien, Multi-Tenancy, API-Zugriff. Diese benötigen Backend-Dienste, die wir betreiben, und werden daher als kostenpflichtiges Managed-Tier statt als selbst hostbarer Code ausgeliefert.',
             },
             contact: {
                 question: 'Wie kann ich Kontakt aufnehmen?',
@@ -1821,6 +1821,16 @@ const de: MessageSchema = {
                 'Die Release-Daten konnten beim Erstellen dieser Seite nicht geladen werden. Das vollständige Changelog finden Sie jederzeit in der Dokumentation.',
             cta: 'Changelog in der Dokumentation öffnen',
         },
+    },
+    notFound: {
+        meta: {
+            title: 'Seite nicht gefunden — Templatical',
+            description:
+                'Diese Seite existiert nicht. Die Templatical-Startseite führt zu allen Inhalten der Website.',
+        },
+        headline: 'Seite nicht gefunden',
+        body: 'Die angeforderte Seite existiert nicht oder wurde verschoben.',
+        home: 'Zurück zur Startseite',
     },
 };
 
