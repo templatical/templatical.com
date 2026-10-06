@@ -501,8 +501,8 @@ onBeforeUnmount(() => {
                 v-else
                 src="/preview.png"
                 :alt="t('heroEditor.previewAlt') || 'Templatical editor preview'"
-                width="2124"
-                height="1428"
+                width="2364"
+                height="1410"
                 decoding="async"
                 fetchpriority="high"
                 class="block h-auto w-full"
