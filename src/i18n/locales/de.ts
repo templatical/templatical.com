@@ -203,7 +203,7 @@ const de: MessageSchema = {
                         'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
                         'Standardmäßig White-Label — Ihre UI, Ihre Marke',
                         'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
-                        'Eingebaute WCAG-Barrierefreiheits-Prüfung mit Auto-Fixes',
+                        'Prüfungen vor dem Versand für Barrierefreiheit, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität, mit Lösungsvorschlägen und Quellenlinks',
                         'Style-isoliert — Shadow-DOM-Mount hält Host-CSS draußen',
                         'Kein Lizenzschlüssel, kein Aktivierungsaufruf — nichts, was wir aus der Ferne abschalten könnten',
                     ],
@@ -275,7 +275,7 @@ const de: MessageSchema = {
         meta: {
             title: 'Funktionen — Templatical',
             description:
-                'Source-Available-Drag-and-Drop-E-Mail-Editor-SDK. Eigene Blöcke, vollständiges Theming, MJML-Ausgabe. Selbst hosten — kostenlos. FSL-1.1-MIT, nach zwei Jahren MIT.',
+                'Source-Available-E-Mail-Editor-SDK mit Prüfungen für Barrierefreiheit, Struktur, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität.',
         },
         hero: {
             eyebrow: 'Source-Available-SDK',
@@ -455,20 +455,20 @@ const de: MessageSchema = {
         },
         accessibility: {
             eyebrow: 'Linting',
-            title: 'Eingebaute Vorlagen-Prüfung',
+            title: 'Qualitätsprüfungen für Vorlagen vor dem Versand',
             description:
-                '30 deterministische Regeln laufen während der Bearbeitung — sichtbar in einem eigenen Sidebar-Tab und als Inline-Badges auf dem Canvas. Barrierefreiheit, Struktur und Links, mit konfigurierbarer Schwere und ohne KI-Raten.',
+                'Der MIT-lizenzierte Qualitäts-Linter prüft beim Bearbeiten Barrierefreiheit, Struktur, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität. Der Tab „Probleme“ listet Befunde auf; Fehler und Warnungen haben zusätzlich Badges auf dem Canvas.',
             outcome:
-                'Alt-Texte, Kontrast, defekte Links und fehlerhafte Struktur vor dem Versand erkennen — nicht danach.',
+                'Erkennen Sie Vorlagenprobleme vor dem Versand, mit Vorschlag und Quellenlink zu jedem Befund.',
             features: [
-                'Live-Prüfungen: Fehler, Warnungen, Hinweise — in der Sidebar gruppiert',
-                'Inline-Badges auf dem Canvas mit Sprung-zu-Stelle und Auto-Fix wo sicher',
-                '20 Barrierefreiheits-Regeln: Alt-Texte, Kontrast, Überschriften-Reihenfolge, Touch-Targets',
-                '5 Link-Regeln: javascript:-URLs, fehlerhafte mailto und tel, Staging-Hosts',
-                '5 Struktur-Regeln: doppelte IDs, leere Sections, Spalten-Unstimmigkeiten',
-                'Pro Regel Schwere überschreibbar, Schwellenwerte konfigurierbar',
-                'Lokale-bewusste Wörterbücher für vagen Text',
-                'Dieselbe Engine läuft eigenständig — Templates in CI, beim Speichern oder vor dem Versand prüfen',
+                'Barrierefreiheit: Alt-Texte, Kontrast, Überschriften-Reihenfolge und Touch-Targets',
+                'Struktur und Links: doppelte IDs, leere Abschnitte, unsichere URLs und Staging-Hosts',
+                'Zustellbarkeitsprüfung meldet Inhaltsmuster, die Spamfilter und Postfachanbieter-Richtlinien nennen; sie sagt die Platzierung im Posteingang nicht voraus',
+                'caniemail-gestützte Prüfungen von selbst verfasstem, durchgereichtem HTML und CSS nennen betroffene Clients anhand eines datierten Datenstands',
+                'Jeder Befund hat Meldung, Vorschlag und Quellenlink; Auto-Fixes gibt es, wenn die Regel einen anbietet',
+                'Der Tab „Probleme“ gruppiert Befunde nach Schwere; Canvas-Badges kennzeichnen Fehler und Warnungen',
+                'Im lokalen Editor misst „Größe prüfen“ bei eingerichtetem HTML-Compiler das kompilierte HTML auf Gmail-Clipping',
+                'Führen Sie lintTemplate ohne Editor oder templatical validate in CI und Agenten-Workflows aus; validate --html ergänzt die kompilierte Größe',
             ],
             docsLabel: 'Prüfungs-Referenz',
         },
@@ -1013,12 +1013,12 @@ const de: MessageSchema = {
                     },
                     linting: {
                         label: 'Qualitätsprüfung für Vorlagen',
-                        us: '30 Regeln für Barrierefreiheit, Struktur und Links, MIT',
+                        us: 'MIT-Qualitäts-Linter: Barrierefreiheit, Struktur, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität',
                         them: 'Bauen Sie selbst',
                     },
                     clientCompat: {
                         label: 'E-Mail-Client-Kompatibilität',
-                        us: 'Von MJML getragen — Outlook, Gmail-Clipping, Apple Mail',
+                        us: 'MJML für erzeugtes Markup; caniemail-Prüfungen für selbst verfasstes HTML/CSS; Größenprüfung des kompilierten HTML für Gmail-Clipping',
                         them: 'Genauso, über grapesjs-mjml — es kompiliert ebenfalls mit MJML',
                     },
                 },
@@ -1044,7 +1044,7 @@ const de: MessageSchema = {
                 them: {
                     scope: 'Sie mehr als E-Mails brauchen — Landingpages, App-Oberflächen, beliebige HTML-Dokumente. Templatical macht E-Mails und sonst nichts.',
                     freedom:
-                        'Sie Layout-Freiheit jenseits von MJML wollen — und in Kauf nehmen, dass Sie damit die E-Mail-Client-Kompatibilität selbst verantworten, denn genau die liefert das MJML-Plugin.',
+                        'Sie Layout-Freiheit jenseits von MJML wollen und die Client-Unterstützung Ihrer eigenen Ausgabe selbst prüfen können.',
                     licence:
                         'Sie eine freizügigere Lizenz brauchen. BSD-3-Clause hat keine Wettbewerbsklausel und keine Zwei-Jahres-Wartezeit; unsere schon.',
                     control:
@@ -1644,7 +1644,7 @@ const de: MessageSchema = {
                     linting: {
                         label: 'Qualitätsprüfung für Vorlagen',
                         them: 'Nicht dokumentiert',
-                        us: '30 Regeln für Barrierefreiheit, Struktur und Links, MIT',
+                        us: 'MIT-Qualitäts-Linter: Barrierefreiheit, Struktur, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität',
                     },
                     importers: {
                         label: 'Migrations-Importer',

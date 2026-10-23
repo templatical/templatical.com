@@ -201,7 +201,7 @@ export default {
                         'Full theming via design tokens, dark mode included',
                         'White-label by default — your UI, your brand',
                         'MJML output — render in browser, on your server, anywhere',
-                        'Built-in WCAG accessibility linting with auto-fixes',
+                        'Pre-send checks for accessibility, links, deliverability patterns (not inbox placement), and email-client compatibility, with suggested fixes and reference links',
                         'Style-isolated — Shadow DOM mount keeps host CSS out',
                         'No license key, no activation call — nothing we can switch off remotely',
                     ],
@@ -273,7 +273,7 @@ export default {
         meta: {
             title: 'Features — Templatical',
             description:
-                'Source-available drag-and-drop email editor SDK. Custom blocks, full theming, MJML output. Self-host free. FSL-1.1-MIT, becoming MIT two years after each release.',
+                'Source-available email editor SDK with accessibility, structure, link, deliverability-pattern and email-client compatibility checks (not inbox placement).',
         },
         hero: {
             eyebrow: 'Source-available SDK',
@@ -446,20 +446,20 @@ export default {
         },
         accessibility: {
             eyebrow: 'Linting',
-            title: 'Built-in template linting',
+            title: 'Template quality checks before send',
             description:
-                '30 deterministic rules run while authoring — surfaced in a dedicated sidebar tab and as inline badges on the canvas. Accessibility, structure, and links, with configurable severity and no AI guesswork.',
+                'The MIT quality linter checks accessibility, structure, links, deliverability patterns (not inbox placement), and email-client compatibility while you author. The Issues tab lists findings; errors and warnings also have canvas badges.',
             outcome:
-                'Catch alt text, contrast, broken links, and malformed structure before send — not after.',
+                'Catch template issues before send, with a suggestion and reference link for each finding.',
             features: [
-                'Live checks: errors, warnings, and info — grouped in the sidebar',
-                'Inline canvas badges with one-click jump and auto-fix where safe',
-                '20 accessibility rules: alt text, contrast, heading order, touch targets',
-                '5 link rules: javascript: URLs, malformed mailto and tel, staging hosts',
-                '5 structure rules: duplicate ids, empty sections, column mismatches',
-                'Per-rule severity overrides and configurable thresholds',
-                'Locale-aware vague-text dictionaries',
-                'Same engine runs standalone — validate templates in CI, on save, or in pre-send pipelines',
+                'Accessibility: alt text, contrast, heading order, and touch targets',
+                'Structure and links: duplicate IDs, empty sections, unsafe URLs, and staging hosts',
+                'Deliverability flags content patterns named by spam filters and mailbox-provider guidelines; it does not predict inbox placement',
+                'Caniemail-backed checks of authored pass-through HTML and CSS name affected clients from a dated snapshot',
+                'Every issue has a message, suggestion, and reference link; auto-fixes are available where a rule provides one',
+                'The Issues tab groups findings by severity; canvas badges mark errors and warnings',
+                'In the local editor, Check size measures compiled HTML for Gmail clipping when an HTML compiler is configured',
+                'Run lintTemplate headlessly or templatical validate in CI and agents; validate --html adds compiled size',
             ],
             docsLabel: 'Linting reference',
         },
@@ -1001,12 +1001,12 @@ export default {
                     },
                     linting: {
                         label: 'Template quality linting',
-                        us: '30 accessibility, structure and link rules, MIT',
+                        us: 'MIT quality linter: accessibility, structure, links, deliverability patterns (not inbox placement), and email-client compatibility',
                         them: 'Yours to build',
                     },
                     clientCompat: {
                         label: 'Email-client compatibility',
-                        us: 'Carried by MJML — Outlook, Gmail clipping, Apple Mail',
+                        us: 'MJML for generated markup; caniemail checks for authored HTML/CSS; compiled HTML size check for Gmail clipping',
                         them: 'The same, through grapesjs-mjml — it compiles with MJML too',
                     },
                 },
@@ -1032,7 +1032,7 @@ export default {
                 them: {
                     scope: 'You need more than email — landing pages, app screens, any HTML document. Templatical does email and nothing else.',
                     freedom:
-                        'You want layout freedom beyond what MJML allows — accepting that you then own email-client compatibility yourself, since the MJML plugin is what provides it.',
+                        'You want layout freedom beyond MJML and can validate client support for the custom output you build.',
                     licence:
                         'You need a more permissive licence. BSD-3-Clause has no non-compete restriction and no two-year wait; ours does.',
                     control:
@@ -1632,7 +1632,7 @@ export default {
                     linting: {
                         label: 'Template quality linting',
                         them: 'Not documented',
-                        us: '30 accessibility, structure and link rules, MIT',
+                        us: 'MIT quality linter: accessibility, structure, links, deliverability patterns (not inbox placement), and email-client compatibility',
                     },
                     importers: {
                         label: 'Migration importers',
