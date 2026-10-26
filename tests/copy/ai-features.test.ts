@@ -86,6 +86,17 @@ describe.each([
         expect(initSentences).toMatch(locale === 'en' ? /\bAI\b/ : /\bKI\b/);
         expect(initSentences).toMatch(locale === 'en' ? /\bmodel\b/ : /\bModell\b/);
     });
+
+    // The hero's own words are what a skimming reader, a search snippet and a link
+    // preview see; the live editor's AI button and the AI section below them are not.
+    it('names the AI assistant on your own model in the homepage hero and its description', () => {
+        const pattern =
+            locale === 'en'
+                ? /\bAI assistant on your own model\b/
+                : /\bKI-Assistent(en)? mit Ihrem eigenen Modell\b/;
+        expect(messages.home.hero.subheadline).toMatch(pattern);
+        expect(messages.home.meta.description).toMatch(pattern);
+    });
 });
 
 describe('the AI section on /features', () => {
