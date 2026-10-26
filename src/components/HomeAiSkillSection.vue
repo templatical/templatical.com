@@ -46,7 +46,10 @@ const halves = computed(() => [
 </script>
 
 <template>
-    <section class="bg-white py-20 sm:py-28 dark:bg-neutral-950">
+    <!-- White like the AI section above it, so a hairline marks where one ends. -->
+    <section
+        class="border-t border-neutral-950/5 bg-white py-20 sm:py-28 dark:border-white/10 dark:bg-neutral-950"
+    >
         <SiteContainer>
             <RevealOnScroll>
                 <div class="mx-auto flex max-w-4xl flex-col items-center gap-8 text-center">

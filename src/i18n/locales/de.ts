@@ -63,7 +63,7 @@ const de: MessageSchema = {
             templateName: 'Willkommens-E-Mail',
             eyebrow: 'Mit einem Backend verbunden',
             description:
-                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand und Medien — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers, es verlässt also nichts diese Seite.',
+                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien und KI — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers und spielt aufgezeichnete KI-Antworten ohne Modell ab, es verlässt also nichts diese Seite.',
             docsLink: 'So funktionieren die Provider',
             reset: 'Demo zurücksetzen',
             resetting: 'Wird zurückgesetzt…',
@@ -198,12 +198,14 @@ const de: MessageSchema = {
                         'Speichern und Laden gegen Ihren eigenen Speicher — Autosave, Speicherstatus, Cmd/Ctrl+S',
                         'Versionsverlauf — durchsuchen, in der Vorschau ansehen und wiederherstellen, in Ihrem Speicher',
                         'Review-Kommentare in Threads, verankert an Blöcken, auf Ihrem Speicher und Ihren Identitäten',
+                        'Gemeinsames Bearbeiten in Echtzeit — geordnete Operationen, Block-Sperren und Präsenz, über Ihr eigenes Backend',
                         'Testversand aus dem Editor — über Ihren ESP und Ihre Domain zugestellt',
                         'Vorschauen von Ihrem Backend aufgelöst — echte Daten, Logik-Zweige ausgewertet',
                         'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
                         'Standardmäßig White-Label — Ihre UI, Ihre Marke',
                         'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
                         'Prüfungen vor dem Versand für Barrierefreiheit, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität, mit Lösungsvorschlägen und Quellenlinks',
+                        'KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ — mit Ihrem eigenen Modell und Ihren Schlüsseln',
                         'Style-isoliert — Shadow-DOM-Mount hält Host-CSS draußen',
                         'Kein Lizenzschlüssel, kein Aktivierungsaufruf — nichts, was wir aus der Ferne abschalten könnten',
                     ],
@@ -227,8 +229,48 @@ const de: MessageSchema = {
                 'Ihre Vorlagen bleiben in Ihrer App, bis Sie sie an Ihr eigenes Backend senden',
             ],
         },
+        ai: {
+            eyebrow: 'Neu · AI-Kit, MIT',
+            headline: 'KI im Editor, mit Ihrem eigenen Modell',
+            subheadline:
+                'Geben Sie init() einen KI-Provider, und der Editor erhält den KI-Assistenten, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“. Ihr Backend ruft das Modell Ihrer Wahl auf, mit Ihren Schlüsseln und Ihren Vereinbarungen zur Datenverarbeitung; das MIT-lizenzierte AI-Kit liefert die Anbindung.',
+            usersTitle: 'Für Ihre Nutzer',
+            // Read with tm(), which returns raw messages.
+            features: [
+                {
+                    name: 'KI-Assistent',
+                    body: 'Ein Chat, der die Vorlage bearbeitet, mit einem Rückgängig-Schritt pro Anfrage. Er nimmt Bilder und PDFs als Anhänge an, und „Aus Screenshot oder PDF importieren“ beginnt eine E-Mail nach einem Entwurf, mit Platzhaltern für Bilder.',
+                },
+                {
+                    name: 'Mit KI umformulieren',
+                    body: 'Einen Absatz aus seiner Werkzeugleiste kürzen, erweitern, im Ton ändern oder in der Grammatik korrigieren, mit einer Vorschau, bevor etwas ersetzt wird.',
+                },
+                {
+                    name: 'Mit KI beheben',
+                    body: 'Behebt Lint-Befunde wie vagen Linktext oder einen fehlenden Preheader aus dem Issues-Panel, als ein Rückgängig-Schritt.',
+                },
+                {
+                    name: 'Alt-Text schreiben',
+                    body: 'Entwirft Alt-Text für ein Bild oder für alle markierten Bilder auf einmal; geschrieben wird erst, wenn Sie ihn annehmen.',
+                },
+            ],
+            tryNote:
+                'Probieren Sie die KI-Schaltfläche im Editor oben aus. Die Antworten sind aufgezeichnet, auf dieser Seite läuft also kein Modell.',
+            backendTitle: 'Für Ihr Backend',
+            copyLabel: 'Kopieren',
+            copiedLabel: 'Kopiert',
+            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
+            backend: [
+                'Im Browser spricht createHttpAiProvider aus @templatical/ai-kit/client mit Ihrem Backend über ein dokumentiertes REST- und Server-Sent-Events-Protokoll.',
+                'Auf Ihrem Server laufen die Prompts, das Tool und die Bearbeitungsschleife des Kits mit createAnthropicAdapter, createOpenAiAdapter oder createVercelAdapter; jedes andere Modell binden Sie über AiModelAdapter an.',
+                'Prüfen Sie es vor dem Livegang mit den Konformitätstests und dem Eval-Set.',
+                'Vorlage, Merge-Tags und Anfragen gehen an das Modell, das Sie aufrufen.',
+            ],
+            ctaPrimary: 'Zum KI-Leitfaden',
+            ctaSecondary: 'Alle KI-Optionen auf der Features-Seite',
+        },
         aiSkill: {
-            eyebrow: 'Neu · Open Source',
+            eyebrow: 'Neu · Agent Skill, MIT',
             headline: 'Beschreiben Sie die E-Mail. Oder die Integration.',
             subheadline:
                 'Ein quelloffener Agent Skill, der vollständig in dem KI-Coding-Agenten läuft, den Sie ohnehin nutzen. Bitten Sie ihn um eine E-Mail, und er schreibt, importiert, validiert und zeigt eine komplette Vorlage. Fragen Sie ihn zum SDK, und er bindet den Editor in Ihre App ein, schreibt den Code dafür oder findet heraus, warum eine Integration sich falsch verhält. Kein Backend, kein API-Schlüssel, nichts wird an uns gesendet.',
@@ -315,6 +357,8 @@ const de: MessageSchema = {
             yourApi: 'Ihre API',
             readOnly: 'Schreibgeschützt',
             composedRestore: 'Kein atomares Restore',
+            noRealtime: 'Ohne Echtzeit',
+            modelAdapter: 'Modell-Adapter',
         },
         backend: {
             eyebrow: 'Ihr Backend anbinden',
@@ -374,6 +418,24 @@ const de: MessageSchema = {
                 'Übergeben Sie create: false für einen schreibgeschützten Review-Durchlauf',
             ],
             docsLabel: 'Kommentar-Referenz',
+        },
+        collaboration: {
+            eyebrow: 'Zusammenarbeit',
+            title: 'Gemeinsames Bearbeiten in Echtzeit, über Ihr eigenes Backend',
+            description:
+                'Mehrere Personen bearbeiten eine Vorlage gleichzeitig. Der Editor schickt jede Änderung als Batch von Operationen an Ihr Backend, Ihr Backend bringt die Batches in eine Reihenfolge, und jeder geöffnete Editor wendet sie in dieser Reihenfolge an. Wer einen Block auswählt, sperrt ihn, und der Header zeigt, wer die Vorlage sonst noch geöffnet hat.',
+            outcome:
+                'Gemeinsames Bearbeiten live, auf Ihrem eigenen Echtzeit-Transport und Vorlagenspeicher.',
+            features: [
+                'join, submit und operationsAfter bilden den Vertrag; acquireLock, renewLock und releaseLock ergänzen Block-Sperren',
+                'Ihr Backend wendet jeden Batch mit applyOperations aus @templatical/types an, derselben Engine, die der Editor nutzt',
+                'Ein erneut gesendeter Batch mit bekannter batchId antwortet mit seiner Revision und wendet nichts an, sodass Wiederholungen sicher sind',
+                'Rückgängig und Wiederholen senden inverse Operationen; ein Schritt, den die Änderung einer anderen Person überholt hat, wird mit einem Hinweis übersprungen',
+                'Andere geöffnete Editoren nennen die Batches eines Agenten oder der KI in einem Hinweis und heben die geänderten Blöcke hervor',
+                'Mit Zusammenarbeit liefert templates.load auch die Revision, und templates.save erhält nur noch einen neuen Namen',
+                'Kein Echtzeit-Kanal? Änderungen laufen trotzdem geordnet über submit, und die Änderungen anderer erscheinen beim nächsten Laden',
+            ],
+            docsLabel: 'Referenz zur Zusammenarbeit',
         },
         customBlocks: {
             eyebrow: 'Erweiterbarkeit',
@@ -611,6 +673,25 @@ const de: MessageSchema = {
                 '`onRequestMedia` ist eine eigene Schnittstelle, nicht dieser Speicher — sind beide gesetzt, gewinnt der Callback',
             ],
             docsLabel: 'Medien-Referenz',
+        },
+        ai: {
+            eyebrow: 'KI',
+            title: 'KI im Editor, mit Ihrem eigenen Modell',
+            description:
+                'Übergeben Sie einen KI-Provider, und der Editor erhält den KI-Assistenten, einen Chat, der die Vorlage mit einem Rückgängig-Schritt pro Anfrage bearbeitet und Bilder und PDFs als Anhänge annimmt; „Mit KI umformulieren“ in der Absatz-Werkzeugleiste; „Mit KI beheben“ für Lint-Befunde; und „Alt-Text schreiben“ für ein Bild oder für viele auf einmal. Ihr Backend ruft das Modell auf, mit Ihren Schlüsseln und Ihren Vereinbarungen zur Datenverarbeitung.',
+            outcome:
+                'Die KI des Editors, mit dem Modell, den Schlüsseln und den Bedingungen, die Sie schon haben.',
+            features: [
+                'Aus @templatical/ai-kit (MIT): createHttpAiProvider spricht mit Ihrem Backend über ein dokumentiertes REST- und Server-Sent-Events-Protokoll, und das Server-Kit bringt die Prompts, das Tool apply_operations und die Bearbeitungsschleife für jede Fetch-API-Laufzeit mit',
+                'Modell-Adapter: createAnthropicAdapter, createOpenAiAdapter (Chat Completions) und createVercelAdapter (ein AI-SDK-Modell oder eine Gateway-Modell-ID, ausgeführt mit streamText), aus @templatical/ai-kit/adapters/anthropic, /openai und /vercel. Jeder nimmt Bilder, PDFs und Bild-URLs an; beim Vercel-Adapter hängt die PDF-Unterstützung von Ihrem AI-SDK-Provider-Paket ab',
+                'Anthropic und OpenAI nehmen einen Client, den Sie selbst erzeugen, daher liest der Adapter keine Umgebungsvariablen und hält keine Schlüssel: Ein Anthropic-Client darf eine eigene baseURL setzen, und OpenAI nimmt auch new AzureOpenAI() oder jeden OpenAI-kompatiblen Chat-Completions-Endpunkt über baseURL. Das SDK des jeweiligen Anbieters ist ein optionaler Peer: Installieren Sie das für den Adapter, den Sie importieren, sonst wird nichts installiert. Jedes andere Modell binden Sie über AiModelAdapter an',
+                'Mit aktivierten Anhängen öffnet „Aus Screenshot oder PDF importieren“ auf der leeren Arbeitsfläche den KI-Assistenten mit den Dateien und einer vorausgefüllten Anfrage; gesendet wird erst, wenn die Person sie abschickt',
+                'Optionaler gespeicherter Verlauf, dessen Rückgängig und Wiederholen Ihr Backend ausführt; ohne ihn lebt der Chat für die Sitzung im Speicher',
+                'Konformitätstests prüfen Ihren Provider und Ihre Routen; ein Eval-Set misst Ihr Modell bei Bearbeitungen, Anhängen, Lint-Korrekturen und Alt-Texten',
+                '„Mit KI beheben“ und „Alt-Text schreiben“ brauchen @templatical/quality mit aktiviertem Linting',
+                'Vorlage, Merge-Tags und Anfragen gehen an das Modell, das Sie aufrufen',
+            ],
+            docsLabel: 'KI-Referenz',
         },
         mjmlOutput: {
             eyebrow: 'Ausgabe',
@@ -1732,7 +1813,7 @@ const de: MessageSchema = {
             },
             packages: {
                 question: 'Welche Pakete sind MIT und welche FSL?',
-                answer: 'Jedes Paket außer Editor, Core und Media-Library ist heute reines MIT: Types, Renderer, Quality, Template-Tools und jeder Migrations-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
+                answer: 'Jedes Paket außer Editor, Core und Media-Library ist heute reines MIT: Types, Renderer, Quality, Template-Tools, AI-Kit und jeder Migrations-Importer. Editor, Core und Media-Library sind FSL-1.1-MIT. Die Aufteilung bedeutet, dass alles, was Sie in ein Backend oder eine Codegen-Pipeline einbauen, von Tag eins an vollständig permissiv ist.',
             },
             branding: {
                 question: 'Muss ich „Powered by Templatical" anzeigen?',
@@ -1748,7 +1829,7 @@ const de: MessageSchema = {
             },
             data: {
                 question: 'Wohin gehen meine Vorlagendaten?',
-                answer: 'Nirgendwohin. Das SDK läuft vollständig im Browser — keine Telemetrie, keine Remote-Aufrufe, keine Analytics. Ihre Vorlagen verlassen Ihre App nur, wenn Sie sie an Ihr eigenes Backend speichern.',
+                answer: 'Nur an Ihr eigenes Backend. Das SDK läuft vollständig im Browser — keine Telemetrie, keine Remote-Aufrufe, keine Analytics. Eine Vorlage verlässt Ihre App nur über einen Provider, den Sie konfigurieren: beim Speichern, beim Testversand oder mit einer KI-Anfrage, die Ihr Backend an das Modell Ihrer Wahl weitergibt.',
             },
             cssIsolation: {
                 question: 'Übernimmt der Editor das CSS meiner App?',

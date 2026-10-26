@@ -90,6 +90,10 @@ export const LOCALIZED_URLS = {
         en: 'https://docs.templatical.com/backend/',
         de: 'https://docs.templatical.com/de/backend/',
     },
+    aiDocs: {
+        en: 'https://docs.templatical.com/backend/ai',
+        de: 'https://docs.templatical.com/de/backend/ai',
+    },
 } as const;
 
 export function localizedUrl(key: keyof typeof LOCALIZED_URLS, locale: string): string {

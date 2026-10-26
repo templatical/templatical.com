@@ -1,6 +1,6 @@
 # Templatical
 
-> Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with your own backend behind every storage feature. Source-available (FSL-1.1-MIT): free for commercial embedding, no license key, MIT two years after each release. Renderer, importers, types, quality linter and CLI are MIT today. Quality checks cover accessibility, structure, links, deliverability patterns (not inbox placement) and email-client compatibility.
+> Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with your own backend behind every storage feature. Source-available (FSL-1.1-MIT): free for commercial embedding, no license key, MIT two years after each release. Renderer, importers, types, quality linter, CLI and AI kit are MIT today. Quality checks cover accessibility, structure, links, deliverability patterns (not inbox placement) and email-client compatibility.
 
 - Install: `npm install @templatical/editor`
 - Agent Skill: `npx skills add templatical/sdk`
@@ -11,6 +11,8 @@
 - [Full docs in one file](https://docs.templatical.com/llms-full.txt)
 - [Installation](https://docs.templatical.com/getting-started/installation)
 - [License FAQ](https://docs.templatical.com/license-faq)
+- [AI over your own backend](https://docs.templatical.com/backend/ai): the AI assistant, Rewrite, Fix with AI and Write alt text on the model you choose; `@templatical/ai-kit` (MIT) has the HTTP provider, server kit, model adapters (`createAnthropicAdapter`, `createOpenAiAdapter` and `createVercelAdapter` from `@templatical/ai-kit/adapters/anthropic`, `/openai`, `/vercel`; the first two take a client you construct, the Vercel one an AI SDK model or a gateway model id; any other model through `AiModelAdapter`), conformance suites and eval set
+- [Collaboration over your own backend](https://docs.templatical.com/backend/collaboration): real-time co-editing with ordered operations, block locks and presence
 
 ## Compare and migrate
 

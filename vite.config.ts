@@ -123,8 +123,12 @@ export default defineConfig(async () => ({
     // dependency (17 optimized -> 0). It costs a slower cold start and prints one
     // warning that scrolls past; the build is unaffected, so nothing else catches
     // it. `tests/vite/dep-scan.test.ts` holds the invariant.
+    //
+    // `@anthropic-ai/sdk` is the same case: the /features AI section's "Model
+    // adapter" tab shows `import Anthropic from '@anthropic-ai/sdk'`, a server-side
+    // import the site never runs.
     optimizeDeps: {
-        exclude: ['@templatical/editor'],
+        exclude: ['@templatical/editor', '@anthropic-ai/sdk'],
     },
     ssgOptions: {
         onPageRendered(route: string, html: string) {

@@ -17,6 +17,9 @@ importers:
       '@shikijs/themes':
         specifier: ^4.5.0
         version: 4.5.0
+      '@templatical/ai-kit':
+        specifier: ^0.51.0
+        version: 0.51.0
       '@unhead/vue':
         specifier: 2.1.17
         version: 2.1.17(vue@3.5.42(typescript@6.0.3))
@@ -434,8 +437,25 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
+  '@templatical/ai-kit@0.51.0':
+    resolution: {integrity: sha512-1Eb/EaqZWXoU6IvoiPXGADJMGh4TM9Yo4e7g2kSRX4QE5val/1kKqAc/I38/tfqDIG/NvpW6HyDllksFEcaz8g==}
+    peerDependencies:
+      '@anthropic-ai/sdk': ^1
+      ai: ^7
+      openai: ^7
+    peerDependenciesMeta:
+      '@anthropic-ai/sdk':
+        optional: true
+      ai:
+        optional: true
+      openai:
+        optional: true
+
   '@templatical/types@0.37.0':
     resolution: {integrity: sha512-QyPLIoWvLHLxo6bOrtEH/6C/c5DsbO8U7lqW3YKV0IWLkkr113WcZ5pn+b63uJyL0CSAh5Nf0EQVmvx2MYd9PA==}
+
+  '@templatical/types@0.51.0':
+    resolution: {integrity: sha512-V9Y7GpKbBFf9G/lvqpC6/tMoL6By7aOFXK48iI/YRBL/a9/1Z8dT2rR42n7w2tY1adVbOMsDnoCp/uz8Om893Q==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -1824,7 +1844,13 @@ snapshots:
       tailwindcss: 4.3.3
       vite: 8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)
 
+  '@templatical/ai-kit@0.51.0':
+    dependencies:
+      '@templatical/types': 0.51.0
+
   '@templatical/types@0.37.0': {}
+
+  '@templatical/types@0.51.0': {}
 
   '@types/chai@5.2.3':
     dependencies:

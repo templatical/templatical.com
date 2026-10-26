@@ -516,8 +516,8 @@ await init({ container: '#editor', content })`,
     },
 ]);
 
-// Seven provider-backed features, grouped under the "Connect your backend"
-// band. Each key is optional and independent — passing one grows the
+// The provider-backed features, one per config key, grouped under the
+// "Connect your backend" band. Each key is optional and independent — passing one grows the
 // editor's chrome for that feature; omitting it leaves nothing downloaded.
 const backendSections = computed<FeatureSection[]>(() => [
     {
@@ -721,6 +721,146 @@ const editor = await init({ container: '#editor', versionHistory })`,
       }).then((r) => r.json()),
   },
 })`,
+            },
+        ],
+    },
+    {
+        slug: 'collaboration',
+        docsPath: '/backend/collaboration',
+        docsLabel: t('features.collaboration.docsLabel'),
+        eyebrow: t('features.collaboration.eyebrow'),
+        title: t('features.collaboration.title'),
+        description: t('features.collaboration.description'),
+        outcome: t('features.collaboration.outcome'),
+        features: tm('features.collaboration.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourApi'),
+                code: `let sessionId = ''
+
+const editor = await init({
+  container: '#editor',
+  user: { id: currentUser.id, name: currentUser.name },
+  // With collaboration on, load also returns the template's revision, and
+  // save receives only a new name: content arrives through submit.
+  templates: myTemplatesProvider,
+  collaboration: {
+    // Subscribe to the template's events, answer with its revision, locks
+    // and members, and call the handlers for everything that follows.
+    join: (templateId, session, handlers) => {
+      sessionId = session.sessionId
+      return myRealtime.join(templateId, session, handlers)
+    },
+
+    // api() is your fetch helper. A refusal rejects with the HTTP status as
+    // statusCode and the response's code, or it is retried as a network error.
+    submit: (templateId, batch) =>
+      api(\`/api/templates/\${templateId}/operations\`, {
+        method: 'POST',
+        headers: { 'X-Session-Id': sessionId },
+        body: JSON.stringify(batch),
+      }),
+
+    operationsAfter: (templateId, revision) =>
+      api(\`/api/templates/\${templateId}/operations?after=\${revision}\`, {
+        headers: { 'X-Session-Id': sessionId },
+      }),
+
+    // Optional together: without them the editor takes no locks.
+    acquireLock: (templateId, blockId) =>
+      api(\`/api/templates/\${templateId}/locks\`, {
+        method: 'POST',
+        headers: { 'X-Session-Id': sessionId },
+        body: JSON.stringify({ blockId }),
+      }),
+    renewLock: (templateId, blockId) =>
+      api(\`/api/templates/\${templateId}/locks/\${blockId}\`, {
+        method: 'PUT',
+        headers: { 'X-Session-Id': sessionId },
+      }),
+    releaseLock: async (templateId, blockId) => {
+      await fetch(\`/api/templates/\${templateId}/locks/\${blockId}\`, {
+        method: 'DELETE',
+        headers: { 'X-Session-Id': sessionId },
+        keepalive: true,
+      })
+    },
+  },
+})
+
+await editor.load('tpl_123')`,
+            },
+            {
+                label: t('features.variants.noRealtime'),
+                code: `const editor = await init({
+  container: '#editor',
+  templates: myTemplatesProvider,
+  collaboration: {
+    // No realtime channel: answer with the revision and no locks or
+    // members, and never call a handler. Other people's edits appear the
+    // next time the template loads.
+    join: async (templateId) => {
+      const { revision } = await api(\`/api/templates/\${templateId}\`)
+      return { revision, locks: [], members: [], leave: () => {} }
+    },
+    submit: (templateId, batch) =>
+      api(\`/api/templates/\${templateId}/operations\`, {
+        method: 'POST',
+        body: JSON.stringify(batch),
+      }),
+    operationsAfter: (templateId, revision) =>
+      api(\`/api/templates/\${templateId}/operations?after=\${revision}\`),
+
+    // No acquireLock, renewLock or releaseLock: the editor takes no locks.
+  },
+})`,
+            },
+        ],
+    },
+    {
+        slug: 'ai',
+        docsPath: '/backend/ai',
+        docsLabel: t('features.ai.docsLabel'),
+        eyebrow: t('features.ai.eyebrow'),
+        title: t('features.ai.title'),
+        description: t('features.ai.description'),
+        outcome: t('features.ai.outcome'),
+        features: tm('features.ai.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourEndpoint'),
+                code: `import { createHttpAiProvider } from '@templatical/ai-kit/client'
+
+const editor = await init({
+  container: '#editor',
+  // Every AI request names a template, so the AI button appears once one
+  // is loaded.
+  templates: myTemplatesProvider,
+
+  // Your backend serves the routes with @templatical/ai-kit/server and
+  // calls the model with your keys. Nothing passes through Templatical.
+  ai: createHttpAiProvider({ baseUrl: '/api/ai' }),
+})
+
+await editor.load('tpl_123')`,
+            },
+            {
+                label: t('features.variants.modelAdapter'),
+                code: `import { createAnthropicAdapter } from '@templatical/ai-kit/adapters/anthropic'
+import Anthropic from '@anthropic-ai/sdk'
+
+// On your server. You construct the client (new Anthropic() reads
+// ANTHROPIC_API_KEY, and may set its own baseURL); the adapter itself reads
+// no environment and holds no keys. createOpenAiAdapter takes a client and
+// model id the same way; createVercelAdapter takes no client, only an AI SDK
+// model or a gateway model id.
+export const model = createAnthropicAdapter({
+  client: new Anthropic(),
+  model: 'claude-opus-5-5',
+})
+
+// The kit's editing loop calls it for chat and Fix with AI, as in the
+// server guide: runEditingTurn({ request, model, write, signal })`,
             },
         ],
     },

@@ -97,6 +97,33 @@ describe('feature anchors', () => {
     });
 });
 
+describe('the backend group', () => {
+    // One section per provider key, each linking that key's docs page. The editing
+    // providers sit together (templates, history, comments, collaboration, AI: the AI's
+    // edits travel as collaboration batches), and the output section closes the group.
+    const group = FEATURES.slice(
+        FEATURES.indexOf('const backendSections'),
+        FEATURES.indexOf('function withBgClass'),
+    );
+    const sections = [...group.matchAll(/^\s*slug: '([^']+)',\n\s*docsPath: '([^']+)',$/gm)].map(
+        (m) => [m[1], m[2]],
+    );
+
+    it('lists one section per provider key, in page order', () => {
+        expect(sections).toEqual([
+            ['templates', '/backend/templates'],
+            ['version-history', '/backend/version-history'],
+            ['comments', '/backend/comments'],
+            ['collaboration', '/backend/collaboration'],
+            ['ai', '/backend/ai'],
+            ['saved-blocks', '/backend/saved-blocks'],
+            ['test-email', '/backend/test-email'],
+            ['media', '/backend/media'],
+            ['mjml-output', '/backend/render'],
+        ]);
+    });
+});
+
 describe('features.index copy', () => {
     // Every string the index band, rail and palette render.
     const indexStrings = (locale: typeof en) =>

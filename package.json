@@ -16,6 +16,7 @@
     "@lucide/vue": "^1.52.0",
     "@shikijs/langs": "^4.5.0",
     "@shikijs/themes": "^4.5.0",
+    "@templatical/ai-kit": "^0.51.0",
     "@unhead/vue": "2.1.17",
     "@vueuse/core": "^14.4.0",
     "@vueuse/integrations": "^14.4.0",
