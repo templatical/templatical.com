@@ -110,12 +110,12 @@ const de: MessageSchema = {
         meta: {
             title: 'Templatical — Einbettbares E-Mail-Editor-SDK',
             description:
-                'Betten Sie einen Source-Available-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, vollständigem Theming und mehr.',
+                'Betten Sie einen Source-Available-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, einem KI-Assistenten mit Ihrem eigenen Modell, vollständigem Theming und mehr.',
         },
         hero: {
             headline: 'Ein Drag-and-Drop-E-Mail-Editor für Ihre App.',
             subheadline:
-                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags und Anzeigebedingungen — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
+                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags, Anzeigebedingungen und ein KI-Assistent mit Ihrem eigenen Modell — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Dokumentation lesen',
             frameworkNote:

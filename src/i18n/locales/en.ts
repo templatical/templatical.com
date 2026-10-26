@@ -108,12 +108,12 @@ export default {
         meta: {
             title: 'Templatical — Embeddable Email Editor SDK',
             description:
-                'Embed a source-available drag-and-drop email editor in your app — MJML export, merge tags, custom blocks, full theming, and more.',
+                'Embed a source-available drag-and-drop email editor in your app — MJML export, merge tags, custom blocks, an AI assistant on your own model, full theming, and more.',
         },
         hero: {
             headline: 'A drag-and-drop email editor for your app.',
             subheadline:
-                'Custom blocks, full theming, merge tags, and display conditions — all built into the SDK. Drop into any app with one init() call.',
+                'Custom blocks, full theming, merge tags, display conditions, and an AI assistant on your own model — all built into the SDK. Drop into any app with one init() call.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Read the docs',
             frameworkNote:
