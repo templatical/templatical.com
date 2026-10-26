@@ -275,3 +275,36 @@ describe('llms.txt', () => {
         expect(llms).not.toMatch(UNBACKED_HOSTS);
     });
 });
+
+describe('the Agent Skill section', () => {
+    const SKILL_SECTION = (
+        import.meta.glob('../../src/components/HomeAiSkillSection.vue', {
+            query: '?raw',
+            import: 'default',
+            eager: true,
+        }) as Record<string, string>
+    )['../../src/components/HomeAiSkillSection.vue'];
+
+    // The Skill helps the developer's coding agent; the AI kit puts AI in front of the
+    // integrator's users. One line under the section tells the two apart and points at
+    // the AI section, so "Templatical AI" never reads as the Skill.
+    it('points at the AI kit, by name and licence, in both languages', () => {
+        expect(en.home.aiSkill.aiKitNote).toMatch(/\bAI kit\b/);
+        expect(en.home.aiSkill.aiKitNote).toMatch(/\bMIT\b/);
+        expect(en.home.aiSkill.aiKitNote).toMatch(/own model/);
+        expect(de.home.aiSkill.aiKitNote).toMatch(/\bAI-Kit\b/);
+        expect(de.home.aiSkill.aiKitNote).toMatch(/\bMIT\b/);
+        expect(de.home.aiSkill.aiKitNote).toMatch(/eigenen Modell/);
+        expect(en.home.aiSkill.aiKitNoteLink.trim()).not.toBe('');
+        expect(de.home.aiSkill.aiKitNoteLink.trim()).not.toBe('');
+    });
+
+    it('links the AI section on /features through the anchor helper, before the Cloud note', () => {
+        expect(SKILL_SECTION).toContain("featureSectionId('ai')");
+        expect(SKILL_SECTION).toMatch(/<router-link[\s\S]*?path: '\/features'/);
+        expect(SKILL_SECTION.indexOf("t('home.aiSkill.aiKitNote')")).toBeGreaterThan(-1);
+        expect(SKILL_SECTION.indexOf("t('home.aiSkill.aiKitNote')")).toBeLessThan(
+            SKILL_SECTION.indexOf("t('home.aiSkill.cloudNote')"),
+        );
+    });
+});

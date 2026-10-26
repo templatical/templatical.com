@@ -247,6 +247,9 @@ const de: MessageSchema = {
                 'Ein Befehl. Er erkennt die installierten Agenten und legt den Skill in den Ordner, den jeder von ihnen liest — Ihrem Projekt wird nichts hinzugefügt.',
             ctaPrimary: 'Zum Skill-Leitfaden',
             ctaSecondary: 'Skill auf GitHub ansehen',
+            aiKitNote:
+                'Sollen Ihre Nutzer KI direkt im Editor nutzen? Der KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ laufen mit Ihrem eigenen Modell, angebunden über das MIT-lizenzierte AI-Kit.',
+            aiKitNoteLink: 'KI im Editor',
             cloudNote:
                 'Lieber gehostete KI? Templatical Cloud bietet KI-Chat direkt im Editor und einen gehosteten MCP-Server.',
             cloudNoteLink: 'Cloud entdecken',

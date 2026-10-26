@@ -245,6 +245,9 @@ export default {
                 'One command. It detects the agents you have installed and writes the skill into the folder each one reads — nothing is added to your project.',
             ctaPrimary: 'Read the skill guide',
             ctaSecondary: 'View the skill on GitHub',
+            aiKitNote:
+                'Want AI for your users inside the editor? The AI assistant, Rewrite, Fix with AI and Write alt text run on your own model, wired up with the MIT AI kit.',
+            aiKitNoteLink: 'AI in the editor',
             cloudNote:
                 'Prefer managed AI? Templatical Cloud adds in-editor AI chat and a hosted MCP server.',
             cloudNoteLink: 'Explore Cloud',

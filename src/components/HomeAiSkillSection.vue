@@ -4,6 +4,7 @@ import { useClipboard } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { ChevronRight } from '@lucide/vue';
 import { URLS, localizedUrl } from '@/lib/urls';
+import { featureSectionId } from '@/composables/useFeatureNav';
 import RevealOnScroll from './RevealOnScroll.vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
@@ -139,6 +140,15 @@ const halves = computed(() => [
                             <ChevronRight class="size-5" />
                         </SiteButton>
                     </div>
+
+                    <p class="text-sm/6 text-neutral-500 dark:text-neutral-400">
+                        {{ t('home.aiSkill.aiKitNote') }}
+                        <router-link
+                            :to="{ path: '/features', hash: `#${featureSectionId('ai')}` }"
+                            class="font-medium text-amber-700 hover:underline dark:text-amber-300"
+                            >{{ t('home.aiSkill.aiKitNoteLink') }}</router-link
+                        >
+                    </p>
 
                     <p class="text-sm/6 text-neutral-500 dark:text-neutral-400">
                         {{ t('home.aiSkill.cloudNote') }}
