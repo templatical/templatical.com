@@ -61,7 +61,7 @@ export default {
             templateName: 'Welcome email',
             eyebrow: 'Wired to a backend',
             description:
-                'Some of what you see here — saving, version history, comments, saved blocks, test sends and media — runs on a backend you implement. This demo uses your browser’s session storage, so nothing leaves the page.',
+                'Some of what you see here — saving, version history, comments, saved blocks, test sends, media and AI — runs on a backend you implement. This demo uses your browser’s session storage and plays recorded AI replies with no model, so nothing leaves the page.',
             docsLink: 'How the providers work',
             reset: 'Reset demo',
             resetting: 'Resetting…',
@@ -196,12 +196,14 @@ export default {
                         'Saving and loading against your own storage — autosave, save status, Cmd/Ctrl+S',
                         'Version history — browse, preview and restore, backed by your storage',
                         'Threaded review comments anchored to blocks, on your storage and identities',
+                        'Real-time co-editing — ordered operations, block locks and presence, over your own backend',
                         'Test sends from the editor, delivered by your own ESP and your domain',
                         'Previews resolved by your backend — real data, logic branches evaluated',
                         'Full theming via design tokens, dark mode included',
                         'White-label by default — your UI, your brand',
                         'MJML output — render in browser, on your server, anywhere',
                         'Pre-send checks for accessibility, links, deliverability patterns (not inbox placement), and email-client compatibility, with suggested fixes and reference links',
+                        'AI assistant, Rewrite, Fix with AI and Write alt text — on your own model and keys',
                         'Style-isolated — Shadow DOM mount keeps host CSS out',
                         'No license key, no activation call — nothing we can switch off remotely',
                     ],
@@ -312,6 +314,8 @@ export default {
             yourApi: 'Your API',
             readOnly: 'Read-only',
             composedRestore: 'No atomic restore',
+            noRealtime: 'Without realtime',
+            modelAdapter: 'Model adapter',
         },
         backend: {
             eyebrow: 'Connect your backend',
@@ -367,6 +371,23 @@ export default {
                 'Pass create: false for a read-only review pass',
             ],
             docsLabel: 'Comments reference',
+        },
+        collaboration: {
+            eyebrow: 'Collaboration',
+            title: 'Real-time co-editing, over your own backend',
+            description:
+                'Several people edit one template at once. The editor sends every edit to your backend as a batch of operations, your backend puts the batches in one order, and every open editor applies them in that order. Selecting a block locks it, and the header shows who else has the template open.',
+            outcome: 'Live co-editing on your own realtime transport and template store.',
+            features: [
+                'join, submit and operationsAfter are the contract; acquireLock, renewLock and releaseLock add block locks',
+                'Your backend applies each batch with applyOperations from @templatical/types, the engine the editor runs',
+                'A resent batch with a known batchId answers its revision and applies nothing, so retries are safe',
+                'Undo and redo send inverse operations; a step that another person’s edit has overtaken is skipped with a notice',
+                'Other open editors name an agent’s or the AI’s batches in a notice and outline the blocks they changed',
+                'With collaboration on, templates.load also returns the revision, and templates.save receives only a new name',
+                'No realtime channel? Edits still go through submit in order, and other people’s edits appear on the next load',
+            ],
+            docsLabel: 'Collaboration reference',
         },
         customBlocks: {
             eyebrow: 'Extensibility',
@@ -601,6 +622,24 @@ export default {
                 '`onRequestMedia` is a separate seam, not this store — set both and the callback wins',
             ],
             docsLabel: 'Media reference',
+        },
+        ai: {
+            eyebrow: 'AI',
+            title: 'AI in the editor, on your own model',
+            description:
+                'Pass an AI provider and the editor gains the AI assistant, a chat that edits the template with one undo step per turn and takes image and PDF attachments; Rewrite in the paragraph toolbar; Fix with AI on lint findings; and Write alt text for one image or in bulk. Your backend calls the model, with your keys and your data-processing terms.',
+            outcome: 'The editor’s AI on the model, keys and terms you already have.',
+            features: [
+                'From @templatical/ai-kit (MIT): createHttpAiProvider talks to your backend over a documented REST and server-sent-events wire, and the server kit has the prompts, the apply_operations tool and the editing loop for any Fetch-API runtime',
+                'Model adapters: createAnthropicAdapter, createOpenAiAdapter (Chat Completions) and createVercelAdapter (an AI SDK model or a gateway model id, run with streamText), from @templatical/ai-kit/adapters/anthropic, /openai and /vercel. Each takes images, PDFs and image URLs; through the Vercel adapter, PDF support depends on your AI SDK provider package',
+                'Anthropic and OpenAI take a client you construct, so the adapter reads no environment and holds no keys: an Anthropic client may set its own baseURL, and OpenAI also takes new AzureOpenAI() or any OpenAI-compatible Chat Completions endpoint through baseURL. Each provider SDK is an optional peer: install the one for the adapter you import, and nothing else installs. Any other model plugs in through AiModelAdapter',
+                'With attachments on, Import from screenshot or PDF on the empty canvas opens the AI assistant with the files and a prefilled request; nothing sends until the author does',
+                'Optional stored history, with Undo and Redo replayed by your backend; without it, the chat lives in memory for the session',
+                'Conformance suites check your provider and routes; an eval set measures your model on edits, attachments, lint fixes and alt text',
+                'Fix with AI and Write alt text need @templatical/quality with lint on',
+                'The template, its merge tags and the prompts go to the model you call: name that provider in your privacy notice',
+            ],
+            docsLabel: 'AI reference',
         },
         mjmlOutput: {
             eyebrow: 'Output',
@@ -1720,7 +1759,7 @@ export default {
             },
             packages: {
                 question: 'Which packages are MIT vs FSL?',
-                answer: "Every package except the editor, core and media library is pure MIT today: types, renderer, quality, template-tools and every migration importer. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you'd build into a backend or codegen pipeline is fully permissive from day one.",
+                answer: "Every package except the editor, core and media library is pure MIT today: types, renderer, quality, template-tools, ai-kit and every migration importer. The editor, core, and media-library packages are FSL-1.1-MIT. The split means anything you'd build into a backend or codegen pipeline is fully permissive from day one.",
             },
             branding: {
                 question: 'Do I need to display "Powered by Templatical"?',
@@ -1736,7 +1775,7 @@ export default {
             },
             data: {
                 question: 'Where does my template data go?',
-                answer: 'Nowhere. The SDK runs entirely in the browser — no telemetry, no remote calls, no analytics. Your templates never leave your app unless you save them to your own backend.',
+                answer: 'Only to your own backend. The SDK runs entirely in the browser — no telemetry, no remote calls, no analytics. A template leaves your app only through a provider you configure: when it is saved, sent as a test, or sent with an AI request, which your backend passes to the model you choose.',
             },
             cssIsolation: {
                 question: "Will the editor inherit my app's CSS?",

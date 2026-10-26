@@ -141,8 +141,15 @@ const status = ref<'idle' | 'loading' | 'ready' | 'error'>('idle');
 const providerErrorMessage = ref<string | null>(null);
 let providerErrorTimeout: ReturnType<typeof setTimeout> | null = null;
 
+// The AI is the exception: the editor states an AI failure in its own UI (the
+// assistant, the rewrite popover, the alt-text review) and passes it here too,
+// so the toast skips the AI's error codes rather than say it twice. Filled from
+// the kit's AI_ERROR_MESSAGES when the editor mounts, before any toast can show.
+let aiErrorCodes = new Set<string>();
+
 function showProviderError(error: Error) {
     console.warn('Templatical editor reported a provider error', error);
+    if (aiErrorCodes.has((error as Error & { code?: string }).code ?? '')) return;
     providerErrorMessage.value = error.message;
     if (providerErrorTimeout) clearTimeout(providerErrorTimeout);
     providerErrorTimeout = setTimeout(() => {
@@ -231,7 +238,20 @@ async function mountEditor() {
             document.head.appendChild(cssLink);
         }
 
-        const mod = await Promise.race([import(/* @vite-ignore */ EDITOR_ESM_URL), timeout]);
+        // The AI is the kit's recorded mock, the one the SDK playground uses: it
+        // plays scripted turns through the public contract, with no model, keys
+        // or backend. Imported here rather than at the top so the kit stays out
+        // of the home page's initial bundle until the editor mounts.
+        const [mod, { AI_RECORDINGS, createMockAiProvider }, { AI_ERROR_MESSAGES }] =
+            await Promise.race([
+                Promise.all([
+                    import(/* @vite-ignore */ EDITOR_ESM_URL),
+                    import('@templatical/ai-kit/testing'),
+                    import('@templatical/ai-kit'),
+                ]),
+                timeout,
+            ]);
+        aiErrorCodes = new Set(Object.keys(AI_ERROR_MESSAGES));
         if (!container.value) {
             status.value = 'idle';
             return;
@@ -253,6 +273,7 @@ async function mountEditor() {
                     onRequest: requestMergeTag,
                 },
                 onError: showProviderError,
+                ai: createMockAiProvider({ ...AI_RECORDINGS }),
                 ...demoBackend.config,
             }),
             timeout,
