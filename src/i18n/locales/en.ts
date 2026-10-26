@@ -227,6 +227,46 @@ export default {
                 'Your templates stay in your app until you send them to your own backend',
             ],
         },
+        ai: {
+            eyebrow: 'New · AI kit, MIT',
+            headline: 'AI in the editor, on your own model',
+            subheadline:
+                'Give init() an AI provider and the editor gets the AI assistant, Rewrite, Fix with AI and Write alt text. Your backend calls the model you choose, with your keys and your data-processing terms; the MIT AI kit supplies the wiring.',
+            usersTitle: 'For your users',
+            // Read with tm(), which returns raw messages.
+            features: [
+                {
+                    name: 'AI assistant',
+                    body: 'A chat that edits the template, one undo step per turn. It takes image and PDF attachments, and Import from screenshot or PDF starts an email from a design, with placeholders for pictures.',
+                },
+                {
+                    name: 'Rewrite',
+                    body: 'Shorten, expand, change the tone of or fix the grammar in a paragraph from its toolbar, with a preview before anything is replaced.',
+                },
+                {
+                    name: 'Fix with AI',
+                    body: 'Fixes lint findings such as vague link text or a missing preheader from the Issues panel, as one undo step.',
+                },
+                {
+                    name: 'Write alt text',
+                    body: 'Drafts alt text for one image or for every flagged image at once; nothing is written until you accept it.',
+                },
+            ],
+            tryNote:
+                'Try the AI button in the editor above. Its replies are recorded, so no model runs on this page.',
+            backendTitle: 'For your backend',
+            copyLabel: 'Copy',
+            copiedLabel: 'Copied',
+            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
+            backend: [
+                'In the browser, createHttpAiProvider from @templatical/ai-kit/client talks to your backend over a documented REST and server-sent-events wire.',
+                'On your server, the kit’s prompts, tool and editing loop run with createAnthropicAdapter, createOpenAiAdapter or createVercelAdapter; any other model plugs in through AiModelAdapter.',
+                'Check it with the conformance suites and the eval set before you ship.',
+                'The template, its merge tags and the prompts go to the model you call; name that provider in your privacy notice.',
+            ],
+            ctaPrimary: 'Read the AI guide',
+            ctaSecondary: 'All AI options on the features page',
+        },
         aiSkill: {
             eyebrow: 'New · Open source',
             headline: 'Describe the email. Or the integration.',
@@ -245,9 +285,6 @@ export default {
                 'One command. It detects the agents you have installed and writes the skill into the folder each one reads — nothing is added to your project.',
             ctaPrimary: 'Read the skill guide',
             ctaSecondary: 'View the skill on GitHub',
-            aiKitNote:
-                'Want AI for your users inside the editor? The AI assistant, Rewrite, Fix with AI and Write alt text run on your own model, wired up with the MIT AI kit.',
-            aiKitNoteLink: 'AI in the editor',
             cloudNote:
                 'Prefer managed AI? Templatical Cloud adds in-editor AI chat and a hosted MCP server.',
             cloudNoteLink: 'Explore Cloud',

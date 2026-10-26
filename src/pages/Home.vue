@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ComparisonSection from '@/components/ComparisonSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
+import HomeAiSection from '@/components/HomeAiSection.vue';
 import HomeAiSkillSection from '@/components/HomeAiSkillSection.vue';
 import HomeCloseSection from '@/components/HomeCloseSection.vue';
 import HomeIndependenceSection from '@/components/HomeIndependenceSection.vue';
@@ -19,6 +20,8 @@ useHead({
 <template>
     <div>
         <HeroSection />
+
+        <HomeAiSection />
 
         <HomeAiSkillSection />
 

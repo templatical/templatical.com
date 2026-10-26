@@ -276,35 +276,87 @@ describe('llms.txt', () => {
     });
 });
 
-describe('the Agent Skill section', () => {
-    const SKILL_SECTION = (
-        import.meta.glob('../../src/components/HomeAiSkillSection.vue', {
-            query: '?raw',
-            import: 'default',
-            eager: true,
-        }) as Record<string, string>
-    )['../../src/components/HomeAiSkillSection.vue'];
+/** A component's source, read through Vite (node:fs is not available here). */
+function source(path: string): string {
+    const all = import.meta.glob('../../src/**/*.vue', {
+        query: '?raw',
+        import: 'default',
+        eager: true,
+    }) as Record<string, string>;
+    return all[`../../src/${path}`];
+}
 
-    // The Skill helps the developer's coding agent; the AI kit puts AI in front of the
-    // integrator's users. One line under the section tells the two apart and points at
-    // the AI section, so "Templatical AI" never reads as the Skill.
-    it('points at the AI kit, by name and licence, in both languages', () => {
-        expect(en.home.aiSkill.aiKitNote).toMatch(/\bAI kit\b/);
-        expect(en.home.aiSkill.aiKitNote).toMatch(/\bMIT\b/);
-        expect(en.home.aiSkill.aiKitNote).toMatch(/own model/);
-        expect(de.home.aiSkill.aiKitNote).toMatch(/\bAI-Kit\b/);
-        expect(de.home.aiSkill.aiKitNote).toMatch(/\bMIT\b/);
-        expect(de.home.aiSkill.aiKitNote).toMatch(/eigenen Modell/);
-        expect(en.home.aiSkill.aiKitNoteLink.trim()).not.toBe('');
-        expect(de.home.aiSkill.aiKitNoteLink.trim()).not.toBe('');
+describe('the homepage AI section', () => {
+    const SECTION = source('components/HomeAiSection.vue');
+    const HOME = source('pages/Home.vue');
+
+    // The Agent Skill is for the integrator's coding agent; this section is the AI the
+    // integrator's users get. It answers first: what you pass, who calls the model, the
+    // install line and the contract, then what users see.
+    it('sits right after the hero, before the Agent Skill section', () => {
+        const order = [...HOME.matchAll(/<(HeroSection|HomeAiSection|HomeAiSkillSection)\b/g)].map(
+            (m) => m[1],
+        );
+        expect(order).toEqual(['HeroSection', 'HomeAiSection', 'HomeAiSkillSection']);
     });
 
-    it('links the AI section on /features through the anchor helper, before the Cloud note', () => {
-        expect(SKILL_SECTION).toContain("featureSectionId('ai')");
-        expect(SKILL_SECTION).toMatch(/<router-link[\s\S]*?path: '\/features'/);
-        expect(SKILL_SECTION.indexOf("t('home.aiSkill.aiKitNote')")).toBeGreaterThan(-1);
-        expect(SKILL_SECTION.indexOf("t('home.aiSkill.aiKitNote')")).toBeLessThan(
-            SKILL_SECTION.indexOf("t('home.aiSkill.cloudNote')"),
-        );
+    // The hero's aurora bleeds 160px into the next section and fades to white, so the first
+    // section after the hero paints that exact colour and lifts its content above it.
+    it('meets the hero aurora obligations', () => {
+        expect(SECTION).toMatch(/<section class="[^"]*\bbg-white\b[^"]*\bdark:bg-neutral-950\b/);
+        expect(SECTION).toMatch(/<SiteContainer class="relative"/);
+    });
+
+    it('answers first, naming the features and the MIT kit, in both languages', () => {
+        expect(en.home.ai.subheadline).toMatch(/\binit\(\)/);
+        expect(de.home.ai.subheadline).toMatch(/\binit\(\)/);
+        const english = JSON.stringify(en.home.ai);
+        for (const name of ['AI assistant', 'Rewrite', 'Fix with AI', 'Write alt text', 'MIT'])
+            expect(english, name).toContain(name);
+        const german = JSON.stringify(de.home.ai);
+        for (const name of [
+            'KI-Assistent',
+            'Mit KI umformulieren',
+            'Mit KI beheben',
+            'Alt-Text schreiben',
+            'MIT',
+        ])
+            expect(german, name).toContain(name);
+    });
+
+    it('names the contract an agent can act on', () => {
+        for (const messages of [en, de]) {
+            const backend = JSON.stringify(messages.home.ai.backend);
+            for (const name of [
+                'createHttpAiProvider',
+                'createAnthropicAdapter',
+                'createOpenAiAdapter',
+                'createVercelAdapter',
+                'AiModelAdapter',
+            ])
+                expect(backend, name).toContain(name);
+        }
+        expect(SECTION).toContain("const installCommand = 'npm install @templatical/ai-kit'");
+        expect(SECTION).toContain("from '@templatical/ai-kit/client'");
+    });
+
+    it('links the AI docs and the AI section on /features', () => {
+        expect(SECTION).toContain("localizedUrl('aiDocs', locale)");
+        expect(SECTION).toContain("featureSectionId('ai')");
+    });
+
+    it('names no model host the adapters do not cover', () => {
+        for (const messages of [en, de])
+            expect(JSON.stringify(messages.home.ai)).not.toMatch(UNBACKED_HOSTS);
+    });
+});
+
+describe('the Agent Skill section', () => {
+    // The AI section now sits directly above it, so the layout tells the two apart and
+    // the one-line pointer it used to carry is gone.
+    it('carries no AI-kit pointer any more', () => {
+        expect(source('components/HomeAiSkillSection.vue')).not.toContain('aiKitNote');
+        expect(en.home.aiSkill).not.toHaveProperty('aiKitNote');
+        expect(de.home.aiSkill).not.toHaveProperty('aiKitNote');
     });
 });

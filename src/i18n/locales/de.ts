@@ -229,6 +229,46 @@ const de: MessageSchema = {
                 'Ihre Vorlagen bleiben in Ihrer App, bis Sie sie an Ihr eigenes Backend senden',
             ],
         },
+        ai: {
+            eyebrow: 'Neu · AI-Kit, MIT',
+            headline: 'KI im Editor, mit Ihrem eigenen Modell',
+            subheadline:
+                'Geben Sie init() einen KI-Provider, und der Editor erhält den KI-Assistenten, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“. Ihr Backend ruft das Modell Ihrer Wahl auf, mit Ihren Schlüsseln und Ihren Vereinbarungen zur Datenverarbeitung; das MIT-lizenzierte AI-Kit liefert die Anbindung.',
+            usersTitle: 'Für Ihre Nutzer',
+            // Read with tm(), which returns raw messages.
+            features: [
+                {
+                    name: 'KI-Assistent',
+                    body: 'Ein Chat, der die Vorlage bearbeitet, mit einem Rückgängig-Schritt pro Anfrage. Er nimmt Bilder und PDFs als Anhänge an, und „Aus Screenshot oder PDF importieren“ beginnt eine E-Mail nach einem Entwurf, mit Platzhaltern für Bilder.',
+                },
+                {
+                    name: 'Mit KI umformulieren',
+                    body: 'Einen Absatz aus seiner Werkzeugleiste kürzen, erweitern, im Ton ändern oder in der Grammatik korrigieren, mit einer Vorschau, bevor etwas ersetzt wird.',
+                },
+                {
+                    name: 'Mit KI beheben',
+                    body: 'Behebt Lint-Befunde wie vagen Linktext oder einen fehlenden Preheader aus dem Issues-Panel, als ein Rückgängig-Schritt.',
+                },
+                {
+                    name: 'Alt-Text schreiben',
+                    body: 'Entwirft Alt-Text für ein Bild oder für alle markierten Bilder auf einmal; geschrieben wird erst, wenn Sie ihn annehmen.',
+                },
+            ],
+            tryNote:
+                'Probieren Sie die KI-Schaltfläche im Editor oben aus. Die Antworten sind aufgezeichnet, auf dieser Seite läuft also kein Modell.',
+            backendTitle: 'Für Ihr Backend',
+            copyLabel: 'Kopieren',
+            copiedLabel: 'Kopiert',
+            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
+            backend: [
+                'Im Browser spricht createHttpAiProvider aus @templatical/ai-kit/client mit Ihrem Backend über ein dokumentiertes REST- und Server-Sent-Events-Protokoll.',
+                'Auf Ihrem Server laufen die Prompts, das Tool und die Bearbeitungsschleife des Kits mit createAnthropicAdapter, createOpenAiAdapter oder createVercelAdapter; jedes andere Modell binden Sie über AiModelAdapter an.',
+                'Prüfen Sie es vor dem Livegang mit den Konformitätstests und dem Eval-Set.',
+                'Vorlage, Merge-Tags und Anfragen gehen an das Modell, das Sie aufrufen: Nennen Sie diesen Anbieter in Ihrer Datenschutzerklärung.',
+            ],
+            ctaPrimary: 'Zum KI-Leitfaden',
+            ctaSecondary: 'Alle KI-Optionen auf der Features-Seite',
+        },
         aiSkill: {
             eyebrow: 'Neu · Open Source',
             headline: 'Beschreiben Sie die E-Mail. Oder die Integration.',
@@ -247,9 +287,6 @@ const de: MessageSchema = {
                 'Ein Befehl. Er erkennt die installierten Agenten und legt den Skill in den Ordner, den jeder von ihnen liest — Ihrem Projekt wird nichts hinzugefügt.',
             ctaPrimary: 'Zum Skill-Leitfaden',
             ctaSecondary: 'Skill auf GitHub ansehen',
-            aiKitNote:
-                'Sollen Ihre Nutzer KI direkt im Editor nutzen? Der KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ laufen mit Ihrem eigenen Modell, angebunden über das MIT-lizenzierte AI-Kit.',
-            aiKitNoteLink: 'KI im Editor',
             cloudNote:
                 'Lieber gehostete KI? Templatical Cloud bietet KI-Chat direkt im Editor und einen gehosteten MCP-Server.',
             cloudNoteLink: 'Cloud entdecken',

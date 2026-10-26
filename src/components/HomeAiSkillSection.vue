@@ -4,7 +4,6 @@ import { useClipboard } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { ChevronRight } from '@lucide/vue';
 import { URLS, localizedUrl } from '@/lib/urls';
-import { featureSectionId } from '@/composables/useFeatureNav';
 import RevealOnScroll from './RevealOnScroll.vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
@@ -47,7 +46,10 @@ const halves = computed(() => [
 </script>
 
 <template>
-    <section class="bg-white py-20 sm:py-28 dark:bg-neutral-950">
+    <!-- White like the AI section above it, so a hairline marks where one ends. -->
+    <section
+        class="border-t border-neutral-950/5 bg-white py-20 sm:py-28 dark:border-white/10 dark:bg-neutral-950"
+    >
         <SiteContainer>
             <RevealOnScroll>
                 <div class="mx-auto flex max-w-4xl flex-col items-center gap-8 text-center">
@@ -140,15 +142,6 @@ const halves = computed(() => [
                             <ChevronRight class="size-5" />
                         </SiteButton>
                     </div>
-
-                    <p class="text-sm/6 text-neutral-500 dark:text-neutral-400">
-                        {{ t('home.aiSkill.aiKitNote') }}
-                        <router-link
-                            :to="{ path: '/features', hash: `#${featureSectionId('ai')}` }"
-                            class="font-medium text-amber-700 hover:underline dark:text-amber-300"
-                            >{{ t('home.aiSkill.aiKitNoteLink') }}</router-link
-                        >
-                    </p>
 
                     <p class="text-sm/6 text-neutral-500 dark:text-neutral-400">
                         {{ t('home.aiSkill.cloudNote') }}
