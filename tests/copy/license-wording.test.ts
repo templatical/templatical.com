@@ -27,7 +27,6 @@ const ALLOWED = [
     'alternatives.grapesjs.meta.description',
     'features.agentSkill.description',
     'features.migration.description',
-    'home.aiSkill.eyebrow',
     'home.aiSkill.subheadline',
     'home.comparison.columns.diy.description',
 ];

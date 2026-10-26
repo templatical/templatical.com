@@ -818,6 +818,53 @@ await editor.load('tpl_123')`,
         ],
     },
     {
+        slug: 'ai',
+        docsPath: '/backend/ai',
+        docsLabel: t('features.ai.docsLabel'),
+        eyebrow: t('features.ai.eyebrow'),
+        title: t('features.ai.title'),
+        description: t('features.ai.description'),
+        outcome: t('features.ai.outcome'),
+        features: tm('features.ai.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourEndpoint'),
+                code: `import { createHttpAiProvider } from '@templatical/ai-kit/client'
+
+const editor = await init({
+  container: '#editor',
+  // Every AI request names a template, so the AI button appears once one
+  // is loaded.
+  templates: myTemplatesProvider,
+
+  // Your backend serves the routes with @templatical/ai-kit/server and
+  // calls the model with your keys. Nothing passes through Templatical.
+  ai: createHttpAiProvider({ baseUrl: '/api/ai' }),
+})
+
+await editor.load('tpl_123')`,
+            },
+            {
+                label: t('features.variants.modelAdapter'),
+                code: `import { createAnthropicAdapter } from '@templatical/ai-kit/adapters/anthropic'
+import Anthropic from '@anthropic-ai/sdk'
+
+// On your server. You construct the client (new Anthropic() reads
+// ANTHROPIC_API_KEY, and may set its own baseURL); the adapter itself reads
+// no environment and holds no keys. createOpenAiAdapter takes a client and
+// model id the same way; createVercelAdapter takes no client, only an AI SDK
+// model or a gateway model id.
+export const model = createAnthropicAdapter({
+  client: new Anthropic(),
+  model: 'claude-opus-5-5',
+})
+
+// The kit's editing loop calls it for chat and Fix with AI, as in the
+// server guide: runEditingTurn({ request, model, write, signal })`,
+            },
+        ],
+    },
+    {
         slug: 'saved-blocks',
         docsPath: '/backend/saved-blocks',
         docsLabel: t('features.savedBlocks.docsLabel'),
@@ -997,53 +1044,6 @@ const editor = await init({
     storage: false,
   },
 })`,
-            },
-        ],
-    },
-    {
-        slug: 'ai',
-        docsPath: '/backend/ai',
-        docsLabel: t('features.ai.docsLabel'),
-        eyebrow: t('features.ai.eyebrow'),
-        title: t('features.ai.title'),
-        description: t('features.ai.description'),
-        outcome: t('features.ai.outcome'),
-        features: tm('features.ai.features') as string[],
-        variants: [
-            {
-                label: t('features.variants.yourEndpoint'),
-                code: `import { createHttpAiProvider } from '@templatical/ai-kit/client'
-
-const editor = await init({
-  container: '#editor',
-  // Every AI request names a template, so the AI button appears once one
-  // is loaded.
-  templates: myTemplatesProvider,
-
-  // Your backend serves the routes with @templatical/ai-kit/server and
-  // calls the model with your keys. Nothing passes through Templatical.
-  ai: createHttpAiProvider({ baseUrl: '/api/ai' }),
-})
-
-await editor.load('tpl_123')`,
-            },
-            {
-                label: t('features.variants.modelAdapter'),
-                code: `import { createAnthropicAdapter } from '@templatical/ai-kit/adapters/anthropic'
-import Anthropic from '@anthropic-ai/sdk'
-
-// On your server. You construct the client (new Anthropic() reads
-// ANTHROPIC_API_KEY, and may set its own baseURL); the adapter itself reads
-// no environment and holds no keys. createOpenAiAdapter takes a client and
-// model id the same way; createVercelAdapter takes no client, only an AI SDK
-// model or a gateway model id.
-export const model = createAnthropicAdapter({
-  client: new Anthropic(),
-  model: 'claude-opus-5-5',
-})
-
-// The kit's editing loop calls it for chat and Fix with AI, as in the
-// server guide: runEditingTurn({ request, model, write, signal })`,
             },
         ],
     },

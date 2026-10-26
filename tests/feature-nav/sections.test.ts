@@ -98,9 +98,9 @@ describe('feature anchors', () => {
 });
 
 describe('the backend group', () => {
-    // One section per provider key, each linking that key's docs page. Collaboration
-    // follows comments, and AI sits between media and rendering, so the output
-    // section still closes the group.
+    // One section per provider key, each linking that key's docs page. The editing
+    // providers sit together (templates, history, comments, collaboration, AI: the AI's
+    // edits travel as collaboration batches), and the output section closes the group.
     const group = FEATURES.slice(
         FEATURES.indexOf('const backendSections'),
         FEATURES.indexOf('function withBgClass'),
@@ -115,10 +115,10 @@ describe('the backend group', () => {
             ['version-history', '/backend/version-history'],
             ['comments', '/backend/comments'],
             ['collaboration', '/backend/collaboration'],
+            ['ai', '/backend/ai'],
             ['saved-blocks', '/backend/saved-blocks'],
             ['test-email', '/backend/test-email'],
             ['media', '/backend/media'],
-            ['ai', '/backend/ai'],
             ['mjml-output', '/backend/render'],
         ]);
     });

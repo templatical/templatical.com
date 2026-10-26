@@ -351,6 +351,34 @@ describe('the homepage AI section', () => {
     });
 });
 
+describe('both AI sections on the homepage and /features', () => {
+    // Where the data goes is stated; what the integrator writes in their own privacy
+    // notice is theirs to decide, so the copy gives no such instruction.
+    it('state the data flow without telling integrators what to put in a privacy notice', () => {
+        for (const messages of [en, de]) {
+            const copy = JSON.stringify([messages.home.ai, messages.features.ai]);
+            expect(copy).not.toMatch(/privacy notice|Datenschutzerklärung/i);
+        }
+        expect(JSON.stringify(en.home.ai.backend)).toMatch(/go to the model you call/);
+        expect(JSON.stringify(de.home.ai.backend)).toMatch(/gehen an das Modell, das Sie aufrufen/);
+    });
+});
+
+describe('the homepage licence labels', () => {
+    // Both the AI kit and the Agent Skill are MIT. The labels name that licence and what
+    // it covers; "open source" above the AI section would read as covering the editor,
+    // which is source-available.
+    it('name MIT and the thing it covers, in both sections and languages', () => {
+        for (const messages of [en, de]) {
+            expect(messages.home.ai.eyebrow).toMatch(/\bMIT\b/);
+            expect(messages.home.aiSkill.eyebrow).toMatch(/\bMIT\b/);
+            expect(messages.home.aiSkill.eyebrow).toMatch(/Agent Skill/);
+            for (const eyebrow of [messages.home.ai.eyebrow, messages.home.aiSkill.eyebrow])
+                expect(eyebrow).not.toMatch(/open[- ]?source/i);
+        }
+    });
+});
+
 describe('the Agent Skill section', () => {
     // The AI section now sits directly above it, so the layout tells the two apart and
     // the one-line pointer it used to carry is gone.
