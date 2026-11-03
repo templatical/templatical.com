@@ -5,6 +5,7 @@ import HomeAiSection from '@/components/HomeAiSection.vue';
 import HomeAiSkillSection from '@/components/HomeAiSkillSection.vue';
 import HomeCloseSection from '@/components/HomeCloseSection.vue';
 import HomeIndependenceSection from '@/components/HomeIndependenceSection.vue';
+import HomeLanguagesSection from '@/components/HomeLanguagesSection.vue';
 import MigrationBand from '@/components/MigrationBand.vue';
 import { usePageMeta } from '@/composables/usePageMeta';
 import { SOFTWARE_APPLICATION } from '@/lib/seo';
@@ -24,6 +25,8 @@ useHead({
         <HomeAiSection />
 
         <HomeAiSkillSection />
+
+        <HomeLanguagesSection />
 
         <ComparisonSection />
 

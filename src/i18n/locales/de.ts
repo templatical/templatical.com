@@ -63,7 +63,7 @@ const de: MessageSchema = {
             templateName: 'Willkommens-E-Mail',
             eyebrow: 'Mit einem Backend verbunden',
             description:
-                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien und KI — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers und spielt aufgezeichnete KI-Antworten ohne Modell ab, es verlässt also nichts diese Seite.',
+                'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien, KI und Übersetzung — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers und spielt aufgezeichnete KI-Antworten und Übersetzungen ohne Modell oder Übersetzungsdienst ab, es verlässt also nichts diese Seite.',
             docsLink: 'So funktionieren die Provider',
             reset: 'Demo zurücksetzen',
             resetting: 'Wird zurückgesetzt…',
@@ -110,12 +110,12 @@ const de: MessageSchema = {
         meta: {
             title: 'Templatical — Einbettbares E-Mail-Editor-SDK',
             description:
-                'Betten Sie einen Source-Available-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, einem KI-Assistenten mit Ihrem eigenen Modell, vollständigem Theming und mehr.',
+                'Betten Sie einen Source-Available-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, Sprachversionen, einem KI-Assistenten mit Ihrem eigenen Modell, vollständigem Theming und mehr.',
         },
         hero: {
             headline: 'Ein Drag-and-Drop-E-Mail-Editor für Ihre App.',
             subheadline:
-                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags, Anzeigebedingungen und ein KI-Assistent mit Ihrem eigenen Modell — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
+                'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags, Anzeigebedingungen, Sprachversionen und ein KI-Assistent mit Ihrem eigenen Modell — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Dokumentation lesen',
             frameworkNote:
@@ -156,6 +156,7 @@ const de: MessageSchema = {
                         'Eine Bibliothek gespeicherter Blöcke — auswählen, benennen, Vorschau, positioniert einfügen',
                         'Ein Dialog für Testversand — Empfängerauswahl, Vorschau, Sende- und Fehlerzustände',
                         'Vorschau-Auflösung — echte Daten statt Merge-Tags, ohne die gespeicherten Inhalte anzufassen',
+                        'Sprachversionen — Text und Überschreibungen pro Sprache, Rückfall auf die Standardsprache, Erkennung veralteter Übersetzungen und ein Übersetzungs-Workflow',
                         'Dark-Mode-Vorschau-Parität zur gesendeten E-Mail',
                         'Theme-Tokens für konsistentes Branding',
                         'MJML-Output, überall renderbar',
@@ -193,6 +194,7 @@ const de: MessageSchema = {
                         'Custom Blocks mit API-gestützten Datenquellen',
                         'Block-Level-Merge-Tags mit Scoping',
                         'Anzeigebedingungen für dynamische Inhalte',
+                        'Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Übersetzungs-Provider',
                         'Pluggbare Medien-Bibliothek — eigener Speicher (S3, Cloudinary, Ihr CMS)',
                         'Gespeicherte Blöcke — Nutzer speichern Blockgruppen und verwenden sie wieder, in Ihrem Speicher',
                         'Speichern und Laden gegen Ihren eigenen Speicher — Autosave, Speicherstatus, Cmd/Ctrl+S',
@@ -243,7 +245,7 @@ const de: MessageSchema = {
                 },
                 {
                     name: 'Mit KI umformulieren',
-                    body: 'Einen Absatz aus seiner Werkzeugleiste kürzen, erweitern, im Ton ändern oder in der Grammatik korrigieren, mit einer Vorschau, bevor etwas ersetzt wird.',
+                    body: 'Einen Absatz aus seiner Werkzeugleiste kürzen, erweitern, im Ton ändern, in der Grammatik korrigieren oder übersetzen, mit einer Vorschau, bevor etwas ersetzt wird.',
                 },
                 {
                     name: 'Mit KI beheben',
@@ -291,6 +293,47 @@ const de: MessageSchema = {
                 'Lieber gehostete KI? Templatical Cloud bietet KI-Chat direkt im Editor und einen gehosteten MCP-Server.',
             cloudNoteLink: 'Cloud entdecken',
         },
+        languages: {
+            eyebrow: 'Neu · Sprachversionen',
+            headline: 'Mehrsprachige Vorlagen, übersetzt über Ihren eigenen Provider',
+            subheadline:
+                'Geben Sie init() eine Liste von Sprachen, und Autoren legen Sprachversionen einer E-Mail an: ein gemeinsamer Blockbaum mit Text, Eigenschaftsüberschreibungen und ausgeblendeten Blöcken pro Sprache. Übergeben Sie einen TranslationProvider, und „Übersetzen“ füllt eine Version über den Dienst Ihrer Wahl: ein LLM, DeepL oder ein Translation-Management-System.',
+            authorsTitle: 'Für Ihre Autoren',
+            // Read with tm(), which returns raw messages.
+            features: [
+                {
+                    name: 'Sprachen',
+                    body: 'Eine Sprache hinzufügen, als Standardsprache festlegen oder entfernen. Alle Versionen teilen den Blockbaum; Text, Links, Bilder und Gestaltung können abweichen, und ein Block lässt sich in einer Sprache ausblenden.',
+                },
+                {
+                    name: 'Sprachleiste',
+                    body: 'Zeigt die bearbeitete Version mit der Zahl fehlender und veralteter Felder und übersetzt genau diese, als ein Rückgängig-Schritt.',
+                },
+                {
+                    name: 'Status-Badges',
+                    body: 'Ein Badge an jedem Block zeigt „Nicht übersetzt“, „Veraltet“ oder „Merge-Tags unterscheiden sich“, daneben „Übersetzen“, „Beibehalten“ und das Zurücksetzen auf die Standardsprache.',
+                },
+                {
+                    name: 'Kommentare und KI',
+                    body: 'Jeder Kommentar speichert die Sprache, in der er geschrieben wurde. Der KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ bearbeiten die angezeigte Sprache.',
+                },
+            ],
+            tryNote:
+                'Probieren Sie es im Editor oben auf der Seite aus: Öffnen Sie das Sprachmenü, wählen Sie Deutsch und starten Sie „Übersetzen“ in der Sprachleiste. Die Übersetzungen sind aufgezeichnet, auf dieser Seite läuft also kein Übersetzungsdienst.',
+            backendTitle: 'Für Ihr Backend',
+            copyLabel: 'Kopieren',
+            copiedLabel: 'Kopiert',
+            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
+            backend: [
+                'Auf Ihrem Server schickt translateFields aus @templatical/ai-kit/server die Felder durch einen beliebigen AiModelAdapter; oder Sie implementieren translate für DeepL oder ein Translation-Management-System.',
+                'Merge-Tags, Logik-Tags und Ihre geschützten Begriffe reisen als nummerierte Platzhalter, und ein Feld wird nur übernommen, wenn jeder Platzhalter zurückkommt.',
+                'renderToMjml(content, { locale }) rendert eine Sprache, und template-tools validate template.json --locale de meldet fehlenden und veralteten Text.',
+                'template-tools strings export und strings import tauschen eine Sprache als JSON mit einem Translation-Management-System aus; die Importer für Beefree, Unlayer und Topol übernehmen die Sprachen der Quelle.',
+                'Betreffzeilen sind nicht Teil der Vorlage: Übersetzen und speichern Sie sie in Ihren eigenen Daten. Halten Sie alle @templatical/*-Pakete auf derselben Version.',
+            ],
+            ctaPrimary: 'Zum Leitfaden für lokalisierte Vorlagen',
+            ctaSecondary: 'Sprachen auf der Features-Seite',
+        },
         cta: {
             headline: 'Starten Sie noch heute mit E-Mail-Vorlagen',
             subheadline:
@@ -317,7 +360,7 @@ const de: MessageSchema = {
         meta: {
             title: 'Funktionen — Templatical',
             description:
-                'Source-Available-E-Mail-Editor-SDK mit Prüfungen für Barrierefreiheit, Struktur, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität.',
+                'Source-Available-E-Mail-Editor-SDK mit Sprachversionen und „Übersetzen“, dazu Prüfungen für Barrierefreiheit, Struktur, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität.',
         },
         hero: {
             eyebrow: 'Source-Available-SDK',
@@ -359,6 +402,7 @@ const de: MessageSchema = {
             composedRestore: 'Kein atomares Restore',
             noRealtime: 'Ohne Echtzeit',
             modelAdapter: 'Modell-Adapter',
+            yourServer: 'Ihr Server',
         },
         backend: {
             eyebrow: 'Ihr Backend anbinden',
@@ -622,6 +666,25 @@ const de: MessageSchema = {
             ],
             docsLabel: 'Logik-Tags-Referenz',
         },
+        languages: {
+            eyebrow: 'Sprachen',
+            title: 'Sprachversionen in einer Vorlage',
+            description:
+                'Eine Vorlage enthält jede Sprache einer E-Mail: einen gemeinsamen Blockbaum plus Text, Eigenschaftsüberschreibungen wie Links und Bilder und ausgeblendete Blöcke pro Sprache. Autoren wechseln Versionen über das Menü „Sprachen“, sehen in der Sprachleiste und an jedem Block, was fehlt oder veraltet ist, und wo eine Übersetzung fehlt, steht der Text der Standardsprache.',
+            outcome: 'Eine E-Mail zu pflegen, in wie vielen Sprachen sie auch verschickt wird.',
+            features: [
+                'localization.locales listet die Sprachen, die Autoren hinzufügen können; bestehende Vorlagen brauchen keine Migration',
+                'Die Struktur ist gemeinsam: Hinzufügen, Verschieben oder Löschen eines Blocks ändert jede Sprache',
+                'Eine Übersetzung eines älteren Standardtexts ist „Veraltet“, bis ein Autor sie erneut übersetzt, beibehält oder den Standardtext verwendet',
+                'renderToMjml(content, { locale }), editor.toHtml({ locale }) und template-tools render --locale rendern eine Sprache, mit ihrem lang und dir',
+                '@templatical/quality meldet localization.untranslated, localization.stale und localization.merge-tags-differ, und template-tools validate --locale prüft sie in der CI',
+                'template-tools strings export und strings import tauschen die Texte einer Sprache als JSON mit einem Translation-Management-System aus; XLIFF und CSV werden nicht unterstützt',
+                'Die Importer für Beefree, Unlayer und Topol übernehmen die Sprachen der Quelle',
+                'Kommentare speichern ihre Sprache; der Versionsverlauf gilt pro Vorlage, und die Spaltenstruktur kann sich zwischen Sprachen nicht unterscheiden',
+                'Die Sprache der Editor-Oberfläche, init({ locale }), ist unabhängig von den Sprachen der Vorlage',
+            ],
+            docsLabel: 'Guide zu lokalisierten Vorlagen',
+        },
         previewResolution: {
             eyebrow: 'Vorschau',
             title: 'Vorschauen mit echten Daten, aufgelöst von Ihrem Backend',
@@ -678,7 +741,7 @@ const de: MessageSchema = {
             eyebrow: 'KI',
             title: 'KI im Editor, mit Ihrem eigenen Modell',
             description:
-                'Übergeben Sie einen KI-Provider, und der Editor erhält den KI-Assistenten, einen Chat, der die Vorlage mit einem Rückgängig-Schritt pro Anfrage bearbeitet und Bilder und PDFs als Anhänge annimmt; „Mit KI umformulieren“ in der Absatz-Werkzeugleiste; „Mit KI beheben“ für Lint-Befunde; und „Alt-Text schreiben“ für ein Bild oder für viele auf einmal. Ihr Backend ruft das Modell auf, mit Ihren Schlüsseln und Ihren Vereinbarungen zur Datenverarbeitung.',
+                'Übergeben Sie einen KI-Provider, und der Editor erhält den KI-Assistenten, einen Chat, der die Vorlage mit einem Rückgängig-Schritt pro Anfrage bearbeitet und Bilder und PDFs als Anhänge annimmt; „Mit KI umformulieren“ in der Absatz-Werkzeugleiste, mit einer Vorgabe zum Übersetzen; „Mit KI beheben“ für Lint-Befunde; und „Alt-Text schreiben“ für ein Bild oder für viele auf einmal. Ihr Backend ruft das Modell auf, mit Ihren Schlüsseln und Ihren Vereinbarungen zur Datenverarbeitung.',
             outcome:
                 'Die KI des Editors, mit dem Modell, den Schlüsseln und den Bedingungen, die Sie schon haben.',
             features: [
@@ -689,9 +752,30 @@ const de: MessageSchema = {
                 'Optionaler gespeicherter Verlauf, dessen Rückgängig und Wiederholen Ihr Backend ausführt; ohne ihn lebt der Chat für die Sitzung im Speicher',
                 'Konformitätstests prüfen Ihren Provider und Ihre Routen; ein Eval-Set misst Ihr Modell bei Bearbeitungen, Anhängen, Lint-Korrekturen und Alt-Texten',
                 '„Mit KI beheben“ und „Alt-Text schreiben“ brauchen @templatical/quality mit aktiviertem Linting',
+                'In einer Sprachansicht bearbeitet jede KI-Funktion diese Sprache; die Übersetzen-Vorgabe von „Mit KI umformulieren“ übersetzt einen Absatz, ganze Sprachversionen laufen über den Übersetzungs-Provider',
                 'Vorlage, Merge-Tags und Anfragen gehen an das Modell, das Sie aufrufen',
             ],
             docsLabel: 'KI-Referenz',
+        },
+        translation: {
+            eyebrow: 'Übersetzung',
+            title: 'Übersetzung über Ihren eigenen Provider',
+            description:
+                'Übergeben Sie einen TranslationProvider, und die Sprachleiste erhält „Übersetzen“. Es schickt die fehlenden und veralteten Felder einer Version an Ihr Backend, das ein LLM, DeepL oder ein Translation-Management-System aufrufen kann. Merge-Tags, Logik-Tags und geschützte Begriffe reisen als nummerierte Platzhalter, und ein zurückgegebenes Feld wird nur übernommen, wenn jeder Platzhalter zurückkommt.',
+            outcome:
+                'Übersetzung mit dem Dienst, den Schlüsseln und den Bedingungen, die Sie schon haben.',
+            features: [
+                'Eine Methode: translate(request, signal) gibt die übersetzten Felder zurück, und ein ausgelassenes Feld behält seinen bisherigen Wert',
+                '„Übersetzen“ schickt nur die Lücken, aktuelle Übersetzungen und manuelle Änderungen bleiben also erhalten; „Alles erneut übersetzen…“ ersetzt sie nach einer Bestätigung',
+                'Aus @templatical/ai-kit (MIT): createHttpTranslationProvider im Browser; readTranslationRequest und translateFields auf dem Server, die einen beliebigen AiModelAdapter nutzen und ein fehlgeschlagenes Feld einmal reparieren',
+                'Höchstens 50 Felder und 20.000 Zeichen pro Aufruf; bei content_too_large halbiert der Editor den Stapel und versucht es erneut',
+                'localization.doNotTranslate schützt bis zu 500 Begriffe, etwa Markennamen, mit derselben exakten Prüfung',
+                'HTML-Blöcke, leere Standardwerte und ausgeblendete Blöcke werden nicht gesendet; HTML-Blöcke übersetzen Sie von Hand',
+                'runTranslationConformance prüft Ihren Provider, und createMockTranslationProvider antwortet für Demos und Tests aus Aufzeichnungen',
+                'Betreffzeilen sind nicht Teil der Vorlage: Übersetzen Sie sie mit demselben Provider und speichern Sie sie in Ihren eigenen Daten',
+                'Die Felder und das Sprachpaar gehen an den Dienst, den Ihr Backend aufruft',
+            ],
+            docsLabel: 'Übersetzungs-Referenz',
         },
         mjmlOutput: {
             eyebrow: 'Ausgabe',
@@ -949,6 +1033,11 @@ const de: MessageSchema = {
                         us: 'Ein init()-Aufruf — React, Vue, Svelte, Angular und Vanilla JS',
                         them: 'Offizielle Pakete für React, Vue und Svelte',
                     },
+                    languages: {
+                        label: 'Sprachversionen und Übersetzung',
+                        us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
+                        them: 'Mehrsprachige Vorlagen ab dem Business-Tarif (300 $/Monat), mit KI-Übersetzung einer ganzen Vorlage oder eines Blocks',
+                    },
                     source: {
                         label: 'Quellcode-Zugang',
                         us: 'Vollständiger Quellcode in einem öffentlichen Repository',
@@ -1006,7 +1095,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}topol.io/editor 0.3.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf topol.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.",
+                    "Geprüft am 8. August 2026 gegen {'@'}topol.io/editor 0.3.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf topol.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zur Vorlagenübersetzung sowie die Tarife auf topol.io/pricing geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1102,6 +1191,11 @@ const de: MessageSchema = {
                         us: 'MJML für erzeugtes Markup; caniemail-Prüfungen für selbst verfasstes HTML/CSS; Größenprüfung des kompilierten HTML für Gmail-Clipping',
                         them: 'Genauso, über grapesjs-mjml — es kompiliert ebenfalls mit MJML',
                     },
+                    languages: {
+                        label: 'Sprachversionen und Übersetzung',
+                        us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
+                        them: 'Bauen Sie selbst. Das I18n-Modul übersetzt die Oberfläche des Editors, nicht den Inhalt der E-Mail',
+                    },
                 },
             },
             bestFit: {
@@ -1144,7 +1238,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen grapesjs 0.23.4 und grapesjs-mjml 1.0.8 in den auf npm veröffentlichten Fassungen. Diese Seite vergleicht das Open-Source-Framework; GrapesJS vertreibt zusätzlich Studio SDK, einen kommerziellen eingebetteten Editor, dessen Preise nur auf Anfrage verfügbar sind und der deshalb hier nicht verglichen wird.',
+                    'Geprüft am 8. August 2026 gegen grapesjs 0.23.4 und grapesjs-mjml 1.0.8 in den auf npm veröffentlichten Fassungen. Diese Seite vergleicht das Open-Source-Framework; GrapesJS vertreibt zusätzlich Studio SDK, einen kommerziellen eingebetteten Editor, dessen Preise nur auf Anfrage verfügbar sind und der deshalb hier nicht verglichen wird. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen grapesjs 0.23.8 in der auf npm veröffentlichten Fassung und die I18n-Dokumentation auf grapesjs.com geprüft.',
                 notDocumented:
                     '„Bauen Sie selbst“ heißt, dass die Funktion nicht ab Werk mitgeliefert wird — nicht, dass sie schwierig oder nicht unterstützt wäre. GrapesJS ist ein Framework, und darauf zu bauen ist der Sinn der Sache.',
                 trademark:
@@ -1215,6 +1309,11 @@ const de: MessageSchema = {
                         us: 'Der MIT-Renderer läuft überall, ohne Dienst und ohne Limit',
                         them: 'Über deren API verfügbar; jeder Export zählt gegen die Generator-Aufrufe',
                     },
+                    languages: {
+                        label: 'Sprachversionen und Übersetzung',
+                        us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
+                        them: 'Nicht dokumentiert. Die Aktion „Translate to other language“ des AI-Assistant-Add-ons ersetzt den Inhalt an Ort und Stelle, über einen Hook, den Sie implementieren',
+                    },
                     source: {
                         label: 'Quellcode-Zugang',
                         us: 'Vollständiger Quellcode in einem öffentlichen Repository',
@@ -1271,7 +1370,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.",
+                    "Geprüft am 8. August 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren SDK-Dokumentation auf chamaileon.io geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1337,6 +1436,11 @@ const de: MessageSchema = {
                         us: 'Sie. Der Editor liegt in Ihrem Bundle und läuft in Ihrer Seite',
                         them: 'Stripo. Die Serverkomponenten laufen auf deren Infrastruktur; Selbst-Hosting ist eine Enterprise-Option',
                     },
+                    languages: {
+                        label: 'Sprachversionen und Übersetzung',
+                        us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
+                        them: 'Für das Plugin nicht dokumentiert; seine Lokalisierung betrifft die eigene Oberfläche. Übersetzungsversionen dokumentiert Stripo für seine E-Mail-App. Der KI-Textassistent des Plugins hat einen Übersetzen-Prompt, der den markierten Text ersetzt',
+                    },
                     source: {
                         label: 'Quellcode-Zugang',
                         us: 'Vollständiger Quellcode in einem öffentlichen Repository',
@@ -1399,7 +1503,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
+                    'Geprüft am 8. August 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1464,6 +1568,11 @@ const de: MessageSchema = {
                         label: 'Aktivierung zur Laufzeit',
                         us: 'Keine. Keine Projekt-ID, keine Domain-Freigabe, kein Aufruf an uns.',
                         them: 'Eine Projekt-ID mit freigegebenen Domains für den Produktivbetrieb',
+                    },
+                    languages: {
+                        label: 'Sprachversionen und Übersetzung',
+                        us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
+                        them: 'Mehrsprachige Vorlagen ab dem Scale-Tarif (750 $/Monat): 2 Sprachen pro Editor, 5 bei Optimize, unbegrenzt bei Enterprise, die Standardsprache eingerechnet. Laut deren Help-Center werden Inhalte nicht automatisch übersetzt',
                     },
                     source: {
                         label: 'Quellcode-Zugang',
@@ -1530,7 +1639,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen react-email-editor 2.0.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
+                    'Geprüft am 8. August 2026 gegen react-email-editor 2.0.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen, deren Help-Center und die Tarife auf unlayer.com geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1590,6 +1699,11 @@ const de: MessageSchema = {
                         label: 'HTML-Import',
                         them: '2 $ pro Import oder 2.000 $ pro Jahr für unbegrenzt, unterhalb der oberen Stufen',
                         us: 'Enthalten, unbegrenzt, MIT-lizenziert',
+                    },
+                    languages: {
+                        label: 'Sprachversionen und Übersetzung',
+                        us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
+                        them: 'Mehrsprachige Vorlagen in den Tarifen Superpowers (3.000 $/Monat, bis zu 6 Übersetzungen pro Vorlage) und Enterprise (bis zu 25); ein DeepL-Add-on in denselben Tarifen übersetzt sie mit Ihrem eigenen DeepL-API-Schlüssel',
                     },
                     source: {
                         label: 'Quellcode-Zugang',
@@ -1656,7 +1770,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}beefree.io/sdk 11.6.1 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.",
+                    "Geprüft am 8. August 2026 gegen {'@'}beefree.io/sdk 11.6.1 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1732,6 +1846,11 @@ const de: MessageSchema = {
                         them: 'Nicht dokumentiert',
                         us: 'Acht MIT-Konverter, darunter einer für Easy-Email-Pro-Vorlagen',
                     },
+                    languages: {
+                        label: 'Sprachversionen und Übersetzung',
+                        us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
+                        them: 'Nicht dokumentiert. „Translate template“ im Enterprise-Tarif gibt über einen translate-Callback, den Sie bereitstellen, eine übersetzte Kopie von Inhalt und Betreff zurück',
+                    },
                     isolation: {
                         label: 'Stil-Isolation',
                         them: 'Nicht dokumentiert',
@@ -1779,7 +1898,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 7. August 2026 gegen easy-email-pro-core 1.59.9 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf easyemail.pro angegebenen Preise. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
+                    'Geprüft am 7. August 2026 gegen easy-email-pro-core 1.59.9 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf easyemail.pro angegebenen Preise. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen easy-email-pro-core 1.60.2 in der auf npm veröffentlichten Fassung, deren Dokumentation und die Preise auf easyemail.pro geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1827,9 +1946,13 @@ const de: MessageSchema = {
                 question: 'Wie migriere ich von einem anderen Editor?',
                 answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für jeden großen Hosted-Editor sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Importer-Seite listet auf, was jeder einzelne annimmt; die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
             },
+            languages: {
+                question: 'Kann eine Vorlage mehrere Sprachen enthalten?',
+                answer: 'Ja. Listen Sie die Sprachen in der Option localization von init() auf, und Autoren legen Sprachversionen über das Menü „Sprachen“ an: ein gemeinsamer Blockbaum mit Text, Eigenschaftsüberschreibungen und ausgeblendeten Blöcken pro Sprache. Wo eine Übersetzung fehlt, steht der Text der Standardsprache. „Übersetzen“ füllt eine Version über den TranslationProvider, den Sie als Option translation übergeben und der ein LLM, DeepL oder ein Translation-Management-System aufrufen kann, und renderToMjml rendert eine Sprache, wenn Sie ihr locale übergeben. Betreffzeilen bleiben beim System, das die E-Mail verschickt, und die Spaltenstruktur teilen alle Sprachen.',
+            },
             data: {
                 question: 'Wohin gehen meine Vorlagendaten?',
-                answer: 'Nur an Ihr eigenes Backend. Das SDK läuft vollständig im Browser — keine Telemetrie, keine Remote-Aufrufe, keine Analytics. Eine Vorlage verlässt Ihre App nur über einen Provider, den Sie konfigurieren: beim Speichern, beim Testversand oder mit einer KI-Anfrage, die Ihr Backend an das Modell Ihrer Wahl weitergibt.',
+                answer: 'Nur an Ihr eigenes Backend. Das SDK läuft vollständig im Browser — keine Telemetrie, keine Remote-Aufrufe, keine Analytics. Eine Vorlage verlässt Ihre App nur über einen Provider, den Sie konfigurieren: beim Speichern, beim Testversand, mit einer KI-Anfrage, die Ihr Backend an das Modell Ihrer Wahl weitergibt, oder zur Übersetzung, die Ihr Backend an den Übersetzungsdienst Ihrer Wahl weitergibt.',
             },
             cssIsolation: {
                 question: 'Übernimmt der Editor das CSS meiner App?',

@@ -300,6 +300,29 @@ const featureSections = computed<FeatureSection[]>(() => [
         ],
     },
     {
+        slug: 'languages',
+        docsPath: '/guide/localized-templates',
+        docsLabel: t('features.languages.docsLabel'),
+        eyebrow: t('features.languages.eyebrow'),
+        title: t('features.languages.title'),
+        description: t('features.languages.description'),
+        outcome: t('features.languages.outcome'),
+        features: tm('features.languages.features') as string[],
+        code: `const editor = await init({
+  container: '#editor',
+  // The languages authors can add from the Languages menu.
+  // settings.locale stays the template's default.
+  localization: {
+    locales: ['en', 'de', 'fr'],
+    // Masked during Translate and checked on return.
+    doNotTranslate: ['Acme'],
+  },
+})
+
+// Render one language version without switching the view.
+const german = await editor.toMjml({ locale: 'de' })`,
+    },
+    {
         slug: 'preview-resolution',
         docsPath: '/guide/preview-rendering',
         docsLabel: t('features.previewResolution.docsLabel'),
@@ -861,6 +884,60 @@ export const model = createAnthropicAdapter({
 
 // The kit's editing loop calls it for chat and Fix with AI, as in the
 // server guide: runEditingTurn({ request, model, write, signal })`,
+            },
+        ],
+    },
+    {
+        slug: 'translation',
+        docsPath: '/backend/translation',
+        docsLabel: t('features.translation.docsLabel'),
+        eyebrow: t('features.translation.eyebrow'),
+        title: t('features.translation.title'),
+        description: t('features.translation.description'),
+        outcome: t('features.translation.outcome'),
+        features: tm('features.translation.features') as string[],
+        variants: [
+            {
+                label: t('features.variants.yourEndpoint'),
+                code: `import { createHttpTranslationProvider } from '@templatical/ai-kit/client'
+
+const editor = await init({
+  container: '#editor',
+  localization: { locales: ['en', 'de'], doNotTranslate: ['Acme'] },
+
+  // Sends POST /api/templates/{template}/translate to your backend,
+  // which calls the translation service with your keys. Nothing
+  // passes through Templatical.
+  translation: createHttpTranslationProvider({ url: '/api' }),
+})`,
+            },
+            {
+                label: t('features.variants.yourServer'),
+                code: `import {
+  aiErrorResponse,
+  aiJsonResponse,
+  readTranslationRequest,
+  translateFields,
+} from '@templatical/ai-kit/server'
+// Any AiModelAdapter, such as the one on the AI section's tab.
+import { model } from './model'
+
+// Mount at POST /templates/{template}/translate, after your own
+// authentication and authorization.
+export async function handleTranslation(request) {
+  try {
+    const body = await readTranslationRequest(request)
+    const result = await translateFields({
+      request: body,
+      model,
+      signal: request.signal,
+    })
+    return aiJsonResponse(result)
+  } catch (error) {
+    if (request.signal.aborted) throw error
+    return aiErrorResponse(error)
+  }
+}`,
             },
         ],
     },

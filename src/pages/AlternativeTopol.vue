@@ -17,6 +17,7 @@ const ROW_KEYS = [
     'customBlocks',
     'storage',
     'frameworks',
+    'languages',
     'source',
     'licence',
     'output',
@@ -36,6 +37,9 @@ const SOURCES = [
     { label: 'topol.io/tariff-plugin', href: URLS.topolPluginPricing },
     { label: 'topol.io/plugin', href: URLS.topolPlugin },
     { label: 'npm: @topol.io/editor', href: URLS.topolNpm },
+    { label: 'docs.topol.io: multilingual templates', href: URLS.topolMultilingualDocs },
+    { label: 'docs.topol.io: template translation', href: URLS.topolTranslationDocs },
+    { label: 'topol.io/pricing', href: URLS.topolPricing },
 ];
 </script>
 

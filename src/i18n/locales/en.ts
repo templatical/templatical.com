@@ -61,7 +61,7 @@ export default {
             templateName: 'Welcome email',
             eyebrow: 'Wired to a backend',
             description:
-                'Some of what you see here — saving, version history, comments, saved blocks, test sends, media and AI — runs on a backend you implement. This demo uses your browser’s session storage and plays recorded AI replies with no model, so nothing leaves the page.',
+                'Some of what you see here — saving, version history, comments, saved blocks, test sends, media, AI and translation — runs on a backend you implement. This demo uses your browser’s session storage and plays recorded AI replies and translations with no model or translation service, so nothing leaves the page.',
             docsLink: 'How the providers work',
             reset: 'Reset demo',
             resetting: 'Resetting…',
@@ -108,12 +108,12 @@ export default {
         meta: {
             title: 'Templatical — Embeddable Email Editor SDK',
             description:
-                'Embed a source-available drag-and-drop email editor in your app — MJML export, merge tags, custom blocks, an AI assistant on your own model, full theming, and more.',
+                'Embed a source-available drag-and-drop email editor in your app — MJML export, merge tags, custom blocks, language versions, an AI assistant on your own model, full theming, and more.',
         },
         hero: {
             headline: 'A drag-and-drop email editor for your app.',
             subheadline:
-                'Custom blocks, full theming, merge tags, display conditions, and an AI assistant on your own model — all built into the SDK. Drop into any app with one init() call.',
+                'Custom blocks, full theming, merge tags, display conditions, language versions, and an AI assistant on your own model — all built into the SDK. Drop into any app with one init() call.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Read the docs',
             frameworkNote:
@@ -154,6 +154,7 @@ export default {
                         'A saved-block library — pick, name, preview, insert at position',
                         'A test-send dialog — recipient picker, preview, sending and error states',
                         'Preview resolution — real data in place of merge tags, without touching stored content',
+                        'Language versions — per-language text and overrides, fallbacks, out-of-date tracking and a translation round trip',
                         'Dark-mode preview parity with sent email',
                         'Theme tokens for brand consistency',
                         'MJML output you can render anywhere',
@@ -191,6 +192,7 @@ export default {
                         'Custom blocks with API-backed data sources',
                         'Block-level merge tags with scoping',
                         'Display conditions for dynamic content',
+                        'Language versions in one template, filled by Translate through your own translation provider',
                         'Pluggable media library — bring your own storage (S3, Cloudinary, your CMS)',
                         'Saved blocks — users save block groups and reuse them, backed by your storage',
                         'Saving and loading against your own storage — autosave, save status, Cmd/Ctrl+S',
@@ -241,7 +243,7 @@ export default {
                 },
                 {
                     name: 'Rewrite',
-                    body: 'Shorten, expand, change the tone of or fix the grammar in a paragraph from its toolbar, with a preview before anything is replaced.',
+                    body: 'Shorten, expand, change the tone of, fix the grammar in or translate a paragraph from its toolbar, with a preview before anything is replaced.',
                 },
                 {
                     name: 'Fix with AI',
@@ -289,6 +291,47 @@ export default {
                 'Prefer managed AI? Templatical Cloud adds in-editor AI chat and a hosted MCP server.',
             cloudNoteLink: 'Explore Cloud',
         },
+        languages: {
+            eyebrow: 'New · Language versions',
+            headline: 'Multilingual templates, translated through your own provider',
+            subheadline:
+                'Give init() a list of languages and authors add language versions of one email: a shared block tree, with each language’s text, property overrides and hidden blocks. Pass a TranslationProvider and Translate fills a version through the service you choose: an LLM, DeepL or a translation management system.',
+            authorsTitle: 'For your authors',
+            // Read with tm(), which returns raw messages.
+            features: [
+                {
+                    name: 'Languages',
+                    body: 'Add a language, make one the default or remove it. Every version shares the block tree; text, links, images and styling can differ, and a block can be hidden in one language.',
+                },
+                {
+                    name: 'Language bar',
+                    body: 'Shows the version being edited with its missing and out-of-date counts, and translates just those fields, as one undo step.',
+                },
+                {
+                    name: 'Status badges',
+                    body: 'A badge on each block says Not translated, Out of date or Merge tags differ, with Translate, Keep and a reset to the default language beside it.',
+                },
+                {
+                    name: 'Comments and AI',
+                    body: 'Each comment records the language it was written in. The AI assistant, Rewrite, Fix with AI and Write alt text edit the language on screen.',
+                },
+            ],
+            tryNote:
+                'Try it in the editor at the top of the page: open the language menu, choose Deutsch and run Translate from the language bar. The translations are recorded, so no translation service runs on this page.',
+            backendTitle: 'For your backend',
+            copyLabel: 'Copy',
+            copiedLabel: 'Copied',
+            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
+            backend: [
+                'On your server, translateFields from @templatical/ai-kit/server runs the fields through any AiModelAdapter; or implement translate against DeepL or a translation management system.',
+                'Merge tags, logic tags and your do-not-translate terms travel as numbered placeholders, and a field is applied only when every placeholder comes back.',
+                'renderToMjml(content, { locale }) renders one language, and template-tools validate template.json --locale de reports missing and out-of-date text.',
+                'template-tools strings export and strings import exchange a language as JSON for a translation management system; the Beefree, Unlayer and Topol importers keep the source’s languages.',
+                'Subject lines aren’t part of the template: translate and store them in your own data. Keep every @templatical/* package on the same version.',
+            ],
+            ctaPrimary: 'Read the localization guide',
+            ctaSecondary: 'Languages on the features page',
+        },
         cta: {
             headline: 'Start building email templates today',
             subheadline:
@@ -315,7 +358,7 @@ export default {
         meta: {
             title: 'Features — Templatical',
             description:
-                'Source-available email editor SDK with accessibility, structure, link, deliverability-pattern and email-client compatibility checks (not inbox placement).',
+                'Source-available email editor SDK with language versions and Translate, plus accessibility, structure, link, deliverability-pattern and email-client compatibility checks (not inbox placement).',
         },
         hero: {
             eyebrow: 'Source-available SDK',
@@ -356,6 +399,7 @@ export default {
             composedRestore: 'No atomic restore',
             noRealtime: 'Without realtime',
             modelAdapter: 'Model adapter',
+            yourServer: 'Your server',
         },
         backend: {
             eyebrow: 'Connect your backend',
@@ -612,6 +656,25 @@ export default {
             ],
             docsLabel: 'Logic tags reference',
         },
+        languages: {
+            eyebrow: 'Languages',
+            title: 'Language versions in one template',
+            description:
+                'One template keeps every language of an email: a shared block tree, plus each language’s text, property overrides such as links and images, and hidden blocks. Authors switch versions from the Languages menu, see what is missing or out of date in the language bar and on each block, and the default language’s text stands in wherever a translation is missing.',
+            outcome: 'One email to maintain, however many languages it ships in.',
+            features: [
+                'localization.locales lists the languages authors can add; existing templates need no migration',
+                'Structure is shared: adding, moving or deleting a block changes every language',
+                'A translation of an older default is Out of date until an author re-translates it, keeps it or uses the default text',
+                'renderToMjml(content, { locale }), editor.toHtml({ locale }) and template-tools render --locale render one language, with its lang and dir',
+                '@templatical/quality reports localization.untranslated, localization.stale and localization.merge-tags-differ, and template-tools validate --locale runs them in CI',
+                'template-tools strings export and strings import exchange a language’s strings as JSON for a translation management system; XLIFF and CSV aren’t supported',
+                'The Beefree, Unlayer and Topol importers keep the source’s languages',
+                'Comments record their language; version history stays per template, and column structure can’t differ per language',
+                'The editor’s own UI language, init({ locale }), is separate from the template’s languages',
+            ],
+            docsLabel: 'Localized templates guide',
+        },
         previewResolution: {
             eyebrow: 'Preview',
             title: 'Previews with real data, resolved by your backend',
@@ -667,7 +730,7 @@ export default {
             eyebrow: 'AI',
             title: 'AI in the editor, on your own model',
             description:
-                'Pass an AI provider and the editor gains the AI assistant, a chat that edits the template with one undo step per turn and takes image and PDF attachments; Rewrite in the paragraph toolbar; Fix with AI on lint findings; and Write alt text for one image or in bulk. Your backend calls the model, with your keys and your data-processing terms.',
+                'Pass an AI provider and the editor gains the AI assistant, a chat that edits the template with one undo step per turn and takes image and PDF attachments; Rewrite in the paragraph toolbar, with a Translate preset; Fix with AI on lint findings; and Write alt text for one image or in bulk. Your backend calls the model, with your keys and your data-processing terms.',
             outcome: 'The editor’s AI on the model, keys and terms you already have.',
             features: [
                 'From @templatical/ai-kit (MIT): createHttpAiProvider talks to your backend over a documented REST and server-sent-events wire, and the server kit has the prompts, the apply_operations tool and the editing loop for any Fetch-API runtime',
@@ -677,9 +740,29 @@ export default {
                 'Optional stored history, with Undo and Redo replayed by your backend; without it, the chat lives in memory for the session',
                 'Conformance suites check your provider and routes; an eval set measures your model on edits, attachments, lint fixes and alt text',
                 'Fix with AI and Write alt text need @templatical/quality with lint on',
+                'In a language view, every AI feature edits that language; Rewrite’s Translate preset translates one paragraph, and whole language versions go through the translation provider',
                 'The template, its merge tags and the prompts go to the model you call',
             ],
             docsLabel: 'AI reference',
+        },
+        translation: {
+            eyebrow: 'Translation',
+            title: 'Translation through your own provider',
+            description:
+                'Pass a TranslationProvider and the language bar gains Translate. It sends a version’s missing and out-of-date fields to your backend, which can call an LLM, DeepL or a translation management system. Merge tags, logic tags and do-not-translate terms travel as numbered placeholders, and a returned field is applied only when every placeholder comes back.',
+            outcome: 'Translation on the service, keys and terms you already have.',
+            features: [
+                'One method: translate(request, signal) returns the fields it translated, and an omitted field keeps its previous value',
+                'Translate sends only the gaps, so current translations and manual edits survive; Translate everything again replaces them after a confirmation',
+                'From @templatical/ai-kit (MIT): createHttpTranslationProvider in the browser; readTranslationRequest and translateFields on the server, which run any AiModelAdapter and repair a failed field once',
+                'At most 50 fields and 20,000 characters per call; on content_too_large the editor halves the batch and retries',
+                'localization.doNotTranslate protects up to 500 terms, such as brand names, with the same exact check',
+                'HTML blocks, empty defaults and hidden blocks aren’t sent; translate HTML blocks by hand',
+                'runTranslationConformance checks your provider, and createMockTranslationProvider answers from recordings for demos and tests',
+                'Subject lines aren’t part of the template: translate them with the same provider and store them in your own data',
+                'The fields and the language pair go to the service your backend calls',
+            ],
+            docsLabel: 'Translation reference',
         },
         mjmlOutput: {
             eyebrow: 'Output',
@@ -935,6 +1018,11 @@ export default {
                         us: 'One init() call — React, Vue, Svelte, Angular and vanilla JS',
                         them: 'Official React, Vue and Svelte packages',
                     },
+                    languages: {
+                        label: 'Language versions and translation',
+                        us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
+                        them: 'Multilingual templates from the Business plan ($300/mo), with AI Template Translation of a whole template or one block',
+                    },
                     source: {
                         label: 'Source access',
                         us: 'Full source in a public repository',
@@ -992,7 +1080,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}topol.io/editor 0.3.0 as published on npm, and the plans listed at topol.io on that date. Pricing and features change — check their site for current terms.",
+                    "Verified on 8 August 2026 against {'@'}topol.io/editor 0.3.0 as published on npm, and the plans listed at topol.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multilingual templates and template translation documentation and the plans at topol.io/pricing.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1088,6 +1176,11 @@ export default {
                         us: 'MJML for generated markup; caniemail checks for authored HTML/CSS; compiled HTML size check for Gmail clipping',
                         them: 'The same, through grapesjs-mjml — it compiles with MJML too',
                     },
+                    languages: {
+                        label: 'Language versions and translation',
+                        us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
+                        them: 'Yours to build. The I18n module translates the editor’s own interface, not the email content',
+                    },
                 },
             },
             bestFit: {
@@ -1130,7 +1223,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against grapesjs 0.23.4 and grapesjs-mjml 1.0.8 as published on npm. This page compares the open-source framework; GrapesJS also sells Studio SDK, a commercial embedded editor whose pricing is quote-only and therefore not compared here.',
+                    'Verified on 8 August 2026 against grapesjs 0.23.4 and grapesjs-mjml 1.0.8 as published on npm. This page compares the open-source framework; GrapesJS also sells Studio SDK, a commercial embedded editor whose pricing is quote-only and therefore not compared here. The language versions row was checked on 3 November 2026 against grapesjs 0.23.8 as published on npm and the I18n documentation at grapesjs.com.',
                 notDocumented:
                     '“Yours to build” means the capability is not provided out of the box, not that it is hard or unsupported — GrapesJS is a framework, and building on it is the point.',
                 trademark:
@@ -1201,6 +1294,11 @@ export default {
                         us: 'The MIT renderer runs anywhere, with no service and no limit',
                         them: 'Available via their API; each export counts against generator calls',
                     },
+                    languages: {
+                        label: 'Language versions and translation',
+                        us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
+                        them: 'Not documented. The AI Assistant add-on’s Translate to other language action rewrites the content in place, through a hook you implement',
+                    },
                     source: {
                         label: 'Source access',
                         us: 'Full source in a public repository',
@@ -1257,7 +1355,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms.",
+                    "Verified on 8 August 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their SDK documentation at chamaileon.io.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1323,6 +1421,11 @@ export default {
                         us: 'You. The editor ships in your bundle and runs in your page',
                         them: 'Stripo. Server components run on their infrastructure; self-hosting is an Enterprise option',
                     },
+                    languages: {
+                        label: 'Language versions and translation',
+                        us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
+                        them: 'Not documented for the plugin, whose localization covers its own interface; Stripo documents translation versions for its email app. The plugin’s AI text assistant has a Translate prompt that rewrites the selected text',
+                    },
                     source: {
                         label: 'Source access',
                         us: 'Full source in a public repository',
@@ -1385,7 +1488,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms.',
+                    'Verified on 8 August 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against the plugin documentation at plugin.stripo.email and their support centre.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1450,6 +1553,11 @@ export default {
                         label: 'Runtime activation',
                         us: 'None. No project ID, no domain allowlist, no call to us.',
                         them: 'A project ID with allowlisted domains for production use',
+                    },
+                    languages: {
+                        label: 'Language versions and translation',
+                        us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
+                        them: 'Multi-language templates from the Scale plan ($750/mo): 2 languages per editor, 5 on Optimize, unlimited on Enterprise, the default language included. Their help centre says content does not auto-translate',
                     },
                     source: {
                         label: 'Source access',
@@ -1516,7 +1624,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against react-email-editor 2.0.0 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms.',
+                    'Verified on 8 August 2026 against react-email-editor 2.0.0 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language documentation, their help centre and the plans at unlayer.com.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1576,6 +1684,11 @@ export default {
                         label: 'HTML import',
                         them: '$2 per import, or $2,000 per year for unlimited, below the top tiers',
                         us: 'Included, unlimited, MIT-licensed',
+                    },
+                    languages: {
+                        label: 'Language versions and translation',
+                        us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
+                        them: 'Multi-language templates on the Superpowers ($3,000/mo, up to 6 translations per template) and Enterprise (up to 25) plans; a DeepL add-on on the same plans translates them with your own DeepL API key',
                     },
                     source: {
                         label: 'Source access',
@@ -1642,7 +1755,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}beefree.io/sdk 11.6.1 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms.",
+                    "Verified on 8 August 2026 against {'@'}beefree.io/sdk 11.6.1 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language templates and DeepL add-on documentation and the plans at developers.beefree.io.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1718,6 +1831,11 @@ export default {
                         them: 'Not documented',
                         us: 'Eight MIT converters, including one for Easy Email Pro templates',
                     },
+                    languages: {
+                        label: 'Language versions and translation',
+                        us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
+                        them: 'Not documented. Translate template, on the Enterprise plan, returns a translated copy of the content and subject through a translate callback you supply',
+                    },
                     isolation: {
                         label: 'Style isolation',
                         them: 'Not documented',
@@ -1765,7 +1883,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 7 August 2026 against easy-email-pro-core 1.59.9 as published on npm, and the pricing listed at easyemail.pro on that date. Pricing and features change — check their site for current terms.',
+                    'Verified on 7 August 2026 against easy-email-pro-core 1.59.9 as published on npm, and the pricing listed at easyemail.pro on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against easy-email-pro-core 1.60.2 as published on npm, their documentation and the pricing at easyemail.pro.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1813,9 +1931,13 @@ export default {
                 question: 'How do I migrate from another editor?',
                 answer: 'We provide free, MIT-licensed converters for every major hosted editor, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The importers page lists what each one accepts, and the docs carry a migration guide per source format.',
             },
+            languages: {
+                question: 'Can one template hold several languages?',
+                answer: 'Yes. List the languages in the localization option of init() and authors add language versions from the Languages menu: one shared block tree, with each language’s text, property overrides and hidden blocks. A missing translation shows the default language’s text. Translate fills a version through the TranslationProvider you pass as the translation option, which can call an LLM, DeepL or a translation management system, and renderToMjml renders one language when you pass its locale. Subject lines stay with the system that sends the email, and column structure is shared by every language.',
+            },
             data: {
                 question: 'Where does my template data go?',
-                answer: 'Only to your own backend. The SDK runs entirely in the browser — no telemetry, no remote calls, no analytics. A template leaves your app only through a provider you configure: when it is saved, sent as a test, or sent with an AI request, which your backend passes to the model you choose.',
+                answer: 'Only to your own backend. The SDK runs entirely in the browser — no telemetry, no remote calls, no analytics. A template leaves your app only through a provider you configure: when it is saved, sent as a test, sent with an AI request, which your backend passes to the model you choose, or sent for translation, which your backend passes to the translation service you choose.',
             },
             cssIsolation: {
                 question: "Will the editor inherit my app's CSS?",

@@ -30,6 +30,7 @@ const ROW_KEYS = [
     'testSend',
     'linting',
     'clientCompat',
+    'languages',
 ] as const;
 
 // Note there is no email-client-compatibility reason here, and the table row for it
@@ -50,6 +51,7 @@ const SOURCES = [
     { label: 'grapesjs.com', href: URLS.grapesjsSite },
     { label: 'npm: grapesjs', href: URLS.grapesjsNpm },
     { label: 'npm: grapesjs-mjml', href: URLS.grapesjsMjmlNpm },
+    { label: 'grapesjs.com: I18n', href: URLS.grapesjsI18nDocs },
 ];
 </script>
 

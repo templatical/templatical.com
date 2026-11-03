@@ -15,6 +15,7 @@ const ROW_KEYS = [
     'whiteLabel',
     'hosting',
     'activation',
+    'languages',
     'source',
     'licence',
     'scope',
@@ -38,6 +39,8 @@ const SOURCES = [
     { label: 'unlayer.com/pricing', href: URLS.unlayerPricing },
     { label: 'docs.unlayer.com', href: URLS.unlayerDocs },
     { label: 'npm: react-email-editor', href: URLS.unlayerNpm },
+    { label: 'docs: multi-language', href: URLS.unlayerMultiLanguageDocs },
+    { label: 'help.unlayer.com: multi-language templates', href: URLS.unlayerMultiLanguageHelp },
 ];
 </script>
 

@@ -15,6 +15,7 @@ const ROW_KEYS = [
     'customBlocks',
     'storage',
     'hosting',
+    'languages',
     'source',
     'licence',
     'support',
@@ -33,6 +34,9 @@ const THEM_KEYS = ['templates', 'operated', 'modules', 'tooling', 'support'] as 
 const SOURCES = [
     { label: 'stripo.email/plugin', href: URLS.stripoPlugin },
     { label: 'support.stripo.email: plan comparison', href: URLS.stripoPlanComparison },
+    { label: 'plugin.stripo.email: localization', href: URLS.stripoPluginLocalization },
+    { label: 'plugin.stripo.email: AI', href: URLS.stripoPluginAi },
+    { label: 'support.stripo.email: translating a template', href: URLS.stripoTranslateHelp },
 ];
 </script>
 

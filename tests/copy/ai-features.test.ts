@@ -9,8 +9,15 @@ import en from '@/i18n/locales/en';
     the conformance suites and the eval set. What shipped is the AI assistant (a chat
     that takes image and PDF attachments, with import from a screenshot or PDF),
     Rewrite, Fix with AI on lint findings and Write alt text. AI scoring, AI
-    suggestions, subject lines and whole-template translation were cut before the
-    release, so the site may not claim them.
+    suggestions and AI-written subject lines were cut before the release, so the site
+    may not claim them.
+
+    Whole-template translation was cut from the AI as well, and shipped in 0.53.0 as a
+    provider of its own (a TranslationProvider passed as init({ translation }), beside
+    language versions). Translation is therefore no longer banned here:
+    tests/copy/languages.test.ts pins how it is described, and that no Cloud copy
+    claims it. Subject lines are banned only next to AI, because the localization copy
+    says they stay with the host that sends the email, as the docs do.
 
     `cloud.*` is not scanned here: it describes Templatical Cloud's own roadmap, which
     is corrected together with the rest of the Cloud copy, not with an SDK release.
@@ -34,8 +41,12 @@ function outsideCloud(messages: typeof en, locale: string): Array<[string, strin
 const CUT_AI_FEATURES: Array<[string, RegExp]> = [
     ['AI scoring', /\bscor(e|es|ing)\b|Bewertung/i],
     ['AI suggestions', /\b(AI|KI)[- ](suggestions|Vorschläge)\b/i],
-    ['subject lines', /subject lines?|Betreffzeile/i],
-    ['translation', /\btranslat(e|es|ion|ions)\b|[UÜ]bersetz/i],
+    // Within one sentence, either order. AI and KI are matched case-sensitively, so
+    // "ai-kit" in a package name does not count as a mention of AI.
+    [
+        'AI subject lines',
+        /\b(?:AI|KI)\b[^.!?]*(?:[Ss]ubject lines?|Betreffzeile)|(?:[Ss]ubject lines?|Betreffzeile)[^.!?]*\b(?:AI|KI)\b/,
+    ],
 ];
 
 /**
@@ -244,8 +255,8 @@ describe('the patterns', () => {
         'KI-Vorschläge',
         'AI subject lines',
         'Betreffzeilen per KI',
-        'Translate the whole template',
-        'Übersetzung der ganzen Vorlage',
+        'The AI writes subject lines for every campaign',
+        'KI-generierte Betreffzeilen',
     ])('catches "%s"', (text) => {
         expect(CUT_AI_FEATURES.some(([, pattern]) => pattern.test(text))).toBe(true);
     });
@@ -256,6 +267,11 @@ describe('the patterns', () => {
         'Mit KI beheben',
         'Write alt text for one image or in bulk',
         'The AI assistant reads image and PDF attachments',
+        'Translate fills a language version through your TranslationProvider',
+        '„Übersetzen“ füllt eine Sprachversion über Ihren TranslationProvider',
+        'Subject lines aren’t part of the template: translate and store them in your own data.',
+        'Betreffzeilen sind nicht Teil der Vorlage: Übersetzen Sie sie mit demselben Provider.',
+        'translateFields from @templatical/ai-kit/server; subject lines stay with the host',
     ])('leaves "%s" alone', (text) => {
         expect(CUT_AI_FEATURES.some(([, pattern]) => pattern.test(text))).toBe(false);
     });
