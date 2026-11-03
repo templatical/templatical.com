@@ -295,40 +295,62 @@ export default {
             eyebrow: 'New · Language versions',
             headline: 'Multilingual templates, translated through your own provider',
             subheadline:
-                'Give init() a list of languages and authors add language versions of one email: a shared block tree, with each language’s text, property overrides and hidden blocks. Pass a TranslationProvider and Translate fills a version through the service you choose: an LLM, DeepL or a translation management system.',
-            authorsTitle: 'For your authors',
-            // Read with tm(), which returns raw messages.
+                'Give init() a list of languages and authors add language versions of one email: a shared block tree, with each language’s text, property overrides and hidden blocks, and no provider needed. Add a translation provider, any object with a translate method, and Translate fills a version through DeepL, a translation management system or an LLM. The AI kit is optional.',
+            builtInTitle: 'Built in',
+            builtInNote:
+                'With localization alone: no provider, no backend, no extra package. The Beefree, Unlayer and Topol importers keep the source’s languages.',
+            // Read with tm(), which returns raw messages, so braces are safe here.
             features: [
                 {
                     name: 'Languages',
                     body: 'Add a language, make one the default or remove it. Every version shares the block tree; text, links, images and styling can differ, and a block can be hidden in one language.',
                 },
                 {
-                    name: 'Language bar',
-                    body: 'Shows the version being edited with its missing and out-of-date counts, and translates just those fields, as one undo step.',
+                    name: 'Language bar and badges',
+                    body: 'The bar shows the version being edited with its missing and out-of-date counts. A badge on each block says Not translated, Out of date or Merge tags differ, with Keep and a reset to the default language beside it.',
                 },
                 {
-                    name: 'Status badges',
-                    body: 'A badge on each block says Not translated, Out of date or Merge tags differ, with Translate, Keep and a reset to the default language beside it.',
+                    name: 'Rendering and checks',
+                    body: 'renderToMjml(content, { locale }) renders one language, template-tools validate --locale reports missing and out-of-date text, and strings export and strings import exchange a language as JSON with a translation management system.',
                 },
                 {
                     name: 'Comments and AI',
-                    body: 'Each comment records the language it was written in. The AI assistant, Rewrite, Fix with AI and Write alt text edit the language on screen.',
+                    body: 'Each comment records the language it was written in. With an AI provider, the AI assistant, Rewrite, Fix with AI and Write alt text edit the language on screen.',
                 },
+            ],
+            translateTitle: 'Translate with any service',
+            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
+            translate: [
+                'Translate sends a version’s missing and out-of-date fields to your provider; your backend calls DeepL, a translation management system or an LLM, and returns the fields it translated.',
+                'Merge tags, logic tags and your do-not-translate terms travel as numbered placeholders, and the editor applies a field only when every placeholder comes back.',
+                'Subject lines aren’t part of the template: translate and store them in your own data. Keep every @templatical/* package on the same version.',
             ],
             tryNote:
                 'Try it in the editor at the top of the page: open the language menu, choose Deutsch and run Translate from the language bar. The translations are recorded, so no translation service runs on this page.',
-            backendTitle: 'For your backend',
+            kitTitle: 'Optional: the AI kit (MIT)',
+            kitIntro:
+                'Ready-made pieces for the same interface, if your translator is an LLM or you want a tested HTTP route. Translate works without it.',
+            // Read with tm(), which returns raw messages, so braces are safe here.
+            kit: [
+                {
+                    name: 'createHttpTranslationProvider',
+                    body: 'The browser half of a documented HTTP route, POST /templates/{template}/translate.',
+                },
+                {
+                    name: 'translateFields',
+                    body: 'On your server, runs the fields through any AiModelAdapter, checks every placeholder and repairs a failed field once.',
+                },
+                {
+                    name: 'runTranslationConformance',
+                    body: 'Checks any provider, yours included, before you ship.',
+                },
+                {
+                    name: 'createMockTranslationProvider',
+                    body: 'Recorded answers for demos and tests; the editor at the top of this page uses it.',
+                },
+            ],
             copyLabel: 'Copy',
             copiedLabel: 'Copied',
-            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
-            backend: [
-                'On your server, translateFields from @templatical/ai-kit/server runs the fields through any AiModelAdapter; or implement translate against DeepL or a translation management system.',
-                'Merge tags, logic tags and your do-not-translate terms travel as numbered placeholders, and a field is applied only when every placeholder comes back.',
-                'renderToMjml(content, { locale }) renders one language, and template-tools validate template.json --locale de reports missing and out-of-date text.',
-                'template-tools strings export and strings import exchange a language as JSON for a translation management system; the Beefree, Unlayer and Topol importers keep the source’s languages.',
-                'Subject lines aren’t part of the template: translate and store them in your own data. Keep every @templatical/* package on the same version.',
-            ],
             ctaPrimary: 'Read the localization guide',
             ctaSecondary: 'Languages on the features page',
         },
@@ -399,7 +421,9 @@ export default {
             composedRestore: 'No atomic restore',
             noRealtime: 'Without realtime',
             modelAdapter: 'Model adapter',
-            yourServer: 'Your server',
+            anyService: 'Any service',
+            aiKit: 'AI kit',
+            aiKitServer: 'AI kit, server',
         },
         backend: {
             eyebrow: 'Connect your backend',
@@ -749,16 +773,16 @@ export default {
             eyebrow: 'Translation',
             title: 'Translation through your own provider',
             description:
-                'Pass a TranslationProvider and the language bar gains Translate. It sends a version’s missing and out-of-date fields to your backend, which can call an LLM, DeepL or a translation management system. Merge tags, logic tags and do-not-translate terms travel as numbered placeholders, and a returned field is applied only when every placeholder comes back.',
+                'Pass a TranslationProvider, any object with a translate method, and the language bar gains Translate. It sends a version’s missing and out-of-date fields to your backend, which can call an LLM, DeepL or a translation management system. Merge tags, logic tags and do-not-translate terms travel as numbered placeholders, and a returned field is applied only when every placeholder comes back.',
             outcome: 'Translation on the service, keys and terms you already have.',
             features: [
-                'One method: translate(request, signal) returns the fields it translated, and an omitted field keeps its previous value',
+                'One method and no extra package: translate(request, signal) returns the fields it translated, and an omitted field keeps its previous value',
                 'Translate sends only the gaps, so current translations and manual edits survive; Translate everything again replaces them after a confirmation',
-                'From @templatical/ai-kit (MIT): createHttpTranslationProvider in the browser; readTranslationRequest and translateFields on the server, which run any AiModelAdapter and repair a failed field once',
+                'Optional, from @templatical/ai-kit (MIT): createHttpTranslationProvider in the browser; readTranslationRequest and translateFields on the server, which run any AiModelAdapter and repair a failed field once',
                 'At most 50 fields and 20,000 characters per call; on content_too_large the editor halves the batch and retries',
                 'localization.doNotTranslate protects up to 500 terms, such as brand names, with the same exact check',
                 'HTML blocks, empty defaults and hidden blocks aren’t sent; translate HTML blocks by hand',
-                'runTranslationConformance checks your provider, and createMockTranslationProvider answers from recordings for demos and tests',
+                'The kit also has runTranslationConformance, which checks any provider, and createMockTranslationProvider, which answers from recordings for demos and tests',
                 'Subject lines aren’t part of the template: translate them with the same provider and store them in your own data',
                 'The fields and the language pair go to the service your backend calls',
             ],

@@ -90,8 +90,8 @@ describe.each([
         expect(answer).toMatch(locale === 'en' ? /Subject lines stay/ : /Betreffzeilen bleiben/);
     });
 
-    it('states the duties the integrator owns where the backend is described', () => {
-        const backend = (messages.home.languages.backend as string[]).join(' ');
+    it('states the duties the integrator owns where Translate is described', () => {
+        const backend = (messages.home.languages.translate as string[]).join(' ');
         expect(backend).toMatch(locale === 'en' ? /Subject lines/ : /Betreffzeilen/);
         expect(backend).toContain('@templatical/*');
         expect(JSON.stringify(messages.features.translation.features)).toMatch(
@@ -162,11 +162,31 @@ describe('the /features sections', () => {
         }
     });
 
-    it('shows the client and the server half of the translation provider', () => {
-        expect(FEATURES).toContain("translation: createHttpTranslationProvider({ url: '/api' })");
-        expect(FEATURES).toContain("} from '@templatical/ai-kit/server'");
-        expect(FEATURES).toContain('await translateFields({');
-        expect(FEATURES).toContain("label: t('features.variants.yourServer')");
+    // Translate needs only an object with a translate method, so the first tab uses
+    // no package at all and the AI kit's two halves follow it as options.
+    it('leads with a provider that needs no package, then the AI kit', () => {
+        const section = FEATURES.slice(FEATURES.indexOf("slug: 'translation',"));
+        const labels = [...section.matchAll(/label: t\('features\.variants\.(\w+)'\)/g)]
+            .slice(0, 3)
+            .map((m) => m[1]);
+        expect(labels).toEqual(['anyService', 'aiKit', 'aiKitServer']);
+
+        const firstTab = section.slice(0, section.indexOf("label: t('features.variants.aiKit')"));
+        expect(firstTab).toContain('async translate(request, signal)');
+        expect(firstTab).not.toContain('@templatical/ai-kit');
+
+        expect(section).toContain("translation: createHttpTranslationProvider({ url: '/api' })");
+        expect(section).toContain("} from '@templatical/ai-kit/server'");
+        expect(section).toContain('await translateFields({');
+    });
+
+    it('calls the AI kit optional in both locales', () => {
+        expect(en.features.translation.features.join(' ')).toMatch(
+            /Optional, from @templatical\/ai-kit \(MIT\)/,
+        );
+        expect(de.features.translation.features.join(' ')).toMatch(
+            /Optional, aus @templatical\/ai-kit \(MIT\)/,
+        );
     });
 });
 
@@ -194,8 +214,44 @@ describe('the homepage section', () => {
     it('links the localization guide and the /features section', () => {
         expect(SECTION).toContain("localizedUrl('localizedTemplatesDocs', locale)");
         expect(SECTION).toContain("featureSectionId('languages')");
-        expect(SECTION).toContain('createHttpTranslationProvider');
-        expect(SECTION).toContain('localization: {');
+    });
+
+    // The section must not read as if Translate needs the AI kit: what works with
+    // localization alone comes first, then a provider with no package, then the
+    // kit as an optional strip.
+    it('shows Translate working without the AI kit', () => {
+        const snippet = SECTION.slice(
+            SECTION.indexOf('const providerCode'),
+            SECTION.indexOf('`;', SECTION.indexOf('const providerCode')),
+        );
+        expect(snippet).toContain('localization: {');
+        expect(snippet).toContain('async translate(request, signal)');
+        expect(snippet).not.toContain('@templatical/ai-kit');
+
+        const order = [
+            "t('home.languages.builtInTitle')",
+            "t('home.languages.translateTitle')",
+            "t('home.languages.kitTitle')",
+        ].map((key) => SECTION.indexOf(key));
+        expect(order.every((at) => at > -1)).toBe(true);
+        expect([...order].sort((a, b) => a - b)).toEqual(order);
+
+        expect(en.home.languages.subheadline).toMatch(/The AI kit is optional\.$/);
+        expect(de.home.languages.subheadline).toMatch(/Das AI-Kit ist optional\.$/);
+        expect(en.home.languages.kitIntro).toMatch(/Translate works without it\.$/);
+        expect(de.home.languages.kitIntro).toMatch(/funktioniert auch ohne\.$/);
+    });
+
+    it('names the AI kit’s pieces in the optional strip', () => {
+        for (const messages of [en, de])
+            expect(
+                (messages.home.languages.kit as Array<{ name: string }>).map(({ name }) => name),
+            ).toEqual([
+                'createHttpTranslationProvider',
+                'translateFields',
+                'runTranslationConformance',
+                'createMockTranslationProvider',
+            ]);
     });
 });
 

@@ -898,21 +898,44 @@ export const model = createAnthropicAdapter({
         features: tm('features.translation.features') as string[],
         variants: [
             {
-                label: t('features.variants.yourEndpoint'),
+                label: t('features.variants.anyService'),
+                code: `const editor = await init({
+  container: '#editor',
+  localization: { locales: ['en', 'de'], doNotTranslate: ['Acme'] },
+
+  // Any object with translate(request, signal); no package needed. Your
+  // backend calls DeepL, a translation management system or an LLM with
+  // your keys. The editor masks merge tags and protected terms before the
+  // call and checks every placeholder in the answer.
+  translation: {
+    async translate(request, signal) {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(request),
+        signal,
+      })
+      if (!res.ok) throw new Error(res.statusText)
+      return res.json() // { fields: [{ id, text }] }
+    },
+  },
+})`,
+            },
+            {
+                label: t('features.variants.aiKit'),
                 code: `import { createHttpTranslationProvider } from '@templatical/ai-kit/client'
 
 const editor = await init({
   container: '#editor',
   localization: { locales: ['en', 'de'], doNotTranslate: ['Acme'] },
 
-  // Sends POST /api/templates/{template}/translate to your backend,
-  // which calls the translation service with your keys. Nothing
-  // passes through Templatical.
+  // Optional: the AI kit's provider for its documented route,
+  // POST /api/templates/{template}/translate on your backend.
   translation: createHttpTranslationProvider({ url: '/api' }),
 })`,
             },
             {
-                label: t('features.variants.yourServer'),
+                label: t('features.variants.aiKitServer'),
                 code: `import {
   aiErrorResponse,
   aiJsonResponse,

@@ -297,40 +297,62 @@ const de: MessageSchema = {
             eyebrow: 'Neu · Sprachversionen',
             headline: 'Mehrsprachige Vorlagen, übersetzt über Ihren eigenen Provider',
             subheadline:
-                'Geben Sie init() eine Liste von Sprachen, und Autoren legen Sprachversionen einer E-Mail an: ein gemeinsamer Blockbaum mit Text, Eigenschaftsüberschreibungen und ausgeblendeten Blöcken pro Sprache. Übergeben Sie einen TranslationProvider, und „Übersetzen“ füllt eine Version über den Dienst Ihrer Wahl: ein LLM, DeepL oder ein Translation-Management-System.',
-            authorsTitle: 'Für Ihre Autoren',
-            // Read with tm(), which returns raw messages.
+                'Geben Sie init() eine Liste von Sprachen, und Autoren legen Sprachversionen einer E-Mail an: ein gemeinsamer Blockbaum mit Text, Eigenschaftsüberschreibungen und ausgeblendeten Blöcken pro Sprache, ganz ohne Provider. Mit einem Übersetzungs-Provider, einem beliebigen Objekt mit einer translate-Methode, füllt „Übersetzen“ eine Version über DeepL, ein Translation-Management-System oder ein LLM. Das AI-Kit ist optional.',
+            builtInTitle: 'Eingebaut',
+            builtInNote:
+                'Nur mit localization: kein Provider, kein Backend, kein zusätzliches Paket. Die Importer für Beefree, Unlayer und Topol übernehmen die Sprachen der Quelle.',
+            // Read with tm(), which returns raw messages, so braces are safe here.
             features: [
                 {
                     name: 'Sprachen',
                     body: 'Eine Sprache hinzufügen, als Standardsprache festlegen oder entfernen. Alle Versionen teilen den Blockbaum; Text, Links, Bilder und Gestaltung können abweichen, und ein Block lässt sich in einer Sprache ausblenden.',
                 },
                 {
-                    name: 'Sprachleiste',
-                    body: 'Zeigt die bearbeitete Version mit der Zahl fehlender und veralteter Felder und übersetzt genau diese, als ein Rückgängig-Schritt.',
+                    name: 'Sprachleiste und Badges',
+                    body: 'Die Leiste zeigt die bearbeitete Version mit der Zahl fehlender und veralteter Felder. Ein Badge an jedem Block zeigt „Nicht übersetzt“, „Veraltet“ oder „Merge-Tags unterscheiden sich“, daneben „Beibehalten“ und das Zurücksetzen auf die Standardsprache.',
                 },
                 {
-                    name: 'Status-Badges',
-                    body: 'Ein Badge an jedem Block zeigt „Nicht übersetzt“, „Veraltet“ oder „Merge-Tags unterscheiden sich“, daneben „Übersetzen“, „Beibehalten“ und das Zurücksetzen auf die Standardsprache.',
+                    name: 'Rendering und Prüfungen',
+                    body: 'renderToMjml(content, { locale }) rendert eine Sprache, template-tools validate --locale meldet fehlenden und veralteten Text, und strings export und strings import tauschen eine Sprache als JSON mit einem Translation-Management-System aus.',
                 },
                 {
                     name: 'Kommentare und KI',
-                    body: 'Jeder Kommentar speichert die Sprache, in der er geschrieben wurde. Der KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ bearbeiten die angezeigte Sprache.',
+                    body: 'Jeder Kommentar speichert die Sprache, in der er geschrieben wurde. Mit einem KI-Provider bearbeiten der KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ die angezeigte Sprache.',
                 },
+            ],
+            translateTitle: 'Übersetzen mit jedem Dienst',
+            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
+            translate: [
+                '„Übersetzen“ schickt die fehlenden und veralteten Felder einer Version an Ihren Provider; Ihr Backend ruft DeepL, ein Translation-Management-System oder ein LLM auf und gibt die übersetzten Felder zurück.',
+                'Merge-Tags, Logik-Tags und Ihre geschützten Begriffe reisen als nummerierte Platzhalter, und der Editor übernimmt ein Feld nur, wenn jeder Platzhalter zurückkommt.',
+                'Betreffzeilen sind nicht Teil der Vorlage: Übersetzen und speichern Sie sie in Ihren eigenen Daten. Halten Sie alle @templatical/*-Pakete auf derselben Version.',
             ],
             tryNote:
                 'Probieren Sie es im Editor oben auf der Seite aus: Öffnen Sie das Sprachmenü, wählen Sie Deutsch und starten Sie „Übersetzen“ in der Sprachleiste. Die Übersetzungen sind aufgezeichnet, auf dieser Seite läuft also kein Übersetzungsdienst.',
-            backendTitle: 'Für Ihr Backend',
+            kitTitle: 'Optional: das AI-Kit (MIT)',
+            kitIntro:
+                'Fertige Bausteine für dieselbe Schnittstelle, wenn Ihr Übersetzer ein LLM ist oder Sie eine getestete HTTP-Route wollen. „Übersetzen“ funktioniert auch ohne.',
+            // Read with tm(), which returns raw messages, so braces are safe here.
+            kit: [
+                {
+                    name: 'createHttpTranslationProvider',
+                    body: 'Die Browser-Hälfte einer dokumentierten HTTP-Route, POST /templates/{template}/translate.',
+                },
+                {
+                    name: 'translateFields',
+                    body: 'Schickt die Felder auf Ihrem Server durch einen beliebigen AiModelAdapter, prüft jeden Platzhalter und repariert ein fehlgeschlagenes Feld einmal.',
+                },
+                {
+                    name: 'runTranslationConformance',
+                    body: 'Prüft jeden Provider, auch Ihren eigenen, vor dem Livegang.',
+                },
+                {
+                    name: 'createMockTranslationProvider',
+                    body: 'Aufgezeichnete Antworten für Demos und Tests; der Editor oben auf dieser Seite nutzt ihn.',
+                },
+            ],
             copyLabel: 'Kopieren',
             copiedLabel: 'Kopiert',
-            // Read with tm(), which returns raw messages, so braces and "@" are safe here.
-            backend: [
-                'Auf Ihrem Server schickt translateFields aus @templatical/ai-kit/server die Felder durch einen beliebigen AiModelAdapter; oder Sie implementieren translate für DeepL oder ein Translation-Management-System.',
-                'Merge-Tags, Logik-Tags und Ihre geschützten Begriffe reisen als nummerierte Platzhalter, und ein Feld wird nur übernommen, wenn jeder Platzhalter zurückkommt.',
-                'renderToMjml(content, { locale }) rendert eine Sprache, und template-tools validate template.json --locale de meldet fehlenden und veralteten Text.',
-                'template-tools strings export und strings import tauschen eine Sprache als JSON mit einem Translation-Management-System aus; die Importer für Beefree, Unlayer und Topol übernehmen die Sprachen der Quelle.',
-                'Betreffzeilen sind nicht Teil der Vorlage: Übersetzen und speichern Sie sie in Ihren eigenen Daten. Halten Sie alle @templatical/*-Pakete auf derselben Version.',
-            ],
             ctaPrimary: 'Zum Leitfaden für lokalisierte Vorlagen',
             ctaSecondary: 'Sprachen auf der Features-Seite',
         },
@@ -402,7 +424,9 @@ const de: MessageSchema = {
             composedRestore: 'Kein atomares Restore',
             noRealtime: 'Ohne Echtzeit',
             modelAdapter: 'Modell-Adapter',
-            yourServer: 'Ihr Server',
+            anyService: 'Beliebiger Dienst',
+            aiKit: 'AI-Kit',
+            aiKitServer: 'AI-Kit, Server',
         },
         backend: {
             eyebrow: 'Ihr Backend anbinden',
@@ -761,17 +785,17 @@ const de: MessageSchema = {
             eyebrow: 'Übersetzung',
             title: 'Übersetzung über Ihren eigenen Provider',
             description:
-                'Übergeben Sie einen TranslationProvider, und die Sprachleiste erhält „Übersetzen“. Es schickt die fehlenden und veralteten Felder einer Version an Ihr Backend, das ein LLM, DeepL oder ein Translation-Management-System aufrufen kann. Merge-Tags, Logik-Tags und geschützte Begriffe reisen als nummerierte Platzhalter, und ein zurückgegebenes Feld wird nur übernommen, wenn jeder Platzhalter zurückkommt.',
+                'Übergeben Sie einen TranslationProvider, ein beliebiges Objekt mit einer translate-Methode, und die Sprachleiste erhält „Übersetzen“. Es schickt die fehlenden und veralteten Felder einer Version an Ihr Backend, das ein LLM, DeepL oder ein Translation-Management-System aufrufen kann. Merge-Tags, Logik-Tags und geschützte Begriffe reisen als nummerierte Platzhalter, und ein zurückgegebenes Feld wird nur übernommen, wenn jeder Platzhalter zurückkommt.',
             outcome:
                 'Übersetzung mit dem Dienst, den Schlüsseln und den Bedingungen, die Sie schon haben.',
             features: [
-                'Eine Methode: translate(request, signal) gibt die übersetzten Felder zurück, und ein ausgelassenes Feld behält seinen bisherigen Wert',
+                'Eine Methode und kein zusätzliches Paket: translate(request, signal) gibt die übersetzten Felder zurück, und ein ausgelassenes Feld behält seinen bisherigen Wert',
                 '„Übersetzen“ schickt nur die Lücken, aktuelle Übersetzungen und manuelle Änderungen bleiben also erhalten; „Alles erneut übersetzen…“ ersetzt sie nach einer Bestätigung',
-                'Aus @templatical/ai-kit (MIT): createHttpTranslationProvider im Browser; readTranslationRequest und translateFields auf dem Server, die einen beliebigen AiModelAdapter nutzen und ein fehlgeschlagenes Feld einmal reparieren',
+                'Optional, aus @templatical/ai-kit (MIT): createHttpTranslationProvider im Browser; readTranslationRequest und translateFields auf dem Server, die einen beliebigen AiModelAdapter nutzen und ein fehlgeschlagenes Feld einmal reparieren',
                 'Höchstens 50 Felder und 20.000 Zeichen pro Aufruf; bei content_too_large halbiert der Editor den Stapel und versucht es erneut',
                 'localization.doNotTranslate schützt bis zu 500 Begriffe, etwa Markennamen, mit derselben exakten Prüfung',
                 'HTML-Blöcke, leere Standardwerte und ausgeblendete Blöcke werden nicht gesendet; HTML-Blöcke übersetzen Sie von Hand',
-                'runTranslationConformance prüft Ihren Provider, und createMockTranslationProvider antwortet für Demos und Tests aus Aufzeichnungen',
+                'Das Kit enthält außerdem runTranslationConformance, das jeden Provider prüft, und createMockTranslationProvider, das für Demos und Tests aus Aufzeichnungen antwortet',
                 'Betreffzeilen sind nicht Teil der Vorlage: Übersetzen Sie sie mit demselben Provider und speichern Sie sie in Ihren eigenen Daten',
                 'Die Felder und das Sprachpaar gehen an den Dienst, den Ihr Backend aufruft',
             ],

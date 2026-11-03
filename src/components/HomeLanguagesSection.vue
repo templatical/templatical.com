@@ -20,32 +20,44 @@ const { t, tm, locale } = useI18n();
 const installCommand = 'npm install @templatical/ai-kit';
 const { copy, copied, isSupported } = useClipboard({ source: installCommand });
 
-// Wrapped so its longest line fits the backend column on desktop without scrolling.
-const clientCode = `import {
-  createHttpTranslationProvider,
-} from '@templatical/ai-kit/client'
-
-const editor = await init({
+// No package beyond the editor: Translate needs only an object with a translate
+// method, which is the point this snippet makes. The AI kit is the optional strip
+// below. Wrapped so its longest line fits the column on desktop without scrolling.
+const providerCode = `const editor = await init({
   container: '#editor',
   localization: {
     locales: ['en', 'de', 'fr'],
     doNotTranslate: ['Acme'],
   },
-  translation: createHttpTranslationProvider({
-    url: '/api',
-  }),
+  // Any object with translate(). Your backend
+  // calls DeepL, a TMS or an LLM.
+  translation: {
+    async translate(request, signal) {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(request),
+        signal,
+      })
+      if (!res.ok) throw new Error(res.statusText)
+      return res.json() // { fields: [{ id, text }] }
+    },
+  },
 })`;
 
 // In the order an author meets them. Icons are decoration; the names and lines
 // carry the facts.
-const icons = [Languages, ListChecks, BadgeAlert, MessagesSquare];
+const icons = [Languages, BadgeAlert, ListChecks, MessagesSquare];
 const features = computed(() =>
     (tm('home.languages.features') as Array<{ name: string; body: string }>).map((feature, i) => ({
         ...feature,
         icon: icons[i],
     })),
 );
-const backend = computed(() => tm('home.languages.backend') as string[]);
+const translateLines = computed(() => tm('home.languages.translate') as string[]);
+const kit = computed(() => tm('home.languages.kit') as Array<{ name: string; body: string }>);
 
 const featuresAnchor = `/features#${featureSectionId('languages')}`;
 </script>
@@ -66,95 +78,146 @@ const featuresAnchor = `/features#${featureSectionId('languages')}`;
                         </SiteText>
                     </div>
 
-                    <div class="grid w-full grid-cols-1 gap-6 lg:grid-cols-[2fr_3fr]">
-                        <div
-                            class="flex flex-col gap-6 rounded-2xl bg-neutral-50 p-6 ring-1 ring-neutral-950/5 sm:p-8 dark:bg-neutral-900 dark:ring-white/10"
-                        >
-                            <h3
-                                class="font-display text-xl tracking-tight text-neutral-950 sm:text-2xl dark:text-white"
-                            >
-                                {{ t('home.languages.authorsTitle') }}
-                            </h3>
-                            <ul class="flex flex-col gap-5">
-                                <li
-                                    v-for="feature in features"
-                                    :key="feature.name"
-                                    class="flex gap-3"
-                                >
-                                    <component
-                                        :is="feature.icon"
-                                        class="mt-1 size-5 shrink-0 text-primary-text"
-                                        aria-hidden="true"
-                                    />
-                                    <div class="flex flex-col gap-1">
-                                        <span
-                                            class="text-base/7 font-medium text-neutral-950 dark:text-white"
-                                            >{{ feature.name }}</span
-                                        >
-                                        <span
-                                            class="text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400"
-                                            >{{ feature.body }}</span
-                                        >
-                                    </div>
-                                </li>
-                            </ul>
-                            <p
-                                class="mt-auto border-t border-neutral-200 pt-5 text-sm/6 text-neutral-500 dark:border-neutral-800 dark:text-neutral-400"
-                            >
-                                {{ t('home.languages.tryNote') }}
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex min-w-0 flex-col gap-6 rounded-2xl bg-neutral-50 p-6 ring-1 ring-neutral-950/5 sm:p-8 dark:bg-neutral-900 dark:ring-white/10"
-                        >
-                            <h3
-                                class="font-display text-xl tracking-tight text-neutral-950 sm:text-2xl dark:text-white"
-                            >
-                                {{ t('home.languages.backendTitle') }}
-                            </h3>
-
+                    <div class="flex w-full flex-col gap-6">
+                        <div class="grid w-full grid-cols-1 gap-6 lg:grid-cols-[2fr_3fr]">
+                            <!-- Built in: everything that works with localization alone. -->
                             <div
-                                class="overflow-hidden rounded-xl bg-white ring-1 ring-neutral-950/10 dark:bg-neutral-950 dark:ring-white/10"
+                                class="flex flex-col gap-6 rounded-2xl bg-neutral-50 p-6 ring-1 ring-neutral-950/5 sm:p-8 dark:bg-neutral-900 dark:ring-white/10"
                             >
-                                <div
-                                    class="flex items-center justify-between gap-3 px-4 py-3 font-mono text-sm/6"
+                                <h3
+                                    class="font-display text-xl tracking-tight text-neutral-950 sm:text-2xl dark:text-white"
                                 >
-                                    <span class="truncate text-neutral-700 dark:text-neutral-300">
-                                        <span
-                                            class="mr-2 text-neutral-400 select-none dark:text-neutral-600"
-                                            >$</span
-                                        >
-                                        {{ installCommand }}
-                                    </span>
-                                    <button
-                                        v-if="isSupported"
-                                        type="button"
-                                        class="shrink-0 rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700 transition hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
-                                        @click="copy(installCommand)"
+                                    {{ t('home.languages.builtInTitle') }}
+                                </h3>
+                                <ul class="flex flex-col gap-5">
+                                    <li
+                                        v-for="feature in features"
+                                        :key="feature.name"
+                                        class="flex gap-3"
                                     >
-                                        {{
-                                            copied
-                                                ? t('home.languages.copiedLabel')
-                                                : t('home.languages.copyLabel')
-                                        }}
-                                    </button>
-                                </div>
+                                        <component
+                                            :is="feature.icon"
+                                            class="mt-1 size-5 shrink-0 text-primary-text"
+                                            aria-hidden="true"
+                                        />
+                                        <div class="flex flex-col gap-1">
+                                            <span
+                                                class="text-base/7 font-medium text-neutral-950 dark:text-white"
+                                                >{{ feature.name }}</span
+                                            >
+                                            <span
+                                                class="text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400"
+                                                >{{ feature.body }}</span
+                                            >
+                                        </div>
+                                    </li>
+                                </ul>
+                                <p
+                                    class="mt-auto border-t border-neutral-200 pt-5 text-sm/6 text-neutral-500 dark:border-neutral-800 dark:text-neutral-400"
+                                >
+                                    {{ t('home.languages.builtInNote') }}
+                                </p>
                             </div>
 
-                            <CodeBlock
-                                :code="clientCode"
-                                lang="javascript"
-                                class="w-full text-left"
-                            />
-
-                            <ul class="flex flex-col gap-3">
-                                <li
-                                    v-for="line in backend"
-                                    :key="line"
-                                    class="text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400"
+                            <!-- Translate: one object with a translate method, no package. -->
+                            <div
+                                class="flex min-w-0 flex-col gap-6 rounded-2xl bg-neutral-50 p-6 ring-1 ring-neutral-950/5 sm:p-8 dark:bg-neutral-900 dark:ring-white/10"
+                            >
+                                <h3
+                                    class="font-display text-xl tracking-tight text-neutral-950 sm:text-2xl dark:text-white"
                                 >
-                                    {{ line }}
+                                    {{ t('home.languages.translateTitle') }}
+                                </h3>
+
+                                <CodeBlock
+                                    :code="providerCode"
+                                    lang="javascript"
+                                    class="w-full text-left"
+                                />
+
+                                <ul class="flex flex-col gap-3">
+                                    <li
+                                        v-for="line in translateLines"
+                                        :key="line"
+                                        class="text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400"
+                                    >
+                                        {{ line }}
+                                    </li>
+                                </ul>
+                                <p
+                                    class="mt-auto border-t border-neutral-200 pt-5 text-sm/6 text-neutral-500 dark:border-neutral-800 dark:text-neutral-400"
+                                >
+                                    {{ t('home.languages.tryNote') }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Optional, so it reads as an addition: an outline on the
+                             page ground rather than a filled card of its own. -->
+                        <div
+                            class="flex flex-col gap-6 rounded-2xl p-6 ring-1 ring-neutral-950/10 sm:p-8 dark:ring-white/10"
+                        >
+                            <div
+                                class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-8"
+                            >
+                                <div class="flex max-w-xl flex-col gap-2">
+                                    <h3
+                                        class="font-display text-lg tracking-tight text-neutral-950 sm:text-xl dark:text-white"
+                                    >
+                                        {{ t('home.languages.kitTitle') }}
+                                    </h3>
+                                    <p
+                                        class="text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400"
+                                    >
+                                        {{ t('home.languages.kitIntro') }}
+                                    </p>
+                                </div>
+                                <div
+                                    class="overflow-hidden rounded-xl bg-neutral-50 ring-1 ring-neutral-950/10 lg:shrink-0 dark:bg-neutral-900 dark:ring-white/10"
+                                >
+                                    <div
+                                        class="flex items-center justify-between gap-3 px-4 py-3 font-mono text-sm/6"
+                                    >
+                                        <!-- Wraps rather than truncates: on a phone the
+                                             package name is the part an ellipsis would hide. -->
+                                        <span
+                                            class="min-w-0 break-all text-neutral-700 dark:text-neutral-300"
+                                        >
+                                            <span
+                                                class="mr-2 text-neutral-400 select-none dark:text-neutral-600"
+                                                >$</span
+                                            >
+                                            {{ installCommand }}
+                                        </span>
+                                        <button
+                                            v-if="isSupported"
+                                            type="button"
+                                            class="shrink-0 rounded-md bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 ring-1 ring-neutral-950/10 transition hover:bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-300 dark:ring-white/10 dark:hover:bg-neutral-700"
+                                            @click="copy(installCommand)"
+                                        >
+                                            {{
+                                                copied
+                                                    ? t('home.languages.copiedLabel')
+                                                    : t('home.languages.copyLabel')
+                                            }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+                                <li
+                                    v-for="item in kit"
+                                    :key="item.name"
+                                    class="flex flex-col gap-1"
+                                >
+                                    <code
+                                        class="font-mono text-sm/6 break-all text-neutral-950 dark:text-white"
+                                        >{{ item.name }}</code
+                                    >
+                                    <span
+                                        class="text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400"
+                                        >{{ item.body }}</span
+                                    >
                                 </li>
                             </ul>
                         </div>
