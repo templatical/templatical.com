@@ -61,11 +61,11 @@ importers:
         specifier: 6.0.8
         version: 6.0.8(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue@3.5.42(typescript@6.0.3))
       prettier:
-        specifier: ^3.9.9
-        version: 3.9.9
+        specifier: ^3.9.10
+        version: 3.9.10
       prettier-plugin-tailwindcss:
         specifier: ^0.8.1
-        version: 0.8.1(prettier@3.9.9)
+        version: 0.8.1(prettier@3.9.10)
       tailwindcss:
         specifier: 4.3.3
         version: 4.3.3
@@ -77,7 +77,7 @@ importers:
         version: 8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)
       vite-ssg:
         specifier: 28.3.0
-        version: 28.3.0(prettier@3.9.9)(unhead@2.1.17)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue-router@5.3.1(@vue/compiler-sfc@3.5.43)(rolldown@1.2.14)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue@3.5.42(typescript@6.0.3)))(vue@3.5.42(typescript@6.0.3))
+        version: 28.3.0(prettier@3.9.10)(unhead@2.1.17)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue-router@5.3.1(@vue/compiler-sfc@3.5.43)(rolldown@1.2.14)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue@3.5.42(typescript@6.0.3)))(vue@3.5.42(typescript@6.0.3))
       vitest:
         specifier: ^5.0.3
         version: 5.0.3(@types/node@26.4.1)(jsdom@28.1.0)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
@@ -1189,8 +1189,8 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.9.9:
-    resolution: {integrity: sha512-Z/CJHIkdujO/OtN7nXUii0Rf3VT5SRuhjBA82Xvu2XhBUgX3nhP67T0LHceBdQLex7OOFGTox+Q5Yg8Jk2Qivg==}
+  prettier@3.9.10:
+    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -2519,11 +2519,11 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  prettier-plugin-tailwindcss@0.8.1(prettier@3.9.9):
+  prettier-plugin-tailwindcss@0.8.1(prettier@3.9.10):
     dependencies:
-      prettier: 3.9.9
+      prettier: 3.9.10
 
-  prettier@3.9.9: {}
+  prettier@3.9.10: {}
 
   property-information@7.2.0: {}
 
@@ -2707,7 +2707,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-ssg@28.3.0(prettier@3.9.9)(unhead@2.1.17)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue-router@5.3.1(@vue/compiler-sfc@3.5.43)(rolldown@1.2.14)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue@3.5.42(typescript@6.0.3)))(vue@3.5.42(typescript@6.0.3)):
+  vite-ssg@28.3.0(prettier@3.9.10)(unhead@2.1.17)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue-router@5.3.1(@vue/compiler-sfc@3.5.43)(rolldown@1.2.14)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue@3.5.42(typescript@6.0.3)))(vue@3.5.42(typescript@6.0.3)):
     dependencies:
       '@unhead/dom': 2.1.17(unhead@2.1.17)
       '@unhead/vue': 2.1.17(vue@3.5.42(typescript@6.0.3))
@@ -2719,7 +2719,7 @@ snapshots:
       vite: 8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)
       vue: 3.5.42(typescript@6.0.3)
     optionalDependencies:
-      prettier: 3.9.9
+      prettier: 3.9.10
       vue-router: 5.3.1(@vue/compiler-sfc@3.5.43)(rolldown@1.2.14)(vite@8.3.3(@types/node@26.4.1)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))(vue@3.5.42(typescript@6.0.3))
     transitivePeerDependencies:
       - '@noble/hashes'
