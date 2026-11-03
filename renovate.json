@@ -1,0 +1,102 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":dependencyDashboard",
+        ":semanticCommits",
+        ":prHourlyLimit2",
+        "group:monorepos",
+        "group:recommended"
+    ],
+    "labels": ["dependencies"],
+    "rangeStrategy": "bump",
+    "minimumReleaseAge": "3 days",
+    "rebaseWhen": "behind-base-branch",
+    "timezone": "Europe/Berlin",
+    "prConcurrentLimit": 5,
+    "postUpdateOptions": ["pnpmDedupe"],
+    "lockFileMaintenance": {
+        "enabled": true,
+        "schedule": ["before 6am on monday"]
+    },
+    "vulnerabilityAlerts": {
+        "enabled": true,
+        "labels": ["security"],
+        "schedule": ["at any time"]
+    },
+    "ignorePaths": ["**/node_modules/**", "**/dist/**"],
+    "packageRules": [
+        {
+            "description": "Major bumps land in their own PR with a breaking label",
+            "matchUpdateTypes": ["major"],
+            "groupName": null,
+            "addLabels": ["breaking"],
+            "automerge": false
+        },
+        {
+            "description": "Group Vue ecosystem (non-major)",
+            "matchPackageNames": ["vue", "vue-tsc", "vue-i18n", "vue-router", "@vue/**", "@vitejs/**"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "groupName": "vue ecosystem"
+        },
+        {
+            "description": "Group VueUse (non-major)",
+            "matchPackageNames": ["@vueuse/**"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "groupName": "vueuse"
+        },
+        {
+            "description": "Group Shiki (non-major). @shikijs/langs and @shikijs/themes are direct deps on purpose and must move with shiki.",
+            "matchPackageNames": ["shiki", "@shikijs/**"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "groupName": "shiki"
+        },
+        {
+            "description": "Group Tailwind (non-major)",
+            "matchPackageNames": ["tailwindcss", "@tailwindcss/**", "prettier-plugin-tailwindcss"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "groupName": "tailwind"
+        },
+        {
+            "description": "Group Vite (non-major)",
+            "matchPackageNames": ["vite"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "groupName": "build tooling"
+        },
+        {
+            "description": "Group Vitest (non-major)",
+            "matchPackageNames": ["vitest", "@vitest/**"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "groupName": "test tooling"
+        },
+        {
+            "description": "Group Prettier (non-major)",
+            "matchPackageNames": ["prettier"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "groupName": "format"
+        },
+        {
+            "description": "Auto-merge devDependency patch + minor updates",
+            "matchDepTypes": ["devDependencies"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "automerge": true
+        },
+        {
+            "description": "TypeScript 7 ships no public compiler API, so vue-tsc/Volar break; revisit when Vue tooling supports it.",
+            "matchPackageNames": ["typescript"],
+            "allowedVersions": "<7"
+        },
+        {
+            "description": "vite-ssg renders heads with its own @unhead/dom, so @unhead/vue must stay on the major vite-ssg uses; tests/seo/head.test.ts pins both versions and fails until it is updated in the same PR.",
+            "matchPackageNames": ["@unhead/vue", "vite-ssg"],
+            "groupName": "unhead + vite-ssg",
+            "automerge": false
+        },
+        {
+            "description": "Every @templatical/* package must stay on one version, and the homepage loads the latest editor from the CDN beside the bundled ai-kit.",
+            "matchPackageNames": ["@templatical/**"],
+            "groupName": "templatical sdk",
+            "automerge": false
+        }
+    ]
+}
