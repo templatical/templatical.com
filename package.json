@@ -13,7 +13,7 @@
     "format:check": "prettier --check src tests vite.config.ts vitest.config.ts tsconfig.json README.md .claude"
   },
   "dependencies": {
-    "@lucide/vue": "^1.52.0",
+    "@lucide/vue": "^1.66.0",
     "@shikijs/langs": "^4.5.0",
     "@shikijs/themes": "^4.5.0",
     "@templatical/ai-kit": "^0.53.0",
