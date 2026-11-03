@@ -47,6 +47,27 @@ describe('createCommentsProvider', () => {
         expect(stored?.updatedAt).toBeUndefined();
     });
 
+    // The editor sends the view's language with every comment and filters "This
+    // language" by what the provider returns; a store that drops it files every
+    // comment under the default language.
+    it('create() keeps the language the comment was written in', async () => {
+        const { create, provider } = setup();
+
+        const root = await create(TEMPLATE_ID, {
+            body: 'Zu lang',
+            blockId: 'hero-cta',
+            locale: 'de',
+        });
+        await create(TEMPLATE_ID, { body: 'Agreed', parentId: root.id, locale: 'en' });
+        const untagged = await create(TEMPLATE_ID, { body: 'No tag', blockId: 'hero-cta' });
+
+        expect(root.locale).toBe('de');
+        const threads = await provider.list(TEMPLATE_ID);
+        expect(threads[0]?.locale).toBe('de');
+        expect(threads[0]?.replies?.[0]?.locale).toBe('en');
+        expect(untagged.locale).toBeNull();
+    });
+
     it('create() with parentId nests under the root rather than adding a thread', async () => {
         const { create, provider } = setup();
         const root = await create(TEMPLATE_ID, { body: 'Root', blockId: 'hero-cta' });

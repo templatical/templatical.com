@@ -100,7 +100,8 @@ describe('feature anchors', () => {
 describe('the backend group', () => {
     // One section per provider key, each linking that key's docs page. The editing
     // providers sit together (templates, history, comments, collaboration, AI: the AI's
-    // edits travel as collaboration batches), and the output section closes the group.
+    // edits travel as collaboration batches), translation follows AI because the AI kit
+    // serves both, and the output section closes the group.
     const group = FEATURES.slice(
         FEATURES.indexOf('const backendSections'),
         FEATURES.indexOf('function withBgClass'),
@@ -116,11 +117,32 @@ describe('the backend group', () => {
             ['comments', '/backend/comments'],
             ['collaboration', '/backend/collaboration'],
             ['ai', '/backend/ai'],
+            ['translation', '/backend/translation'],
             ['saved-blocks', '/backend/saved-blocks'],
             ['test-email', '/backend/test-email'],
             ['media', '/backend/media'],
             ['mjml-output', '/backend/render'],
         ]);
+    });
+});
+
+describe('the editor group', () => {
+    // Language versions are an editor feature (init({ localization })), so they sit with
+    // the other ways one template varies its content, ahead of preview resolution; the
+    // translation provider that fills them is a backend section of its own.
+    const group = FEATURES.slice(
+        FEATURES.indexOf('const featureSections'),
+        FEATURES.indexOf('const backendSections'),
+    );
+    const slugs = [...group.matchAll(/^\s*slug: '([^']+)',$/gm)].map((m) => m[1]);
+
+    it('puts languages between logic tags and preview resolution', () => {
+        expect(slugs.slice(slugs.indexOf('logic-tags'), slugs.indexOf('logic-tags') + 3)).toEqual([
+            'logic-tags',
+            'languages',
+            'preview-resolution',
+        ]);
+        expect(group).toContain("docsPath: '/guide/localized-templates'");
     });
 });
 

@@ -6,6 +6,12 @@ import { ArrowUpRight, Info, TriangleAlert, X } from '@lucide/vue';
 import type { TemplateContent } from '@templatical/types';
 import { useDarkMode } from '@/composables/useDarkMode';
 import { createDemoBackend } from '@/lib/demo-backend';
+import {
+    HERO_CONTENT,
+    HERO_DO_NOT_TRANSLATE,
+    HERO_LOCALES,
+    HERO_TRANSLATIONS,
+} from '@/lib/demo-backend/hero-content';
 import { URLS, localizedUrl } from '@/lib/urls';
 import HeroProviderLegend from './HeroProviderLegend.vue';
 import HeroMjmlPanel from './HeroMjmlPanel.vue';
@@ -15,110 +21,11 @@ type MergeTag = { label: string; value: string };
 const EDITOR_ESM_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.js';
 const EDITOR_CSS_URL = 'https://unpkg.com/@templatical/editor/dist/cdn/editor.css';
 
-const noMargin = { top: 0, right: 0, bottom: 0, left: 0 } as const;
-const heroContent = {
-    settings: {
-        width: 600,
-        backgroundColor: '#ffffff',
-        textColor: '#475569',
-        linkColor: '#2c85de',
-        linkUnderline: true,
-        fontFamily: 'Helvetica, Arial, sans-serif',
-        preheaderText: 'Your workspace is ready — here is what comes next.',
-        // Required by `TemplateSettings` (BCP-47, drives the rendered
-        // `<html lang>`) and read unconditionally by `renderToMjml()`. Fixed
-        // to English rather than bound to the site's `locale` because the
-        // block copy below is hardcoded English regardless of UI language —
-        // tagging it `lang="de"` on the German site would mispronounce
-        // correct content for screen readers, not fix anything.
-        locale: 'en',
-    },
-    blocks: [
-        {
-            id: 'hero-brand',
-            type: 'title',
-            content: '<p>Acme</p>',
-            level: 1,
-            color: '#0f172a',
-            textAlign: 'center',
-            styles: {
-                padding: { top: 32, right: 32, bottom: 8, left: 32 },
-                margin: noMargin,
-                backgroundColor: '#ffffff',
-            },
-        },
-        {
-            id: 'hero-headline',
-            type: 'title',
-            content: '<p>Welcome, <span data-merge-tag="{{first_name}}">First Name</span></p>',
-            level: 2,
-            color: '#0f172a',
-            textAlign: 'center',
-            styles: {
-                padding: { top: 8, right: 40, bottom: 8, left: 40 },
-                margin: noMargin,
-                backgroundColor: '#ffffff',
-            },
-        },
-        {
-            id: 'hero-intro',
-            type: 'paragraph',
-            content:
-                '<p style="text-align: center">Your workspace is ready. Pick up where you left off, or jump in fresh — we set up a <a href="https://example.com/tour">quick tour</a> for you.</p>',
-            styles: {
-                padding: { top: 0, right: 40, bottom: 24, left: 40 },
-                margin: noMargin,
-                backgroundColor: '#ffffff',
-            },
-        },
-        {
-            id: 'hero-cta',
-            type: 'button',
-            text: 'Open your dashboard',
-            url: 'https://example.com/dashboard',
-            backgroundColor: '#0f172a',
-            textColor: '#ffffff',
-            borderRadius: 8,
-            fontSize: 15,
-            buttonPadding: { top: 14, right: 28, bottom: 14, left: 28 },
-            styles: {
-                padding: { top: 0, right: 20, bottom: 32, left: 20 },
-                margin: noMargin,
-                backgroundColor: '#ffffff',
-            },
-        },
-        {
-            id: 'hero-divider',
-            type: 'divider',
-            lineStyle: 'solid',
-            color: '#e5e7eb',
-            thickness: 1,
-            width: 'full',
-            styles: {
-                padding: { top: 0, right: 40, bottom: 0, left: 40 },
-                margin: noMargin,
-                backgroundColor: '#ffffff',
-            },
-        },
-        {
-            id: 'hero-footer',
-            type: 'paragraph',
-            content:
-                '<p style="text-align: center"><span style="font-size: 12px; color: #94a3b8">Acme Inc. · 1 Market St, San Francisco · <a href="{{unsubscribe_url}}">Unsubscribe</a></span></p>',
-            styles: {
-                padding: { top: 16, right: 24, bottom: 32, left: 24 },
-                margin: noMargin,
-                backgroundColor: '#ffffff',
-            },
-        },
-    ],
-};
-
 const { isDark } = useDarkMode();
 const { t, locale } = useI18n();
 const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-const demoBackend = createDemoBackend(heroContent as unknown as TemplateContent, {
+const demoBackend = createDemoBackend(HERO_CONTENT as unknown as TemplateContent, {
     visitorName: t('heroEditor.user.you'),
     reviewerName: t('heroEditor.seed.reviewerName'),
     threadBody: t('heroEditor.seed.threadBody'),
@@ -224,6 +131,9 @@ let cssLink: HTMLLinkElement | null = null;
 
 const LOAD_TIMEOUT_MS = 15000;
 
+/** How long the recorded Translate waits before answering. */
+const TRANSLATE_DELAY_MS = 900;
+
 async function mountEditor() {
     if (status.value !== 'idle') return;
     status.value = 'loading';
@@ -238,19 +148,23 @@ async function mountEditor() {
             document.head.appendChild(cssLink);
         }
 
-        // The AI is the kit's recorded mock, the one the SDK playground uses: it
-        // plays scripted turns through the public contract, with no model, keys
-        // or backend. Imported here rather than at the top so the kit stays out
-        // of the home page's initial bundle until the editor mounts.
-        const [mod, { AI_RECORDINGS, createMockAiProvider }, { AI_ERROR_MESSAGES }] =
-            await Promise.race([
-                Promise.all([
-                    import(/* @vite-ignore */ EDITOR_ESM_URL),
-                    import('@templatical/ai-kit/testing'),
-                    import('@templatical/ai-kit'),
-                ]),
-                timeout,
-            ]);
+        // The AI and Translate are the kit's recorded mocks, the ones the SDK
+        // playground uses: they play scripted answers through the public
+        // contracts, with no model, keys or backend. Imported here rather than
+        // at the top so the kit stays out of the home page's initial bundle
+        // until the editor mounts.
+        const [
+            mod,
+            { AI_RECORDINGS, createMockAiProvider, createMockTranslationProvider },
+            { AI_ERROR_MESSAGES },
+        ] = await Promise.race([
+            Promise.all([
+                import(/* @vite-ignore */ EDITOR_ESM_URL),
+                import('@templatical/ai-kit/testing'),
+                import('@templatical/ai-kit'),
+            ]),
+            timeout,
+        ]);
         aiErrorCodes = new Set(Object.keys(AI_ERROR_MESSAGES));
         if (!container.value) {
             status.value = 'idle';
@@ -267,13 +181,24 @@ async function mountEditor() {
                 uiTheme: isDark.value ? 'dark' : 'light',
                 locale: locale.value,
                 branding: false,
-                content: heroContent,
+                content: HERO_CONTENT,
                 mergeTags: {
                     tags: demoTags.value.map(({ label, value }) => ({ label, value })),
                     onRequest: requestMergeTag,
                 },
                 onError: showProviderError,
                 ai: createMockAiProvider({ ...AI_RECORDINGS }),
+                // The Languages menu, with German already added and empty, and a
+                // Translate that answers from the recording after a short pause,
+                // so the language bar's progress actually shows.
+                localization: {
+                    locales: [...HERO_LOCALES],
+                    doNotTranslate: [...HERO_DO_NOT_TRANSLATE],
+                },
+                translation: createMockTranslationProvider({
+                    translations: HERO_TRANSLATIONS,
+                    delayMs: TRANSLATE_DELAY_MS,
+                }),
                 ...demoBackend.config,
             }),
             timeout,
@@ -294,7 +219,7 @@ async function mountEditor() {
         } else {
             await instance.create({
                 name: t('heroEditor.demo.templateName'),
-                content: heroContent,
+                content: HERO_CONTENT,
             });
         }
         status.value = 'ready';

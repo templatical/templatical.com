@@ -26,6 +26,7 @@ const faqItems = computed(() =>
         'branding',
         'frameworks',
         'migrate',
+        'languages',
         'data',
         'cssIsolation',
         'paid',

@@ -1,6 +1,6 @@
 # Templatical
 
-> Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with your own backend behind every storage feature. Source-available (FSL-1.1-MIT): free for commercial embedding, no license key, MIT two years after each release. Renderer, importers, types, quality linter, CLI and AI kit are MIT today. Quality checks cover accessibility, structure, links, deliverability patterns (not inbox placement) and email-client compatibility.
+> Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with your own backend behind every storage feature. Source-available (FSL-1.1-MIT): free for commercial embedding, no license key, MIT two years after each release. Renderer, importers, types, quality linter, CLI and AI kit are MIT today. Quality checks cover accessibility, structure, links, deliverability patterns (not inbox placement) and email-client compatibility. One template can hold language versions, filled by Translate through your own translation provider.
 
 - Install: `npm install @templatical/editor`
 - Agent Skill: `npx skills add templatical/sdk`
@@ -11,8 +11,10 @@
 - [Full docs in one file](https://docs.templatical.com/llms-full.txt)
 - [Installation](https://docs.templatical.com/getting-started/installation)
 - [License FAQ](https://docs.templatical.com/license-faq)
-- [AI over your own backend](https://docs.templatical.com/backend/ai): the AI assistant, Rewrite, Fix with AI and Write alt text on the model you choose; `@templatical/ai-kit` (MIT) has the HTTP provider, server kit, model adapters (`createAnthropicAdapter`, `createOpenAiAdapter` and `createVercelAdapter` from `@templatical/ai-kit/adapters/anthropic`, `/openai`, `/vercel`; the first two take a client you construct, the Vercel one an AI SDK model or a gateway model id; any other model through `AiModelAdapter`), conformance suites and eval set
+- [AI over your own backend](https://docs.templatical.com/backend/ai): the AI assistant, Rewrite (with a Translate preset for one paragraph), Fix with AI and Write alt text on the model you choose; `@templatical/ai-kit` (MIT) has the HTTP provider, server kit, model adapters (`createAnthropicAdapter`, `createOpenAiAdapter` and `createVercelAdapter` from `@templatical/ai-kit/adapters/anthropic`, `/openai`, `/vercel`; the first two take a client you construct, the Vercel one an AI SDK model or a gateway model id; any other model through `AiModelAdapter`), conformance suites and eval set
 - [Collaboration over your own backend](https://docs.templatical.com/backend/collaboration): real-time co-editing with ordered operations, block locks and presence
+- [Localized templates](https://docs.templatical.com/guide/localized-templates): language versions in one template (`init({ localization })`, `settings.locales`, per-block `l10n` text, overrides and hidden blocks), rendered per language with `renderToMjml(content, { locale })`, checked with `template-tools validate --locale <tag>` and the `localization` lint rules, and exchanged as JSON with `template-tools strings export` / `strings import` (no XLIFF or CSV); subject lines stay with the host
+- [Translation over your own backend](https://docs.templatical.com/backend/translation): `init({ translation })` takes a `TranslationProvider`, any object with a `translate(request, signal)` method, that can call DeepL, a translation management system or an LLM; merge tags, logic tags and `doNotTranslate` terms are masked and checked exactly on return; the optional `@templatical/ai-kit` has `createHttpTranslationProvider`, `translateFields` and `runTranslationConformance`. Language versions themselves need no provider
 
 ## Compare and migrate
 

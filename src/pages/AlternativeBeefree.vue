@@ -14,6 +14,7 @@ const ROW_KEYS = [
     'activation',
     'savedBlocks',
     'htmlImport',
+    'languages',
     'source',
     'licence',
     'assets',
@@ -42,6 +43,8 @@ const SOURCES = [
     { label: 'docs.beefree.io', href: URLS.beefreeAuthDocs },
     { label: 'docs: custom file picker', href: URLS.beefreeFilePickerDocs },
     { label: 'npm: @beefree.io/sdk', href: URLS.beefreeNpm },
+    { label: 'docs: multi-language templates', href: URLS.beefreeMultiLanguageDocs },
+    { label: 'docs: DeepL add-on', href: URLS.beefreeDeeplDocs },
 ];
 </script>
 

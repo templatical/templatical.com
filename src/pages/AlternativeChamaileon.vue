@@ -16,6 +16,7 @@ const ROW_KEYS = [
     'activation',
     'whiteLabel',
     'headless',
+    'languages',
     'source',
     'licence',
     'output',
@@ -39,6 +40,7 @@ const THEM_KEYS = ['modular', 'brand', 'gallery', 'operated', 'support'] as cons
 const SOURCES = [
     { label: 'chamaileon.io/sdk', href: URLS.chamaileonSdk },
     { label: 'npm: @chamaileon-sdk/plugins', href: URLS.chamaileonNpm },
+    { label: 'chamaileon.io: email editor SDK docs', href: URLS.chamaileonEditorDocs },
 ];
 </script>
 

@@ -41,6 +41,23 @@ export const URLS = {
     unlayerPricing: 'https://unlayer.com/pricing',
     unlayerDocs: 'https://docs.unlayer.com/docs/getting-started',
     unlayerNpm: 'https://www.npmjs.com/package/react-email-editor',
+    // Back the "Language versions and translation" rows, checked on 3 November 2026.
+    beefreeMultiLanguageDocs:
+        'https://docs.beefree.io/beefree-sdk/other-customizations/multi-language-templates',
+    beefreeDeeplDocs: 'https://docs.beefree.io/beefree-sdk/ai-and-mcp/ai-addons/deepl',
+    unlayerMultiLanguageDocs: 'https://docs.unlayer.com/builder/templates/multi-language',
+    unlayerMultiLanguageHelp:
+        'https://help.unlayer.com/en/articles/12746617-multi-language-templates',
+    stripoPluginLocalization: 'https://plugin.stripo.email/extensions/features/localization',
+    stripoPluginAi: 'https://plugin.stripo.email/editor-configuration/artificial-intelligence',
+    stripoTranslateHelp:
+        'https://support.stripo.email/en/articles/13393929-how-to-translate-an-email-template',
+    topolMultilingualDocs: 'https://docs.topol.io/email-editor/guide/multilingual-templates.html',
+    topolTranslationDocs: 'https://docs.topol.io/email-editor/guide/template-translation.html',
+    topolPricing: 'https://topol.io/pricing',
+    chamaileonEditorDocs: 'https://chamaileon.io/sdk/v2/docs/email-editor/',
+    easyEmailProTranslateDocs: 'https://docs.easyemail.pro/docs/advanced/email-translate',
+    grapesjsI18nDocs: 'https://grapesjs.com/docs/modules/I18n.html',
 } as const;
 
 export const LOCALIZED_URLS = {
@@ -93,6 +110,10 @@ export const LOCALIZED_URLS = {
     aiDocs: {
         en: 'https://docs.templatical.com/backend/ai',
         de: 'https://docs.templatical.com/de/backend/ai',
+    },
+    localizedTemplatesDocs: {
+        en: 'https://docs.templatical.com/guide/localized-templates',
+        de: 'https://docs.templatical.com/de/guide/localized-templates',
     },
 } as const;
 

@@ -62,6 +62,9 @@ export function createCommentsProvider(store: DemoStore, author: CommentAuthor):
             const comment: Comment = {
                 id: nextId(),
                 body: input.body,
+                // The view's language, which the comments panel's "This language"
+                // filter reads back; untagged means the template's current default.
+                locale: input.locale ?? null,
                 author,
                 createdAt: new Date().toISOString(),
                 blockId: input.blockId ?? null,

@@ -17,6 +17,7 @@ const ROW_KEYS = [
     'agents',
     'linting',
     'importers',
+    'languages',
     'isolation',
     'output',
 ] as const;
@@ -33,6 +34,7 @@ const SOURCES = [
     { label: 'easyemail.pro', href: URLS.easyEmailPro },
     { label: 'docs.easyemail.pro', href: URLS.easyEmailProQuickStart },
     { label: 'npm: easy-email-pro-core', href: URLS.easyEmailProNpm },
+    { label: 'docs.easyemail.pro: email translation', href: URLS.easyEmailProTranslateDocs },
 ];
 </script>
 
