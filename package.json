@@ -21,7 +21,7 @@
     "@vueuse/core": "^14.4.0",
     "@vueuse/integrations": "^14.4.0",
     "clsx": "^2.1.1",
-    "focus-trap": "8.2.2",
+    "focus-trap": "8.2.4",
     "shiki": "^4.5.0",
     "tailwind-merge": "^3.7.0",
     "vue": "3.5.42",
