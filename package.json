@@ -24,14 +24,14 @@
     "focus-trap": "8.2.4",
     "shiki": "^4.5.0",
     "tailwind-merge": "^3.7.0",
-    "vue": "3.5.42",
-    "vue-i18n": "11.4.14",
-    "vue-router": "5.3.1"
+    "vue": "3.5.44",
+    "vue-i18n": "11.4.16",
+    "vue-router": "5.4.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
     "@templatical/types": "^0.53.0",
-    "@vitejs/plugin-vue": "6.0.8",
+    "@vitejs/plugin-vue": "6.0.10",
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "4.3.3",
@@ -39,6 +39,6 @@
     "vite": "8.3.5",
     "vite-ssg": "28.3.0",
     "vitest": "^5.0.5",
-    "vue-tsc": "3.3.11"
+    "vue-tsc": "3.3.14"
   }
 }
