@@ -19,7 +19,7 @@
     "@templatical/ai-kit": "^0.53.0",
     "@unhead/vue": "2.1.17",
     "@vueuse/core": "^14.4.0",
-    "@vueuse/integrations": "^14.4.0",
+    "@vueuse/integrations": "^15.0.0",
     "clsx": "^2.1.1",
     "focus-trap": "8.2.4",
     "shiki": "^4.5.0",
