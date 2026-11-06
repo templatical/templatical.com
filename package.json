@@ -2,7 +2,7 @@
   "name": "templatical-site",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.34.9",
+  "packageManager": "pnpm@12.17.0",
   "scripts": {
     "dev": "vite",
     "build": "vite-ssg build",
