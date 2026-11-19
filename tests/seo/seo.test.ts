@@ -431,7 +431,7 @@ describe('home page structured data', () => {
     it('describes the MIT-licensed product with a zero-price offer', () => {
         expect(SOFTWARE_APPLICATION['@type']).toBe('SoftwareApplication');
         expect(SOFTWARE_APPLICATION.url).toBe('https://templatical.com/');
-        expect(SOFTWARE_APPLICATION.description).toContain('open source under MIT');
+        expect(SOFTWARE_APPLICATION.description).toContain('MIT-licensed and open source');
         expect(SOFTWARE_APPLICATION.license).toBe('https://opensource.org/licenses/MIT');
         expect(SOFTWARE_APPLICATION.offers).toEqual({
             '@type': 'Offer',

@@ -197,7 +197,7 @@ export const SOFTWARE_APPLICATION = {
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Web',
     description:
-        'Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with language versions of one template. All packages are open source under MIT.',
+        'Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with your own backend behind every storage feature. All packages are MIT-licensed and open source. One template can hold language versions, filled by Translate through your own translation provider.',
     url: `${SITE_ORIGIN}/`,
     license: 'https://opensource.org/licenses/MIT',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

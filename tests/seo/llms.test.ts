@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import llms from '../../public/llms.txt?raw';
 import { IMPORTERS } from '@/lib/importers';
+import { SOFTWARE_APPLICATION } from '@/lib/seo';
 import { routes } from '@/router';
 
 const IMPORTERS_LINE =
@@ -9,6 +10,12 @@ const IMPORTERS_LINE =
 describe('llms.txt', () => {
     it('states that every package is MIT-licensed', () => {
         expect(llms).toContain('All packages are MIT-licensed and open source.');
+    });
+
+    it('starts the home JSON-LD description with the llms.txt summary sentence', () => {
+        const summary = llms.match(/^> (.+?\.) /m)?.[1];
+        expect(summary).toBeDefined();
+        expect(SOFTWARE_APPLICATION.description.startsWith(summary!)).toBe(true);
     });
 
     it('gives both install commands', () => {

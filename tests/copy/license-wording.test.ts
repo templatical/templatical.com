@@ -21,7 +21,7 @@ describe('MIT licence wording', () => {
         expect(llms).toContain('All packages are MIT-licensed and open source.');
         expect(llms).toContain('[License](https://docs.templatical.com/license-faq)');
         expect(readme).toContain('open-source, MIT-licensed drag-and-drop email editor SDK');
-        expect(SOFTWARE_APPLICATION.description).toContain('open source under MIT');
+        expect(SOFTWARE_APPLICATION.description).toContain('MIT-licensed and open source');
         expect(SOFTWARE_APPLICATION.license).toBe('https://opensource.org/licenses/MIT');
     });
 });

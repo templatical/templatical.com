@@ -11,7 +11,6 @@ const ROW_KEYS = [
     'pricing',
     'domains',
     'customTools',
-    'savedBlocks',
     'whiteLabel',
     'hosting',
     'activation',

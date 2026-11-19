@@ -108,14 +108,16 @@ const de: MessageSchema = {
     },
     home: {
         meta: {
-            title: 'Templatical — Einbettbares E-Mail-Editor-SDK',
+            title: 'Templatical — Open-Source-E-Mail-Editor-SDK',
             description:
-                'Betten Sie einen Open-Source-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, Sprachversionen, einem KI-Assistenten mit Ihrem eigenen Modell, vollständigem Theming und mehr.',
+                'Betten Sie einen Open-Source-Drag-and-Drop-E-Mail-Editor in Ihre App ein — mit MJML-Export, Merge-Tags, benutzerdefinierten Blöcken, Sprachversionen, einem KI-Assistenten mit Ihrem eigenen Modell, vollständigem Theming und mehr. Open Source, MIT-lizenziert.',
         },
         hero: {
-            headline: 'Ein Drag-and-Drop-E-Mail-Editor für Ihre App.',
+            headline: 'Ein Open-Source-E-Mail-Editor per Drag-and-drop für Ihre App.',
             subheadline:
                 'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags, Anzeigebedingungen, Sprachversionen und ein KI-Assistent mit Ihrem eigenen Modell — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
+            backendNote:
+                'Speicherung und Versand liegen bei Ihrem Team; es gibt keinen gehosteten Dienst.',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Dokumentation lesen',
             frameworkNote:
@@ -123,7 +125,7 @@ const de: MessageSchema = {
             badges: [
                 'TypeScript-first',
                 'Auf MJML aufgebaut',
-                'MIT-lizenziert',
+                'Open Source (MIT)',
                 'Framework-neutral',
                 'Shadow DOM',
                 'Kein Lizenzschlüssel',
@@ -131,11 +133,11 @@ const de: MessageSchema = {
         },
         comparison: {
             eyebrow: 'Warum Templatical',
-            headline: 'Alles enthalten, nichts hinter Bezahlschranken',
+            headline: 'Editor-Funktionen und Anbieterbedingungen',
             subheadline:
-                'Selbst bauen kostet ein Quartal Engineering. SaaS-Builder verlangen pro Sitz und sperren die wichtigen Features hinter Upgrades. Templatical enthält sie — Open-Source, selbst gehostet, sofort einbettbar.',
+                'Templatical enthält die aufgeführten Editor-Funktionen unter MIT. Kommerzielle Editoren unterscheiden sich bei Tarifen, Laufzeit-Einrichtung und Ausgabeformaten.',
             youBuildLabel: 'Müssten Sie selbst bauen',
-            paywalledLabel: 'Hinter Bezahlschranke oder eingeschränkt',
+            paywalledLabel: 'Anbieterbedingungen und Grenzen',
             sdkLabel: 'Im SDK enthalten',
             compareLink: 'Im Vergleich mit Easy Email Pro',
             recommendedLabel: 'Empfohlen',
@@ -164,23 +166,16 @@ const de: MessageSchema = {
                     ],
                 },
                 hosted: {
-                    title: 'SaaS-Builder',
+                    title: 'Kommerzielle Editor-SDKs',
                     description:
-                        'Eine gehostete Editor-Komponente einbinden, die auf eine Render-API des Anbieters zeigt.',
+                        'Die datierten, belegten Anbietervergleiche in der Fußzeile beschreiben Preise, Laufzeit-Einrichtung und Ausgabe.',
                     tradeOffs: [
-                        'Custom Blocks nur in höheren Tarifen',
-                        'Anzeigebedingungen nur in höheren Tarifen',
-                        'Custom-Theming und Design-Tokens nur in höheren Tarifen',
-                        'White-Label und Marken-Entfernung nur Enterprise',
-                        'Custom-Merge-Tag-Syntax (Liquid, Handlebars) hinter Bezahlschranke',
-                        'Template- und Block-Defaults nur in höheren Tarifen',
-                        'Medien-Bibliothek — an den Speicher des Anbieters gebunden',
-                        'Wiederverwendbare gespeicherte Blöcke nur in Bezahltarifen — auch selbst gehostet',
-                        'Preise skalieren pro Sitz oder Endnutzer',
-                        'Closed Source — kein Audit, Fork oder Erweitern',
-                        'Output an die Render-API des Anbieters gekoppelt',
-                        'Lizenzschlüssel wird gegen die Server des Anbieters geprüft — Features je nach Tarif remote freigeschaltet',
-                        'Keine CSS-Isolation — Host-Styles greifen in den eingebetteten Editor durch',
+                        'Stripo bietet Custom Blocks ab dem Business-Tarif.',
+                        'Unlayer begrenzt Custom Tools je nach Tarif auf 1, 3 oder 5.',
+                        'Topol enthält White-Labeling und Custom Blocks in jedem Tarif.',
+                        'Chamaileon liefert seinen Editor im iframe und zählt Nutzer und Exporte.',
+                        'Easy Email Pro schaltet Funktionen über eine Client-ID frei und exportiert MJML.',
+                        'Unlayer lädt den Editor von einem CDN; Selbst-Hosting ist eine Enterprise-Option.',
                     ],
                 },
                 templatical: {
@@ -1559,11 +1554,6 @@ const de: MessageSchema = {
                         us: 'Unbegrenzt, in Ihrem eigenen Code definiert',
                         them: 'Begrenzte Custom Tools: 1 in Launch, 3 in Scale, 5 in Optimize',
                     },
-                    savedBlocks: {
-                        label: 'Wiederverwendbare gespeicherte Blöcke',
-                        us: 'Unbegrenzt, gespeichert wo Sie möchten',
-                        them: 'Custom Blocks ab Scale (750 $/Monat)',
-                    },
                     whiteLabel: {
                         label: 'White-Labeling',
                         us: 'Standard. Es gibt kein Branding zu entfernen.',
@@ -1953,7 +1943,7 @@ const de: MessageSchema = {
             },
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
-                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für jeden großen Hosted-Editor sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Importer-Seite listet auf, was jeder einzelne annimmt; die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
+                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für BeeFree, Unlayer, Stripo, Topol, Chamaileon und Easy Email Pro sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
             },
             languages: {
                 question: 'Kann eine Vorlage mehrere Sprachen enthalten?',

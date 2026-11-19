@@ -106,14 +106,15 @@ export default {
     },
     home: {
         meta: {
-            title: 'Templatical — Embeddable Email Editor SDK',
+            title: 'Templatical — Open-Source Email Editor SDK',
             description:
-                'Embed an open-source drag-and-drop email editor in your app — MJML export, merge tags, custom blocks, language versions, an AI assistant on your own model, full theming, and more.',
+                'Embed an open-source drag-and-drop email editor in your app — MJML export, merge tags, custom blocks, language versions, an AI assistant on your own model, full theming, and more. Open source, MIT-licensed.',
         },
         hero: {
-            headline: 'A drag-and-drop email editor for your app.',
+            headline: 'An open-source drag-and-drop email editor for your app.',
             subheadline:
                 'Custom blocks, full theming, merge tags, display conditions, language versions, and an AI assistant on your own model — all built into the SDK. Drop into any app with one init() call.',
+            backendNote: 'Your team owns storage and sending; there is no hosted service.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Read the docs',
             frameworkNote:
@@ -121,7 +122,7 @@ export default {
             badges: [
                 'TypeScript-first',
                 'Built on MJML',
-                'MIT-licensed',
+                'Open source (MIT)',
                 'Framework-neutral',
                 'Shadow DOM',
                 'No license key',
@@ -129,11 +130,11 @@ export default {
         },
         comparison: {
             eyebrow: 'Why Templatical',
-            headline: 'Everything you need, nothing paywalled',
+            headline: 'Editor capabilities and vendor terms',
             subheadline:
-                'Building from scratch takes a quarter of engineering. SaaS builders charge per seat and gate the features that matter. Templatical includes them — open-source, self-hosted, ready to embed.',
+                'Templatical includes the listed editor features under MIT. Commercial editors differ in their plans, runtime setup and output formats.',
             youBuildLabel: 'You’ll build yourself',
-            paywalledLabel: 'Paywalled or restricted',
+            paywalledLabel: 'Vendor terms and limits',
             sdkLabel: 'Included in the SDK',
             compareLink: 'Compared with Easy Email Pro',
             recommendedLabel: 'Recommended',
@@ -162,23 +163,16 @@ export default {
                     ],
                 },
                 hosted: {
-                    title: 'SaaS builders',
+                    title: 'Commercial editor SDKs',
                     description:
-                        'Drop in a hosted editor component pointing at a vendor’s rendering API.',
+                        'The dated, sourced vendor comparisons linked in the footer cover pricing, runtime setup and output.',
                     tradeOffs: [
-                        'Custom blocks gated to higher paid tiers',
-                        'Display conditions gated to higher paid tiers',
-                        'Custom theming and design tokens on higher tiers',
-                        'White-label and brand removal on enterprise tiers',
-                        'Custom merge-tag syntax (Liquid, Handlebars) paywalled',
-                        'Template and block defaults gated to paid tiers',
-                        'Pluggable media library — locked to vendor’s storage',
-                        'Reusable saved blocks gated to paid tiers — even self-hosted',
-                        'Per-seat or per-end-user pricing scales with you',
-                        'Closed source — cannot audit, fork, or extend',
-                        'Output coupled to the vendor’s render API',
-                        'License key validated against the vendor’s servers — features enabled remotely by plan',
-                        'No CSS isolation — host styles can cascade into the embedded editor',
+                        'Stripo offers custom blocks from its Business plan.',
+                        'Unlayer caps custom tools at 1, 3 or 5, depending on plan.',
+                        'Topol includes white-labelling and custom blocks on every plan.',
+                        'Chamaileon serves its editor in an iframe and meters users and exports.',
+                        'Easy Email Pro uses a client ID to gate features and exports MJML.',
+                        'Unlayer loads its editor from a CDN; self-hosting is an Enterprise option.',
                     ],
                 },
                 templatical: {
@@ -1544,11 +1538,6 @@ export default {
                         us: 'Unlimited, defined in your own code',
                         them: 'Capped custom tools: 1 on Launch, 3 on Scale, 5 on Optimize',
                     },
-                    savedBlocks: {
-                        label: 'Reusable saved blocks',
-                        us: 'Unlimited, stored wherever you choose',
-                        them: 'Custom blocks from Scale ($750/mo) up',
-                    },
                     whiteLabel: {
                         label: 'White-labelling',
                         us: 'Default. No branding to remove.',
@@ -1938,7 +1927,7 @@ export default {
             },
             migrate: {
                 question: 'How do I migrate from another editor?',
-                answer: 'We provide free, MIT-licensed converters for every major hosted editor, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The importers page lists what each one accepts, and the docs carry a migration guide per source format.',
+                answer: 'We provide free, MIT-licensed converters for BeeFree, Unlayer, Stripo, Topol, Chamaileon and Easy Email Pro, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The docs carry a migration guide per source format.',
             },
             languages: {
                 question: 'Can one template hold several languages?',
