@@ -874,8 +874,7 @@ export default {
     importers: {
         meta: {
             title: 'Template importers — Templatical',
-            description:
-                'Free, MIT-licensed converters from Beefree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, raw HTML and MJML into Templatical JSON.',
+            description: 'Free, MIT-licensed converters from {importers} into Templatical JSON.',
         },
         hero: {
             eyebrow: 'Migration',
@@ -1934,7 +1933,7 @@ export default {
             },
             migrate: {
                 question: 'How do I migrate from another editor?',
-                answer: 'We provide free, MIT-licensed converters for Beefree, Unlayer, Stripo, Topol, Chamaileon and Easy Email Pro, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The docs carry a migration guide per source format.',
+                answer: 'We provide free, MIT-licensed converters for {importers}. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The docs carry a migration guide per source format.',
             },
             languages: {
                 question: 'Can one template hold several languages?',

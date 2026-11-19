@@ -889,7 +889,7 @@ const de: MessageSchema = {
         meta: {
             title: 'Vorlagen-Importer — Templatical',
             description:
-                'Kostenlose, MIT-lizenzierte Konverter von Beefree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, rohem HTML und MJML nach Templatical-JSON.',
+                'Kostenlose, MIT-lizenzierte Konverter wandeln Ihre Vorlagen aus {importers} in Templatical-JSON um.',
         },
         hero: {
             eyebrow: 'Migration',
@@ -1949,7 +1949,7 @@ const de: MessageSchema = {
             },
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
-                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für Beefree, Unlayer, Stripo, Topol, Chamaileon und Easy Email Pro sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
+                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für {importers}. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
             },
             languages: {
                 question: 'Kann eine Vorlage mehrere Sprachen enthalten?',

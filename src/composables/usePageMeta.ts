@@ -13,12 +13,12 @@ import { useRoute } from 'vue-router';
 export function usePageMeta(
     titleKey: string,
     descriptionKey: string,
-    options: { noindex?: boolean } = {},
+    options: { noindex?: boolean; descriptionParams?: () => Record<string, string> } = {},
 ): void {
     const { t } = useI18n();
     const route = useRoute();
     const title = computed(() => t(titleKey));
-    const description = computed(() => t(descriptionKey));
+    const description = computed(() => t(descriptionKey, options.descriptionParams?.() ?? {}));
     const canonical = computed(() => canonicalUrl(route.path));
     useHead({
         title,
