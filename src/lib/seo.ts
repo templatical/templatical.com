@@ -16,7 +16,7 @@ export interface RenderedPage {
 }
 
 /** Routes that render but are not pages to index: noindex, no canonical, absent from the sitemap. */
-const UNLISTED = new Set(['/404']);
+const UNLISTED = new Set(['/404', '/privacy']);
 
 /** sitemap.xml for the prerendered routes. */
 export function buildSitemap(routes: readonly string[]): string {
@@ -197,9 +197,9 @@ export const SOFTWARE_APPLICATION = {
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Web',
     description:
-        'Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with language versions of one template. Source-available under FSL-1.1-MIT, free for commercial embedding, MIT two years after each release.',
+        'Embeddable drag-and-drop email editor SDK: JSON templates in, MJML out, framework-agnostic, with your own backend behind every storage feature. All packages are MIT-licensed and open source. One template can hold language versions, filled by Translate through your own translation provider.',
     url: `${SITE_ORIGIN}/`,
-    license: 'https://github.com/templatical/sdk/blob/main/LICENSE',
+    license: 'https://opensource.org/licenses/MIT',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     sameAs: [
         'https://github.com/templatical/sdk',

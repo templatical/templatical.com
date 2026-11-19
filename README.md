@@ -1,6 +1,6 @@
 # templatical.com
 
-Marketing site for **Templatical** — the source-available, drag-and-drop email editor SDK. Positioned as a self-hosted alternative to hosted email-editor SaaS like BeeFree and Unlayer, with free migration tools.
+Marketing site for **Templatical** — the open-source, MIT-licensed drag-and-drop email editor SDK. Positioned as a self-hosted alternative to hosted email-editor SaaS like BeeFree and Unlayer, with free migration tools.
 
 Deployed to Cloudflare Pages at [templatical.com](https://templatical.com).
 
@@ -59,7 +59,7 @@ The `@/` alias maps to `src/`.
 
 ## Related Repositories
 
-- [templatical/sdk](https://github.com/templatical/sdk) — the editor SDK itself (source-available, FSL-1.1-MIT)
+- [templatical/sdk](https://github.com/templatical/sdk) — the MIT-licensed editor SDK itself
 
 ## License
 

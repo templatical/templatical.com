@@ -28,11 +28,6 @@ const ROW_KEYS = [
 // template is a proprietary JSON rendered to HTML by their own engine.
 const US_KEYS = ['cost', 'runtime', 'ownership', 'source', 'output'] as const;
 
-// All five are structural, so none of them expires on us: scope (we are email-only by
-// choice), who operates the editor, a template catalog we do not sell, a file manager we
-// do not ship, and a paid support contract we do not offer. Nothing here is a feature we
-// might ship and then forget to remove — the failure mode this list is written to avoid.
-//
 // Keep this the same length as US_KEYS. The section carries the UWG §6 balance, and an
 // uneven split reads as a scorecard rather than as a decision aid — so a new reason on
 // one side needs a real one on the other, never padding.

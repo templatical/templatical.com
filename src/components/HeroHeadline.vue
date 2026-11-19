@@ -32,7 +32,10 @@ const classes = computed(() => cn(baseClass, sizeClass, attrs.class as string));
 const root = ref<HTMLElement | null>(null);
 const enhanced = ref(false);
 
-const tokens = computeTokens(props.text, props.accent);
+// Derived, not split once at setup: a locale switch changes `text` without remounting,
+// and a one-off split left the visible characters in the old language while the
+// `sr-only` copy moved on.
+const tokens = computed(() => computeTokens(props.text, props.accent));
 
 function computeTokens(text: string, accent?: string) {
     const words = text.split(/(\s+)/);
@@ -110,13 +113,30 @@ function clearTransforms() {
     for (const node of chars) node.style.transform = '';
 }
 
-onMounted(() => {
-    enhanced.value = true;
+// Start the magnetic effect after the intro animation completes. The delay is read
+// when the timer starts, so it tracks the length of the text being revealed.
+const { start: startMagnet, stop: stopMagnet } = useTimeoutFn(
+    () => {
+        if (reducedMotion.value !== 'reduce') resumeRaf();
+    },
+    () => startDelay + chars.length * perChar + duration,
+    { immediate: false },
+);
+
+function reveal() {
     const el = root.value;
     if (!el) return;
+    stopMagnet();
+    pauseRaf();
     chars = Array.from(el.querySelectorAll<HTMLElement>('.hh__c'));
 
     const isReduced = reducedMotion.value === 'reduce';
+
+    // On a text change Vue reuses these spans by position, so each still holds the
+    // previous reveal, filled. Cancel it rather than stack another on top.
+    for (const node of chars) {
+        for (const animation of node.getAnimations()) animation.cancel();
+    }
 
     if (isReduced) {
         chars.forEach((node) => {
@@ -152,14 +172,22 @@ onMounted(() => {
     if (coarsePointer.value) return;
 
     measure();
-    if (!isReduced) {
-        // Start the magnetic effect after the intro animation completes.
-        useTimeoutFn(resumeRaf, startDelay + chars.length * perChar + duration);
-    }
+    if (!isReduced) startMagnet();
+}
+
+onMounted(() => {
+    enhanced.value = true;
+    reveal();
 });
+
+// A new text replays the intro over the new characters. `post`, so the spans for it
+// are in the DOM before reveal() collects them: any the old text did not have are
+// new, unanimated, and held at the `opacity: 0` that `.hh--enhanced` gives them.
+watch(tokens, reveal, { flush: 'post' });
 
 // React to reduced-motion toggling mid-session.
 watch(reducedMotion, (v) => {
+    if (v === 'reduce') stopMagnet();
     if (coarsePointer.value) return;
     if (v === 'reduce') {
         pauseRaf();

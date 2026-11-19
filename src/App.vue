@@ -39,7 +39,10 @@ useHead({
         <TheNavbar class="vt-navbar" />
 
         <main id="main-content" class="vt-main">
-            <router-view />
+            <!-- Key by path so navigation remounts the page and refreshes its head and hero. -->
+            <router-view v-slot="{ Component, route: current }">
+                <component :is="Component" :key="current.path" />
+            </router-view>
         </main>
 
         <TheFooter class="vt-footer" />

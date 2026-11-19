@@ -1,7 +1,11 @@
 export const URLS = {
     docs: 'https://docs.templatical.com',
     playground: 'https://play.templatical.com',
-    cloud: 'https://cloud.templatical.com',
+    // Provider privacy policies linked from /privacy.
+    cloudflarePrivacy: 'https://www.cloudflare.com/privacypolicy/',
+    bunnyPrivacy: 'https://bunny.net/privacy/',
+    githubPrivacy:
+        'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement',
     github: 'https://github.com/templatical/sdk',
     discussions: 'https://github.com/templatical/sdk/discussions',
     // Corrections to /alternatives/* pages are site-copy issues, not SDK bugs — they

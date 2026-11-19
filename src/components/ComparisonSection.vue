@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { URLS } from '@/lib/urls';
-import { Check, ChevronRight, Plus, X } from '@lucide/vue';
+import { Check, ChevronRight, X } from '@lucide/vue';
 import RevealOnScroll from './RevealOnScroll.vue';
 import SiteContainer from './SiteContainer.vue';
 import SiteEyebrow from './SiteEyebrow.vue';
@@ -97,47 +96,6 @@ function trailingLabel(slug: Slug): string {
                                         {{ item }}
                                     </li>
                                 </ul>
-                            </div>
-                            <div
-                                class="flex flex-col gap-3 border-t border-neutral-200 pt-6 dark:border-neutral-800"
-                            >
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <h4
-                                        class="text-xs/5 font-medium tracking-wide text-neutral-500 uppercase dark:text-neutral-400"
-                                    >
-                                        {{ t('home.comparison.cloudLabel') }}
-                                    </h4>
-                                    <span
-                                        class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px]/4 font-semibold tracking-wide text-amber-900 uppercase dark:bg-amber-500/15 dark:text-amber-300"
-                                    >
-                                        {{ t('home.comparison.cloudBadge') }}
-                                    </span>
-                                </div>
-                                <ul class="flex flex-col gap-2.5">
-                                    <li
-                                        v-for="item in listAt(
-                                            'home.comparison.columns.templatical.cloud',
-                                        )"
-                                        :key="item"
-                                        class="flex gap-2.5 text-sm/6 text-neutral-700 dark:text-neutral-300"
-                                    >
-                                        <Plus
-                                            :stroke-width="2.25"
-                                            class="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400"
-                                            aria-hidden="true"
-                                        />
-                                        {{ item }}
-                                    </li>
-                                </ul>
-                                <a
-                                    :href="URLS.cloud"
-                                    target="_blank"
-                                    rel="noopener"
-                                    class="inline-flex items-center gap-1 self-start text-xs/5 font-medium text-amber-700 hover:underline dark:text-amber-300"
-                                >
-                                    {{ t('home.comparison.cloudMore') }}
-                                    <ChevronRight class="size-3.5" />
-                                </a>
                             </div>
                         </template>
 

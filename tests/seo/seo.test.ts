@@ -388,7 +388,7 @@ describe('auditPages', () => {
         // Real titles and descriptions are sentences, so a version number inside one is
         // not a key, and a single dot (a host name) is not the three-part path of one.
         it.each([
-            'Source-available email editor SDK — Templatical',
+            'Open-source email editor SDK — Templatical',
             'Works with Node v22.1.4 and newer',
             'templatical.com',
         ])('leaves the real text "%s" alone', (text) => {
@@ -428,14 +428,28 @@ describe('home page structured data', () => {
         expect(auditPages([page('/faq', head('FAQ', '/faq'))])).toEqual([]);
     });
 
-    it('describes the product as source-available with a free offer', () => {
+    it('describes the MIT-licensed product with a zero-price offer', () => {
         expect(SOFTWARE_APPLICATION['@type']).toBe('SoftwareApplication');
         expect(SOFTWARE_APPLICATION.url).toBe('https://templatical.com/');
-        expect(SOFTWARE_APPLICATION.description).toContain('Source-available under FSL-1.1-MIT');
+        expect(SOFTWARE_APPLICATION.description).toContain('MIT-licensed and open source');
+        expect(SOFTWARE_APPLICATION.license).toBe('https://opensource.org/licenses/MIT');
         expect(SOFTWARE_APPLICATION.offers).toEqual({
             '@type': 'Offer',
             price: '0',
             priceCurrency: 'USD',
         });
+    });
+});
+
+describe('the legal pages', () => {
+    it('leaves privacy out of the sitemap', () => {
+        expect(buildSitemap(['/', '/privacy'])).not.toMatch(/privacy/);
+    });
+
+    it('requires /privacy to be noindex', () => {
+        const route = '/privacy';
+        const unlisted = head('Legal', route, { canonical: null, ogUrl: null });
+        expect(auditPages([page(route, unlisted)])).toEqual([`${route}: not marked noindex`]);
+        expect(auditPages([page(route, unlisted + NOINDEX)])).toEqual([]);
     });
 });

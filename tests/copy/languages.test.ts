@@ -9,19 +9,9 @@ import { SOFTWARE_APPLICATION } from '@/lib/seo';
     with each language's text, overrides and hidden blocks) and Translate through a
     bring-your-own TranslationProvider (init({ translation })), with the HTTP provider
     and the server helpers in @templatical/ai-kit (MIT). These tests pin how the site
-    names them, the two duties the integrator owns (subject lines stay with the host
-    that sends the email; every @templatical/* package stays on one version), and that
-    no copy claims translation for Templatical Cloud, which does not translate yet.
+    names them and the two duties the integrator owns (subject lines stay with the host
+    that sends the email; every @templatical/* package stays on one version).
 */
-
-/** Every string leaf as [path, text]; array items get `[i]`. */
-function strings(tree: unknown, path: string): Array<[string, string]> {
-    if (typeof tree === 'string') return [[path, tree]];
-    if (Array.isArray(tree)) return tree.flatMap((item, i) => strings(item, `${path}[${i}]`));
-    if (tree !== null && typeof tree === 'object')
-        return Object.entries(tree).flatMap(([key, value]) => strings(value, `${path}.${key}`));
-    return [];
-}
 
 /** A source file, read through Vite (node:fs is not available here). */
 const SOURCES = import.meta.glob('../../src/**/*.vue', {
@@ -32,17 +22,6 @@ const SOURCES = import.meta.glob('../../src/**/*.vue', {
 const source = (path: string): string => SOURCES[`../../src/${path}`] ?? '';
 
 const TRANSLATE = { en: /\btranslat/i, de: /[ÜüUu]bersetz/ } as const;
-
-/**
- * A sentence that names Cloud and translation together. A question stays joined to
- * the sentence that answers it, because "Prefer managed AI? Templatical Cloud adds
- * …" is how the homepage already introduces Cloud.
- */
-function claimsCloudTranslation(text: string, locale: keyof typeof TRANSLATE): boolean {
-    return text
-        .split(/(?<=[.!;:])\s+/)
-        .some((sentence) => /\bCloud\b/.test(sentence) && TRANSLATE[locale].test(sentence));
-}
 
 describe.each([
     ['en', en],
@@ -74,9 +53,7 @@ describe.each([
 
     it('says where translation requests go', () => {
         const answer = messages.faq.items.data.answer;
-        const cloudAt = answer.indexOf('Templatical Cloud');
-        const initSentences = cloudAt === -1 ? answer : answer.slice(0, cloudAt);
-        expect(initSentences).toMatch(
+        expect(answer).toMatch(
             locale === 'en' ? /sent for translation[^.]*translation service/ : /Übersetzungsdienst/,
         );
     });
@@ -97,35 +74,6 @@ describe.each([
         expect(JSON.stringify(messages.features.translation.features)).toMatch(
             locale === 'en' ? /Subject lines/ : /Betreffzeilen/,
         );
-    });
-
-    // Cloud's own translation isn't built. Any sentence, anywhere in the locale (the
-    // Cloud section included, where it exists), that names Cloud and translation in
-    // one breath is the claim this guards against.
-    it('never claims translation for Templatical Cloud', () => {
-        const claims = strings(messages, locale).filter(([, text]) =>
-            claimsCloudTranslation(text, locale),
-        );
-        expect(claims.map(([path]) => path)).toEqual([]);
-    });
-});
-
-describe('the Cloud translation guard', () => {
-    it.each([
-        ['en', 'Templatical Cloud translates every language version for you.'],
-        ['en', 'Prefer managed translation? Templatical Cloud runs it.'],
-        ['de', 'Templatical Cloud übersetzt jede Sprachversion für Sie.'],
-        ['de', 'Die Übersetzung übernimmt Templatical Cloud.'],
-    ] as const)('catches %s "%s"', (locale, text) => {
-        expect(claimsCloudTranslation(text, locale)).toBe(true);
-    });
-
-    it.each([
-        ['en', 'Translate fills a version through your provider. Templatical Cloud hosts media.'],
-        ['en', 'Cloud build adds a managed media browser when you opt in'],
-        ['de', '„Übersetzen“ füllt eine Version. Templatical Cloud hostet Medien.'],
-    ] as const)('leaves %s "%s" alone', (locale, text) => {
-        expect(claimsCloudTranslation(text, locale)).toBe(false);
     });
 });
 
