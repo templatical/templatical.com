@@ -16,10 +16,13 @@ const SOURCES = import.meta.glob(['../../src/**/*.vue', '../../src/**/*.ts'], {
 
 /** Source without comments, so a comment or a sample snippet's comment never counts. */
 function code(text: string): string {
-    return text
-        .replace(/<!--[\s\S]*?-->/g, '')
-        .replace(/\/\*[\s\S]*?\*\//g, '')
-        .replace(/(^|[^:])\/\/.*$/gm, '$1');
+    let withoutHtmlComments = text;
+    while (true) {
+        const next = withoutHtmlComments.replace(/<!--[\s\S]*?-->/g, '');
+        if (next === withoutHtmlComments) break;
+        withoutHtmlComments = next;
+    }
+    return withoutHtmlComments.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
 }
 
 /*
@@ -37,6 +40,12 @@ const LIST_FILE = '../../src/lib/legal.ts';
 describe('browser storage', () => {
     afterEach(() => {
         vi.unstubAllGlobals();
+    });
+
+    it('removes an HTML comment exposed by removing another comment', () => {
+        expect(code('<!<!-- nested -->----><span>sessionStorage</span>')).toBe(
+            '<span>sessionStorage</span>',
+        );
     });
 
     it('keeps each listed key in the file that writes it', () => {
