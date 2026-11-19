@@ -233,8 +233,8 @@ describe('the hero editor', () => {
 });
 
 describe('the comparison pages', () => {
-    // Each vendor's row is sourced from pages checked on 3 November 2026; the rest of
-    // each page keeps its own, earlier verification date.
+    // Every comparison page was rechecked on 19 November 2026. The languages row stays
+    // sourced from the pages below, and the footnote names that date.
     const PAGES = {
         beefree: ['AlternativeBeefree', ['beefreeMultiLanguageDocs', 'beefreeDeeplDocs']],
         unlayer: ['AlternativeUnlayer', ['unlayerMultiLanguageDocs', 'unlayerMultiLanguageHelp']],
@@ -257,8 +257,8 @@ describe('the comparison pages', () => {
         for (const url of urls) expect(component, url).toContain(`href: URLS.${url} }`);
 
         for (const [messages, date] of [
-            [en, 'checked on 3 November 2026'],
-            [de, 'am 3. November 2026'],
+            [en, '19 November 2026'],
+            [de, '19. November 2026'],
         ] as const) {
             const vendor = (messages.alternatives as Record<string, any>)[key];
             const row = vendor.table.rows.languages;

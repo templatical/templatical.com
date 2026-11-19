@@ -172,7 +172,7 @@ export default {
                     tradeOffs: [
                         'Stripo offers custom blocks from its Business plan.',
                         'Unlayer caps custom tools at 1, 3 or 5, depending on plan.',
-                        'Topol includes white-labelling and custom blocks on every plan.',
+                        'Topol includes white-labelling on every plan and custom blocks from its Business plan.',
                         'Chamaileon serves its editor in an iframe and meters users and exports.',
                         'Easy Email Pro uses a client ID to gate features and exports MJML.',
                         'Unlayer loads its editor from a CDN; self-hosting is an Enterprise option.',
@@ -970,7 +970,7 @@ export default {
                 eyebrow: 'Comparison',
                 headline: 'An open-source alternative to Topol Plugin',
                 subheadline:
-                    'Both put a drag-and-drop email editor inside your product. Topol is the most generous of the hosted builders on what it includes per plan — the differences that remain are who runs the editor, whether your bill grows with your users, and who owns the output. Everything below is checkable against public sources.',
+                    'Both put a drag-and-drop email editor inside your product. The differences that remain are who runs the editor, whether your bill grows with your users, and who owns the output. Everything below is checkable against public sources.',
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
             },
@@ -989,7 +989,7 @@ export default {
                     users: {
                         label: 'End-user limits',
                         us: 'None. The editor does not know or count your users.',
-                        them: '50, 100 or 500 users included; beyond that $1.60, $1.40 or $0.70 per extra user per month',
+                        them: '50, 100 or 500 users included; additional users are listed at $1.60, $1.40 and $0.70. Topol counts unique userId values within a billing cycle',
                     },
                     domains: {
                         label: 'Domain binding',
@@ -1014,7 +1014,7 @@ export default {
                     customBlocks: {
                         label: 'Custom blocks',
                         us: 'Unlimited, defined in your own code',
-                        them: 'Included on every plan',
+                        them: 'On the Business plan ($300/mo) and higher',
                     },
                     storage: {
                         label: 'Image storage',
@@ -1024,7 +1024,7 @@ export default {
                     frameworks: {
                         label: 'Framework support',
                         us: 'One init() call — React, Vue, Svelte, Angular and vanilla JS',
-                        them: 'Official React, Vue and Svelte packages',
+                        them: 'Official packages for plain JavaScript or TypeScript, React, Vue, Svelte and Angular',
                     },
                     languages: {
                         label: 'Language versions and translation',
@@ -1088,7 +1088,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}topol.io/editor 0.3.0 as published on npm, and the plans listed at topol.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multilingual templates and template translation documentation and the plans at topol.io/pricing.",
+                    "Verified on 19 November 2026 against {'@'}topol.io/editor 0.3.0 as published on npm, and the plans listed at topol.io/pricing on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 19 November 2026 against their multilingual templates and template translation documentation and the plans at topol.io/pricing.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1230,7 +1230,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against grapesjs 0.23.4 and grapesjs-mjml 1.0.8 as published on npm. This page compares the open-source framework; GrapesJS also sells Studio SDK, a commercial embedded editor whose pricing is quote-only and therefore not compared here. The language versions row was checked on 3 November 2026 against grapesjs 0.23.8 as published on npm and the I18n documentation at grapesjs.com.',
+                    'Verified on 19 November 2026 against grapesjs 0.23.9 and grapesjs-mjml 1.0.8 as published on npm, and the I18n documentation at grapesjs.com. This page compares the open-source framework; GrapesJS also sells Studio SDK, which has published plans at grapesjs.com/sdk/pricing and is not compared here. Pricing and features change — check their site for current terms.',
                 notDocumented:
                     '“Yours to build” means the capability is not provided out of the box, not that it is hard or unsupported — GrapesJS is a framework, and building on it is the point.',
                 trademark:
@@ -1264,7 +1264,7 @@ export default {
                     pricing: {
                         label: 'Pricing',
                         us: 'No fee, on any tier',
-                        them: 'Free Starter, then $200 or $600 per month, plus Enterprise',
+                        them: 'Free Starter, then Standard from $200/month or Scale from $600/month, plus Enterprise',
                     },
                     metering: {
                         label: 'What is metered',
@@ -1362,7 +1362,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their SDK documentation at chamaileon.io.",
+                    "Verified on 19 November 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io/sdk on that date. Pricing and features change — check their site for current terms.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1426,17 +1426,17 @@ export default {
                     hosting: {
                         label: 'Who runs the editor',
                         us: 'You. The editor ships in your bundle and runs in your page',
-                        them: 'Stripo. Server components run on their infrastructure; self-hosting is an Enterprise option',
+                        them: 'Stripo. Server components run on their infrastructure; deploying them yourself is an Enterprise option. The editor’s static files can be served from your own CDN',
                     },
                     languages: {
                         label: 'Language versions and translation',
                         us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
-                        them: 'Not documented for the plugin, whose localization covers its own interface; Stripo documents translation versions for its email app. The plugin’s AI text assistant has a Translate prompt that rewrites the selected text',
+                        them: 'Not documented for the plugin, whose localization covers its own interface; Stripo documents translation versions for its email app. The plugin’s AI text assistant has a Translate prompt that translates the selected text into English',
                     },
                     source: {
                         label: 'Source access',
                         us: 'Full source in a public repository',
-                        them: 'Not published',
+                        them: 'Not published. Stripo publishes the editor’s built static files for self-hosting, not its source',
                     },
                     licence: {
                         label: 'Licence',
@@ -1479,7 +1479,7 @@ export default {
                     modules:
                         'You want AMP and interactive modules maintained by a vendor rather than built in-house.',
                     tooling:
-                        'You want built-in image editing and stock content bundled with the editor.',
+                        'You want stock images bundled with the editor. Stripo includes them on every plugin plan.',
                     support:
                         'You want a commercial vendor with a dedicated support channel rather than an open-source project.',
                 },
@@ -1495,7 +1495,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against the plugin documentation at plugin.stripo.email and their support centre.',
+                    'Verified on 19 November 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms. The language versions row was checked on 19 November 2026 against the plugin documentation at plugin.stripo.email and their support centre.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1534,7 +1534,7 @@ export default {
                     domains: {
                         label: 'Domain limits',
                         us: 'None. Run it on as many domains as you like.',
-                        them: '1 domain on Free and Launch, 3 on Scale and Optimize',
+                        them: '1 domain on Free, 2 on Launch, 3 on Scale and Optimize',
                     },
                     customTools: {
                         label: 'Custom block types',
@@ -1598,7 +1598,7 @@ export default {
                 us: {
                     cost: 'You do not want the editor billed by tier or limited by how many domains you run it on.',
                     extensibility:
-                        'You expect to add more than a handful of custom block types. Templatical does not cap them; Unlayer allows 1 to 5 depending on plan.',
+                        'You expect to add more than a handful of custom block types. Templatical does not cap them; Unlayer’s priced plans allow 1, 3 or 5.',
                     ownership:
                         'You want the editor running in your own bundle without an Enterprise contract to get it there.',
                     output: 'You want portable output. Templatical exports MJML, an open standard with an MIT implementation you can run yourself; an Unlayer template is their design JSON, rendered by their engine.',
@@ -1610,7 +1610,7 @@ export default {
                         'You would rather someone else operated the editor, with hosting and uptime handled for you.',
                     amp: 'You send AMP email. Templatical has no AMP support and no plans to add it.',
                     tooling:
-                        'You want a built-in image editor and stock images. Unlayer includes stock images on every plan and the image editor from Launch ($250/mo) up.',
+                        'You want a built-in image editor and stock images. Unlayer includes both from Launch ($250/mo) up.',
                     support:
                         'You want a commercial vendor behind the editor, with a dedicated customer success manager on their Enterprise tier.',
                 },
@@ -1626,7 +1626,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against react-email-editor 2.0.0 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language documentation, their help centre and the plans at unlayer.com.',
+                    'Verified on 19 November 2026 against react-email-editor 2.1.3 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1659,7 +1659,7 @@ export default {
                 rows: {
                     pricing: {
                         label: 'Pricing',
-                        them: 'Free tier, then $400 to $6,000 per month',
+                        them: 'Free tier, then Essentials $400, Core $1,200 or Superpowers $3,000 per month, plus Enterprise',
                         us: 'No fee, on any tier',
                     },
                     users: {
@@ -1738,9 +1738,9 @@ export default {
                 them: {
                     scope: 'You need landing pages and popups as well as email. Templatical is email-only and intends to stay that way.',
                     operated:
-                        'You would rather someone else operated the editor — hosted, auto-scaling, with an uptime commitment behind it.',
+                        'You would rather someone else operated the editor. Beefree hosts it, and the npm package loads it from their CDN at runtime.',
                     catalog:
-                        'You want a large ready-made template catalog to offer your users on day one.',
+                        'You want Beefree’s Template Catalog API. It is a $2,000/year add-on on Core and included on Superpowers and Enterprise.',
                     support:
                         'You want a commercial vendor with a paid support contract rather than an open-source project.',
                     files: 'You want a file manager out of the box. Beefree ships one on every plan; Templatical’s media library uses a provider you implement on your own backend.',
@@ -1757,7 +1757,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}beefree.io/sdk 11.6.1 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language templates and DeepL add-on documentation and the plans at developers.beefree.io.",
+                    "Verified on 19 November 2026 against {'@'}beefree.io/sdk 11.8.0 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 19 November 2026 against their multi-language templates and DeepL add-on documentation and the plans at developers.beefree.io.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1790,7 +1790,7 @@ export default {
                 rows: {
                     licensing: {
                         label: 'Licensing',
-                        them: 'Commercial subscription, $99–$499 per month',
+                        them: 'Commercial subscription, $99–$499 per month; three plans are listed at a limited-time price, with regular prices up to $799',
                         us: 'MIT. No fee.',
                     },
                     source: {
@@ -1810,7 +1810,7 @@ export default {
                     },
                     footprint: {
                         label: 'Install footprint',
-                        them: 'About 62 MB unpacked across four packages',
+                        them: 'About 65.7 MB unpacked across four packages',
                         us: '10.3 MB, zero runtime dependencies',
                     },
                     activation: {
@@ -1830,7 +1830,7 @@ export default {
                     },
                     importers: {
                         label: 'Migration importers',
-                        them: 'Not documented',
+                        them: 'Unlayer, Beefree and Klaviyo, through the easy-email-pro-migrations package',
                         us: '{count} MIT converters, including one for Easy Email Pro templates',
                     },
                     languages: {
@@ -1885,7 +1885,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 7 August 2026 against easy-email-pro-core 1.59.9 as published on npm, and the pricing listed at easyemail.pro on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against easy-email-pro-core 1.60.2 as published on npm, their documentation and the pricing at easyemail.pro.',
+                    'Verified on 19 November 2026 against easy-email-pro-core, easy-email-pro-editor, easy-email-pro-theme and easy-email-pro-kit, all 1.61.0, as published on npm, and the pricing on the page served at easyemail.pro on that date. Pricing and features change — check their site for current terms.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:

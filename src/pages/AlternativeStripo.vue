@@ -25,8 +25,8 @@ const ROW_KEYS = [
 const US_KEYS = ['metering', 'cost', 'ownership', 'output', 'source'] as const;
 
 // All five are structural: a template library we do not curate, infrastructure we do
-// not run, AMP and interactive modules we have no plans for, bundled image editing we
-// do not ship, and a paid support channel we do not offer.
+// not run, AMP and interactive modules we have no plans for, stock images we do not
+// bundle, and a paid support channel we do not offer.
 //
 // Keep this the same length as US_KEYS — see the note in AlternativeBeefree.vue.
 const THEM_KEYS = ['templates', 'operated', 'modules', 'tooling', 'support'] as const;
@@ -37,6 +37,7 @@ const SOURCES = [
     { label: 'plugin.stripo.email: localization', href: URLS.stripoPluginLocalization },
     { label: 'plugin.stripo.email: AI', href: URLS.stripoPluginAi },
     { label: 'support.stripo.email: translating a template', href: URLS.stripoTranslateHelp },
+    { label: 'plugin.stripo.email: CDN hosting', href: URLS.stripoCdnHosting },
 ];
 </script>
 
