@@ -175,7 +175,7 @@ const de: MessageSchema = {
                     tradeOffs: [
                         'Stripo bietet Custom Blocks ab dem Business-Tarif.',
                         'Unlayer begrenzt Custom Tools je nach Tarif auf 1, 3 oder 5.',
-                        'Topol enthält White-Labeling und Custom Blocks in jedem Tarif.',
+                        'Topol enthält White-Labeling in jedem Tarif und Custom Blocks ab dem Business-Tarif.',
                         'Chamaileon liefert seinen Editor im iframe und zählt Nutzer und Exporte.',
                         'Easy Email Pro schaltet Funktionen über eine Client-ID frei und exportiert MJML.',
                         'Unlayer lädt den Editor von einem CDN; Selbst-Hosting ist eine Enterprise-Option.',
@@ -985,7 +985,7 @@ const de: MessageSchema = {
                 eyebrow: 'Vergleich',
                 headline: 'Eine Open-Source-Alternative zu Topol Plugin',
                 subheadline:
-                    'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Topol ist unter den gehosteten Buildern am großzügigsten dabei, was pro Tarif enthalten ist — es bleiben die Fragen, wer den Editor betreibt, ob Ihre Rechnung mit Ihren Nutzern wächst und wem die Ausgabe gehört. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
+                    'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Die verbleibenden Unterschiede sind, wer den Editor betreibt, ob Ihre Rechnung mit Ihren Nutzern wächst und wem die Ausgabe gehört. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
             },
@@ -1004,7 +1004,7 @@ const de: MessageSchema = {
                     users: {
                         label: 'Endnutzer-Limits',
                         us: 'Keine. Der Editor kennt und zählt Ihre Nutzer nicht.',
-                        them: '50, 100 oder 500 Nutzer enthalten; darüber 1,60, 1,40 oder 0,70 $ je weiterem Nutzer und Monat',
+                        them: '50, 100 oder 500 Nutzer enthalten; weitere Nutzer sind mit 1,60, 1,40 und 0,70 $ angegeben. Topol zählt eindeutige userId-Werte innerhalb eines Abrechnungszeitraums',
                     },
                     domains: {
                         label: 'Domain-Bindung',
@@ -1029,7 +1029,7 @@ const de: MessageSchema = {
                     customBlocks: {
                         label: 'Eigene Blöcke',
                         us: 'Unbegrenzt, in Ihrem eigenen Code definiert',
-                        them: 'In jedem Tarif enthalten',
+                        them: 'Im Business-Tarif (300 $/Monat) und höher',
                     },
                     storage: {
                         label: 'Bildspeicher',
@@ -1039,7 +1039,7 @@ const de: MessageSchema = {
                     frameworks: {
                         label: 'Framework-Unterstützung',
                         us: 'Ein init()-Aufruf — React, Vue, Svelte, Angular und Vanilla JS',
-                        them: 'Offizielle Pakete für React, Vue und Svelte',
+                        them: 'Offizielle Pakete für reines JavaScript oder TypeScript, React, Vue, Svelte und Angular',
                     },
                     languages: {
                         label: 'Sprachversionen und Übersetzung',
@@ -1103,7 +1103,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}topol.io/editor 0.3.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf topol.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zur Vorlagenübersetzung sowie die Tarife auf topol.io/pricing geprüft.",
+                    "Geprüft am 19. November 2026 gegen {'@'}topol.io/editor 0.3.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf topol.io/pricing angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zur Vorlagenübersetzung sowie die Tarife auf topol.io/pricing geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1245,7 +1245,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen grapesjs 0.23.4 und grapesjs-mjml 1.0.8 in den auf npm veröffentlichten Fassungen. Diese Seite vergleicht das Open-Source-Framework; GrapesJS vertreibt zusätzlich Studio SDK, einen kommerziellen eingebetteten Editor, dessen Preise nur auf Anfrage verfügbar sind und der deshalb hier nicht verglichen wird. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen grapesjs 0.23.8 in der auf npm veröffentlichten Fassung und die I18n-Dokumentation auf grapesjs.com geprüft.',
+                    'Geprüft am 19. November 2026 gegen grapesjs 0.23.9 und grapesjs-mjml 1.0.8 in den auf npm veröffentlichten Fassungen sowie gegen die I18n-Dokumentation auf grapesjs.com. Diese Seite vergleicht das Open-Source-Framework; GrapesJS vertreibt zusätzlich Studio SDK, das veröffentlichte Tarife auf grapesjs.com/sdk/pricing hat und hier nicht verglichen wird. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
                 notDocumented:
                     '„Bauen Sie selbst“ heißt, dass die Funktion nicht ab Werk mitgeliefert wird — nicht, dass sie schwierig oder nicht unterstützt wäre. GrapesJS ist ein Framework, und darauf zu bauen ist der Sinn der Sache.',
                 trademark:
@@ -1279,7 +1279,7 @@ const de: MessageSchema = {
                     pricing: {
                         label: 'Preise',
                         us: 'Kostenlos, in jeder Ausbaustufe',
-                        them: 'Kostenloser Starter, danach 200 oder 600 $ pro Monat, dazu Enterprise',
+                        them: 'Kostenloser Starter, danach Standard ab 200 $ pro Monat oder Scale ab 600 $ pro Monat, dazu Enterprise',
                     },
                     metering: {
                         label: 'Was abgerechnet wird',
@@ -1377,7 +1377,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren SDK-Dokumentation auf chamaileon.io geprüft.",
+                    "Geprüft am 19. November 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io/sdk angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1441,17 +1441,17 @@ const de: MessageSchema = {
                     hosting: {
                         label: 'Wer den Editor betreibt',
                         us: 'Sie. Der Editor liegt in Ihrem Bundle und läuft in Ihrer Seite',
-                        them: 'Stripo. Die Serverkomponenten laufen auf deren Infrastruktur; Selbst-Hosting ist eine Enterprise-Option',
+                        them: 'Stripo. Die Serverkomponenten laufen auf deren Infrastruktur; sie selbst bereitzustellen ist eine Enterprise-Option. Die statischen Dateien des Editors können über Ihr eigenes CDN ausgeliefert werden',
                     },
                     languages: {
                         label: 'Sprachversionen und Übersetzung',
                         us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
-                        them: 'Für das Plugin nicht dokumentiert; seine Lokalisierung betrifft die eigene Oberfläche. Übersetzungsversionen dokumentiert Stripo für seine E-Mail-App. Der KI-Textassistent des Plugins hat einen Übersetzen-Prompt, der den markierten Text ersetzt',
+                        them: 'Für das Plugin nicht dokumentiert; seine Lokalisierung betrifft die eigene Oberfläche. Übersetzungsversionen dokumentiert Stripo für seine E-Mail-App. Der KI-Textassistent des Plugins hat einen Übersetzen-Prompt, der den markierten Text ins Englische übersetzt',
                     },
                     source: {
                         label: 'Quellcode-Zugang',
                         us: 'Vollständiger Quellcode in einem öffentlichen Repository',
-                        them: 'Nicht veröffentlicht',
+                        them: 'Nicht veröffentlicht. Stripo veröffentlicht die gebauten statischen Dateien des Editors zum Selbst-Hosten, nicht den Quellcode',
                     },
                     licence: {
                         label: 'Lizenz',
@@ -1494,7 +1494,7 @@ const de: MessageSchema = {
                     modules:
                         'Sie AMP und interaktive Module von einem Anbieter gepflegt haben wollen, statt sie selbst zu bauen.',
                     tooling:
-                        'Sie eingebaute Bildbearbeitung und Stock-Inhalte zusammen mit dem Editor wollen.',
+                        'Sie Stock-Bilder wollen, die mit dem Editor mitgeliefert werden. Stripo enthält sie in jedem Plugin-Tarif.',
                     support:
                         'Sie einen kommerziellen Anbieter mit dediziertem Support-Kanal wollen statt eines Open-Source-Projekts.',
                 },
@@ -1510,7 +1510,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft.',
+                    'Geprüft am 19. November 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1549,7 +1549,7 @@ const de: MessageSchema = {
                     domains: {
                         label: 'Domain-Grenzen',
                         us: 'Keine. Betreiben Sie ihn auf so vielen Domains, wie Sie möchten.',
-                        them: '1 Domain in Free und Launch, 3 in Scale und Optimize',
+                        them: '1 Domain in Free, 2 in Launch, 3 in Scale und Optimize',
                     },
                     customTools: {
                         label: 'Eigene Blocktypen',
@@ -1613,7 +1613,7 @@ const de: MessageSchema = {
                 us: {
                     cost: 'Der Editor weder nach Tarif abgerechnet noch durch die Zahl Ihrer Domains begrenzt sein soll.',
                     extensibility:
-                        'Sie mehr als eine Handvoll eigener Blocktypen erwarten. Templatical begrenzt sie nicht; Unlayer erlaubt je nach Tarif 1 bis 5.',
+                        'Sie mehr als eine Handvoll eigener Blocktypen erwarten. Templatical begrenzt sie nicht; die bepreisten Tarife von Unlayer erlauben 1, 3 oder 5.',
                     ownership:
                         'Der Editor in Ihrem eigenen Bundle laufen soll, ohne dass es dafür einen Enterprise-Vertrag braucht.',
                     output: 'Sie portable Ausgabe wollen. Templatical exportiert MJML — einen offenen Standard mit einer MIT-lizenzierten Implementierung, die Sie selbst betreiben können; eine Unlayer-Vorlage ist deren Design-JSON, gerendert von deren Engine.',
@@ -1625,7 +1625,7 @@ const de: MessageSchema = {
                         'Sie den Editor lieber von jemand anderem betreiben lassen, inklusive Hosting und Verfügbarkeit.',
                     amp: 'Sie AMP-E-Mails versenden. Templatical unterstützt AMP nicht und hat es auch nicht vor.',
                     tooling:
-                        'Sie einen eingebauten Bildeditor und Stock-Bilder wollen. Unlayer liefert Stock-Bilder in jedem Tarif und den Bildeditor ab Launch (250 $/Monat).',
+                        'Sie einen eingebauten Bildeditor und Stock-Bilder wollen. Unlayer liefert beides ab Launch (250 $/Monat).',
                     support:
                         'Sie einen kommerziellen Anbieter hinter dem Editor wollen, mit einem dedizierten Customer Success Manager in deren Enterprise-Tarif.',
                 },
@@ -1641,7 +1641,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen react-email-editor 2.0.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen, deren Help-Center und die Tarife auf unlayer.com geprüft.',
+                    'Geprüft am 19. November 2026 gegen react-email-editor 2.1.3 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1674,7 +1674,7 @@ const de: MessageSchema = {
                 rows: {
                     pricing: {
                         label: 'Preise',
-                        them: 'Kostenlose Stufe, danach 400 bis 6.000 $ pro Monat',
+                        them: 'Kostenlose Stufe, danach Essentials 400, Core 1.200 oder Superpowers 3.000 $ pro Monat, dazu Enterprise',
                         us: 'Kostenlos, in jeder Ausbaustufe',
                     },
                     users: {
@@ -1753,9 +1753,9 @@ const de: MessageSchema = {
                 them: {
                     scope: 'Sie neben E-Mails auch Landingpages und Popups brauchen. Templatical ist auf E-Mails beschränkt und soll es bleiben.',
                     operated:
-                        'Sie den Editor lieber von jemand anderem betreiben lassen — gehostet, automatisch skalierend, mit einer Verfügbarkeitszusage.',
+                        'Sie den Editor lieber von jemand anderem betreiben lassen. Beefree hostet ihn, und das npm-Paket lädt ihn zur Laufzeit von deren CDN.',
                     catalog:
-                        'Sie Ihren Nutzern von Tag eins an einen großen Katalog fertiger Vorlagen anbieten wollen.',
+                        'Sie die Template Catalog API von Beefree wollen. Sie ist in Core ein Add-on für 2.000 $ pro Jahr und in Superpowers und Enterprise enthalten.',
                     support:
                         'Sie einen kommerziellen Anbieter mit bezahltem Support-Vertrag wollen statt eines Open-Source-Projekts.',
                     files: 'Sie einen File Manager ab Werk wollen. Beefree liefert ihn in jedem Tarif mit; die Medien-Bibliothek von Templatical verwendet einen Provider, den Sie auf Ihrem eigenen Backend implementieren.',
@@ -1772,7 +1772,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}beefree.io/sdk 11.6.1 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft.",
+                    "Geprüft am 19. November 2026 gegen {'@'}beefree.io/sdk 11.8.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1805,7 +1805,7 @@ const de: MessageSchema = {
                 rows: {
                     licensing: {
                         label: 'Lizenzierung',
-                        them: 'Kommerzielles Abonnement, 99–499 $ pro Monat',
+                        them: 'Kommerzielles Abonnement, 99–499 $ pro Monat; drei Tarife sind zu einem zeitlich begrenzten Preis angegeben, mit regulären Preisen bis 799 $',
                         us: 'MIT. Kostenlos.',
                     },
                     source: {
@@ -1825,7 +1825,7 @@ const de: MessageSchema = {
                     },
                     footprint: {
                         label: 'Installationsgröße',
-                        them: 'Rund 62 MB entpackt über vier Pakete',
+                        them: 'Rund 65,7 MB entpackt über vier Pakete',
                         us: '10,3 MB, keine Runtime-Dependencies',
                     },
                     activation: {
@@ -1845,7 +1845,7 @@ const de: MessageSchema = {
                     },
                     importers: {
                         label: 'Migrations-Importer',
-                        them: 'Nicht dokumentiert',
+                        them: 'Unlayer, Beefree und Klaviyo, über das Paket easy-email-pro-migrations',
                         us: '{count} MIT-Konverter, darunter einer für Easy-Email-Pro-Vorlagen',
                     },
                     languages: {
@@ -1900,7 +1900,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 7. August 2026 gegen easy-email-pro-core 1.59.9 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf easyemail.pro angegebenen Preise. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen easy-email-pro-core 1.60.2 in der auf npm veröffentlichten Fassung, deren Dokumentation und die Preise auf easyemail.pro geprüft.',
+                    'Geprüft am 19. November 2026 gegen easy-email-pro-core, easy-email-pro-editor, easy-email-pro-theme und easy-email-pro-kit, alle 1.61.0, in den auf npm veröffentlichten Fassungen sowie gegen die Preise auf der an diesem Tag unter easyemail.pro ausgelieferten Seite. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
