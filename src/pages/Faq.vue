@@ -6,6 +6,7 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
 import { usePageMeta } from '@/composables/usePageMeta';
+import { importerNameList } from '@/lib/importers';
 import { URLS, localizedUrl } from '@/lib/urls';
 import { ChevronRight } from '@lucide/vue';
 import { computed } from 'vue';
@@ -34,7 +35,10 @@ const faqItems = computed(() =>
         'contact',
     ].map((key) => ({
         question: t(`faq.items.${key}.question`),
-        answer: t(`faq.items.${key}.answer`),
+        answer:
+            key === 'migrate'
+                ? t(`faq.items.${key}.answer`, { importers: importerNameList(locale.value) })
+                : t(`faq.items.${key}.answer`),
     })),
 );
 </script>
