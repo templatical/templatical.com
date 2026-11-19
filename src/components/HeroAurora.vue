@@ -18,8 +18,14 @@
     bleed. Alternating section backgrounds is the natural instinct and is what breaks
     it — the alternation has to start one section later.
 
-    Confirm a suspected case by hit test, not by eye: document.elementFromPoint() at
-    the heading's own centre returns this overlay rather than the heading.
+    Confirm a suspected case by hit test, not by eye, but never with a plain
+    document.elementFromPoint(). The root below is `pointer-events-none`, which
+    inherits into every layer, and a hit test skips elements that take no pointer
+    events: a heading this overlay has swallowed still hit-tests as itself, so the
+    plain check passes on exactly the broken page. In the console, first add
+    `.hero-aurora, .hero-aurora * { pointer-events: auto }`, then hit-test the
+    heading's centre (this overlay now answers if it covers it), then remove the
+    override. Never leave it in source.
 -->
 <script setup lang="ts">
 import {

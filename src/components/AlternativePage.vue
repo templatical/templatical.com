@@ -30,10 +30,9 @@ import { useI18n } from 'vue-i18n';
 const props = defineProps<{
     /** i18n namespace, e.g. `alternatives.easyEmailPro`. */
     ns: string;
-    /** Comparison row order. Fixed in code, not read from the message object: `tm()`
-     *  on a nested structure returns compiled message functions rather than plain
-     *  strings (the repo's Faq.vue pattern), and it keeps ordering out of
-     *  translators' hands. */
+    /** Comparison row order. Fixed in code, not read from the message object, so
+     *  ordering stays out of translators' hands: reordering the comparison is a
+     *  reviewed code change, not a copy edit. */
     rowKeys: readonly string[];
     /** Reasons to choose Templatical. */
     usKeys: readonly string[];
