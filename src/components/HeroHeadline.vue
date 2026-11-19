@@ -116,7 +116,9 @@ function clearTransforms() {
 // Start the magnetic effect after the intro animation completes. The delay is read
 // when the timer starts, so it tracks the length of the text being revealed.
 const { start: startMagnet, stop: stopMagnet } = useTimeoutFn(
-    resumeRaf,
+    () => {
+        if (reducedMotion.value !== 'reduce') resumeRaf();
+    },
     () => startDelay + chars.length * perChar + duration,
     { immediate: false },
 );
@@ -185,6 +187,7 @@ watch(tokens, reveal, { flush: 'post' });
 
 // React to reduced-motion toggling mid-session.
 watch(reducedMotion, (v) => {
+    if (v === 'reduce') stopMagnet();
     if (coarsePointer.value) return;
     if (v === 'reduce') {
         pauseRaf();
