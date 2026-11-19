@@ -19,7 +19,7 @@ import { usePageMeta } from '@/composables/usePageMeta';
 import { tagTemplateAsHtml } from '@/composables/useShikiHighlight';
 import CodeBlock from '@/components/CodeBlock.vue';
 import VariantTabs from '@/components/VariantTabs.vue';
-import { URLS } from '@/lib/urls';
+import { URLS, localizedUrl } from '@/lib/urls';
 import { IMPORTERS } from '@/lib/importers';
 
 const { t, tm, locale, fallbackLocale } = useI18n();
@@ -1537,7 +1537,12 @@ const { activeSlug, progress, stackInView, paletteOpen, shortcutLabel, jumpTo } 
                         v-for="path in [
                             {
                                 key: 'install',
-                                links: [{ ctaKey: 'cta', href: URLS.docs }],
+                                links: [
+                                    {
+                                        ctaKey: 'cta',
+                                        href: localizedUrl('installation', locale),
+                                    },
+                                ],
                             },
                             // Points at /importers rather than repeating a subset of
                             // the converters — that duplicate list is what went stale

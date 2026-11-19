@@ -119,6 +119,10 @@ export const LOCALIZED_URLS = {
         en: 'https://docs.templatical.com/guide/localized-templates',
         de: 'https://docs.templatical.com/de/guide/localized-templates',
     },
+    installation: {
+        en: 'https://docs.templatical.com/getting-started/installation',
+        de: 'https://docs.templatical.com/de/getting-started/installation',
+    },
 } as const;
 
 export function localizedUrl(key: keyof typeof LOCALIZED_URLS, locale: string): string {
