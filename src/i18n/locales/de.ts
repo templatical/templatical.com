@@ -119,7 +119,10 @@ const de: MessageSchema = {
             backendNote:
                 'Speicherung und Versand liegen bei Ihrem Team; es gibt keinen gehosteten Dienst.',
             ctaPrimary: 'Playground öffnen',
-            ctaSecondary: 'Dokumentation lesen',
+            ctaSecondary: 'Installationsanleitung',
+            copyLabel: 'Kopieren',
+            copiedLabel: 'Kopiert',
+            copyAriaLabel: 'Installationsbefehl kopieren',
             frameworkNote:
                 'Funktioniert in React, Svelte, Angular, Vue und Vanilla JS — ein init()-Aufruf, keine Runtime-Dependencies.',
             badges: [
@@ -352,13 +355,13 @@ const de: MessageSchema = {
             cta: 'Alle Importer ansehen',
         },
         close: {
-            headline: 'Diese Woche einen E-Mail-Editor ausliefern',
+            headline: 'Installation: ein npm install, ein init()-Aufruf',
             subheadline:
                 'Ein npm install. Ein init()-Aufruf. JSON rein, MJML raus — überall rendern, kostenlos.',
             copyLabel: 'Kopieren',
             copiedLabel: 'Kopiert',
             ctaPrimary: 'Playground öffnen',
-            ctaSecondary: 'Auf GitHub bewerten',
+            ctaSecondary: 'Installationsanleitung',
         },
     },
     features: {
@@ -369,8 +372,7 @@ const de: MessageSchema = {
         },
         hero: {
             eyebrow: 'Open-Source-SDK',
-            headline:
-                'Was andere Editoren hinter Schranken halten — bei uns in Ihrem Repo. Kostenlos einbettbar.',
+            headline: 'Funktionen des MIT-lizenzierten E-Mail-Editor-SDKs',
             subheadline:
                 'Die Power-Features und eine saubere Basis — alles enthalten, nichts gesperrt. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
             pricingPill: 'Open Source · MIT · Kostenlos selbst hosten',
@@ -817,7 +819,7 @@ const de: MessageSchema = {
         },
         supporting: {
             eyebrow: 'Die Essentials',
-            headline: 'Alles andere, was Sie erwarten — richtig gemacht.',
+            headline: 'Grundlagen für Integration und Bearbeitung',
             subheadline:
                 'Einsatzbereites Mounting, framework-unabhängig, jede Sprache, die Sie brauchen. Plus die Politur — Dark Mode, Rückgängig/Wiederholen, responsive Vorschau.',
         },
@@ -854,7 +856,7 @@ const de: MessageSchema = {
             },
         },
         migration: {
-            eyebrow: 'Schmerzlose Migration',
+            eyebrow: 'Migration',
             title: 'Schon in einem anderen Editor? Bringen Sie Ihre Vorlagen mit.',
             description:
                 'Ein Importer je Quellformat — Hosted-Editoren plus rohes HTML und MJML. Kostenlos, quelloffen, MIT, kein manuelles Nachbauen und kein Vendor-Lock-in.',
@@ -873,7 +875,7 @@ const de: MessageSchema = {
                 title: 'SDK installieren',
                 description:
                     'Paket hinzufügen, mit einem init()-Aufruf einbinden, ausliefern. Erstklassige Beispiele für jedes große Framework.',
-                cta: 'Zur Installations-Anleitung',
+                cta: 'Zur Installationsanleitung',
             },
             migrate: {
                 title: 'Vorlagen migrieren',
@@ -887,7 +889,7 @@ const de: MessageSchema = {
         meta: {
             title: 'Vorlagen-Importer — Templatical',
             description:
-                'Kostenlose, MIT-lizenzierte Konverter von BeeFree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, rohem HTML und MJML nach Templatical-JSON.',
+                'Kostenlose, MIT-lizenzierte Konverter von Beefree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, rohem HTML und MJML nach Templatical-JSON.',
         },
         hero: {
             eyebrow: 'Migration',
@@ -1653,7 +1655,7 @@ const de: MessageSchema = {
             meta: {
                 title: 'Eine Open-Source-Alternative zu Beefree SDK — Templatical',
                 description:
-                    'Ein belegter Direktvergleich: Hosting-Modell, Preise pro Nutzer, was der Editor zur Laufzeit braucht und wie Sie bestehende BeeFree-Vorlagen migrieren.',
+                    'Ein belegter Direktvergleich: Hosting-Modell, Preise pro Nutzer, was der Editor zur Laufzeit braucht und wie Sie bestehende Beefree-Vorlagen migrieren.',
             },
             hero: {
                 eyebrow: 'Vergleich',
@@ -1760,13 +1762,13 @@ const de: MessageSchema = {
                 },
             },
             close: {
-                headline: 'Schon auf BeeFree? Nehmen Sie Ihre Vorlagen mit',
-                body: 'Templatical liefert einen MIT-lizenzierten Konverter für BeeFree-Vorlagen — eine Evaluierung startet also mit Ihren echten Designs statt mit einer leeren Seite.',
+                headline: 'Schon auf Beefree? Nehmen Sie Ihre Vorlagen mit',
+                body: 'Templatical liefert einen MIT-lizenzierten Konverter für Beefree-Vorlagen — eine Evaluierung startet also mit Ihren echten Designs statt mit einer leeren Seite.',
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
             },
             migration: {
-                label: 'Zur BeeFree-Migrationsanleitung',
+                label: 'Zur Beefree-Migrationsanleitung',
             },
             footnote: {
                 verified:
@@ -1774,7 +1776,7 @@ const de: MessageSchema = {
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
-                    'BeeFree und Beefree SDK sind Marken des jeweiligen Inhabers. Diese Seite wird von Templatical gepflegt und steht weder in Verbindung mit dem Anbieter noch wird sie von ihm unterstützt.',
+                    'Beefree und Beefree SDK sind Marken des jeweiligen Inhabers. Diese Seite wird von Templatical gepflegt und steht weder in Verbindung mit dem Anbieter noch wird sie von ihm unterstützt.',
                 sourcesLabel: 'Quellen',
                 stale: 'Diese Seite ist eine Momentaufnahme, kein dauerhafter Anspruch — auch das, was Beefree SDK laut uns besser macht. Falls hier etwas veraltet oder falsch ist,',
                 staleCta: 'melden Sie es uns',
@@ -1844,7 +1846,7 @@ const de: MessageSchema = {
                     importers: {
                         label: 'Migrations-Importer',
                         them: 'Nicht dokumentiert',
-                        us: 'Acht MIT-Konverter, darunter einer für Easy-Email-Pro-Vorlagen',
+                        us: '{count} MIT-Konverter, darunter einer für Easy-Email-Pro-Vorlagen',
                     },
                     languages: {
                         label: 'Sprachversionen und Übersetzung',
@@ -1941,9 +1943,13 @@ const de: MessageSchema = {
                 question: 'Welche Frameworks werden unterstützt?',
                 answer: 'Templatical funktioniert in React, Svelte, Angular, Vue und Vanilla JS. Das veröffentlichte Paket ist vollständig in sich geschlossen — Vue ist intern gebündelt, daher installieren Konsumenten ein Paket ohne Peer-Dependencies und mounten den Editor mit einem einzigen init()-Aufruf in beliebige DOM-Elemente.',
             },
+            install: {
+                question: 'Wie installiere ich Templatical?',
+                answer: "Führen Sie npm install {'@'}templatical/editor aus und binden Sie den Editor mit einem init()-Aufruf ein. Um Vorlagen nach MJML zu konvertieren, installieren Sie zusätzlich {'@'}templatical/renderer; das ist optional. Die Installationsanleitung auf docs.templatical.com behandelt pnpm, yarn, bun und den CDN-Build.",
+            },
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
-                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für BeeFree, Unlayer, Stripo, Topol, Chamaileon und Easy Email Pro sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
+                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für Beefree, Unlayer, Stripo, Topol, Chamaileon und Easy Email Pro sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
             },
             languages: {
                 question: 'Kann eine Vorlage mehrere Sprachen enthalten?',
@@ -1974,9 +1980,9 @@ const de: MessageSchema = {
             eyebrow: 'Noch Fragen?',
             headline: 'Antwort nicht gefunden?',
             description:
-                'Fragen Sie die Community auf GitHub Discussions oder tauchen Sie in die Dokumentation für die tiefere API-Referenz ein.',
+                'Fragen Sie die Community auf GitHub Discussions oder beginnen Sie mit der Installationsanleitung in der Dokumentation.',
             discussionsCta: 'Auf GitHub Discussions fragen',
-            docsCta: 'Zur Dokumentation',
+            docsCta: 'Zur Installationsanleitung',
         },
     },
     changelog: {

@@ -116,7 +116,10 @@ export default {
                 'Custom blocks, full theming, merge tags, display conditions, language versions, and an AI assistant on your own model — all built into the SDK. Drop into any app with one init() call.',
             backendNote: 'Your team owns storage and sending; there is no hosted service.',
             ctaPrimary: 'Open playground',
-            ctaSecondary: 'Read the docs',
+            ctaSecondary: 'Installation guide',
+            copyLabel: 'Copy',
+            copiedLabel: 'Copied',
+            copyAriaLabel: 'Copy the install command',
             frameworkNote:
                 'Works in React, Svelte, Angular, Vue, and vanilla JS — one init() call, zero runtime dependencies.',
             badges: [
@@ -349,13 +352,13 @@ export default {
             cta: 'See all importers',
         },
         close: {
-            headline: 'Ship an email editor this week',
+            headline: 'Installation: one npm install, one init() call',
             subheadline:
                 'One npm install. One init() call. JSON in, MJML out — render anywhere, free.',
             copyLabel: 'Copy',
             copiedLabel: 'Copied',
             ctaPrimary: 'Open playground',
-            ctaSecondary: 'Star on GitHub',
+            ctaSecondary: 'Installation guide',
         },
     },
     features: {
@@ -366,7 +369,7 @@ export default {
         },
         hero: {
             eyebrow: 'Open-source SDK',
-            headline: 'The features other editors gate. In your repo. Free to embed.',
+            headline: 'Email editor features in the MIT-licensed SDK',
             subheadline:
                 'The power features, and a clean set of essentials — all included, nothing gated. Portable JSON in, MJML out, no usage tier in the way.',
             pricingPill: 'Open source · MIT · Free to self-host',
@@ -802,7 +805,7 @@ export default {
         },
         supporting: {
             eyebrow: 'The essentials',
-            headline: 'Everything else you expect — done right.',
+            headline: 'Integration and editing essentials',
             subheadline:
                 'Drop-in mount, framework-agnostic, every locale you need. Plus the polish — dark mode, undo/redo, responsive preview.',
         },
@@ -839,7 +842,7 @@ export default {
             },
         },
         migration: {
-            eyebrow: 'Painless migration',
+            eyebrow: 'Migration',
             title: 'Already in another editor? Bring your templates with you.',
             description:
                 'One importer per source format — hosted editors plus raw HTML and MJML. Free, open-source, MIT, no manual rebuilding and no vendor lock-in.',
@@ -872,7 +875,7 @@ export default {
         meta: {
             title: 'Template importers — Templatical',
             description:
-                'Free, MIT-licensed converters from BeeFree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, raw HTML and MJML into Templatical JSON.',
+                'Free, MIT-licensed converters from Beefree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, raw HTML and MJML into Templatical JSON.',
         },
         hero: {
             eyebrow: 'Migration',
@@ -1637,7 +1640,7 @@ export default {
             meta: {
                 title: 'An open-source Beefree SDK alternative — Templatical',
                 description:
-                    'A sourced side-by-side comparison: hosting model, per-user pricing, what the editor needs at runtime, and how to migrate existing BeeFree templates.',
+                    'A sourced side-by-side comparison: hosting model, per-user pricing, what the editor needs at runtime, and how to migrate existing Beefree templates.',
             },
             hero: {
                 eyebrow: 'Comparison',
@@ -1744,13 +1747,13 @@ export default {
                 },
             },
             close: {
-                headline: 'Already on BeeFree? Bring your templates',
-                body: 'Templatical ships an MIT-licensed converter for BeeFree templates, so an evaluation starts from your real designs rather than a blank canvas.',
+                headline: 'Already on Beefree? Bring your templates',
+                body: 'Templatical ships an MIT-licensed converter for Beefree templates, so an evaluation starts from your real designs rather than a blank canvas.',
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
             },
             migration: {
-                label: 'Read the BeeFree migration guide',
+                label: 'Read the Beefree migration guide',
             },
             footnote: {
                 verified:
@@ -1758,7 +1761,7 @@ export default {
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
-                    'BeeFree and Beefree SDK are trademarks of their respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                    'Beefree and Beefree SDK are trademarks of their respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
                 sourcesLabel: 'Sources',
                 stale: 'This page is a snapshot, not a standing claim — including what we say Beefree SDK does better. If anything here is out of date or wrong,',
                 staleCta: 'open an issue',
@@ -1828,7 +1831,7 @@ export default {
                     importers: {
                         label: 'Migration importers',
                         them: 'Not documented',
-                        us: 'Eight MIT converters, including one for Easy Email Pro templates',
+                        us: '{count} MIT converters, including one for Easy Email Pro templates',
                     },
                     languages: {
                         label: 'Language versions and translation',
@@ -1925,9 +1928,13 @@ export default {
                 question: 'What frameworks are supported?',
                 answer: 'Templatical works in React, Svelte, Angular, Vue, and vanilla JS. The published package is fully self-contained — Vue is bundled inside, so consumers install one package with zero peer dependencies and mount the editor with a single init() call into any DOM element.',
             },
+            install: {
+                question: 'How do I install Templatical?',
+                answer: "Run npm install {'@'}templatical/editor and mount the editor with one init() call. To convert templates to MJML, also install {'@'}templatical/renderer; it is optional. The installation guide on docs.templatical.com covers pnpm, yarn, bun and the CDN build.",
+            },
             migrate: {
                 question: 'How do I migrate from another editor?',
-                answer: 'We provide free, MIT-licensed converters for BeeFree, Unlayer, Stripo, Topol, Chamaileon and Easy Email Pro, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The docs carry a migration guide per source format.',
+                answer: 'We provide free, MIT-licensed converters for Beefree, Unlayer, Stripo, Topol, Chamaileon and Easy Email Pro, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The docs carry a migration guide per source format.',
             },
             languages: {
                 question: 'Can one template hold several languages?',
@@ -1958,9 +1965,9 @@ export default {
             eyebrow: 'Still curious?',
             headline: "Didn't find your answer?",
             description:
-                'Ask the community on GitHub Discussions, or dive into the docs for the deeper API reference.',
+                'Ask the community on GitHub Discussions, or start with the installation guide in the docs.',
             discussionsCta: 'Ask on GitHub Discussions',
-            docsCta: 'Read the docs',
+            docsCta: 'Read the install guide',
         },
     },
     changelog: {
