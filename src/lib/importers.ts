@@ -29,7 +29,7 @@ export interface Importer {
 }
 
 export const IMPORTERS: readonly Importer[] = [
-    { slug: 'beefree', name: 'BeeFree', group: 'hosted' },
+    { slug: 'beefree', name: 'Beefree', group: 'hosted' },
     { slug: 'unlayer', name: 'Unlayer', group: 'hosted' },
     { slug: 'stripo', name: 'Stripo', group: 'hosted' },
     { slug: 'topol', name: 'Topol', group: 'hosted' },

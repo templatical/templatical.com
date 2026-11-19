@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { URLS } from '@/lib/urls';
+import { URLS, localizedUrl } from '@/lib/urls';
 import { useScrollLock, useToggle, useWindowScroll } from '@vueuse/core';
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 import { computed, nextTick, ref, watch } from 'vue';
@@ -12,7 +12,7 @@ import SiteButton from './SiteButton.vue';
 import GithubIcon from './icons/GithubIcon.vue';
 import { Menu, X } from '@lucide/vue';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const route = useRoute();
 const { y: scrollY } = useWindowScroll();
 const hasTransparentHero = computed(() => route.meta.transparentHero === true);
@@ -108,7 +108,12 @@ const linkClasses =
                     >
                         <GithubIcon class="size-5" />
                     </a>
-                    <SiteButton :href="URLS.docs" external size="md" class="max-sm:hidden">
+                    <SiteButton
+                        :href="localizedUrl('installation', locale)"
+                        external
+                        size="md"
+                        class="max-sm:hidden"
+                    >
                         {{ t('nav.getStarted') }}
                     </SiteButton>
 
