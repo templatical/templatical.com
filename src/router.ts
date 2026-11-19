@@ -1,3 +1,5 @@
+import type { RouteRecordRaw } from 'vue-router';
+
 declare module 'vue-router' {
     interface RouteMeta {
         /**
@@ -10,7 +12,11 @@ declare module 'vue-router' {
     }
 }
 
-export const routes = [
+export function legalRoutes(): RouteRecordRaw[] {
+    return [{ path: '/privacy', component: () => import('./pages/Privacy.vue') }];
+}
+
+export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         component: () => import('./pages/Home.vue'),
@@ -71,6 +77,7 @@ export const routes = [
         component: () => import('./pages/AlternativeGrapesjs.vue'),
         meta: { transparentHero: true },
     },
+    ...legalRoutes(),
     // Cloudflare Pages answers a path with no file by serving the prerendered
     // /404 as dist/404.html with a 404 status. vite-ssg skips the catch-all (its
     // path holds `:` and `*`), so that one only serves client-side navigation.

@@ -25,12 +25,7 @@ const ROW_KEYS = [
 
 const US_KEYS = ['cost', 'domains', 'ownership', 'output', 'source'] as const;
 
-// `comments` is the one perishable entry here: our Cloud tier plans commenting, so if
-// that ships, this reason stops being true and the page needs editing in the same
-// change. The other four are structural — infrastructure, storage and support we do
-// not offer, and a template library we do not curate.
-//
-// Keep this the same length as US_KEYS — see the note in AlternativeBeefree.vue.
+// Keep this the same length as US_KEYS for a balanced comparison.
 const THEM_KEYS = ['operated', 'storage', 'comments', 'templates', 'support'] as const;
 
 const SOURCES = [

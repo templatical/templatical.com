@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LEGAL } from '@/lib/legal';
 import { URLS } from '@/lib/urls';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -109,15 +110,21 @@ const socialLinks = [{ label: 'GitHub', href: URLS.github, icon: GithubIcon }];
                 class="flex flex-col items-start justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row sm:items-center dark:border-neutral-800"
             >
                 <div
-                    class="flex flex-col gap-1 text-sm/7 text-neutral-600 sm:flex-row sm:items-center sm:gap-3 dark:text-neutral-400"
+                    class="flex flex-col gap-1 text-sm/7 text-neutral-600 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 dark:text-neutral-400"
                 >
                     <span>{{ t('footer.copyright', { year: new Date().getFullYear() }) }}</span>
                     <a
-                        href="mailto:hi@templatical.com"
+                        :href="`mailto:${LEGAL.email}`"
                         class="transition-colors hover:text-neutral-950 dark:hover:text-white"
                     >
-                        hi@templatical.com
+                        {{ LEGAL.email }}
                     </a>
+                    <router-link
+                        to="/privacy"
+                        class="transition-colors hover:text-neutral-950 dark:hover:text-white"
+                    >
+                        {{ t('footer.privacy') }}
+                    </router-link>
                 </div>
                 <div class="flex items-center gap-1">
                     <a

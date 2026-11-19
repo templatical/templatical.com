@@ -40,11 +40,7 @@ const ROW_KEYS = [
 // `emailSupport` row, which already names grapesjs-mjml as the maintained path.
 const US_KEYS = ['purpose', 'features', 'previews', 'dropIn', 'defaults'] as const;
 
-// `licence` is the notable one: BSD-3-Clause genuinely beats FSL-1.1-MIT today — no
-// non-compete restriction, no two-year wait. It is conceded in both the table and here
-// rather than argued around. All five are structural and none can expire.
-//
-// Keep this the same length as US_KEYS — see the note in AlternativeBeefree.vue.
+// Keep this the same length as US_KEYS for a balanced comparison.
 const THEM_KEYS = ['scope', 'freedom', 'licence', 'control', 'reuse'] as const;
 
 const SOURCES = [

@@ -15,12 +15,9 @@ import en from '@/i18n/locales/en';
     Whole-template translation was cut from the AI as well, and shipped in 0.53.0 as a
     provider of its own (a TranslationProvider passed as init({ translation }), beside
     language versions). Translation is therefore no longer banned here:
-    tests/copy/languages.test.ts pins how it is described, and that no Cloud copy
-    claims it. Subject lines are banned only next to AI, because the localization copy
-    says they stay with the host that sends the email, as the docs do.
-
-    `cloud.*` is not scanned here: it describes Templatical Cloud's own roadmap, which
-    is corrected together with the rest of the Cloud copy, not with an SDK release.
+    tests/copy/languages.test.ts pins how it is described. Subject lines are banned
+    only next to AI, because localization copy says they stay with the host that
+    sends the email, as the docs do.
 */
 
 /** Every string leaf as [path, text]; array items get `[i]`. */
@@ -30,12 +27,6 @@ function strings(tree: unknown, path: string): Array<[string, string]> {
     if (tree !== null && typeof tree === 'object')
         return Object.entries(tree).flatMap(([key, value]) => strings(value, `${path}.${key}`));
     return [];
-}
-
-function outsideCloud(messages: typeof en, locale: string): Array<[string, string]> {
-    return Object.entries(messages)
-        .filter(([key]) => key !== 'cloud')
-        .flatMap(([key, value]) => strings(value, `${locale}.${key}`));
 }
 
 const CUT_AI_FEATURES: Array<[string, RegExp]> = [
@@ -71,9 +62,9 @@ describe.each([
     ['en', en],
     ['de', de],
 ])('%s copy', (locale, messages) => {
-    const copy = outsideCloud(messages, locale);
+    const copy = strings(messages, locale);
 
-    it('has strings outside the Cloud tree to scan', () => {
+    it('has strings to scan', () => {
         expect(copy.length).toBeGreaterThan(0);
     });
 
@@ -86,16 +77,13 @@ describe.each([
         const mitSentence = answer.split('. ')[0];
         expect(mitSentence).toMatch(/\bMIT\b/);
         // German capitalizes the package names it lists ("Template-Tools", "AI-Kit").
-        expect(mitSentence).toMatch(/\bai-kit\b/i);
+        expect(mitSentence).toMatch(/\bai[- ]kit\b/i);
     });
 
     it('says where AI requests go when the template data answer covers init()', () => {
         const answer = messages.faq.items.data.answer;
-        // Only the self-hosted part: a Cloud sentence, where present, is Cloud's own copy.
-        const cloudAt = answer.indexOf('Templatical Cloud');
-        const initSentences = cloudAt === -1 ? answer : answer.slice(0, cloudAt);
-        expect(initSentences).toMatch(locale === 'en' ? /\bAI\b/ : /\bKI\b/);
-        expect(initSentences).toMatch(locale === 'en' ? /\bmodel\b/ : /\bModell\b/);
+        expect(answer).toMatch(locale === 'en' ? /\bAI\b/ : /\bKI\b/);
+        expect(answer).toMatch(locale === 'en' ? /\bmodel\b/ : /\bModell\b/);
     });
 
     // The hero's own words are what a skimming reader, a search snippet and a link
@@ -278,9 +266,9 @@ describe('the patterns', () => {
 });
 
 describe('llms.txt', () => {
-    it('names the AI kit among the MIT packages', () => {
-        const mitLine = llms.split('\n').find((line) => line.includes('MIT today')) ?? '';
-        expect(mitLine).toMatch(/AI kit/);
+    it('states the MIT licence for every package, including the AI kit', () => {
+        expect(llms).toContain('All packages are MIT-licensed and open source.');
+        expect(llms).toContain('`@templatical/ai-kit`');
     });
 
     it('links the AI and collaboration docs pages', () => {
@@ -393,15 +381,12 @@ describe('both AI sections on the homepage and /features', () => {
 
 describe('the homepage licence labels', () => {
     // Both the AI kit and the Agent Skill are MIT. The labels name that licence and what
-    // it covers; "open source" above the AI section would read as covering the editor,
-    // which is source-available.
+    // it covers.
     it('name MIT and the thing it covers, in both sections and languages', () => {
         for (const messages of [en, de]) {
             expect(messages.home.ai.eyebrow).toMatch(/\bMIT\b/);
             expect(messages.home.aiSkill.eyebrow).toMatch(/\bMIT\b/);
             expect(messages.home.aiSkill.eyebrow).toMatch(/Agent Skill/);
-            for (const eyebrow of [messages.home.ai.eyebrow, messages.home.aiSkill.eyebrow])
-                expect(eyebrow).not.toMatch(/open[- ]?source/i);
         }
     });
 });

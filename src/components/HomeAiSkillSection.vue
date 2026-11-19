@@ -142,17 +142,6 @@ const halves = computed(() => [
                             <ChevronRight class="size-5" />
                         </SiteButton>
                     </div>
-
-                    <p class="text-sm/6 text-neutral-500 dark:text-neutral-400">
-                        {{ t('home.aiSkill.cloudNote') }}
-                        <a
-                            :href="URLS.cloud"
-                            target="_blank"
-                            rel="noopener"
-                            class="font-medium text-amber-700 hover:underline dark:text-amber-300"
-                            >{{ t('home.aiSkill.cloudNoteLink') }}</a
-                        >
-                    </p>
                 </div>
             </RevealOnScroll>
         </SiteContainer>
