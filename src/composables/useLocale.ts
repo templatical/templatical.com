@@ -10,12 +10,13 @@ function isSupported(locale: string): locale is SupportedLocale {
     return SUPPORTED_LOCALES.includes(locale as SupportedLocale);
 }
 
-function getInitialLocale(): SupportedLocale {
-    if (typeof window === 'undefined') {
-        return 'en';
+function getPreferredLocale(): SupportedLocale {
+    let stored: string | null = null;
+    try {
+        stored = localStorage.getItem(STORAGE_KEY);
+    } catch {
+        // Storage can be unavailable; use the browser language instead.
     }
-
-    const stored = localStorage.getItem(STORAGE_KEY);
     if (stored && isSupported(stored)) {
         return stored;
     }
@@ -28,20 +29,35 @@ function getInitialLocale(): SupportedLocale {
     return 'en';
 }
 
-const initialLocale = getInitialLocale();
-i18n.global.locale.value = initialLocale;
-if (typeof document !== 'undefined') {
-    document.documentElement.lang = initialLocale;
+function setLocale(value: SupportedLocale) {
+    i18n.global.locale.value = value;
+    if (typeof document !== 'undefined') {
+        document.documentElement.lang = value;
+    }
+}
+
+setLocale('en');
+
+// Prerendered HTML is English, so apply the preference after hydration; doing so at import time causes a mismatch.
+export function applyPreferredLocale() {
+    if (typeof window === 'undefined') {
+        return;
+    }
+
+    setLocale(getPreferredLocale());
 }
 
 export function useLocale() {
     const locale = computed({
         get: () => i18n.global.locale.value as SupportedLocale,
         set: (value: SupportedLocale) => {
-            i18n.global.locale.value = value;
-            localStorage.setItem(STORAGE_KEY, value);
-            if (typeof document !== 'undefined') {
-                document.documentElement.lang = value;
+            setLocale(value);
+            if (typeof window !== 'undefined') {
+                try {
+                    localStorage.setItem(STORAGE_KEY, value);
+                } catch {
+                    // The language switch still works when storage is unavailable.
+                }
             }
         },
     });
