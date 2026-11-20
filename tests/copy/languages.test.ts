@@ -36,15 +36,6 @@ describe.each([
         expect(messages.features.meta.description).toMatch(versions);
     });
 
-    it('lists language versions with Translate among the SDK features', () => {
-        const sdk = messages.home.comparison.columns.templatical.sdk as string[];
-        const item = sdk.find((line) => /^(Language versions|Sprachversionen)\b/.test(line));
-        expect(item).toBeDefined();
-        expect(item).toMatch(locale === 'en' ? /\bTranslate\b/ : /Übersetzen/);
-        const diy = messages.home.comparison.columns.diy.tradeOffs as string[];
-        expect(diy.some((line) => /^(Language versions|Sprachversionen)\b/.test(line))).toBe(true);
-    });
-
     it('gives Rewrite its Translate preset', () => {
         const rewrite = (messages.home.ai.features as Array<{ name: string; body: string }>)[1];
         expect(rewrite?.body).toMatch(TRANSLATE[locale]);
@@ -142,13 +133,13 @@ describe('the homepage section', () => {
     const HOME = source('pages/Home.vue');
     const SECTION = source('components/HomeLanguagesSection.vue');
 
-    it('follows the Agent Skill section, ahead of the comparison', () => {
+    it('follows the Agent Skill section, ahead of runtime independence', () => {
         const order = [
             '<HeroSection />',
             '<HomeAiSection />',
             '<HomeAiSkillSection />',
             '<HomeLanguagesSection />',
-            '<ComparisonSection />',
+            '<HomeIndependenceSection />',
         ].map((tag) => HOME.indexOf(tag));
         expect(order.every((at) => at > -1)).toBe(true);
         expect([...order].sort((a, b) => a - b)).toEqual(order);

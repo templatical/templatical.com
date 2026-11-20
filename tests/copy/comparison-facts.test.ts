@@ -93,21 +93,6 @@ describe('comparison facts rechecked on 19 November 2026', () => {
         );
     });
 
-    it('keeps the homepage trade-off line in step with the Topol custom-blocks row', () => {
-        expect(en.home.comparison.columns.hosted.tradeOffs).toContain(
-            'Topol includes white-labelling on every plan and custom blocks from its Business plan.',
-        );
-        expect(de.home.comparison.columns.hosted.tradeOffs).toContain(
-            'Topol enthält White-Labeling in jedem Tarif und Custom Blocks ab dem Business-Tarif.',
-        );
-        for (const line of [
-            ...en.home.comparison.columns.hosted.tradeOffs,
-            ...de.home.comparison.columns.hosted.tradeOffs,
-        ]) {
-            expect(line).not.toMatch(/custom blocks on every plan|Custom Blocks in jedem Tarif/i);
-        }
-    });
-
     it('drops the separate language-row sentence only where the ruling said to', () => {
         for (const vendor of ['grapesjs', 'chamaileon', 'easyEmailPro', 'unlayer']) {
             expect(enAlternatives[vendor].footnote.verified, vendor).not.toContain(

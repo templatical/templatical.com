@@ -99,7 +99,7 @@ const de: MessageSchema = {
         comparisonTopol: 'vs. Topol Plugin',
         comparisonChamaileon: 'vs. Chamaileon SDK',
         comparisonGrapesjs: 'vs. GrapesJS',
-        comparison: 'vs. Easy Email Pro',
+        comparisonEasyEmailPro: 'vs. Easy Email Pro',
         documentation: 'Dokumentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -132,81 +132,6 @@ const de: MessageSchema = {
                 'Kein Lizenzschlüssel',
             ],
         },
-        comparison: {
-            eyebrow: 'Warum Templatical',
-            headline: 'Editor-Funktionen und Anbieterbedingungen',
-            subheadline:
-                'Templatical enthält die aufgeführten Editor-Funktionen unter MIT. Kommerzielle Editoren unterscheiden sich bei Tarifen, Laufzeit-Einrichtung und Ausgabeformaten.',
-            youBuildLabel: 'Müssten Sie selbst bauen',
-            paywalledLabel: 'Anbieterbedingungen und Grenzen',
-            sdkLabel: 'Im SDK enthalten',
-            compareLink: 'Im Vergleich mit Easy Email Pro',
-            recommendedLabel: 'Empfohlen',
-            columns: {
-                diy: {
-                    title: 'Selbst bauen',
-                    description:
-                        'Ein Open-Source-Web-Builder-Framework mit einem MJML-Plugin kombinieren oder React-Email-Komponenten selbst zusammenstellen.',
-                    tradeOffs: [
-                        'Die Editor-UX selbst — Drag-and-Drop, Verschachtelung, Spalten, Undo/Redo',
-                        'Block-Level-Merge-Tag-Scoping',
-                        'Anzeigebedingungen mit Live-Vorschau',
-                        'Custom-Block-SDK mit API-gestützten Datenquellen',
-                        'Editor-zu-Medien-Bibliothek-Integration — Picker, Image-Block-Hook, Ersetzen-Flow',
-                        'Eine Bibliothek gespeicherter Blöcke — auswählen, benennen, Vorschau, positioniert einfügen',
-                        'Ein Dialog für Testversand — Empfängerauswahl, Vorschau, Sende- und Fehlerzustände',
-                        'Vorschau-Auflösung — echte Daten statt Merge-Tags, ohne die gespeicherten Inhalte anzufassen',
-                        'Sprachversionen — Text und Überschreibungen pro Sprache, Rückfall auf die Standardsprache, Erkennung veralteter Übersetzungen und ein Übersetzungs-Workflow',
-                        'Dark-Mode-Vorschau-Parität zur gesendeten E-Mail',
-                        'Theme-Tokens für konsistentes Branding',
-                        'MJML-Output, überall renderbar',
-                        'E-Mail-Client-Kompatibilität — Outlook 2007–365, Gmail-Clipping, Apple Mail',
-                        'Barrierefreiheit — Tastaturnavigation, ARIA, Screenreader',
-                        'Stil-Isolation — Host-CSS-Resets und Design-System-Globals dringen in den Editor ein',
-                        'Laufende Wartung — jede E-Mail-Client-Änderung ist ein Regressions-Risiko',
-                    ],
-                },
-                hosted: {
-                    title: 'Kommerzielle Editor-SDKs',
-                    description:
-                        'Die datierten, belegten Anbietervergleiche in der Fußzeile beschreiben Preise, Laufzeit-Einrichtung und Ausgabe.',
-                    tradeOffs: [
-                        'Stripo bietet Custom Blocks ab dem Business-Tarif.',
-                        'Unlayer begrenzt Custom Tools je nach Tarif auf 1, 3 oder 5.',
-                        'Topol enthält White-Labeling in jedem Tarif und Custom Blocks ab dem Business-Tarif.',
-                        'Chamaileon liefert seinen Editor im iframe und zählt Nutzer und Exporte.',
-                        'Easy Email Pro schaltet Funktionen über eine Client-ID frei und exportiert MJML.',
-                        'Unlayer lädt den Editor von einem CDN; Selbst-Hosting ist eine Enterprise-Option.',
-                    ],
-                },
-                templatical: {
-                    title: 'Templatical',
-                    description:
-                        'Ein quelloffenes E-Mail-Editor-SDK mit Custom Blocks, Merge-Tags und eigenen Providern für Speicherfunktionen.',
-                    sdk: [
-                        'Custom Blocks mit API-gestützten Datenquellen',
-                        'Block-Level-Merge-Tags mit Scoping',
-                        'Anzeigebedingungen für dynamische Inhalte',
-                        'Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Übersetzungs-Provider',
-                        'Pluggbare Medien-Bibliothek — eigener Speicher (S3, Cloudinary, Ihr CMS)',
-                        'Gespeicherte Blöcke — Nutzer speichern Blockgruppen und verwenden sie wieder, in Ihrem Speicher',
-                        'Speichern und Laden gegen Ihren eigenen Speicher — Autosave, Speicherstatus, Cmd/Ctrl+S',
-                        'Versionsverlauf — durchsuchen, in der Vorschau ansehen und wiederherstellen, in Ihrem Speicher',
-                        'Review-Kommentare in Threads, verankert an Blöcken, auf Ihrem Speicher und Ihren Identitäten',
-                        'Gemeinsames Bearbeiten in Echtzeit — geordnete Operationen, Block-Sperren und Präsenz, über Ihr eigenes Backend',
-                        'Testversand aus dem Editor — über Ihren ESP und Ihre Domain zugestellt',
-                        'Vorschauen von Ihrem Backend aufgelöst — echte Daten, Logik-Zweige ausgewertet',
-                        'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
-                        'Standardmäßig White-Label — Ihre UI, Ihre Marke',
-                        'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
-                        'Prüfungen vor dem Versand für Barrierefreiheit, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität, mit Lösungsvorschlägen und Quellenlinks',
-                        'KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ — mit Ihrem eigenen Modell und Ihren Schlüsseln',
-                        'Style-isoliert — Shadow-DOM-Mount hält Host-CSS draußen',
-                        'Kein Lizenzschlüssel, kein Aktivierungsaufruf — nichts, was wir aus der Ferne abschalten könnten',
-                    ],
-                },
-            },
-        },
         independence: {
             eyebrow: 'Unabhängig zur Laufzeit',
             headline: 'Nichts zu aktivieren. Nichts zu widerrufen.',
@@ -218,6 +143,24 @@ const de: MessageSchema = {
                 'Keine Telemetrie, keine Analytics, keine Nutzungsberichte',
                 'Ihre Vorlagen bleiben in Ihrer App, bis Sie sie an Ihr eigenes Backend senden',
             ],
+            vendors: {
+                intro: 'Bei kommerziellen Editor-SDKs bleibt der Anbieter nach dem Launch im Spiel:',
+                items: [
+                    {
+                        term: 'An Domains gebundene Schlüssel',
+                        detail: 'Eine Projekt-ID oder ein API-Schlüssel, der nur auf den Domains funktioniert, die Sie beim Anbieter registrieren.',
+                    },
+                    {
+                        term: 'Ablaufende Tokens',
+                        detail: 'Access-Tokens, die gegen die Server des Anbieters erzeugt und nach dessen Zeitplan erneuert werden.',
+                    },
+                    {
+                        term: 'Gemessene Tarife',
+                        detail: 'Monatstarife, die Nutzer, Exporte oder gestaltete E-Mails zählen und über dem Limit zusätzlich berechnen.',
+                    },
+                ],
+                note: 'Muster aus den kommerziellen Editoren, die diese Website vergleicht, geprüft am 19. November 2026.',
+            },
         },
         ai: {
             eyebrow: 'Neu · AI-Kit, MIT',
@@ -360,6 +303,9 @@ const de: MessageSchema = {
             copiedLabel: 'Kopiert',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Installationsanleitung',
+            buildNote:
+                'Einen E-Mail-Editor selbst zu bauen heißt: Drag-and-Drop-UX, Merge-Tags, Outlook-Eigenheiten und deren Pflege, alles vor der ersten Vorlage.',
+            buildLink: 'Sehen Sie, was das SDK mitbringt',
         },
     },
     features: {
