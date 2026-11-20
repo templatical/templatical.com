@@ -9,6 +9,7 @@ import { createDemoBackend } from '@/lib/demo-backend';
 import {
     HERO_CONTENT,
     HERO_DO_NOT_TRANSLATE,
+    HERO_FREE_PLAN_CONDITION,
     HERO_LOCALES,
     HERO_TRANSLATIONS,
 } from '@/lib/demo-backend/hero-content';
@@ -77,6 +78,16 @@ const DEMO_TAG_VALUES: Record<(typeof DEMO_TAG_KEYS)[number], string> = {
     email: '{{email}}',
     company: '{{company}}',
     unsubscribeUrl: '{{unsubscribe_url}}',
+};
+// Preview surfaces render `sample` in place of the chip. The editing canvas
+// keeps showing the label. Every tag in this list has one, including tags the
+// seed does not use yet, so a tag inserted from the picker previews the same way.
+const DEMO_TAG_SAMPLES: Record<(typeof DEMO_TAG_KEYS)[number], string> = {
+    firstName: 'Alex',
+    lastName: 'Chen',
+    email: 'alex@example.com',
+    company: 'North Studio',
+    unsubscribeUrl: 'https://example.com/unsubscribe',
 };
 
 const dynamicMergeTagsDocsUrl = computed(() => localizedUrl('dynamicMergeTagsDocs', locale.value));
@@ -183,8 +194,15 @@ async function mountEditor() {
                 branding: false,
                 content: HERO_CONTENT,
                 mergeTags: {
-                    tags: demoTags.value.map(({ label, value }) => ({ label, value })),
+                    tags: demoTags.value.map(({ label, value, key }) => ({
+                        label,
+                        value,
+                        sample: DEMO_TAG_SAMPLES[key],
+                    })),
                     onRequest: requestMergeTag,
+                },
+                displayConditions: {
+                    conditions: [{ ...HERO_FREE_PLAN_CONDITION }],
                 },
                 onError: showProviderError,
                 ai: createMockAiProvider({ ...AI_RECORDINGS }),

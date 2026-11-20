@@ -6,8 +6,11 @@ import { COMMENTS_KEY } from './comments';
 /** Anyone but the visitor, so the editor withholds edit/delete on these. */
 export const SEEDED_AUTHOR_ID = 'reviewer';
 
-/** The CTA is the block a reviewer would actually comment on, and it is visible without scrolling the canvas. */
+/** The primary button. The seeded thread asks for a more direct label and the brand colour, and the button sits in the hero. */
 export const SEED_ANCHOR_BLOCK_ID = 'hero-cta';
+
+/** The oldest seeded version is the newsletter from before the office-hours band was added. */
+export const SEED_REMOVED_BLOCK_ID = 'ship-office-hours';
 
 const SEEDED_KEY = 'seeded';
 const HOUR = 60 * 60 * 1000;
@@ -18,24 +21,45 @@ export interface SeedCopy {
     replyBody: string;
 }
 
-/** A shallow clone with one block replaced, so seeded history diverges visibly. */
+/**
+ * Walk sections as well as the top level. The seeded button lives inside the
+ * hero section; a top-level-only patch would leave its text identical in
+ * every version.
+ */
+function mapBlocks(blocks: Block[], visit: (block: Block) => Block | null): Block[] {
+    const next: Block[] = [];
+    for (const block of blocks) {
+        const current: Block =
+            block.type === 'section'
+                ? {
+                      ...block,
+                      children: block.children.map((column) => mapBlocks(column, visit)),
+                  }
+                : block;
+        const visited = visit(current);
+        if (visited) next.push(visited);
+    }
+    return next;
+}
+
+/** A clone with one block replaced, at any depth, so seeded history diverges visibly. */
 function withBlockPatch(
     content: TemplateContent,
     blockId: string,
     patch: Record<string, unknown>,
 ): TemplateContent {
-    const clone = JSON.parse(JSON.stringify(content)) as { blocks: Block[] };
-    clone.blocks = clone.blocks.map((block) =>
+    const clone = JSON.parse(JSON.stringify(content)) as TemplateContent;
+    clone.blocks = mapBlocks(clone.blocks, (block) =>
         block.id === blockId ? ({ ...block, ...patch } as Block) : block,
     );
-    return clone as unknown as TemplateContent;
+    return clone;
 }
 
-/** A clone with one block removed. */
+/** A clone with one block removed, at any depth. */
 function withoutBlock(content: TemplateContent, blockId: string): TemplateContent {
-    const clone = JSON.parse(JSON.stringify(content)) as { blocks: Block[] };
-    clone.blocks = clone.blocks.filter((block) => block.id !== blockId);
-    return clone as unknown as TemplateContent;
+    const clone = JSON.parse(JSON.stringify(content)) as TemplateContent;
+    clone.blocks = mapBlocks(clone.blocks, (block) => (block.id === blockId ? null : block));
+    return clone;
 }
 
 export function ensureSeeded(
@@ -59,7 +83,7 @@ export function ensureSeeded(
             createdAt: at(3),
             isAutomatic: true,
             content: withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, {
-                text: 'Go to dashboard',
+                text: 'See the notes',
             }),
         },
         {
@@ -67,8 +91,8 @@ export function ensureSeeded(
             createdAt: at(26),
             isAutomatic: false,
             content: withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, {
-                text: 'Get started',
-                backgroundColor: '#2c85de',
+                text: 'View the notes',
+                backgroundColor: '#1d4e89',
             }),
         },
         {
@@ -76,8 +100,8 @@ export function ensureSeeded(
             createdAt: at(52),
             isAutomatic: true,
             content: withoutBlock(
-                withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, { text: 'Get started' }),
-                'hero-divider',
+                withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, { text: 'View the notes' }),
+                SEED_REMOVED_BLOCK_ID,
             ),
         },
     ];

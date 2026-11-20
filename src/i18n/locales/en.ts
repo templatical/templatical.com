@@ -57,7 +57,7 @@ export default {
             you: 'You',
         },
         demo: {
-            templateName: 'Welcome email',
+            templateName: 'November product update',
             eyebrow: 'Wired to a backend',
             description:
                 'Some of what you see here — saving, version history, comments, saved blocks, test sends, media, AI and translation — runs on a backend you implement. This demo uses your browser’s session storage and plays recorded AI replies and translations with no model or translation service, so nothing leaves the page.',
