@@ -116,8 +116,6 @@ const de: MessageSchema = {
             headline: 'Ein Open-Source-E-Mail-Editor per Drag-and-drop für Ihre App.',
             subheadline:
                 'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags, Anzeigebedingungen, Sprachversionen und ein KI-Assistent mit Ihrem eigenen Modell — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
-            backendNote:
-                'Speicherung und Versand liegen bei Ihrem Team; es gibt keinen gehosteten Dienst.',
             ctaPrimary: 'Playground öffnen',
             ctaSecondary: 'Installationsanleitung',
             copyLabel: 'Kopieren',
