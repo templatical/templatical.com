@@ -14,7 +14,7 @@
     "typecheck": "vue-tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@lucide/vue": "^1.66.0",
+    "@lucide/vue": "^1.74.0",
     "@shikijs/langs": "^4.5.0",
     "@shikijs/themes": "^4.5.0",
     "@templatical/ai-kit": "^0.53.0",
