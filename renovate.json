@@ -40,6 +40,12 @@
             "groupName": "vue ecosystem"
         },
         {
+            "description": "VueUse majors move as one PR: @vueuse/core and @vueuse/integrations must stay on the same major. Placed after the major rule, which clears groupName.",
+            "matchPackageNames": ["@vueuse/**"],
+            "matchUpdateTypes": ["major"],
+            "groupName": "vueuse major"
+        },
+        {
             "description": "Group VueUse (non-major)",
             "matchPackageNames": ["@vueuse/**"],
             "matchUpdateTypes": ["patch", "minor"],
@@ -91,6 +97,11 @@
             "matchPackageNames": ["@unhead/vue", "vite-ssg"],
             "groupName": "unhead + vite-ssg",
             "automerge": false
+        },
+        {
+            "description": "Hold @unhead/vue below 3 while vite-ssg depends on unhead 2: vite-ssg creates and renders the head with its own @unhead/vue and @unhead/dom 2, so a v3 copy in the app ships pages with no <title> (the prerender SEO audit fails the build). Lift this cap in the PR that moves vite-ssg to a release on unhead 3.",
+            "matchPackageNames": ["@unhead/vue"],
+            "allowedVersions": "<3"
         },
         {
             "description": "Every @templatical/* package must stay on one version, and the homepage loads the latest editor from the CDN beside the bundled ai-kit.",
