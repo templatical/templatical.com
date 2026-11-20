@@ -114,7 +114,6 @@ export default {
             headline: 'An open-source drag-and-drop email editor for your app.',
             subheadline:
                 'Custom blocks, full theming, merge tags, display conditions, language versions, and an AI assistant on your own model — all built into the SDK. Drop into any app with one init() call.',
-            backendNote: 'Your team owns storage and sending; there is no hosted service.',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Installation guide',
             copyLabel: 'Copy',

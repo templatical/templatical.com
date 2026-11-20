@@ -37,7 +37,6 @@ const { copy, copied, isSupported } = useClipboard({ source: installCommand });
                 class="flex max-w-2xl flex-col gap-4 text-lg/8 text-neutral-600 motion-safe:animate-fade-in motion-safe:[animation-delay:200ms] dark:text-neutral-400"
             >
                 <p>{{ t('home.hero.subheadline') }}</p>
-                <p>{{ t('home.hero.backendNote') }}</p>
             </div>
         </SiteContainer>
 
