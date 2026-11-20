@@ -38,7 +38,7 @@
     "typescript": "6.0.3",
     "vite": "8.3.8",
     "vite-ssg": "28.3.0",
-    "vitest": "^5.0.5",
+    "vitest": "^5.1.0",
     "vue-tsc": "3.3.14"
   }
 }
