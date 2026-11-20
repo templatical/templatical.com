@@ -83,6 +83,15 @@ const mjml = await editor.toMjml()`;
                         <ChevronRight class="size-5" />
                     </SiteButton>
                 </div>
+
+                <p class="max-w-xl text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400">
+                    {{ t('home.close.buildNote') }}
+                    <router-link
+                        to="/features"
+                        class="rounded-sm font-medium whitespace-nowrap text-primary-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                        >{{ t('home.close.buildLink') }}</router-link
+                    >
+                </p>
             </div>
         </SiteContainer>
     </section>

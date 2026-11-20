@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ComparisonSection from '@/components/ComparisonSection.vue';
 import HeroSection from '@/components/HeroSection.vue';
 import HomeAiSection from '@/components/HomeAiSection.vue';
 import HomeAiSkillSection from '@/components/HomeAiSkillSection.vue';
@@ -27,8 +26,6 @@ useHead({
         <HomeAiSkillSection />
 
         <HomeLanguagesSection />
-
-        <ComparisonSection />
 
         <HomeIndependenceSection />
 

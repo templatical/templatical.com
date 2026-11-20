@@ -97,7 +97,7 @@ export default {
         comparisonTopol: 'vs Topol Plugin',
         comparisonChamaileon: 'vs Chamaileon SDK',
         comparisonGrapesjs: 'vs GrapesJS',
-        comparison: 'vs Easy Email Pro',
+        comparisonEasyEmailPro: 'vs Easy Email Pro',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -130,81 +130,6 @@ export default {
                 'No license key',
             ],
         },
-        comparison: {
-            eyebrow: 'Why Templatical',
-            headline: 'Editor capabilities and vendor terms',
-            subheadline:
-                'Templatical includes the listed editor features under MIT. Commercial editors differ in their plans, runtime setup and output formats.',
-            youBuildLabel: 'You’ll build yourself',
-            paywalledLabel: 'Vendor terms and limits',
-            sdkLabel: 'Included in the SDK',
-            compareLink: 'Compared with Easy Email Pro',
-            recommendedLabel: 'Recommended',
-            columns: {
-                diy: {
-                    title: 'Build it yourself',
-                    description:
-                        'Wire up an open-source web-builder framework with an MJML plugin, or compose React Email components yourself.',
-                    tradeOffs: [
-                        'The editor UX itself — drag-and-drop, nesting, column splits, undo/redo',
-                        'Block-level merge tag scoping',
-                        'Display conditions with live preview',
-                        'Custom block SDK with API-backed data sources',
-                        'Editor-to-media-library glue — picker, image-block hook, replace flow',
-                        'A saved-block library — pick, name, preview, insert at position',
-                        'A test-send dialog — recipient picker, preview, sending and error states',
-                        'Preview resolution — real data in place of merge tags, without touching stored content',
-                        'Language versions — per-language text and overrides, fallbacks, out-of-date tracking and a translation round trip',
-                        'Dark-mode preview parity with sent email',
-                        'Theme tokens for brand consistency',
-                        'MJML output you can render anywhere',
-                        'Email-client compatibility — Outlook 2007–365, Gmail clipping, Apple Mail',
-                        'Accessibility — keyboard nav, ARIA, screen readers',
-                        'Style isolation — host CSS resets and design-system globals bleed into the editor',
-                        'Ongoing maintenance — every email-client tweak is a regression risk',
-                    ],
-                },
-                hosted: {
-                    title: 'Commercial editor SDKs',
-                    description:
-                        'The dated, sourced vendor comparisons linked in the footer cover pricing, runtime setup and output.',
-                    tradeOffs: [
-                        'Stripo offers custom blocks from its Business plan.',
-                        'Unlayer caps custom tools at 1, 3 or 5, depending on plan.',
-                        'Topol includes white-labelling on every plan and custom blocks from its Business plan.',
-                        'Chamaileon serves its editor in an iframe and meters users and exports.',
-                        'Easy Email Pro uses a client ID to gate features and exports MJML.',
-                        'Unlayer loads its editor from a CDN; self-hosting is an Enterprise option.',
-                    ],
-                },
-                templatical: {
-                    title: 'Templatical',
-                    description:
-                        'An open-source email editor SDK with custom blocks, merge tags and your own providers for storage.',
-                    sdk: [
-                        'Custom blocks with API-backed data sources',
-                        'Block-level merge tags with scoping',
-                        'Display conditions for dynamic content',
-                        'Language versions in one template, filled by Translate through your own translation provider',
-                        'Pluggable media library — bring your own storage (S3, Cloudinary, your CMS)',
-                        'Saved blocks — users save block groups and reuse them, backed by your storage',
-                        'Saving and loading against your own storage — autosave, save status, Cmd/Ctrl+S',
-                        'Version history — browse, preview and restore, backed by your storage',
-                        'Threaded review comments anchored to blocks, on your storage and identities',
-                        'Real-time co-editing — ordered operations, block locks and presence, over your own backend',
-                        'Test sends from the editor, delivered by your own ESP and your domain',
-                        'Previews resolved by your backend — real data, logic branches evaluated',
-                        'Full theming via design tokens, dark mode included',
-                        'White-label by default — your UI, your brand',
-                        'MJML output — render in browser, on your server, anywhere',
-                        'Pre-send checks for accessibility, links, deliverability patterns (not inbox placement), and email-client compatibility, with suggested fixes and reference links',
-                        'AI assistant, Rewrite, Fix with AI and Write alt text — on your own model and keys',
-                        'Style-isolated — Shadow DOM mount keeps host CSS out',
-                        'No license key, no activation call — nothing we can switch off remotely',
-                    ],
-                },
-            },
-        },
         independence: {
             eyebrow: 'Runtime independence',
             headline: 'Nothing to activate. Nothing to revoke.',
@@ -216,6 +141,24 @@ export default {
                 'No telemetry, no analytics, no usage reporting',
                 'Your templates stay in your app until you send them to your own backend',
             ],
+            vendors: {
+                intro: 'With commercial editor SDKs, the vendor stays in the loop after you ship:',
+                items: [
+                    {
+                        term: 'Domain-bound keys',
+                        detail: 'A project ID or API key that works only on the domains you register with the vendor.',
+                    },
+                    {
+                        term: 'Expiring tokens',
+                        detail: 'Access tokens minted against the vendor’s servers and refreshed on their schedule.',
+                    },
+                    {
+                        term: 'Metered plans',
+                        detail: 'Monthly plans that count users, exports or designed emails, with charges past the limit.',
+                    },
+                ],
+                note: 'Patterns from the commercial editors compared on this site, checked 19 November 2026.',
+            },
         },
         ai: {
             eyebrow: 'New · AI kit, MIT',
@@ -358,6 +301,9 @@ export default {
             copiedLabel: 'Copied',
             ctaPrimary: 'Open playground',
             ctaSecondary: 'Installation guide',
+            buildNote:
+                'Building an email editor yourself means the drag-and-drop UX, merge tags, Outlook quirks and their upkeep, all before your first template.',
+            buildLink: 'See what ships in the SDK',
         },
     },
     features: {
