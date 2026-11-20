@@ -306,8 +306,7 @@ const themReasons = computed(() =>
                             target="_blank"
                             rel="noopener"
                             class="font-medium text-primary-text hover:underline"
-                            >{{ t(k('footnote.staleCta')) }}</a
-                        >.
+                            >{{ t(k('footnote.staleCta')) }}</a>.
                     </p>
                 </div>
             </SiteContainer>
