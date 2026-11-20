@@ -4,9 +4,10 @@ import config from '../../renovate.json';
 /*
     Renovate merges package rules in order, so a later rule can put a package
     back into a group or turn automerge off. These assertions pin the rules that
-    must survive that merge: TypeScript stays below 7, the head stack and the
-    SDK each move as one non-automerge group, majors stay manual, and the Shiki
-    language/theme packages stay with shiki.
+    must survive that merge: TypeScript stays below 7, @unhead/vue stays below 3
+    while vite-ssg depends on unhead 2, the head stack and the SDK each move as
+    one non-automerge group, majors stay manual, VueUse majors arrive as one PR,
+    and the Shiki language/theme packages stay with shiki.
 */
 
 interface PackageRule {
@@ -38,6 +39,33 @@ describe('renovate.json', () => {
         expect(viteSsg).toBe(unhead);
         expect(unhead?.groupName).toBe('unhead + vite-ssg');
         expect(unhead?.automerge).toBe(false);
+    });
+
+    it('caps @unhead/vue below 3 without capping vite-ssg', () => {
+        const capped = rules.filter((rule) => rule.allowedVersions !== undefined);
+        const unheadCap = capped.find((rule) => rule.matchPackageNames?.includes('@unhead/vue'));
+
+        expect(unheadCap?.allowedVersions).toBe('<3');
+        expect(unheadCap?.matchPackageNames).toEqual(['@unhead/vue']);
+        for (const rule of capped) {
+            expect(rule.matchPackageNames).not.toContain('vite-ssg');
+        }
+    });
+
+    it('groups VueUse majors into one manual PR, after the rule that clears major groups', () => {
+        const majorIndex = rules.findIndex(
+            (rule) => rule.matchUpdateTypes?.length === 1 && rule.matchUpdateTypes[0] === 'major',
+        );
+        const vueuseMajorIndex = rules.findIndex(
+            (rule) =>
+                rule.matchPackageNames?.includes('@vueuse/**') &&
+                rule.matchUpdateTypes?.includes('major'),
+        );
+        const vueuseMajor = rules[vueuseMajorIndex];
+
+        expect(vueuseMajor?.groupName).toBe('vueuse major');
+        expect(vueuseMajor?.automerge).not.toBe(true);
+        expect(vueuseMajorIndex).toBeGreaterThan(majorIndex);
     });
 
     it('groups @templatical/** and does not automerge it', () => {
