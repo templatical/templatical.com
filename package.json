@@ -34,7 +34,7 @@
     "@templatical/types": "^0.53.0",
     "@types/node": "24.19.2",
     "@vitejs/plugin-vue": "6.0.10",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "4.3.5",
     "typescript": "6.0.3",
