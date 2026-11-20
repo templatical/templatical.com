@@ -2,7 +2,7 @@
   "name": "templatical-site",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.34.9",
+  "packageManager": "pnpm@12.21.0",
   "scripts": {
     "dev": "vite",
     "build": "vite-ssg build",
@@ -18,8 +18,8 @@
     "@shikijs/themes": "^4.5.0",
     "@templatical/ai-kit": "^0.53.0",
     "@unhead/vue": "2.1.17",
-    "@vueuse/core": "^14.4.0",
-    "@vueuse/integrations": "^14.4.0",
+    "@vueuse/core": "^15.0.0",
+    "@vueuse/integrations": "^15.0.0",
     "clsx": "^2.1.1",
     "focus-trap": "8.2.4",
     "shiki": "^4.5.0",
@@ -36,9 +36,9 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
-    "vite": "8.3.5",
+    "vite": "8.3.8",
     "vite-ssg": "28.3.0",
-    "vitest": "^5.0.5",
+    "vitest": "^5.1.0",
     "vue-tsc": "3.3.14"
   }
 }
