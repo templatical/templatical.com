@@ -3,7 +3,12 @@ import type { Comment, TemplateContent } from '@templatical/types';
 import { createStore, memoryStorage } from '@/lib/demo-backend/store';
 import { createVersionStore } from '@/lib/demo-backend/version-store';
 import { COMMENTS_KEY } from '@/lib/demo-backend/comments';
-import { ensureSeeded, SEED_ANCHOR_BLOCK_ID, SEEDED_AUTHOR_ID } from '@/lib/demo-backend/seed';
+import {
+    ensureSeeded,
+    SEED_ANCHOR_BLOCK_ID,
+    SEED_REMOVED_BLOCK_ID,
+    SEEDED_AUTHOR_ID,
+} from '@/lib/demo-backend/seed';
 
 const COPY = {
     reviewerName: 'Sam Okafor',
@@ -22,7 +27,7 @@ const baseContent = (): TemplateContent =>
                 text: 'Open your dashboard',
                 backgroundColor: '#0f172a',
             },
-            { id: 'hero-divider', type: 'divider', color: '#e5e7eb' },
+            { id: SEED_REMOVED_BLOCK_ID, type: 'paragraph', content: 'Later' },
         ],
     }) as unknown as TemplateContent;
 
@@ -73,7 +78,7 @@ describe('ensureSeeded', () => {
         }
     });
 
-    it('removes the divider block from exactly one seeded version, keeping it in the rest', () => {
+    it('removes the office-hours band from exactly one seeded version, keeping it in the rest', () => {
         const { store, versions } = setup();
 
         ensureSeeded(store, versions, baseContent(), COPY);
@@ -81,18 +86,20 @@ describe('ensureSeeded', () => {
         const blockIdsByVersion = versions
             .read()
             .map((version) => version.content.blocks.map((block) => block.id));
-        const versionsWithoutDivider = blockIdsByVersion.filter(
-            (ids) => !ids.includes('hero-divider'),
+        const versionsWithoutOfficeHours = blockIdsByVersion.filter(
+            (ids) => !ids.includes(SEED_REMOVED_BLOCK_ID),
         );
-        const versionsWithDivider = blockIdsByVersion.filter((ids) => ids.includes('hero-divider'));
+        const versionsWithOfficeHours = blockIdsByVersion.filter((ids) =>
+            ids.includes(SEED_REMOVED_BLOCK_ID),
+        );
 
         // withoutBlock is what produces this divergence. A regression that turns
         // it into a no-op (e.g. an inverted predicate, or `return content`)
-        // would leave every version with the divider block and go undetected by
+        // would leave every version with the office-hours band and go undetected by
         // the "differs from baseContent" check above, since withBlockPatch's
         // text/color changes already satisfy that assertion on their own.
-        expect(versionsWithoutDivider).toHaveLength(1);
-        expect(versionsWithDivider).toHaveLength(blockIdsByVersion.length - 1);
+        expect(versionsWithoutOfficeHours).toHaveLength(1);
+        expect(versionsWithOfficeHours).toHaveLength(blockIdsByVersion.length - 1);
     });
 
     it('seeds versions oldest-last with distinct timestamps', () => {

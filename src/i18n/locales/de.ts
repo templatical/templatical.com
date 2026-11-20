@@ -59,7 +59,7 @@ const de: MessageSchema = {
             you: 'Sie',
         },
         demo: {
-            templateName: 'Willkommens-E-Mail',
+            templateName: 'Produkt-Update November',
             eyebrow: 'Mit einem Backend verbunden',
             description:
                 'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien, KI und Übersetzung — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers und spielt aufgezeichnete KI-Antworten und Übersetzungen ohne Modell oder Übersetzungsdienst ab, es verlässt also nichts diese Seite.',
