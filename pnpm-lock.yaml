@@ -185,8 +185,8 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0
       '@templatical/ai-kit':
-        specifier: ^0.60.3
-        version: 0.60.4
+        specifier: ^0.61.0
+        version: 0.61.0
       '@unhead/vue':
         specifier: 2.1.17
         version: 2.1.17(vue@3.5.45(typescript@6.0.3))
@@ -222,8 +222,8 @@ importers:
         specifier: 4.3.5
         version: 4.3.5(vite@8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
       '@templatical/types':
-        specifier: ^0.60.3
-        version: 0.60.4
+        specifier: ^0.61.0
+        version: 0.61.0
       '@types/node':
         specifier: 26.6.6
         version: 26.6.6
@@ -644,8 +644,8 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@templatical/ai-kit@0.60.4':
-    resolution: {integrity: sha512-JpikPa2PyVpe1Vc+FkN1srh7oFNXmr4/I69A9np7OR//AJ8tnTvqFWKNhuMNv/udj17I6tSzQYdY42NzxOrwCw==}
+  '@templatical/ai-kit@0.61.0':
+    resolution: {integrity: sha512-qj63K+WvIpQDSyslHDWrrbGAFYI0l37bEzpoCpaHeW3xTQggri6Q0Bq7nXhAQWNNxa828fQQ7Po5wcHWiaGK+A==}
     peerDependencies:
       '@anthropic-ai/sdk': ^1
       ai: ^7
@@ -658,8 +658,8 @@ packages:
       openai:
         optional: true
 
-  '@templatical/types@0.60.4':
-    resolution: {integrity: sha512-M2+tkJGzVT9UzTIjQBeBZeQDE4E3Zl20k3F6MxRemDVOJ/34xMz7wOe93HVCZrf9rpKFFHbE6Nr4TV1YF1iTKA==}
+  '@templatical/types@0.61.0':
+    resolution: {integrity: sha512-/aH7JJbHDmvVx6aa6XQzQa8PO54Ym1Ixuqbv2dWCZfao/WoZU67v4KSfz8Wm+x0WZMXs9v2mSj3Lfq/V1jLGbQ==}
     peerDependencies:
       liquidjs: ^10.30.1
     peerDependenciesMeta:
@@ -2048,13 +2048,13 @@ snapshots:
       tailwindcss: 4.3.5
       vite: 8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0)
 
-  '@templatical/ai-kit@0.60.4':
+  '@templatical/ai-kit@0.61.0':
     dependencies:
-      '@templatical/types': 0.60.4
+      '@templatical/types': 0.61.0
     transitivePeerDependencies:
       - liquidjs
 
-  '@templatical/types@0.60.4': {}
+  '@templatical/types@0.61.0': {}
 
   '@tybys/wasm-util@0.10.5':
     dependencies:
