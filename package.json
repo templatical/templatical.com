@@ -24,7 +24,7 @@
     "clsx": "^2.1.1",
     "focus-trap": "8.2.5",
     "shiki": "^4.6.0",
-    "tailwind-merge": "^3.7.0",
+    "tailwind-merge": "^3.7.1",
     "vue": "3.5.45",
     "vue-i18n": "11.4.22",
     "vue-router": "5.5.1"
