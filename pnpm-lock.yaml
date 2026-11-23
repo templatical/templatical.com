@@ -185,7 +185,7 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0
       '@templatical/ai-kit':
-        specifier: ^0.62.1
+        specifier: ^0.62.2
         version: 0.62.2
       '@unhead/vue':
         specifier: 2.1.17
@@ -222,7 +222,7 @@ importers:
         specifier: 4.3.5
         version: 4.3.5(vite@8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.0))
       '@templatical/types':
-        specifier: ^0.62.1
+        specifier: ^0.62.2
         version: 0.62.2
       '@types/node':
         specifier: 26.6.6
