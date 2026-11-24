@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
-import { URLS } from '@/lib/urls';
+import { URLS, localizedUrl } from '@/lib/urls';
 import CodeBlock from './CodeBlock.vue';
 import { ChevronRight } from '@lucide/vue';
 import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const installCommand = 'npm install @templatical/editor @templatical/renderer';
 const { copy, copied, isSupported } = useClipboard({ source: installCommand });
@@ -73,11 +73,25 @@ const mjml = await editor.toMjml()`;
                     <SiteButton :href="URLS.playground" size="lg" external>
                         {{ t('home.close.ctaPrimary') }}
                     </SiteButton>
-                    <SiteButton :href="URLS.github" variant="plain" size="lg" external>
+                    <SiteButton
+                        :href="localizedUrl('installation', locale)"
+                        variant="plain"
+                        size="lg"
+                        external
+                    >
                         {{ t('home.close.ctaSecondary') }}
                         <ChevronRight class="size-5" />
                     </SiteButton>
                 </div>
+
+                <p class="max-w-xl text-sm/6 text-pretty text-neutral-600 dark:text-neutral-400">
+                    {{ t('home.close.buildNote') }}
+                    <router-link
+                        to="/features"
+                        class="rounded-sm font-medium whitespace-nowrap text-primary-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                        >{{ t('home.close.buildLink') }}</router-link
+                    >
+                </p>
             </div>
         </SiteContainer>
     </section>

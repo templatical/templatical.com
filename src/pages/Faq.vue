@@ -6,12 +6,13 @@ import SiteContainer from '@/components/SiteContainer.vue';
 import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteText from '@/components/SiteText.vue';
 import { usePageMeta } from '@/composables/usePageMeta';
-import { URLS } from '@/lib/urls';
+import { importerNameList } from '@/lib/importers';
+import { URLS, localizedUrl } from '@/lib/urls';
 import { ChevronRight } from '@lucide/vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 usePageMeta('faq.meta.title', 'faq.meta.description');
 
@@ -25,6 +26,7 @@ const faqItems = computed(() =>
         'hosted',
         'branding',
         'frameworks',
+        'install',
         'migrate',
         'languages',
         'data',
@@ -33,7 +35,10 @@ const faqItems = computed(() =>
         'contact',
     ].map((key) => ({
         question: t(`faq.items.${key}.question`),
-        answer: t(`faq.items.${key}.answer`),
+        answer:
+            key === 'migrate'
+                ? t(`faq.items.${key}.answer`, { importers: importerNameList(locale.value) })
+                : t(`faq.items.${key}.answer`),
     })),
 );
 </script>
@@ -101,7 +106,7 @@ const faqItems = computed(() =>
                             <ChevronRight class="size-4" />
                         </a>
                         <a
-                            :href="URLS.docs"
+                            :href="localizedUrl('installation', locale)"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="inline-flex items-center gap-1.5 text-sm/7 font-medium text-neutral-700 transition-colors hover:text-neutral-950 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-neutral-300 dark:hover:text-white"

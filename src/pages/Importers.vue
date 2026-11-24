@@ -11,6 +11,7 @@ import {
     IMPORTER_COUNT,
     IMPORTER_GROUP_ORDER,
     importerGuidePath,
+    importerNameList,
     importerPackage,
     importersIn,
 } from '@/lib/importers';
@@ -28,7 +29,9 @@ function docsUrl(path: string): string {
     return `${URLS.docs}${prefix}${path}`;
 }
 
-usePageMeta('importers.meta.title', 'importers.meta.description');
+usePageMeta('importers.meta.title', 'importers.meta.description', {
+    descriptionParams: () => ({ importers: importerNameList(locale.value) }),
+});
 
 const groups = computed(() =>
     IMPORTER_GROUP_ORDER.map((group) => ({

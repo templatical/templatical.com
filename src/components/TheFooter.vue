@@ -54,7 +54,7 @@ const groups = computed<FooterGroup[]>(() => [
             { label: t('footer.comparisonTopol'), href: '/alternatives/topol' },
             { label: t('footer.comparisonChamaileon'), href: '/alternatives/chamaileon' },
             { label: t('footer.comparisonGrapesjs'), href: '/alternatives/grapesjs' },
-            { label: t('footer.comparison'), href: '/alternatives/easy-email-pro' },
+            { label: t('footer.comparisonEasyEmailPro'), href: '/alternatives/easy-email-pro' },
         ],
     },
 ]);

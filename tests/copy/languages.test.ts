@@ -36,15 +36,6 @@ describe.each([
         expect(messages.features.meta.description).toMatch(versions);
     });
 
-    it('lists language versions with Translate among the SDK features', () => {
-        const sdk = messages.home.comparison.columns.templatical.sdk as string[];
-        const item = sdk.find((line) => /^(Language versions|Sprachversionen)\b/.test(line));
-        expect(item).toBeDefined();
-        expect(item).toMatch(locale === 'en' ? /\bTranslate\b/ : /Übersetzen/);
-        const diy = messages.home.comparison.columns.diy.tradeOffs as string[];
-        expect(diy.some((line) => /^(Language versions|Sprachversionen)\b/.test(line))).toBe(true);
-    });
-
     it('gives Rewrite its Translate preset', () => {
         const rewrite = (messages.home.ai.features as Array<{ name: string; body: string }>)[1];
         expect(rewrite?.body).toMatch(TRANSLATE[locale]);
@@ -142,13 +133,13 @@ describe('the homepage section', () => {
     const HOME = source('pages/Home.vue');
     const SECTION = source('components/HomeLanguagesSection.vue');
 
-    it('follows the Agent Skill section, ahead of the comparison', () => {
+    it('follows the Agent Skill section, ahead of runtime independence', () => {
         const order = [
             '<HeroSection />',
             '<HomeAiSection />',
             '<HomeAiSkillSection />',
             '<HomeLanguagesSection />',
-            '<ComparisonSection />',
+            '<HomeIndependenceSection />',
         ].map((tag) => HOME.indexOf(tag));
         expect(order.every((at) => at > -1)).toBe(true);
         expect([...order].sort((a, b) => a - b)).toEqual(order);
@@ -233,8 +224,8 @@ describe('the hero editor', () => {
 });
 
 describe('the comparison pages', () => {
-    // Each vendor's row is sourced from pages checked on 3 November 2026; the rest of
-    // each page keeps its own, earlier verification date.
+    // Every comparison page was rechecked on 19 November 2026. The languages row stays
+    // sourced from the pages below, and the footnote names that date.
     const PAGES = {
         beefree: ['AlternativeBeefree', ['beefreeMultiLanguageDocs', 'beefreeDeeplDocs']],
         unlayer: ['AlternativeUnlayer', ['unlayerMultiLanguageDocs', 'unlayerMultiLanguageHelp']],
@@ -257,8 +248,8 @@ describe('the comparison pages', () => {
         for (const url of urls) expect(component, url).toContain(`href: URLS.${url} }`);
 
         for (const [messages, date] of [
-            [en, 'checked on 3 November 2026'],
-            [de, 'am 3. November 2026'],
+            [en, '19 November 2026'],
+            [de, '19. November 2026'],
         ] as const) {
             const vendor = (messages.alternatives as Record<string, any>)[key];
             const row = vendor.table.rows.languages;

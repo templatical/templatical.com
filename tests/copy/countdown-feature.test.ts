@@ -6,6 +6,8 @@ it('renders the countdown feature description through vue-i18n in both languages
         i18n.global.locale.value = locale;
         const text = i18n.global.t('features.countdown.description');
         expect(text).toContain('countdown.imageUrl in init()');
-        expect(text).toMatch(locale === 'en' ? /ships no image server/ : /liefert keinen Bildserver/);
+        expect(text).toMatch(
+            locale === 'en' ? /ships no image server/ : /liefert keinen Bildserver/,
+        );
     }
 });

@@ -23,6 +23,8 @@ export const URLS = {
     easyEmailPro: 'https://www.easyemail.pro/',
     easyEmailProQuickStart: 'https://docs.easyemail.pro/docs/tutorial/quick-start',
     easyEmailProNpm: 'https://www.npmjs.com/package/easy-email-pro-core',
+    // Backs the importers row: Unlayer, Beefree and Klaviyo converters.
+    easyEmailProMigrationsNpm: 'https://www.npmjs.com/package/easy-email-pro-migrations',
     beefreePricing: 'https://developers.beefree.io/pricing-plans',
     beefreeAuthDocs:
         'https://docs.beefree.io/beefree-sdk/getting-started/readme/installation/authorization-process-in-detail',
@@ -32,20 +34,22 @@ export const URLS = {
     beefreeFilePickerDocs:
         'https://docs.beefree.io/beefree-sdk/other-customizations/advanced-options/custom-file-picker',
     grapesjsSite: 'https://grapesjs.com/',
+    // Backs the GrapesJS footnote: Studio SDK has published plans and is not compared.
+    grapesjsSdkPricing: 'https://grapesjs.com/sdk/pricing',
     grapesjsNpm: 'https://www.npmjs.com/package/grapesjs',
     grapesjsMjmlNpm: 'https://www.npmjs.com/package/grapesjs-mjml',
     chamaileonSdk: 'https://chamaileon.io/sdk/',
     chamaileonNpm: 'https://www.npmjs.com/package/@chamaileon-sdk/plugins',
-    topolPluginPricing: 'https://topol.io/tariff-plugin',
     topolPlugin: 'https://topol.io/plugin',
     topolNpm: 'https://www.npmjs.com/package/@topol.io/editor',
     stripoPlugin: 'https://stripo.email/plugin/',
     stripoPlanComparison:
         'https://support.stripo.email/en/articles/11331457-new-plugin-what-s-the-difference-between-free-startup-business-and-enterprise-plans',
     unlayerPricing: 'https://unlayer.com/pricing',
-    unlayerDocs: 'https://docs.unlayer.com/docs/getting-started',
+    // Installation page. docs.unlayer.com/docs/getting-started canonicalizes here.
+    unlayerDocs: 'https://docs.unlayer.com/builder/installation',
     unlayerNpm: 'https://www.npmjs.com/package/react-email-editor',
-    // Back the "Language versions and translation" rows, checked on 3 November 2026.
+    // Back the "Language versions and translation" rows, rechecked on 19 November 2026.
     beefreeMultiLanguageDocs:
         'https://docs.beefree.io/beefree-sdk/other-customizations/multi-language-templates',
     beefreeDeeplDocs: 'https://docs.beefree.io/beefree-sdk/ai-and-mcp/ai-addons/deepl',
@@ -56,8 +60,16 @@ export const URLS = {
     stripoPluginAi: 'https://plugin.stripo.email/editor-configuration/artificial-intelligence',
     stripoTranslateHelp:
         'https://support.stripo.email/en/articles/13393929-how-to-translate-an-email-template',
+    // Backs the hosting row: the editor's static files can be served from your own CDN.
+    stripoCdnHosting: 'https://plugin.stripo.email/hosting-stripo-editor-files-on-your-own-cdn',
     topolMultilingualDocs: 'https://docs.topol.io/email-editor/guide/multilingual-templates.html',
     topolTranslationDocs: 'https://docs.topol.io/email-editor/guide/template-translation.html',
+    // Backs the custom-blocks row: Business plan and higher.
+    topolCustomBlockDocs: 'https://docs.topol.io/email-editor/guide/custom-block.html',
+    // Backs the framework-support row: plain JavaScript or TypeScript, plus React, Vue, Svelte and Angular.
+    topolFrameworkDocs: 'https://docs.topol.io/email-editor/guide/js-frameworks.html',
+    // Backs the end-user row: unique userId values counted within a billing cycle.
+    topolFaqDocs: 'https://docs.topol.io/email-editor/guide/faq.html',
     topolPricing: 'https://topol.io/pricing',
     chamaileonEditorDocs: 'https://chamaileon.io/sdk/v2/docs/email-editor/',
     easyEmailProTranslateDocs: 'https://docs.easyemail.pro/docs/advanced/email-translate',
@@ -131,6 +143,10 @@ export const LOCALIZED_URLS = {
     localizedTemplatesDocs: {
         en: 'https://docs.templatical.com/guide/localized-templates',
         de: 'https://docs.templatical.com/de/guide/localized-templates',
+    },
+    installation: {
+        en: 'https://docs.templatical.com/getting-started/installation',
+        de: 'https://docs.templatical.com/de/getting-started/installation',
     },
 } as const;
 

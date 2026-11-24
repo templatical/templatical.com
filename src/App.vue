@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
+import { applyPreferredLocale } from '@/composables/useLocale';
 import { useViewTransitions } from '@/composables/useViewTransitions';
 import { SITE_ORIGIN } from '@/lib/seo';
 import { useHead } from '@unhead/vue';
+import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
 useViewTransitions();
+
+onMounted(() => {
+    applyPreferredLocale();
+});
 
 const OG_IMAGE = `${SITE_ORIGIN}/og.png`;
 

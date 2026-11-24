@@ -11,6 +11,7 @@ import {
 import { createMockTranslationProvider } from '@templatical/ai-kit/testing';
 import {
     HERO_CONTENT,
+    HERO_COUNTDOWN_GIF,
     HERO_DO_NOT_TRANSLATE,
     HERO_LOCALES,
     HERO_TRANSLATIONS,
@@ -45,22 +46,6 @@ function styles(text: string): string[] {
 }
 
 describe('the hero template', () => {
-    it('uses compact paragraph labels in the three feature columns', () => {
-        const section = content.blocks.find((block) => block.id === 'hero-features');
-        if (section?.type !== 'section') throw new Error('feature section missing');
-        expect(section.children.map((column) => column[0])).toMatchObject(
-            ['Shared boards', 'Offline mode', 'Team calendar'].map((title, index) => ({
-                id: `hero-feature-${index + 1}-title`,
-                type: 'paragraph',
-                content: `<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>${title}</strong></span></p>`,
-                styles: { padding: { top: 0, right: 8, bottom: 6, left: 8 } },
-            })),
-        );
-    });
-
-    it('sets the target from the Berlin calendar date across the UTC day boundary', () => {
-        expect(heroTargetDate(Date.parse('2026-11-24T23:30:00Z'))).toBe('2026-12-07T18:00');
-    });
     it('starts with an empty German version beside the English default', () => {
         expect(content.settings.locale).toBe('en');
         expect(content.settings.locales).toEqual(['de']);
@@ -70,13 +55,77 @@ describe('the hero template', () => {
     });
 
     it('protects the brand name', () => {
-        expect(gaps.tokens['hero-brand/content']).toEqual(['Acme']);
+        expect(gaps.tokens['hero-brand/content']).toEqual(['Cindermill']);
+    });
+
+    it('keeps the first title as the headline the recorded AI rewrites', () => {
+        const titles: { id: string; content?: string }[] = [];
+        const walk = (
+            blocks: readonly { id: string; type: string; content?: string; children?: unknown[] }[],
+        ) => {
+            for (const block of blocks) {
+                if (block.type === 'title') titles.push(block);
+                if (Array.isArray(block.children)) {
+                    for (const column of block.children) {
+                        if (Array.isArray(column)) walk(column);
+                    }
+                }
+            }
+        };
+        walk(content.blocks);
+        expect(titles[0]).toMatchObject({
+            id: 'ship-headline',
+            content: '<p>What shipped in November</p>',
+        });
+    });
+
+    it('places a white countdown band after the live updates and before the change table', () => {
+        const sections = content.blocks.map(({ id }) => id);
+        expect(sections.indexOf('ship-countdown-band')).toBe(sections.indexOf('ship-features') + 1);
+        expect(sections.indexOf('ship-changes')).toBe(sections.indexOf('ship-countdown-band') + 1);
+        const band = findBlock(content.blocks, 'ship-countdown-band') as unknown as {
+            styles: { backgroundColor: string };
+        };
+        const countdown = findBlock(content.blocks, 'ship-countdown') as unknown as {
+            type: string;
+            timezone: string;
+            targetDate: string;
+            backgroundColor: string;
+            digitColor: string;
+            labelColor: string;
+        };
+        expect(band.styles.backgroundColor).toBe('#ffffff');
+        expect(countdown).toMatchObject({
+            type: 'countdown',
+            timezone: 'Europe/Berlin',
+            backgroundColor: '#ffffff',
+            digitColor: '#1c1733',
+            labelColor: '#4a4562',
+        });
+        expect(countdown.targetDate).toMatch(/^\d{4}-\d{2}-\d{2}T18:00$/);
+        expect(HERO_COUNTDOWN_GIF).toBe('https://play.templatical.com/countdown-sample.gif');
+    });
+
+    it('sets 18:00 twelve Berlin calendar days ahead, including a midnight boundary', () => {
+        expect(heroTargetDate(new Date('2026-11-24T22:30:00Z'))).toBe('2026-12-06T18:00');
+        expect(heroTargetDate(new Date('2026-11-24T23:30:00Z'))).toBe('2026-12-07T18:00');
     });
 });
 
 describe('the recorded German', () => {
     it('answers exactly the fields Translate sends', () => {
         expect(Object.keys(german).sort()).toEqual(gaps.strings.map(({ id }) => id).sort());
+        for (const field of [
+            'ship-countdown-kicker/content',
+            'ship-countdown-title/content',
+            'ship-countdown/labelDays',
+            'ship-countdown/labelHours',
+            'ship-countdown/labelMinutes',
+            'ship-countdown/labelSeconds',
+            'ship-countdown/expiredMessage',
+        ]) {
+            expect(german).toHaveProperty(field);
+        }
     });
 
     it.each(gaps.strings.map((entry) => [entry.id, entry] as const))(
@@ -92,7 +141,7 @@ describe('the recorded German', () => {
         const untranslated = gaps.strings
             .filter(({ id, source }) => german[id] === source)
             .map(({ id }) => id);
-        // The brand title is the protected name alone.
+        // The brand line is the protected name alone.
         expect(untranslated).toEqual(['hero-brand/content']);
     });
 
@@ -125,27 +174,38 @@ describe('the recorded German', () => {
         expect(localeCoverage(translated, 'de')).toMatchObject({ missing: [], stale: [] });
 
         const projected = resolveLocale(translated, 'de');
-        const headline = projected.blocks.find((block) => block.id === 'hero-headline');
-        expect(headline).toMatchObject({
+        const greeting = findBlock(projected.blocks, 'ship-greeting');
+        expect(greeting).toMatchObject({
             content:
-                '<p><span data-merge-tag="{{first_name}}">First Name</span>, lernen Sie das neue Acme kennen</p>',
-        });
-        const featureSection = projected.blocks.find((block) => block.id === 'hero-features');
-        if (featureSection?.type !== 'section') throw new Error('feature section missing');
-        expect(featureSection.children.map((column) => column[0]?.content)).toEqual([
-            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Gemeinsame Boards</strong></span></p>',
-            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Offline-Modus</strong></span></p>',
-            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Teamkalender</strong></span></p>',
-        ]);
-        expect(projected.blocks.find((block) => block.id === 'hero-countdown')).toMatchObject({
-            labelDays: 'Tage',
-            labelHours: 'Stunden',
-            labelMinutes: 'Minuten',
-            labelSeconds: 'Sekunden',
-            expiredMessage: 'Der Early Access ist geöffnet',
+                '<p style="text-align: center; font-size: 16px; color: #1c1733">Hallo <span data-merge-tag="{{first_name}}">First name</span>, das hat sich diesen Monat bei <span data-merge-tag="{{company}}">Company</span> geändert. Drei Aktualisierungen sind live, und ein Termin steht im Kalender.</p>',
         });
         expect(projected.settings.preheaderText).toBe(
-            'Der Early Access beginnt bald. Sichern Sie sich Ihren Platz vor dem Start.',
+            'November bei Cindermill: gemeinsame Zeitpläne, Ruhezeiten und eine Sprechstunde am 14. Januar.',
         );
+    });
+});
+
+function findBlock(
+    blocks: readonly { id: string; children?: unknown[] }[],
+    id: string,
+): { id: string; content?: string } | undefined {
+    for (const block of blocks) {
+        if (block.id === id) return block;
+        if (!Array.isArray(block.children)) continue;
+        for (const column of block.children) {
+            if (!Array.isArray(column)) continue;
+            const found = findBlock(column, id);
+            if (found) return found;
+        }
+    }
+    return undefined;
+}
+
+describe('hero template name', () => {
+    it('names the seeded newsletter, not the old welcome email', async () => {
+        const en = (await import('@/i18n/locales/en')).default;
+        const de = (await import('@/i18n/locales/de')).default;
+        expect(en.heroEditor.demo.templateName).toBe('November product update');
+        expect(de.heroEditor.demo.templateName).toBe('Produkt-Update November');
     });
 });

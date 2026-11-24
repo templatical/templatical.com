@@ -29,7 +29,7 @@ export interface Importer {
 }
 
 export const IMPORTERS: readonly Importer[] = [
-    { slug: 'beefree', name: 'BeeFree', group: 'hosted' },
+    { slug: 'beefree', name: 'Beefree', group: 'hosted' },
     { slug: 'unlayer', name: 'Unlayer', group: 'hosted' },
     { slug: 'stripo', name: 'Stripo', group: 'hosted' },
     { slug: 'topol', name: 'Topol', group: 'hosted' },
@@ -43,6 +43,14 @@ export const IMPORTERS: readonly Importer[] = [
 export const IMPORTER_GROUP_ORDER: readonly ImporterGroup[] = ['hosted', 'markup'];
 
 export const IMPORTER_COUNT = IMPORTERS.length;
+
+export function importerNameList(locale: string): string {
+    // en-GB, not en: the site writes lists without a serial comma ("HTML and MJML").
+    const listLocale = locale === 'de' ? 'de' : 'en-GB';
+    return new Intl.ListFormat(listLocale, { style: 'long', type: 'conjunction' }).format(
+        IMPORTERS.map(({ name }) => name),
+    );
+}
 
 export function importerPackage(slug: string): string {
     return `@templatical/import-${slug}`;

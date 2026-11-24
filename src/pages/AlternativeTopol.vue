@@ -29,12 +29,14 @@ const US_KEYS = ['cost', 'domains', 'ownership', 'output', 'source'] as const;
 const THEM_KEYS = ['operated', 'storage', 'comments', 'templates', 'support'] as const;
 
 const SOURCES = [
-    { label: 'topol.io/tariff-plugin', href: URLS.topolPluginPricing },
     { label: 'topol.io/plugin', href: URLS.topolPlugin },
     { label: 'npm: @topol.io/editor', href: URLS.topolNpm },
     { label: 'docs.topol.io: multilingual templates', href: URLS.topolMultilingualDocs },
     { label: 'docs.topol.io: template translation', href: URLS.topolTranslationDocs },
     { label: 'topol.io/pricing', href: URLS.topolPricing },
+    { label: 'docs.topol.io: custom blocks', href: URLS.topolCustomBlockDocs },
+    { label: 'docs.topol.io: JS frameworks', href: URLS.topolFrameworkDocs },
+    { label: 'docs.topol.io: FAQ', href: URLS.topolFaqDocs },
 ];
 </script>
 

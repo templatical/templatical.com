@@ -45,6 +45,7 @@ const THEM_KEYS = ['scope', 'freedom', 'licence', 'control', 'reuse'] as const;
 
 const SOURCES = [
     { label: 'grapesjs.com', href: URLS.grapesjsSite },
+    { label: 'grapesjs.com/sdk/pricing', href: URLS.grapesjsSdkPricing },
     { label: 'npm: grapesjs', href: URLS.grapesjsNpm },
     { label: 'npm: grapesjs-mjml', href: URLS.grapesjsMjmlNpm },
     { label: 'grapesjs.com: I18n', href: URLS.grapesjsI18nDocs },

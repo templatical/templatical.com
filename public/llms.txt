@@ -16,6 +16,12 @@
 - [Localized templates](https://docs.templatical.com/guide/localized-templates): language versions in one template (`init({ localization })`, `settings.locales`, per-block `l10n` text, overrides and hidden blocks), rendered per language with `renderToMjml(content, { locale })`, checked with `template-tools validate --locale <tag>` and the `localization` lint rules, and exchanged as JSON with `template-tools strings export` / `strings import` (no XLIFF or CSV); subject lines stay with the host
 - [Translation over your own backend](https://docs.templatical.com/backend/translation): `init({ translation })` takes a `TranslationProvider`, any object with a `translate(request, signal)` method, that can call DeepL, a translation management system or an LLM; merge tags, logic tags and `doNotTranslate` terms are masked and checked exactly on return; the optional `@templatical/ai-kit` has `createHttpTranslationProvider`, `translateFields` and `runTranslationConformance`. Language versions themselves need no provider
 
+## Site pages
+
+- [Features](https://templatical.com/features): every editor capability and each backend provider, with links to their docs pages
+- [FAQ](https://templatical.com/faq): licence, commercial use, branding, frameworks, installation, migration, data location and CSS isolation
+- [Changelog](https://templatical.com/changelog): recent SDK releases by date, each linked to its full notes in the docs changelog
+
 ## Compare and migrate
 
 - [Importers](https://templatical.com/importers): Unlayer, Beefree, Stripo, Topol, Chamaileon, Easy Email Pro, MJML and HTML

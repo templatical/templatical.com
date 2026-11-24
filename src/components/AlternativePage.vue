@@ -8,6 +8,7 @@ import SiteEyebrow from '@/components/SiteEyebrow.vue';
 import SiteSubheading from '@/components/SiteSubheading.vue';
 import SiteText from '@/components/SiteText.vue';
 import { usePageMeta } from '@/composables/usePageMeta';
+import { IMPORTER_COUNT } from '@/lib/importers';
 import { URLS } from '@/lib/urls';
 import { Check, ChevronRight } from '@lucide/vue';
 import { computed } from 'vue';
@@ -54,7 +55,10 @@ const rows = computed(() =>
         key,
         label: t(k(`table.rows.${key}.label`)),
         them: t(k(`table.rows.${key}.them`)),
-        us: t(k(`table.rows.${key}.us`)),
+        us:
+            key === 'importers'
+                ? t(k(`table.rows.${key}.us`), { count: IMPORTER_COUNT })
+                : t(k(`table.rows.${key}.us`)),
     })),
 );
 
@@ -302,8 +306,7 @@ const themReasons = computed(() =>
                             target="_blank"
                             rel="noopener"
                             class="font-medium text-primary-text hover:underline"
-                            >{{ t(k('footnote.staleCta')) }}</a
-                        >.
+                            >{{ t(k('footnote.staleCta')) }}</a>.
                     </p>
                 </div>
             </SiteContainer>

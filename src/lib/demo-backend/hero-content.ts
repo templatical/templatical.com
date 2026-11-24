@@ -11,203 +11,534 @@
  *
  * Edit a seed block's text and its recording in the same change;
  * `tests/demo-backend/hero-content.test.ts` fails until they agree.
+ *
+ * Cindermill is a fictional work-planning product. The name is protected from
+ * translation the same way the previous brand was. The first title is
+ * `ship-headline`: the AI mock's "headline" / "title" turn rewrites whichever
+ * title comes first.
  */
 
-/**
- * The SDK playground's fixed sample GIF previews the countdown block. It does
- * not read the target date; a real integration supplies a URL backed by a timer
- * image service.
- */
+type Padding = { top: number; right: number; bottom: number; left: number };
+
+const INK = '#1c1733';
+const PAPER = '#f7f4ee';
+const WHITE = '#ffffff';
+const WASH = '#eef1f8';
+const CREAM = '#f6f3ec';
+const SOFT = '#d9d3c5';
+const MUTED = '#4a4562';
+const FOOTER_BG = '#f3efe6';
+const FOOTER_TEXT = '#5c5670';
+const CORAL = '#c2412d';
+const TABLE_HEAD = '#e4e0f2';
+const TABLE_LINE = '#d9d5e8';
+const UPGRADE = '#f8e7e0';
+const LINK = '#9a3412';
+
+const pad = (top: number, right: number, bottom: number, left: number): Padding => ({
+    top,
+    right,
+    bottom,
+    left,
+});
+
+const box = (padding: Padding, backgroundColor?: string) =>
+    backgroundColor ? { padding, backgroundColor } : { padding };
+
+const CENTER_INK = `text-align: center; font-size: 16px; color: ${INK}`;
+const CENTER_MUTED = `text-align: center; font-size: 15px; color: ${MUTED}`;
+const CENTER_SOFT = `text-align: center; font-size: 16px; color: ${SOFT}`;
+const LEFT_INK = `text-align: left; font-size: 16px; color: ${INK}`;
+const KICKER = `font-size: 14px; color: ${SOFT}`;
+const FOOTER_SPAN = `font-size: 14px; color: ${FOOTER_TEXT}`;
+const BRAND_SPAN = `font-size: 18px; color: ${CREAM}`;
+
+const html = (style: string, text: string) => `<p style="${style}">${text}</p>`;
+
 export const HERO_COUNTDOWN_GIF = 'https://play.templatical.com/countdown-sample.gif';
 
-export function heroTargetDate(now = Date.now()): string {
+/** A Berlin wall-clock deadline keeps the sample GIF's 12-day display aligned. */
+export function heroTargetDate(now = new Date()): string {
     const parts = new Intl.DateTimeFormat('en-US', {
         timeZone: 'Europe/Berlin',
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     }).formatToParts(now);
-    const value = (type: string) => Number(parts.find((part) => part.type === type)?.value);
-    const date = new Date(Date.UTC(value('year'), value('month') - 1, value('day') + 12));
+    const part = (type: string) => Number(parts.find((entry) => entry.type === type)?.value);
+    const date = new Date(Date.UTC(part('year'), part('month') - 1, part('day') + 12));
     return `${date.toISOString().slice(0, 10)}T18:00`;
 }
 
-function feature(n: number, title: string, body: string) {
-    return [
-        {
-            id: `hero-feature-${n}-title`,
-            type: 'paragraph',
-            content: `<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>${title}</strong></span></p>`,
-            styles: { padding: { top: 0, right: 8, bottom: 6, left: 8 } },
-        },
-        {
-            id: `hero-feature-${n}-body`,
-            type: 'paragraph',
-            content: `<p style="text-align: center"><span style="font-size: 14px">${body}</span></p>`,
-            styles: { padding: { top: 0, right: 8, bottom: 0, left: 8 } },
-        },
-    ];
-}
+/** Shown only to recipients on the Free plan. The editor config lists the same condition. */
+export const HERO_FREE_PLAN_CONDITION = {
+    label: 'Free plan',
+    before: "{% if plan == 'free' %}",
+    after: '{% endif %}',
+    description: 'Shown only to people on the Free plan',
+};
+
+const zero = pad(0, 0, 0, 0);
 
 export const HERO_CONTENT = {
     settings: {
         width: 600,
-        backgroundColor: '#ffffff',
-        textColor: '#475569',
-        linkColor: '#2c85de',
+        backgroundColor: PAPER,
+        textColor: INK,
+        linkColor: LINK,
         linkUnderline: true,
         fontFamily: 'Helvetica, Arial, sans-serif',
-        preheaderText: 'Early access opens soon. Save your spot before the doors open.',
-        // Required by `TemplateSettings` (BCP-47, drives the rendered
-        // `<html lang>`) and read unconditionally by `renderToMjml()`. Fixed
-        // to English rather than bound to the site's `locale` because the
-        // block copy below is hardcoded English regardless of UI language —
-        // tagging it `lang="de"` on the German site would mispronounce
-        // correct content for screen readers, not fix anything.
+        preheaderText:
+            'November at Cindermill: shared timelines, quiet hours, and office hours on 14 January.',
+        // Required by `TemplateSettings` and read unconditionally by
+        // `renderToMjml()`. Fixed to English: the copy below is English, and
+        // German exists only as the Translate recording.
         locale: 'en',
-        // The empty German version exposes Translate in the Languages menu;
-        // HERO_TRANSLATIONS supplies its recorded result.
+        // Choosing Deutsch shows "Translate {count} fields" immediately.
+        // Translate fills the gaps from HERO_TRANSLATIONS.
         locales: ['de'],
     },
     blocks: [
         {
-            id: 'hero-brand',
-            type: 'title',
-            content: '<p>Acme</p>',
-            level: 1,
-            color: '#0f172a',
-            textAlign: 'center',
-            styles: {
-                padding: { top: 32, right: 32, bottom: 20, left: 32 },
-                backgroundColor: '#ffffff',
-            },
+            id: 'ship-header',
+            type: 'section',
+            columns: '1',
+            styles: box(pad(32, 32, 28, 32), INK),
+            children: [
+                [
+                    {
+                        id: 'hero-brand',
+                        type: 'paragraph',
+                        content: `<p style="text-align: center"><span style="${BRAND_SPAN}">Cindermill</span></p>`,
+                        styles: box(pad(0, 0, 6, 0), INK),
+                    },
+                    {
+                        id: 'ship-kicker',
+                        type: 'paragraph',
+                        content: `<p style="text-align: center"><span style="${KICKER}">November notes</span></p>`,
+                        styles: box(zero, INK),
+                    },
+                ],
+            ],
         },
         {
-            id: 'hero-eyebrow',
-            type: 'paragraph',
-            content:
-                '<p style="text-align: center"><span style="font-size: 12px; letter-spacing: 2px; color: #2c85de"><strong>EARLY ACCESS</strong></span></p>',
-            styles: {
-                padding: { top: 0, right: 40, bottom: 4, left: 40 },
-                backgroundColor: '#ffffff',
-            },
+            id: 'ship-hero',
+            type: 'section',
+            columns: '1',
+            styles: box(zero, WHITE),
+            children: [
+                [
+                    {
+                        id: 'ship-headline',
+                        type: 'title',
+                        content: '<p>What shipped in November</p>',
+                        level: 1,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(36, 40, 8, 40), WHITE),
+                    },
+                    {
+                        id: 'ship-greeting',
+                        type: 'paragraph',
+                        content: html(
+                            CENTER_INK,
+                            'Hi <span data-merge-tag="{{first_name}}">First name</span>, here is what changed for <span data-merge-tag="{{company}}">Company</span> this month. Three updates are live, and one session is on the calendar.',
+                        ),
+                        styles: box(pad(4, 48, 8, 48), WHITE),
+                    },
+                    {
+                        id: 'hero-cta',
+                        type: 'button',
+                        text: 'Open your workspace',
+                        url: 'https://example.com/workspace',
+                        backgroundColor: INK,
+                        textColor: WHITE,
+                        borderRadius: 8,
+                        fontSize: 16,
+                        align: 'center',
+                        buttonPadding: pad(14, 28, 14, 28),
+                        styles: box(pad(8, 40, 28, 40), WHITE),
+                    },
+                    {
+                        id: 'ship-hero-image',
+                        type: 'image',
+                        src: '/demo/hero-banner.png',
+                        alt: 'Geometric banner with an indigo ring, a coral circle, and a paper card of timeline bars',
+                        width: 600,
+                        naturalWidth: 1200,
+                        naturalHeight: 480,
+                        align: 'center',
+                        fluidOnMobile: true,
+                        styles: box(zero, INK),
+                    },
+                ],
+            ],
         },
         {
-            id: 'hero-headline',
-            type: 'title',
-            content:
-                '<p><span data-merge-tag="{{first_name}}">First Name</span>, meet the new Acme</p>',
-            level: 2,
-            color: '#0f172a',
-            textAlign: 'center',
-            styles: {
-                padding: { top: 4, right: 40, bottom: 12, left: 40 },
-                backgroundColor: '#ffffff',
-            },
+            id: 'ship-gap-hero',
+            type: 'spacer',
+            height: 20,
+            styles: box(zero),
         },
         {
-            id: 'hero-intro',
-            type: 'paragraph',
-            content:
-                '<p style="text-align: center">We rebuilt it around how teams actually plan. Early-access members get in first, and the doors open in:</p>',
-            styles: {
-                padding: { top: 0, right: 48, bottom: 16, left: 48 },
-                backgroundColor: '#ffffff',
-            },
+            id: 'ship-features-intro',
+            type: 'section',
+            columns: '1',
+            styles: box(pad(32, 40, 4, 40), WASH),
+            children: [
+                [
+                    {
+                        id: 'ship-title-updates',
+                        type: 'title',
+                        content: '<p>Three updates</p>',
+                        level: 2,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(0, 0, 8, 0), WASH),
+                    },
+                    {
+                        id: 'ship-copy-updates',
+                        type: 'paragraph',
+                        content: html(CENTER_INK, 'All three are on for every workspace.'),
+                        styles: box(pad(0, 12, 8, 12), WASH),
+                    },
+                ],
+            ],
         },
         {
-            id: 'hero-countdown',
-            type: 'countdown',
-            targetDate: heroTargetDate(),
-            timezone: 'Europe/Berlin',
-            showDays: true,
-            showHours: true,
-            showMinutes: true,
-            showSeconds: true,
-            separator: ':',
-            digitFontSize: 36,
-            digitColor: '#0f172a',
-            labelColor: '#64748b',
-            labelFontSize: 12,
-            backgroundColor: '#ffffff',
-            labelDays: 'Days',
-            labelHours: 'Hours',
-            labelMinutes: 'Minutes',
-            labelSeconds: 'Seconds',
-            expiredMessage: 'Early access is open',
-            expiredImageUrl: '',
-            hideOnExpiry: false,
-            styles: {
-                padding: { top: 0, right: 24, bottom: 24, left: 24 },
-                backgroundColor: '#ffffff',
-            },
-        },
-        {
-            id: 'hero-cta',
-            type: 'button',
-            text: 'Reserve my spot',
-            url: 'https://example.com/early-access',
-            backgroundColor: '#0f172a',
-            textColor: '#ffffff',
-            borderRadius: 8,
-            fontSize: 15,
-            buttonPadding: { top: 14, right: 28, bottom: 14, left: 28 },
-            align: 'center',
-            styles: {
-                padding: { top: 0, right: 20, bottom: 32, left: 20 },
-                backgroundColor: '#ffffff',
-            },
-        },
-        {
-            id: 'hero-features',
+            id: 'ship-features',
             type: 'section',
             columns: '3',
-            borderRadius: 12,
-            // A pale card inset on the white body: the band supplies the
-            // side margins, which block styles have no field for.
-            wrapper: {
-                backgroundColor: '#ffffff',
-                padding: { top: 0, right: 24, bottom: 32, left: 24 },
-            },
+            styles: box(pad(8, 12, 32, 12), WASH),
             children: [
-                feature(
-                    1,
-                    'Shared boards',
-                    'Plan together in real time, every change in one place.',
-                ),
-                feature(
-                    2,
-                    'Offline mode',
-                    'Keep working on the train. Everything syncs when you are back.',
-                ),
-                feature(3, 'Team calendar', 'Deadlines and time off, side by side.'),
+                [
+                    {
+                        id: 'ship-icon-timeline',
+                        type: 'image',
+                        src: '/demo/icon-timeline.png',
+                        alt: 'A vertical timeline with a coral node and two indigo nodes',
+                        width: 64,
+                        naturalWidth: 128,
+                        naturalHeight: 128,
+                        align: 'center',
+                        fluidOnMobile: false,
+                        styles: box(pad(8, 0, 8, 0), WASH),
+                    },
+                    {
+                        id: 'ship-title-timeline',
+                        type: 'title',
+                        content: '<p>One timeline</p>',
+                        level: 3,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(4, 6, 4, 6), WASH),
+                    },
+                    {
+                        id: 'ship-copy-timeline',
+                        type: 'paragraph',
+                        content: html(
+                            CENTER_MUTED,
+                            'Plans from every team sit on one line, so a slipped date shows up before the meeting.',
+                        ),
+                        styles: box(pad(0, 6, 8, 6), WASH),
+                    },
+                ],
+                [
+                    {
+                        id: 'ship-icon-quiet',
+                        type: 'image',
+                        src: '/demo/icon-quiet.png',
+                        alt: 'A circle containing a pause mark in coral and indigo',
+                        width: 64,
+                        naturalWidth: 128,
+                        naturalHeight: 128,
+                        align: 'center',
+                        fluidOnMobile: false,
+                        styles: box(pad(8, 0, 8, 0), WASH),
+                    },
+                    {
+                        id: 'ship-title-quiet',
+                        type: 'title',
+                        content: '<p>Quiet hours</p>',
+                        level: 3,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(4, 6, 4, 6), WASH),
+                    },
+                    {
+                        id: 'ship-copy-quiet',
+                        type: 'paragraph',
+                        content: html(
+                            CENTER_MUTED,
+                            'Notifications hold outside the hours you set. Mentions arrive when you are back.',
+                        ),
+                        styles: box(pad(0, 6, 8, 6), WASH),
+                    },
+                ],
+                [
+                    {
+                        id: 'ship-icon-rounds',
+                        type: 'image',
+                        src: '/demo/icon-rounds.png',
+                        alt: 'Three dots on a ring, the top one coral',
+                        width: 64,
+                        naturalWidth: 128,
+                        naturalHeight: 128,
+                        align: 'center',
+                        fluidOnMobile: false,
+                        styles: box(pad(8, 0, 8, 0), WASH),
+                    },
+                    {
+                        id: 'ship-title-rounds',
+                        type: 'title',
+                        content: '<p>Review rounds</p>',
+                        level: 3,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(4, 6, 4, 6), WASH),
+                    },
+                    {
+                        id: 'ship-copy-rounds',
+                        type: 'paragraph',
+                        content: html(
+                            CENTER_MUTED,
+                            'Comments sit in one round. The round closes when every reviewer has answered.',
+                        ),
+                        styles: box(pad(0, 6, 8, 6), WASH),
+                    },
+                ],
             ],
-            styles: {
-                padding: { top: 24, right: 12, bottom: 24, left: 12 },
-                backgroundColor: '#f8fafc',
-            },
         },
         {
-            id: 'hero-divider',
-            type: 'divider',
-            lineStyle: 'solid',
-            color: '#e5e7eb',
-            thickness: 1,
-            width: 'full',
-            styles: {
-                padding: { top: 0, right: 40, bottom: 0, left: 40 },
-                backgroundColor: '#ffffff',
-            },
+            id: 'ship-countdown-band',
+            type: 'section',
+            columns: '1',
+            styles: box(pad(32, 40, 32, 40), WHITE),
+            children: [
+                [
+                    {
+                        id: 'ship-countdown-kicker',
+                        type: 'paragraph',
+                        content: html(CENTER_MUTED, 'Next up'),
+                        styles: box(pad(0, 0, 8, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-countdown-title',
+                        type: 'title',
+                        content: '<p>Shared review links</p>',
+                        level: 2,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(0, 0, 8, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-countdown-copy',
+                        type: 'paragraph',
+                        content: html(CENTER_INK, 'Open to every workspace in'),
+                        styles: box(pad(0, 0, 8, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-countdown',
+                        type: 'countdown',
+                        targetDate: heroTargetDate(),
+                        timezone: 'Europe/Berlin',
+                        showDays: true,
+                        showHours: true,
+                        showMinutes: true,
+                        showSeconds: true,
+                        separator: ':',
+                        digitFontSize: 32,
+                        digitColor: INK,
+                        labelColor: MUTED,
+                        labelFontSize: 12,
+                        backgroundColor: WHITE,
+                        fontFamily: 'Helvetica, Arial, sans-serif',
+                        labelDays: 'Days',
+                        labelHours: 'Hours',
+                        labelMinutes: 'Minutes',
+                        labelSeconds: 'Seconds',
+                        expiredMessage: 'Shared review links are open',
+                        expiredImageUrl: '',
+                        hideOnExpiry: false,
+                        styles: box(pad(0, 0, 0, 0), WHITE),
+                    },
+                ],
+            ],
         },
         {
-            id: 'hero-footer',
-            type: 'paragraph',
-            content:
-                '<p style="text-align: center"><span style="font-size: 12px; color: #94a3b8">Acme Inc. · 1 Market St, San Francisco · <a href="{{unsubscribe_url}}">Unsubscribe</a></span></p>',
-            styles: {
-                padding: { top: 16, right: 24, bottom: 32, left: 24 },
-                backgroundColor: '#ffffff',
+            id: 'ship-changes',
+            type: 'section',
+            columns: '1',
+            styles: box(pad(32, 40, 28, 40), WHITE),
+            children: [
+                [
+                    {
+                        id: 'ship-title-changes',
+                        type: 'title',
+                        content: '<p>What changed</p>',
+                        level: 2,
+                        color: INK,
+                        textAlign: 'left',
+                        styles: box(pad(0, 0, 8, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-copy-changes',
+                        type: 'paragraph',
+                        content: html(LEFT_INK, 'The short version, for anyone with a minute.'),
+                        styles: box(pad(0, 0, 12, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-changes-table',
+                        type: 'table',
+                        hasHeaderRow: true,
+                        headerBackgroundColor: TABLE_HEAD,
+                        borderColor: TABLE_LINE,
+                        borderWidth: 1,
+                        cellPadding: 12,
+                        fontSize: 15,
+                        color: INK,
+                        textAlign: 'left',
+                        styles: box(pad(4, 0, 4, 0), WHITE),
+                        rows: [
+                            {
+                                id: 'row-head',
+                                cells: [
+                                    { id: 'cell-head-area', content: 'Area' },
+                                    { id: 'cell-head-change', content: 'Change' },
+                                ],
+                            },
+                            {
+                                id: 'row-timelines',
+                                cells: [
+                                    { id: 'cell-timelines-area', content: 'Timelines' },
+                                    {
+                                        id: 'cell-timelines-change',
+                                        content: 'A second team can join an existing plan',
+                                    },
+                                ],
+                            },
+                            {
+                                id: 'row-notifications',
+                                cells: [
+                                    { id: 'cell-notifications-area', content: 'Notifications' },
+                                    {
+                                        id: 'cell-notifications-change',
+                                        content: 'Quiet hours now follow each person',
+                                    },
+                                ],
+                            },
+                            {
+                                id: 'row-reviews',
+                                cells: [
+                                    { id: 'cell-reviews-area', content: 'Reviews' },
+                                    {
+                                        id: 'cell-reviews-change',
+                                        content: 'A round closes after the last answer',
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            ],
+        },
+        {
+            id: 'ship-office-hours',
+            type: 'section',
+            columns: '1',
+            styles: box(pad(32, 40, 32, 40), INK),
+            children: [
+                [
+                    {
+                        id: 'ship-title-hours',
+                        type: 'title',
+                        content: '<p>Office hours, live</p>',
+                        level: 2,
+                        color: CREAM,
+                        textAlign: 'center',
+                        styles: box(pad(0, 0, 8, 0), INK),
+                    },
+                    {
+                        id: 'ship-copy-hours',
+                        type: 'paragraph',
+                        content: html(
+                            CENTER_SOFT,
+                            '14 January 2027, 16:00 Lisbon time. Bring one question about the timeline view. The second half is open.',
+                        ),
+                        styles: box(pad(0, 8, 0, 8), INK),
+                    },
+                ],
+            ],
+        },
+        {
+            id: 'ship-upgrade',
+            type: 'section',
+            columns: '1',
+            displayCondition: { ...HERO_FREE_PLAN_CONDITION },
+            border: {
+                top: { width: 4, style: 'solid', color: CORAL },
+                right: { width: 0, style: 'solid', color: CORAL },
+                bottom: { width: 0, style: 'solid', color: CORAL },
+                left: { width: 0, style: 'solid', color: CORAL },
             },
+            styles: box(pad(28, 40, 32, 40), UPGRADE),
+            children: [
+                [
+                    {
+                        id: 'ship-title-upgrade',
+                        type: 'title',
+                        content: '<p>You are on the Free plan</p>',
+                        level: 2,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(0, 0, 8, 0), UPGRADE),
+                    },
+                    {
+                        id: 'ship-copy-upgrade',
+                        type: 'paragraph',
+                        content: html(
+                            CENTER_INK,
+                            'Shared timelines are part of Pro. This workspace can use them until the end of the month.',
+                        ),
+                        styles: box(pad(0, 8, 8, 8), UPGRADE),
+                    },
+                    {
+                        id: 'ship-upgrade-cta',
+                        type: 'button',
+                        text: 'Compare plans',
+                        url: 'https://example.com/plans',
+                        backgroundColor: INK,
+                        textColor: WHITE,
+                        borderRadius: 8,
+                        fontSize: 16,
+                        align: 'center',
+                        buttonPadding: pad(14, 28, 14, 28),
+                        styles: box(pad(8, 0, 0, 0), UPGRADE),
+                    },
+                ],
+            ],
+        },
+        {
+            id: 'ship-gap-footer',
+            type: 'spacer',
+            height: 20,
+            styles: box(zero),
+        },
+        {
+            id: 'ship-footer',
+            type: 'section',
+            columns: '1',
+            styles: box(pad(8, 32, 28, 32), FOOTER_BG),
+            children: [
+                [
+                    {
+                        id: 'ship-footer-copy',
+                        type: 'paragraph',
+                        content: `<p style="text-align: center"><span style="${FOOTER_SPAN}">Cindermill · 18 Lantern Yard, Lisbon · <a href="{{unsubscribe_url}}">Unsubscribe</a></span></p>`,
+                        styles: box(pad(16, 0, 0, 0), FOOTER_BG),
+                    },
+                ],
+            ],
         },
     ],
 };
@@ -216,44 +547,89 @@ export const HERO_CONTENT = {
 export const HERO_LOCALES = ['en', 'de'] as const;
 
 /** Protected from translation: the editor masks it and checks it comes back unchanged. */
-export const HERO_DO_NOT_TRANSLATE = ['Acme'] as const;
+export const HERO_DO_NOT_TRANSLATE = ['Cindermill'] as const;
 
 /**
  * What the recorded translation provider answers, keyed by target language,
  * then field id. Each value is masked exactly as the editor sends it: the
- * protected brand name and the merge-tag chip are `<x id="n"/>`, a merge tag
+ * protected brand name and a merge-tag chip are `<x id="n"/>`, a merge tag
  * inside an attribute is `__xn__`, and inline `style` values are copied from
  * the English, because Translate refuses a new or changed one.
  */
 export const HERO_TRANSLATIONS: Record<string, Record<string, string>> = {
     de: {
-        'hero-brand/content': '<p><x id="1"/></p>',
-        'hero-eyebrow/content':
-            '<p style="text-align: center"><span style="font-size: 12px; letter-spacing: 2px; color: #2c85de"><strong>FRÜHER ZUGANG</strong></span></p>',
-        'hero-headline/content': '<p><x id="1"/>, lernen Sie das neue <x id="2"/> kennen</p>',
-        'hero-intro/content':
-            '<p style="text-align: center">Wir haben es neu entwickelt, damit Teams ihre Arbeit besser planen können. Mitglieder mit Early Access erhalten zuerst Zugang. Der Start ist in:</p>',
-        'hero-countdown/labelDays': 'Tage',
-        'hero-countdown/labelHours': 'Stunden',
-        'hero-countdown/labelMinutes': 'Minuten',
-        'hero-countdown/labelSeconds': 'Sekunden',
-        'hero-countdown/expiredMessage': 'Der Early Access ist geöffnet',
-        'hero-cta/text': 'Platz sichern',
-        'hero-feature-1-title/content':
-            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Gemeinsame Boards</strong></span></p>',
-        'hero-feature-1-body/content':
-            '<p style="text-align: center"><span style="font-size: 14px">Planen Sie gemeinsam in Echtzeit. Jede Änderung bleibt an einem Ort.</span></p>',
-        'hero-feature-2-title/content':
-            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Offline-Modus</strong></span></p>',
-        'hero-feature-2-body/content':
-            '<p style="text-align: center"><span style="font-size: 14px">Arbeiten Sie auch unterwegs weiter. Alles wird synchronisiert, sobald Sie wieder online sind.</span></p>',
-        'hero-feature-3-title/content':
-            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Teamkalender</strong></span></p>',
-        'hero-feature-3-body/content':
-            '<p style="text-align: center"><span style="font-size: 14px">Fristen und Abwesenheiten stehen nebeneinander.</span></p>',
-        'hero-footer/content':
-            '<p style="text-align: center"><span style="font-size: 12px; color: #94a3b8"><x id="1"/> Inc. · 1 Market St, San Francisco · <a href="__x2__">Abmelden</a></span></p>',
+        'hero-brand/content': `<p style="text-align: center"><span style="${BRAND_SPAN}"><x id="1"/></span></p>`,
+        'ship-kicker/content': `<p style="text-align: center"><span style="${KICKER}">Notizen im November</span></p>`,
+        'ship-headline/content': '<p>Was im November fertig wurde</p>',
+        'ship-greeting/content': html(
+            CENTER_INK,
+            'Hallo <x id="1"/>, das hat sich diesen Monat bei <x id="2"/> geändert. Drei Aktualisierungen sind live, und ein Termin steht im Kalender.',
+        ),
+        'hero-cta/text': 'Arbeitsbereich öffnen',
+        'ship-hero-image/alt':
+            'Geometrisches Banner mit einem indigofarbenen Ring, einem korallenroten Kreis und einer Papierkarte mit Zeitplanbalken',
+        'ship-title-updates/content': '<p>Drei Aktualisierungen</p>',
+        'ship-copy-updates/content': html(
+            CENTER_INK,
+            'Alle drei sind für jeden Arbeitsbereich aktiv.',
+        ),
+        'ship-icon-timeline/alt':
+            'Eine senkrechte Zeitleiste mit einem korallenroten Punkt und zwei indigofarbenen Punkten',
+        'ship-title-timeline/content': '<p>Ein Zeitplan</p>',
+        'ship-copy-timeline/content': html(
+            CENTER_MUTED,
+            'Die Pläne aller Teams liegen auf einer Linie, damit ein verrutschter Termin vor der Besprechung auffällt.',
+        ),
+        'ship-icon-quiet/alt': 'Ein Kreis mit einem Pause-Zeichen in Koralle und Indigo',
+        'ship-title-quiet/content': '<p>Ruhezeiten</p>',
+        'ship-copy-quiet/content': html(
+            CENTER_MUTED,
+            'Benachrichtigungen warten außerhalb der Stunden, die Sie festlegen. Erwähnungen kommen an, wenn Sie zurück sind.',
+        ),
+        'ship-icon-rounds/alt': 'Drei Punkte auf einem Ring, der obere korallenrot',
+        'ship-title-rounds/content': '<p>Prüfrunden</p>',
+        'ship-copy-rounds/content': html(
+            CENTER_MUTED,
+            'Kommentare werden in einer Feedbackrunde gesammelt. Sie endet, sobald alle Beteiligten geantwortet haben.',
+        ),
+        'ship-countdown-kicker/content': html(CENTER_MUTED, 'Als Nächstes'),
+        'ship-countdown-title/content': '<p>Geteilte Prüflinks</p>',
+        'ship-countdown-copy/content': html(CENTER_INK, 'Für jeden Arbeitsbereich verfügbar in'),
+        'ship-countdown/labelDays': 'Tage',
+        'ship-countdown/labelHours': 'Stunden',
+        'ship-countdown/labelMinutes': 'Minuten',
+        'ship-countdown/labelSeconds': 'Sekunden',
+        'ship-countdown/expiredMessage': 'Geteilte Prüflinks sind verfügbar',
+        'ship-title-changes/content': '<p>Was sich geändert hat</p>',
+        'ship-copy-changes/content': html(
+            LEFT_INK,
+            'Die Kurzfassung für alle, die eine Minute Zeit haben.',
+        ),
+        'ship-changes-table/rows.row-head.cells.cell-head-area.content': 'Bereich',
+        'ship-changes-table/rows.row-head.cells.cell-head-change.content': 'Änderung',
+        'ship-changes-table/rows.row-timelines.cells.cell-timelines-area.content': 'Zeitpläne',
+        'ship-changes-table/rows.row-timelines.cells.cell-timelines-change.content':
+            'Ein zweites Team kann einem bestehenden Plan beitreten',
+        'ship-changes-table/rows.row-notifications.cells.cell-notifications-area.content':
+            'Benachrichtigungen',
+        'ship-changes-table/rows.row-notifications.cells.cell-notifications-change.content':
+            'Ruhezeiten folgen jetzt jeder Person',
+        'ship-changes-table/rows.row-reviews.cells.cell-reviews-area.content': 'Prüfungen',
+        'ship-changes-table/rows.row-reviews.cells.cell-reviews-change.content':
+            'Eine Runde schließt nach der letzten Antwort',
+        'ship-title-hours/content': '<p>Live-Sprechstunde</p>',
+        'ship-copy-hours/content': html(
+            CENTER_SOFT,
+            '14. Januar 2027, 16:00 Uhr Lissabonner Zeit. Bringen Sie eine Frage zur Zeitplanansicht mit. Die zweite Hälfte ist offen.',
+        ),
+        'ship-title-upgrade/content': '<p>Sie sind im kostenlosen Tarif</p>',
+        'ship-copy-upgrade/content': html(
+            CENTER_INK,
+            'Gemeinsame Zeitpläne gehören zu Pro. Dieser Arbeitsbereich kann sie bis zum Monatsende nutzen.',
+        ),
+        'ship-upgrade-cta/text': 'Tarife vergleichen',
+        'ship-footer-copy/content': `<p style="text-align: center"><span style="${FOOTER_SPAN}"><x id="1"/> · 18 Lantern Yard, Lisbon · <a href="__x2__">Abmelden</a></span></p>`,
         'settings/preheaderText':
-            'Der Early Access beginnt bald. Sichern Sie sich Ihren Platz vor dem Start.',
+            'November bei <x id="1"/>: gemeinsame Zeitpläne, Ruhezeiten und eine Sprechstunde am 14. Januar.',
     },
 };

@@ -1,0 +1,124 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: en-US
+
+reviews:
+  profile: chill
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  suggested_reviewers: false
+  in_progress_fortune: false
+  poem: false
+
+  auto_review:
+    enabled: true
+    drafts: false
+    ignore_usernames:
+      - renovate[bot]
+    ignore_title_keywords:
+      - Version Packages
+
+  # Review hand-written agent and legal surfaces; skip build output and image assets.
+  path_filters:
+    - "!dist/**"
+    - "!coverage/**"
+    - "!pnpm-lock.yaml"
+    - "!public/**/*.png"
+    - "!public/**/*.jpg"
+    - "!public/**/*.jpeg"
+    - "!public/**/*.webp"
+    - "!public/**/*.gif"
+    - "!public/**/*.avif"
+    - "!public/**/*.ico"
+
+  path_instructions:
+    - path: "**"
+      instructions: |
+        - When sponsorship wording appears, check the SDK's `SPONSORS.md` tiers: free "Used by" means company names in the SDK README; logos under "Sponsored by" are paid, with README and docs placement from $50/month and the templatical.com homepage from $100/month. Do not imply free logo placement.
+        - A new third-party script, font, fetch or embed request must be listed in `PRIVACY_SECTIONS` in `src/lib/legal.ts`, and `PRIVACY_UPDATED` must be bumped when the notice changes. Hosts that are only links belong in `src/lib/urls.ts`.
+
+    - path: "src/i18n/locales/**"
+      instructions: |
+        - English is canonical; mirror every changed key and copy change in `en.ts` in `de.ts` in the same PR. German uses the formal "Sie" register.
+        - Write plain, declarative copy with noun-phrase headings: no hype, editorial adverbs or slogans. Lead with what an agent or developer can verify: the install line, the contract and links to docs. Give exact names, defaults and limits checked against source; name members instead of derived counts or unverifiable claims.
+        - Templatical packages are "open source (MIT)". Never call them "source-available" or imply that Templatical Cloud exists. Date and source comparisons; do not invent competitor features, prices, ratings, adoption numbers or benchmarks.
+
+    - path: "src/pages/**"
+      instructions: |
+        - Keep user-facing copy in both `src/i18n/locales/en.ts` and `de.ts`; German uses formal "Sie". Copy is plain and declarative, leads with the install line, contract and docs links, and avoids hype, editorial adverbs, unverifiable claims and derived counts.
+        - Describe Templatical as "open source (MIT)", never "source-available" or a live Templatical Cloud. Date and source competitor comparisons, including prices and ratings; check competitor facts against the public npm tarball and public pages and keep the page's verification date and version visible.
+        - Route title, description, social mirrors and canonical come from `usePageMeta`; homepage JSON-LD comes from the factual `SOFTWARE_APPLICATION` in `src/lib/seo.ts`.
+        - The real `/404` page stays noindex. `/privacy` is also noindex and omitted from the sitemap.
+
+    - path: "src/components/**"
+      instructions: |
+        - User-facing strings come from i18n; mirror English key and copy changes in German in the same PR, using formal "Sie". Write plain, declarative copy with no hype, editorial adverbs, unverifiable claims or derived counts; lead with the install line, contract and docs links.
+        - Say "open source (MIT)" for Templatical, never "source-available" or a live Templatical Cloud. Date and source any competitor comparison; do not invent features, prices, ratings or benchmarks.
+
+    - path: "src/lib/seo.ts"
+      instructions: |
+        - Keep route canonicals and the prerender head audit here. Each indexable page needs one unique title and description, matching og/twitter mirrors, and a canonical plus `og:url` from `canonicalUrl(route.path)`. `/404` and `/privacy` stay noindex, without canonical or `og:url`, and out of the sitemap.
+        - Homepage SoftwareApplication JSON-LD states verifiable facts only: product type, MIT licence, identities and a zero-price offer.
+
+    - path: "src/composables/usePageMeta.ts"
+      instructions: |
+        - `usePageMeta` alone writes each route's title, description, og/twitter mirrors, canonical and `og:url`. Use `canonicalUrl(route.path)`; `{ noindex: true }` writes robots noindex and omits canonical and `og:url`. Each page's title and description must be unique.
+
+    - path: "src/App.vue"
+      instructions: |
+        - `App.vue` writes only site-wide social tags: og:type, og:image and size, twitter:card and twitter:image. Route-specific metadata belongs to `usePageMeta`.
+
+    - path: "index.html"
+      instructions: |
+        - Do not add static title, description or social tags. `usePageMeta` owns route metadata and `App.vue` owns site-wide social tags; static tags can cause every prerendered route to ship the homepage head.
+
+    - path: "vite.config.ts"
+      instructions: |
+        - The build's `onPageRendered`/`onFinished` prerender audit must still reject broken head tags before writing `dist/sitemap.xml`. Keep `/404` and `/privacy` noindex and unlisted.
+
+    - path: "public/llms.txt"
+      instructions: |
+        - This file is hand-written. Keep one line for every indexable page, and keep the install command and single skill install command literal. State that all Templatical packages are open source (MIT).
+
+    - path: "src/lib/legal.ts"
+      instructions: |
+        - `PRIVACY_SECTIONS` lists third-party requests made by the site, including edge-injected services. Add any new third-party script, font, fetch or embed request and bump `PRIVACY_UPDATED` whenever the notice changes. The notice covers templatical.com only.
+
+    - path: "src/pages/Privacy.vue"
+      instructions: |
+        - Keep the privacy notice aligned with `PRIVACY_SECTIONS` and new third-party requests. Bump `PRIVACY_UPDATED` in `src/lib/legal.ts` when the notice changes. The `/privacy` route stays noindex.
+
+    - path: "src/lib/urls.ts"
+      instructions: |
+        - External link destinations live under the `URLS` const here rather than inline in components. A link-only host is not a third-party request; any new script, font, fetch or embed host must also be disclosed in `PRIVACY_SECTIONS`, with `PRIVACY_UPDATED` bumped.
+
+    - path: "tests/**"
+      instructions: |
+        - Assert concrete values and behavior. Do not weaken a structural, copy, SEO or privacy guard merely to make it pass; keep the guard aligned with the site rule it protects.
+
+  pre_merge_checks:
+    docstrings:
+      mode: "off"
+    custom_checks:
+      - name: German copy mirror
+        mode: "warning"
+        instructions: |
+          If the PR changes a key or copy in `src/i18n/locales/en.ts`, check the matching key and copy in `src/i18n/locales/de.ts` in the same PR. German should use the formal "Sie" register. Pass if no English key or copy changed, or if every changed item has its German mirror. Otherwise fail and name the missing keys.
+      - name: MIT licence and removed Cloud wording
+        mode: "warning"
+        instructions: |
+          Check changed public copy, metadata, JSON-LD and `public/llms.txt`. Pass when Templatical licence claims say "open source (MIT)" together, do not say "source-available", and do not present Templatical Cloud as a current product. Otherwise fail and quote each conflicting claim.
+      - name: Sourced comparison claims
+        mode: "warning"
+        instructions: |
+          If the PR adds or changes claims about a competitor, including features, prices, ratings, adoption or benchmarks, require a visible verification date and source. For `/alternatives/*` pages, keep the pinned version in the page footnote and verify against the public npm tarball and public pages. Pass when there are no changed comparison claims or every such claim is dated and sourced. Otherwise fail and list each unsupported claim.
+
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+    autofix:
+      enabled: false

@@ -34,6 +34,7 @@ const SOURCES = [
     { label: 'easyemail.pro', href: URLS.easyEmailPro },
     { label: 'docs.easyemail.pro', href: URLS.easyEmailProQuickStart },
     { label: 'npm: easy-email-pro-core', href: URLS.easyEmailProNpm },
+    { label: 'npm: easy-email-pro-migrations', href: URLS.easyEmailProMigrationsNpm },
     { label: 'docs.easyemail.pro: email translation', href: URLS.easyEmailProTranslateDocs },
 ];
 </script>

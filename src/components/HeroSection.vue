@@ -4,6 +4,7 @@ import { useBundleSize } from '@/composables/useBundleSize';
 import { useChangelog } from '@/composables/useChangelog';
 import { COUNTDOWN_LAUNCH, launchExpiry, launchIsActive } from '@/lib/launch-promotion';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useClipboard } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import GitHubStarButton from './GitHubStarButton.vue';
 import HeroAurora from './HeroAurora.vue';
@@ -34,6 +35,10 @@ function refreshCountdownLaunch(): void {
 
 onMounted(refreshCountdownLaunch);
 onUnmounted(() => clearTimeout(expiryTimer));
+
+// Literal command, not translatable prose: the copy button reproduces it verbatim.
+const installCommand = 'npm install @templatical/editor';
+const { copy, copied, isSupported } = useClipboard({ source: installCommand });
 </script>
 
 <template>
@@ -60,7 +65,6 @@ onUnmounted(() => clearTimeout(expiryTimer));
                 class="flex max-w-2xl flex-col gap-4 text-lg/8 text-neutral-600 motion-safe:animate-fade-in motion-safe:[animation-delay:200ms] dark:text-neutral-400"
             >
                 <p>{{ t('home.hero.subheadline') }}</p>
-                <p>{{ t('home.hero.backendNote') }}</p>
             </div>
         </SiteContainer>
 
@@ -84,10 +88,38 @@ onUnmounted(() => clearTimeout(expiryTimer));
                 <SiteButton :href="URLS.playground" size="lg" external>
                     {{ t('home.hero.ctaPrimary') }}
                 </SiteButton>
-                <SiteButton :href="URLS.docs" variant="plain" size="lg" external>
+                <SiteButton
+                    :href="localizedUrl('installation', locale)"
+                    variant="plain"
+                    size="lg"
+                    external
+                >
                     {{ t('home.hero.ctaSecondary') }}
                     <ChevronRight class="size-5" />
                 </SiteButton>
+            </div>
+            <div
+                class="w-full max-w-xl overflow-hidden rounded-xl bg-white text-left ring-1 ring-neutral-950/10 motion-safe:animate-fade-in motion-safe:[animation-delay:400ms] dark:bg-neutral-950 dark:ring-white/10"
+            >
+                <div class="flex items-center justify-between gap-3 px-4 py-3 font-mono text-sm/6">
+                    <span class="truncate text-neutral-700 dark:text-neutral-300">
+                        <span class="mr-2 text-neutral-400 select-none dark:text-neutral-600"
+                            >$</span
+                        >
+                        {{ installCommand }}
+                    </span>
+                    <button
+                        v-if="isSupported"
+                        type="button"
+                        class="shrink-0 rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700 hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none motion-safe:transition dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                        :aria-label="
+                            copied ? t('home.hero.copiedLabel') : t('home.hero.copyAriaLabel')
+                        "
+                        @click="copy(installCommand)"
+                    >
+                        {{ copied ? t('home.hero.copiedLabel') : t('home.hero.copyLabel') }}
+                    </button>
+                </div>
             </div>
             <p
                 class="max-w-xl text-xs/5 text-pretty text-neutral-500 motion-safe:animate-fade-in motion-safe:[animation-delay:450ms] dark:text-neutral-500"

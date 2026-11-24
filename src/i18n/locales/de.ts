@@ -59,7 +59,7 @@ const de: MessageSchema = {
             you: 'Sie',
         },
         demo: {
-            templateName: 'Produkteinführung',
+            templateName: 'Produkt-Update November',
             eyebrow: 'Mit einem Backend verbunden',
             description:
                 'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien, KI und Übersetzung — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers und spielt aufgezeichnete KI-Antworten und Übersetzungen ohne Modell oder Übersetzungsdienst ab, es verlässt also nichts diese Seite.',
@@ -79,8 +79,8 @@ const de: MessageSchema = {
         },
         seed: {
             reviewerName: 'Sam Okafor',
-            threadBody: 'Kann der Button genauer sagen, was man nach dem Klick erhält?',
-            replyBody: 'Ja. Bitten wir darum, vor dem Early Access einen Platz zu reservieren.',
+            threadBody: 'Dieser Button trägt die ganze E-Mail — geht das direkter?',
+            replyBody: 'Sehe ich auch so. Etwas Auffordernderes, und in der Markenfarbe.',
         },
     },
     footer: {
@@ -99,7 +99,7 @@ const de: MessageSchema = {
         comparisonTopol: 'vs. Topol Plugin',
         comparisonChamaileon: 'vs. Chamaileon SDK',
         comparisonGrapesjs: 'vs. GrapesJS',
-        comparison: 'vs. Easy Email Pro',
+        comparisonEasyEmailPro: 'vs. Easy Email Pro',
         documentation: 'Dokumentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -116,10 +116,11 @@ const de: MessageSchema = {
             headline: 'Ein Open-Source-E-Mail-Editor per Drag-and-drop für Ihre App.',
             subheadline:
                 'Benutzerdefinierte Blöcke, vollständiges Theming, Merge-Tags, Anzeigebedingungen, Sprachversionen und ein KI-Assistent mit Ihrem eigenen Modell — alles im SDK enthalten. In jede App mit einem init()-Aufruf einbinden.',
-            backendNote:
-                'Speicherung und Versand liegen bei Ihrem Team; es gibt keinen gehosteten Dienst.',
             ctaPrimary: 'Playground öffnen',
-            ctaSecondary: 'Dokumentation lesen',
+            ctaSecondary: 'Installationsanleitung',
+            copyLabel: 'Kopieren',
+            copiedLabel: 'Kopiert',
+            copyAriaLabel: 'Installationsbefehl kopieren',
             frameworkNote:
                 'Funktioniert in React, Svelte, Angular, Vue und Vanilla JS — ein init()-Aufruf, keine Runtime-Dependencies.',
             countdownLaunch: 'Neu: Countdown-Blöcke →',
@@ -132,81 +133,6 @@ const de: MessageSchema = {
                 'Kein Lizenzschlüssel',
             ],
         },
-        comparison: {
-            eyebrow: 'Warum Templatical',
-            headline: 'Editor-Funktionen und Anbieterbedingungen',
-            subheadline:
-                'Templatical enthält die aufgeführten Editor-Funktionen unter MIT. Kommerzielle Editoren unterscheiden sich bei Tarifen, Laufzeit-Einrichtung und Ausgabeformaten.',
-            youBuildLabel: 'Müssten Sie selbst bauen',
-            paywalledLabel: 'Anbieterbedingungen und Grenzen',
-            sdkLabel: 'Im SDK enthalten',
-            compareLink: 'Im Vergleich mit Easy Email Pro',
-            recommendedLabel: 'Empfohlen',
-            columns: {
-                diy: {
-                    title: 'Selbst bauen',
-                    description:
-                        'Ein Open-Source-Web-Builder-Framework mit einem MJML-Plugin kombinieren oder React-Email-Komponenten selbst zusammenstellen.',
-                    tradeOffs: [
-                        'Die Editor-UX selbst — Drag-and-Drop, Verschachtelung, Spalten, Undo/Redo',
-                        'Block-Level-Merge-Tag-Scoping',
-                        'Anzeigebedingungen mit Live-Vorschau',
-                        'Custom-Block-SDK mit API-gestützten Datenquellen',
-                        'Editor-zu-Medien-Bibliothek-Integration — Picker, Image-Block-Hook, Ersetzen-Flow',
-                        'Eine Bibliothek gespeicherter Blöcke — auswählen, benennen, Vorschau, positioniert einfügen',
-                        'Ein Dialog für Testversand — Empfängerauswahl, Vorschau, Sende- und Fehlerzustände',
-                        'Vorschau-Auflösung — echte Daten statt Merge-Tags, ohne die gespeicherten Inhalte anzufassen',
-                        'Sprachversionen — Text und Überschreibungen pro Sprache, Rückfall auf die Standardsprache, Erkennung veralteter Übersetzungen und ein Übersetzungs-Workflow',
-                        'Dark-Mode-Vorschau-Parität zur gesendeten E-Mail',
-                        'Theme-Tokens für konsistentes Branding',
-                        'MJML-Output, überall renderbar',
-                        'E-Mail-Client-Kompatibilität — Outlook 2007–365, Gmail-Clipping, Apple Mail',
-                        'Barrierefreiheit — Tastaturnavigation, ARIA, Screenreader',
-                        'Stil-Isolation — Host-CSS-Resets und Design-System-Globals dringen in den Editor ein',
-                        'Laufende Wartung — jede E-Mail-Client-Änderung ist ein Regressions-Risiko',
-                    ],
-                },
-                hosted: {
-                    title: 'Kommerzielle Editor-SDKs',
-                    description:
-                        'Die datierten, belegten Anbietervergleiche in der Fußzeile beschreiben Preise, Laufzeit-Einrichtung und Ausgabe.',
-                    tradeOffs: [
-                        'Stripo bietet Custom Blocks ab dem Business-Tarif.',
-                        'Unlayer begrenzt Custom Tools je nach Tarif auf 1, 3 oder 5.',
-                        'Topol enthält White-Labeling und Custom Blocks in jedem Tarif.',
-                        'Chamaileon liefert seinen Editor im iframe und zählt Nutzer und Exporte.',
-                        'Easy Email Pro schaltet Funktionen über eine Client-ID frei und exportiert MJML.',
-                        'Unlayer lädt den Editor von einem CDN; Selbst-Hosting ist eine Enterprise-Option.',
-                    ],
-                },
-                templatical: {
-                    title: 'Templatical',
-                    description:
-                        'Ein quelloffenes E-Mail-Editor-SDK mit Custom Blocks, Merge-Tags und eigenen Providern für Speicherfunktionen.',
-                    sdk: [
-                        'Custom Blocks mit API-gestützten Datenquellen',
-                        'Block-Level-Merge-Tags mit Scoping',
-                        'Anzeigebedingungen für dynamische Inhalte',
-                        'Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Übersetzungs-Provider',
-                        'Pluggbare Medien-Bibliothek — eigener Speicher (S3, Cloudinary, Ihr CMS)',
-                        'Gespeicherte Blöcke — Nutzer speichern Blockgruppen und verwenden sie wieder, in Ihrem Speicher',
-                        'Speichern und Laden gegen Ihren eigenen Speicher — Autosave, Speicherstatus, Cmd/Ctrl+S',
-                        'Versionsverlauf — durchsuchen, in der Vorschau ansehen und wiederherstellen, in Ihrem Speicher',
-                        'Review-Kommentare in Threads, verankert an Blöcken, auf Ihrem Speicher und Ihren Identitäten',
-                        'Gemeinsames Bearbeiten in Echtzeit — geordnete Operationen, Block-Sperren und Präsenz, über Ihr eigenes Backend',
-                        'Testversand aus dem Editor — über Ihren ESP und Ihre Domain zugestellt',
-                        'Vorschauen von Ihrem Backend aufgelöst — echte Daten, Logik-Zweige ausgewertet',
-                        'Vollständiges Theming über Design-Tokens, Dark Mode inklusive',
-                        'Standardmäßig White-Label — Ihre UI, Ihre Marke',
-                        'MJML-Output — im Browser, auf Ihrem Server, überall rendern',
-                        'Prüfungen vor dem Versand für Barrierefreiheit, Links, Zustellbarkeitsmuster (keine Posteingangsprognose) und E-Mail-Client-Kompatibilität, mit Lösungsvorschlägen und Quellenlinks',
-                        'KI-Assistent, „Mit KI umformulieren“, „Mit KI beheben“ und „Alt-Text schreiben“ — mit Ihrem eigenen Modell und Ihren Schlüsseln',
-                        'Style-isoliert — Shadow-DOM-Mount hält Host-CSS draußen',
-                        'Kein Lizenzschlüssel, kein Aktivierungsaufruf — nichts, was wir aus der Ferne abschalten könnten',
-                    ],
-                },
-            },
-        },
         independence: {
             eyebrow: 'Unabhängig zur Laufzeit',
             headline: 'Nichts zu aktivieren. Nichts zu widerrufen.',
@@ -218,6 +144,24 @@ const de: MessageSchema = {
                 'Keine Telemetrie, keine Analytics, keine Nutzungsberichte',
                 'Ihre Vorlagen bleiben in Ihrer App, bis Sie sie an Ihr eigenes Backend senden',
             ],
+            vendors: {
+                intro: 'Bei kommerziellen Editor-SDKs bleibt der Anbieter nach dem Launch im Spiel:',
+                items: [
+                    {
+                        term: 'An Domains gebundene Schlüssel',
+                        detail: 'Eine Projekt-ID oder ein API-Schlüssel, der nur auf den Domains funktioniert, die Sie beim Anbieter registrieren.',
+                    },
+                    {
+                        term: 'Ablaufende Tokens',
+                        detail: 'Access-Tokens, die gegen die Server des Anbieters erzeugt und nach dessen Zeitplan erneuert werden.',
+                    },
+                    {
+                        term: 'Gemessene Tarife',
+                        detail: 'Monatstarife, die Nutzer, Exporte oder gestaltete E-Mails zählen und über dem Limit zusätzlich berechnen.',
+                    },
+                ],
+                note: 'Muster aus den kommerziellen Editoren, die diese Website vergleicht, geprüft am 19. November 2026.',
+            },
         },
         ai: {
             eyebrow: 'Neu · AI-Kit, MIT',
@@ -353,13 +297,16 @@ const de: MessageSchema = {
             cta: 'Alle Importer ansehen',
         },
         close: {
-            headline: 'Diese Woche einen E-Mail-Editor ausliefern',
+            headline: 'Installation: ein npm install, ein init()-Aufruf',
             subheadline:
                 'Ein npm install. Ein init()-Aufruf. JSON rein, MJML raus — überall rendern, kostenlos.',
             copyLabel: 'Kopieren',
             copiedLabel: 'Kopiert',
             ctaPrimary: 'Playground öffnen',
-            ctaSecondary: 'Auf GitHub bewerten',
+            ctaSecondary: 'Installationsanleitung',
+            buildNote:
+                'Einen E-Mail-Editor selbst zu bauen heißt: Drag-and-Drop-UX, Merge-Tags, Outlook-Eigenheiten und deren Pflege, alles vor der ersten Vorlage.',
+            buildLink: 'Sehen Sie, was das SDK mitbringt',
         },
     },
     features: {
@@ -370,8 +317,7 @@ const de: MessageSchema = {
         },
         hero: {
             eyebrow: 'Open-Source-SDK',
-            headline:
-                'Was andere Editoren hinter Schranken halten — bei uns in Ihrem Repo. Kostenlos einbettbar.',
+            headline: 'Funktionen des MIT-lizenzierten E-Mail-Editor-SDKs',
             subheadline:
                 'Die Power-Features und eine saubere Basis — alles enthalten, nichts gesperrt. Portables JSON rein, MJML raus, keine Nutzungsstufe im Weg.',
             pricingPill: 'Open Source · MIT · Kostenlos selbst hosten',
@@ -833,7 +779,7 @@ const de: MessageSchema = {
         },
         supporting: {
             eyebrow: 'Die Essentials',
-            headline: 'Alles andere, was Sie erwarten — richtig gemacht.',
+            headline: 'Grundlagen für Integration und Bearbeitung',
             subheadline:
                 'Einsatzbereites Mounting, framework-unabhängig, jede Sprache, die Sie brauchen. Plus die Politur — Dark Mode, Rückgängig/Wiederholen, responsive Vorschau.',
         },
@@ -870,7 +816,7 @@ const de: MessageSchema = {
             },
         },
         migration: {
-            eyebrow: 'Schmerzlose Migration',
+            eyebrow: 'Migration',
             title: 'Schon in einem anderen Editor? Bringen Sie Ihre Vorlagen mit.',
             description:
                 'Ein Importer je Quellformat — Hosted-Editoren plus rohes HTML und MJML. Kostenlos, quelloffen, MIT, kein manuelles Nachbauen und kein Vendor-Lock-in.',
@@ -889,7 +835,7 @@ const de: MessageSchema = {
                 title: 'SDK installieren',
                 description:
                     'Paket hinzufügen, mit einem init()-Aufruf einbinden, ausliefern. Erstklassige Beispiele für jedes große Framework.',
-                cta: 'Zur Installations-Anleitung',
+                cta: 'Zur Installationsanleitung',
             },
             migrate: {
                 title: 'Vorlagen migrieren',
@@ -903,7 +849,7 @@ const de: MessageSchema = {
         meta: {
             title: 'Vorlagen-Importer — Templatical',
             description:
-                'Kostenlose, MIT-lizenzierte Konverter von BeeFree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, rohem HTML und MJML nach Templatical-JSON.',
+                'Kostenlose, MIT-lizenzierte Konverter wandeln Ihre Vorlagen aus {importers} in Templatical-JSON um.',
         },
         hero: {
             eyebrow: 'Migration',
@@ -999,7 +945,7 @@ const de: MessageSchema = {
                 eyebrow: 'Vergleich',
                 headline: 'Eine Open-Source-Alternative zu Topol Plugin',
                 subheadline:
-                    'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Topol ist unter den gehosteten Buildern am großzügigsten dabei, was pro Tarif enthalten ist — es bleiben die Fragen, wer den Editor betreibt, ob Ihre Rechnung mit Ihren Nutzern wächst und wem die Ausgabe gehört. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
+                    'Beide bringen einen Drag-and-Drop-E-Mail-Editor in Ihr Produkt. Die verbleibenden Unterschiede sind, wer den Editor betreibt, ob Ihre Rechnung mit Ihren Nutzern wächst und wem die Ausgabe gehört. Alles Folgende ist anhand öffentlicher Quellen überprüfbar.',
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
             },
@@ -1018,7 +964,7 @@ const de: MessageSchema = {
                     users: {
                         label: 'Endnutzer-Limits',
                         us: 'Keine. Der Editor kennt und zählt Ihre Nutzer nicht.',
-                        them: '50, 100 oder 500 Nutzer enthalten; darüber 1,60, 1,40 oder 0,70 $ je weiterem Nutzer und Monat',
+                        them: '50, 100 oder 500 Nutzer enthalten; weitere Nutzer sind mit 1,60, 1,40 und 0,70 $ angegeben. Topol zählt eindeutige userId-Werte innerhalb eines Abrechnungszeitraums',
                     },
                     domains: {
                         label: 'Domain-Bindung',
@@ -1043,7 +989,7 @@ const de: MessageSchema = {
                     customBlocks: {
                         label: 'Eigene Blöcke',
                         us: 'Unbegrenzt, in Ihrem eigenen Code definiert',
-                        them: 'In jedem Tarif enthalten',
+                        them: 'Im Business-Tarif (300 $/Monat) und höher',
                     },
                     storage: {
                         label: 'Bildspeicher',
@@ -1053,7 +999,7 @@ const de: MessageSchema = {
                     frameworks: {
                         label: 'Framework-Unterstützung',
                         us: 'Ein init()-Aufruf — React, Vue, Svelte, Angular und Vanilla JS',
-                        them: 'Offizielle Pakete für React, Vue und Svelte',
+                        them: 'Offizielle Pakete für reines JavaScript oder TypeScript, React, Vue, Svelte und Angular',
                     },
                     languages: {
                         label: 'Sprachversionen und Übersetzung',
@@ -1117,7 +1063,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}topol.io/editor 0.3.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf topol.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zur Vorlagenübersetzung sowie die Tarife auf topol.io/pricing geprüft.",
+                    "Geprüft am 19. November 2026 gegen {'@'}topol.io/editor 0.3.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf topol.io/pricing angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zur Vorlagenübersetzung sowie die Tarife auf topol.io/pricing geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1259,7 +1205,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen grapesjs 0.23.4 und grapesjs-mjml 1.0.8 in den auf npm veröffentlichten Fassungen. Diese Seite vergleicht das Open-Source-Framework; GrapesJS vertreibt zusätzlich Studio SDK, einen kommerziellen eingebetteten Editor, dessen Preise nur auf Anfrage verfügbar sind und der deshalb hier nicht verglichen wird. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen grapesjs 0.23.8 in der auf npm veröffentlichten Fassung und die I18n-Dokumentation auf grapesjs.com geprüft.',
+                    'Geprüft am 19. November 2026 gegen grapesjs 0.23.9 und grapesjs-mjml 1.0.8 in den auf npm veröffentlichten Fassungen sowie gegen die I18n-Dokumentation auf grapesjs.com. Diese Seite vergleicht das Open-Source-Framework; GrapesJS vertreibt zusätzlich Studio SDK, das veröffentlichte Tarife auf grapesjs.com/sdk/pricing hat und hier nicht verglichen wird. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
                 notDocumented:
                     '„Bauen Sie selbst“ heißt, dass die Funktion nicht ab Werk mitgeliefert wird — nicht, dass sie schwierig oder nicht unterstützt wäre. GrapesJS ist ein Framework, und darauf zu bauen ist der Sinn der Sache.',
                 trademark:
@@ -1293,7 +1239,7 @@ const de: MessageSchema = {
                     pricing: {
                         label: 'Preise',
                         us: 'Kostenlos, in jeder Ausbaustufe',
-                        them: 'Kostenloser Starter, danach 200 oder 600 $ pro Monat, dazu Enterprise',
+                        them: 'Kostenloser Starter, danach Standard ab 200 $ pro Monat oder Scale ab 600 $ pro Monat, dazu Enterprise',
                     },
                     metering: {
                         label: 'Was abgerechnet wird',
@@ -1396,7 +1342,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren SDK-Dokumentation auf chamaileon.io geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitung für Countdown-Timer geprüft.",
+                    "Geprüft am 19. November 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io/sdk angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitung für Countdown-Timer geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1460,17 +1406,17 @@ const de: MessageSchema = {
                     hosting: {
                         label: 'Wer den Editor betreibt',
                         us: 'Sie. Der Editor liegt in Ihrem Bundle und läuft in Ihrer Seite',
-                        them: 'Stripo. Die Serverkomponenten laufen auf deren Infrastruktur; Selbst-Hosting ist eine Enterprise-Option',
+                        them: 'Stripo. Die Serverkomponenten laufen auf deren Infrastruktur; sie selbst bereitzustellen ist eine Enterprise-Option. Die statischen Dateien des Editors können über Ihr eigenes CDN ausgeliefert werden',
                     },
                     languages: {
                         label: 'Sprachversionen und Übersetzung',
                         us: 'Enthalten: Sprachversionen in einer Vorlage, gefüllt mit „Übersetzen“ über Ihren eigenen Provider (ein LLM, DeepL oder ein Translation-Management-System)',
-                        them: 'Für das Plugin nicht dokumentiert; seine Lokalisierung betrifft die eigene Oberfläche. Übersetzungsversionen dokumentiert Stripo für seine E-Mail-App. Der KI-Textassistent des Plugins hat einen Übersetzen-Prompt, der den markierten Text ersetzt',
+                        them: 'Für das Plugin nicht dokumentiert; seine Lokalisierung betrifft die eigene Oberfläche. Übersetzungsversionen dokumentiert Stripo für seine E-Mail-App. Der KI-Textassistent des Plugins hat einen Übersetzen-Prompt, der den markierten Text ins Englische übersetzt',
                     },
                     source: {
                         label: 'Quellcode-Zugang',
                         us: 'Vollständiger Quellcode in einem öffentlichen Repository',
-                        them: 'Nicht veröffentlicht',
+                        them: 'Nicht veröffentlicht. Stripo veröffentlicht die gebauten statischen Dateien des Editors zum Selbst-Hosten, nicht den Quellcode',
                     },
                     licence: {
                         label: 'Lizenz',
@@ -1518,7 +1464,7 @@ const de: MessageSchema = {
                     modules:
                         'Sie AMP und interaktive Module von einem Anbieter gepflegt haben wollen, statt sie selbst zu bauen.',
                     tooling:
-                        'Sie eingebaute Bildbearbeitung und Stock-Inhalte zusammen mit dem Editor wollen.',
+                        'Sie Stock-Bilder wollen, die mit dem Editor mitgeliefert werden. Stripo enthält sie in jedem Plugin-Tarif.',
                     support:
                         'Sie einen kommerziellen Anbieter mit dediziertem Support-Kanal wollen statt eines Open-Source-Projekts.',
                 },
@@ -1534,7 +1480,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitungen zu Timern und monatlichen Aufrufen geprüft.',
+                    'Geprüft am 19. November 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitungen zum Timer und zu den monatlichen Aufrufen geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1573,7 +1519,7 @@ const de: MessageSchema = {
                     domains: {
                         label: 'Domain-Grenzen',
                         us: 'Keine. Betreiben Sie ihn auf so vielen Domains, wie Sie möchten.',
-                        them: '1 Domain in Free und Launch, 3 in Scale und Optimize',
+                        them: '1 Domain in Free, 2 in Launch, 3 in Scale und Optimize',
                     },
                     customTools: {
                         label: 'Eigene Blocktypen',
@@ -1642,7 +1588,7 @@ const de: MessageSchema = {
                 us: {
                     cost: 'Der Editor weder nach Tarif abgerechnet noch durch die Zahl Ihrer Domains begrenzt sein soll.',
                     extensibility:
-                        'Sie mehr als eine Handvoll eigener Blocktypen erwarten. Templatical begrenzt sie nicht; Unlayer erlaubt je nach Tarif 1 bis 5.',
+                        'Sie mehr als eine Handvoll eigener Blocktypen erwarten. Templatical begrenzt sie nicht; die bepreisten Tarife von Unlayer erlauben 1, 3 oder 5.',
                     ownership:
                         'Der Editor in Ihrem eigenen Bundle laufen soll, ohne dass es dafür einen Enterprise-Vertrag braucht.',
                     output: 'Sie portable Ausgabe wollen. Templatical exportiert MJML — einen offenen Standard mit einer MIT-lizenzierten Implementierung, die Sie selbst betreiben können; eine Unlayer-Vorlage ist deren Design-JSON, gerendert von deren Engine.',
@@ -1654,7 +1600,7 @@ const de: MessageSchema = {
                         'Sie den Editor lieber von jemand anderem betreiben lassen, inklusive Hosting und Verfügbarkeit.',
                     amp: 'Sie AMP-E-Mails versenden. Templatical unterstützt AMP nicht und hat es auch nicht vor.',
                     tooling:
-                        'Sie einen eingebauten Bildeditor und Stock-Bilder wollen. Unlayer liefert Stock-Bilder in jedem Tarif und den Bildeditor ab Launch (250 $/Monat).',
+                        'Sie einen eingebauten Bildeditor und Stock-Bilder wollen. Unlayer liefert beides ab Launch (250 $/Monat).',
                     support:
                         'Sie einen kommerziellen Anbieter hinter dem Editor wollen, mit einem dedizierten Customer Success Manager in deren Enterprise-Tarif.',
                 },
@@ -1670,7 +1616,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen react-email-editor 2.0.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen, deren Help-Center und die Tarife auf unlayer.com geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Timer-Dokumentation geprüft.',
+                    'Geprüft am 19. November 2026 gegen react-email-editor 2.1.3 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Countdown-Zeile wurde am 24. November 2026 anhand der Timer-Dokumentation geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1684,7 +1630,7 @@ const de: MessageSchema = {
             meta: {
                 title: 'Eine Open-Source-Alternative zu Beefree SDK — Templatical',
                 description:
-                    'Ein belegter Direktvergleich: Hosting-Modell, Preise pro Nutzer, was der Editor zur Laufzeit braucht und wie Sie bestehende BeeFree-Vorlagen migrieren.',
+                    'Ein belegter Direktvergleich: Hosting-Modell, Preise pro Nutzer, was der Editor zur Laufzeit braucht und wie Sie bestehende Beefree-Vorlagen migrieren.',
             },
             hero: {
                 eyebrow: 'Vergleich',
@@ -1703,7 +1649,7 @@ const de: MessageSchema = {
                 rows: {
                     pricing: {
                         label: 'Preise',
-                        them: 'Kostenlose Stufe, danach 400 bis 6.000 $ pro Monat',
+                        them: 'Kostenlose Stufe, danach Essentials 400, Core 1.200 oder Superpowers 3.000 $ pro Monat, dazu Enterprise',
                         us: 'Kostenlos, in jeder Ausbaustufe',
                     },
                     users: {
@@ -1787,30 +1733,30 @@ const de: MessageSchema = {
                 them: {
                     scope: 'Sie neben E-Mails auch Landingpages und Popups brauchen. Templatical ist auf E-Mails beschränkt und soll es bleiben.',
                     operated:
-                        'Sie den Editor lieber von jemand anderem betreiben lassen — gehostet, automatisch skalierend, mit einer Verfügbarkeitszusage.',
+                        'Sie den Editor lieber von jemand anderem betreiben lassen. Beefree hostet ihn, und das npm-Paket lädt ihn zur Laufzeit von deren CDN.',
                     catalog:
-                        'Sie Ihren Nutzern von Tag eins an einen großen Katalog fertiger Vorlagen anbieten wollen.',
+                        'Sie die Template Catalog API von Beefree wollen. Sie ist in Core ein Add-on für 2.000 $ pro Jahr und in Superpowers und Enterprise enthalten.',
                     support:
                         'Sie einen kommerziellen Anbieter mit bezahltem Support-Vertrag wollen statt eines Open-Source-Projekts.',
                     files: 'Sie einen File Manager ab Werk wollen. Beefree liefert ihn in jedem Tarif mit; die Medien-Bibliothek von Templatical verwendet einen Provider, den Sie auf Ihrem eigenen Backend implementieren.',
                 },
             },
             close: {
-                headline: 'Schon auf BeeFree? Nehmen Sie Ihre Vorlagen mit',
-                body: 'Templatical liefert einen MIT-lizenzierten Konverter für BeeFree-Vorlagen — eine Evaluierung startet also mit Ihren echten Designs statt mit einer leeren Seite.',
+                headline: 'Schon auf Beefree? Nehmen Sie Ihre Vorlagen mit',
+                body: 'Templatical liefert einen MIT-lizenzierten Konverter für Beefree-Vorlagen — eine Evaluierung startet also mit Ihren echten Designs statt mit einer leeren Seite.',
                 ctaPrimary: 'Playground öffnen',
                 ctaSecondary: 'Dokumentation lesen',
             },
             migration: {
-                label: 'Zur BeeFree-Migrationsanleitung',
+                label: 'Zur Beefree-Migrationsanleitung',
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}beefree.io/sdk 11.6.1 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand des Verzeichnisses der Partner-Add-ons geprüft.",
+                    "Geprüft am 19. November 2026 gegen {'@'}beefree.io/sdk 11.8.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand des Verzeichnisses der Partner-Add-ons geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
-                    'BeeFree und Beefree SDK sind Marken des jeweiligen Inhabers. Diese Seite wird von Templatical gepflegt und steht weder in Verbindung mit dem Anbieter noch wird sie von ihm unterstützt.',
+                    'Beefree und Beefree SDK sind Marken des jeweiligen Inhabers. Diese Seite wird von Templatical gepflegt und steht weder in Verbindung mit dem Anbieter noch wird sie von ihm unterstützt.',
                 sourcesLabel: 'Quellen',
                 stale: 'Diese Seite ist eine Momentaufnahme, kein dauerhafter Anspruch — auch das, was Beefree SDK laut uns besser macht. Falls hier etwas veraltet oder falsch ist,',
                 staleCta: 'melden Sie es uns',
@@ -1839,7 +1785,7 @@ const de: MessageSchema = {
                 rows: {
                     licensing: {
                         label: 'Lizenzierung',
-                        them: 'Kommerzielles Abonnement, 99–499 $ pro Monat',
+                        them: 'Kommerzielles Abonnement, 99–499 $ pro Monat; drei Tarife sind zu einem zeitlich begrenzten Preis angegeben, mit regulären Preisen bis 799 $',
                         us: 'MIT. Kostenlos.',
                     },
                     source: {
@@ -1859,7 +1805,7 @@ const de: MessageSchema = {
                     },
                     footprint: {
                         label: 'Installationsgröße',
-                        them: 'Rund 62 MB entpackt über vier Pakete',
+                        them: 'Rund 65,7 MB entpackt über vier Pakete',
                         us: '10,3 MB, keine Runtime-Dependencies',
                     },
                     activation: {
@@ -1879,8 +1825,8 @@ const de: MessageSchema = {
                     },
                     importers: {
                         label: 'Migrations-Importer',
-                        them: 'Nicht dokumentiert',
-                        us: 'Acht MIT-Konverter, darunter einer für Easy-Email-Pro-Vorlagen',
+                        them: 'Unlayer, Beefree und Klaviyo, über das Paket easy-email-pro-migrations',
+                        us: '{count} MIT-Konverter, darunter einer für Easy-Email-Pro-Vorlagen',
                     },
                     languages: {
                         label: 'Sprachversionen und Übersetzung',
@@ -1934,7 +1880,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 7. August 2026 gegen easy-email-pro-core 1.59.9 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf easyemail.pro angegebenen Preise. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen easy-email-pro-core 1.60.2 in der auf npm veröffentlichten Fassung, deren Dokumentation und die Preise auf easyemail.pro geprüft.',
+                    'Geprüft am 19. November 2026 gegen easy-email-pro-core, easy-email-pro-editor, easy-email-pro-theme und easy-email-pro-kit, alle 1.61.0, in den auf npm veröffentlichten Fassungen sowie gegen die Preise auf der an diesem Tag unter easyemail.pro ausgelieferten Seite. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1977,9 +1923,13 @@ const de: MessageSchema = {
                 question: 'Welche Frameworks werden unterstützt?',
                 answer: 'Templatical funktioniert in React, Svelte, Angular, Vue und Vanilla JS. Das veröffentlichte Paket ist vollständig in sich geschlossen — Vue ist intern gebündelt, daher installieren Konsumenten ein Paket ohne Peer-Dependencies und mounten den Editor mit einem einzigen init()-Aufruf in beliebige DOM-Elemente.',
             },
+            install: {
+                question: 'Wie installiere ich Templatical?',
+                answer: "Führen Sie npm install {'@'}templatical/editor aus und binden Sie den Editor mit einem init()-Aufruf ein. Um Vorlagen nach MJML zu konvertieren, installieren Sie zusätzlich {'@'}templatical/renderer; das ist optional. Die Installationsanleitung auf docs.templatical.com behandelt pnpm, yarn, bun und den CDN-Build.",
+            },
             migrate: {
                 question: 'Wie migriere ich von einem anderen Editor?',
-                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für BeeFree, Unlayer, Stripo, Topol, Chamaileon und Easy Email Pro sowie für rohes HTML und MJML. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
+                answer: 'Wir bieten kostenlose, MIT-lizenzierte Konverter für {importers}. Sie importieren Ihre bestehenden Vorlagen direkt und übernehmen Block-Mapping, Stil-Erhaltung und Merge-Tag-Konvertierung automatisch — und jeder liefert einen Bericht über alles, was manuell geprüft werden sollte. Die Dokumentation enthält je Quellformat eine Migrationsanleitung.',
             },
             languages: {
                 question: 'Kann eine Vorlage mehrere Sprachen enthalten?',
@@ -2010,9 +1960,9 @@ const de: MessageSchema = {
             eyebrow: 'Noch Fragen?',
             headline: 'Antwort nicht gefunden?',
             description:
-                'Fragen Sie die Community auf GitHub Discussions oder tauchen Sie in die Dokumentation für die tiefere API-Referenz ein.',
+                'Fragen Sie die Community auf GitHub Discussions oder beginnen Sie mit der Installationsanleitung in der Dokumentation.',
             discussionsCta: 'Auf GitHub Discussions fragen',
-            docsCta: 'Zur Dokumentation',
+            docsCta: 'Zur Installationsanleitung',
         },
     },
     changelog: {
@@ -2127,7 +2077,7 @@ const de: MessageSchema = {
                 title: 'Editor-Demo: unpkg',
                 paragraphs: [
                     'Auf Bildschirmen ab 1024 px Breite läuft auf der Startseite der echte Templatical-Editor. Sobald die Demo ins Bild scrollt, wird ihr Code von unpkg (unpkg.com) geladen, einem öffentlichen, von der Community betriebenen CDN für npm-Pakete; ihr Stylesheet lädt die Schrift Geist erneut von Bunny Fonts. Ihr Browser ruft diese Dateien direkt ab, daher erhält unpkg Ihre IP-Adresse und den User-Agent. Mit dem Betreiber von unpkg haben wir keinen Vertrag. Auf kleineren Bildschirmen sehen Sie stattdessen ein Bild, und von unpkg wird nichts geladen.',
-                    'Was Sie in der Demo tun, bleibt in Ihrem Browser (siehe Speicher im Browser) und wird nie an uns gesendet. Wenn Sie ein Bild per URL einfügen, lädt Ihr Browser es von dieser Adresse. Wenn Sie ein YouTube- oder Vimeo-Video einfügen, zeigt der Editor dessen Vorschaubild; Ihr Browser lädt es von YouTube (img.youtube.com) beziehungsweise für Vimeo vom Drittanbieter vumbnail.com, die dabei jeweils Ihre IP-Adresse und den User-Agent erhalten.',
+                    'Was Sie in der Demo tun, bleibt in Ihrem Browser (siehe Speicher im Browser) und wird nie an uns gesendet. Der Countdown in der Vorlage lädt ein Beispiel-GIF von unserem Playground-Host (play.templatical.com), der dabei Ihre IP-Adresse und den User-Agent erhält. Wenn Sie ein Bild per URL einfügen, lädt Ihr Browser es von dieser Adresse. Wenn Sie ein YouTube- oder Vimeo-Video einfügen, zeigt der Editor dessen Vorschaubild; Ihr Browser lädt es von YouTube (img.youtube.com) beziehungsweise für Vimeo vom Drittanbieter vumbnail.com, die dabei jeweils Ihre IP-Adresse und den User-Agent erhalten.',
                     'Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO, unser berechtigtes Interesse daran, dass Sie das echte Produkt in seiner neuesten Version ausprobieren können.',
                 ],
             },

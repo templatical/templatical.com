@@ -57,7 +57,7 @@ export default {
             you: 'You',
         },
         demo: {
-            templateName: 'Product launch',
+            templateName: 'November product update',
             eyebrow: 'Wired to a backend',
             description:
                 'Some of what you see here — saving, version history, comments, saved blocks, test sends, media, AI and translation — runs on a backend you implement. This demo uses your browser’s session storage and plays recorded AI replies and translations with no model or translation service, so nothing leaves the page.',
@@ -77,8 +77,8 @@ export default {
         },
         seed: {
             reviewerName: 'Sam Okafor',
-            threadBody: 'Can the launch CTA say what someone gets when they click?',
-            replyBody: 'Yes. Ask them to reserve a spot before early access opens.',
+            threadBody: 'This button is doing the work of the whole email — can it be more direct?',
+            replyBody: 'Agreed. Something imperative, and give it the brand colour.',
         },
     },
     footer: {
@@ -97,7 +97,7 @@ export default {
         comparisonTopol: 'vs Topol Plugin',
         comparisonChamaileon: 'vs Chamaileon SDK',
         comparisonGrapesjs: 'vs GrapesJS',
-        comparison: 'vs Easy Email Pro',
+        comparisonEasyEmailPro: 'vs Easy Email Pro',
         documentation: 'Documentation',
         playground: 'Playground',
         github: 'GitHub',
@@ -114,9 +114,11 @@ export default {
             headline: 'An open-source drag-and-drop email editor for your app.',
             subheadline:
                 'Custom blocks, full theming, merge tags, display conditions, language versions, and an AI assistant on your own model — all built into the SDK. Drop into any app with one init() call.',
-            backendNote: 'Your team owns storage and sending; there is no hosted service.',
             ctaPrimary: 'Open playground',
-            ctaSecondary: 'Read the docs',
+            ctaSecondary: 'Installation guide',
+            copyLabel: 'Copy',
+            copiedLabel: 'Copied',
+            copyAriaLabel: 'Copy the install command',
             frameworkNote:
                 'Works in React, Svelte, Angular, Vue, and vanilla JS — one init() call, zero runtime dependencies.',
             countdownLaunch: 'New: countdown blocks →',
@@ -129,81 +131,6 @@ export default {
                 'No license key',
             ],
         },
-        comparison: {
-            eyebrow: 'Why Templatical',
-            headline: 'Editor capabilities and vendor terms',
-            subheadline:
-                'Templatical includes the listed editor features under MIT. Commercial editors differ in their plans, runtime setup and output formats.',
-            youBuildLabel: 'You’ll build yourself',
-            paywalledLabel: 'Vendor terms and limits',
-            sdkLabel: 'Included in the SDK',
-            compareLink: 'Compared with Easy Email Pro',
-            recommendedLabel: 'Recommended',
-            columns: {
-                diy: {
-                    title: 'Build it yourself',
-                    description:
-                        'Wire up an open-source web-builder framework with an MJML plugin, or compose React Email components yourself.',
-                    tradeOffs: [
-                        'The editor UX itself — drag-and-drop, nesting, column splits, undo/redo',
-                        'Block-level merge tag scoping',
-                        'Display conditions with live preview',
-                        'Custom block SDK with API-backed data sources',
-                        'Editor-to-media-library glue — picker, image-block hook, replace flow',
-                        'A saved-block library — pick, name, preview, insert at position',
-                        'A test-send dialog — recipient picker, preview, sending and error states',
-                        'Preview resolution — real data in place of merge tags, without touching stored content',
-                        'Language versions — per-language text and overrides, fallbacks, out-of-date tracking and a translation round trip',
-                        'Dark-mode preview parity with sent email',
-                        'Theme tokens for brand consistency',
-                        'MJML output you can render anywhere',
-                        'Email-client compatibility — Outlook 2007–365, Gmail clipping, Apple Mail',
-                        'Accessibility — keyboard nav, ARIA, screen readers',
-                        'Style isolation — host CSS resets and design-system globals bleed into the editor',
-                        'Ongoing maintenance — every email-client tweak is a regression risk',
-                    ],
-                },
-                hosted: {
-                    title: 'Commercial editor SDKs',
-                    description:
-                        'The dated, sourced vendor comparisons linked in the footer cover pricing, runtime setup and output.',
-                    tradeOffs: [
-                        'Stripo offers custom blocks from its Business plan.',
-                        'Unlayer caps custom tools at 1, 3 or 5, depending on plan.',
-                        'Topol includes white-labelling and custom blocks on every plan.',
-                        'Chamaileon serves its editor in an iframe and meters users and exports.',
-                        'Easy Email Pro uses a client ID to gate features and exports MJML.',
-                        'Unlayer loads its editor from a CDN; self-hosting is an Enterprise option.',
-                    ],
-                },
-                templatical: {
-                    title: 'Templatical',
-                    description:
-                        'An open-source email editor SDK with custom blocks, merge tags and your own providers for storage.',
-                    sdk: [
-                        'Custom blocks with API-backed data sources',
-                        'Block-level merge tags with scoping',
-                        'Display conditions for dynamic content',
-                        'Language versions in one template, filled by Translate through your own translation provider',
-                        'Pluggable media library — bring your own storage (S3, Cloudinary, your CMS)',
-                        'Saved blocks — users save block groups and reuse them, backed by your storage',
-                        'Saving and loading against your own storage — autosave, save status, Cmd/Ctrl+S',
-                        'Version history — browse, preview and restore, backed by your storage',
-                        'Threaded review comments anchored to blocks, on your storage and identities',
-                        'Real-time co-editing — ordered operations, block locks and presence, over your own backend',
-                        'Test sends from the editor, delivered by your own ESP and your domain',
-                        'Previews resolved by your backend — real data, logic branches evaluated',
-                        'Full theming via design tokens, dark mode included',
-                        'White-label by default — your UI, your brand',
-                        'MJML output — render in browser, on your server, anywhere',
-                        'Pre-send checks for accessibility, links, deliverability patterns (not inbox placement), and email-client compatibility, with suggested fixes and reference links',
-                        'AI assistant, Rewrite, Fix with AI and Write alt text — on your own model and keys',
-                        'Style-isolated — Shadow DOM mount keeps host CSS out',
-                        'No license key, no activation call — nothing we can switch off remotely',
-                    ],
-                },
-            },
-        },
         independence: {
             eyebrow: 'Runtime independence',
             headline: 'Nothing to activate. Nothing to revoke.',
@@ -215,6 +142,24 @@ export default {
                 'No telemetry, no analytics, no usage reporting',
                 'Your templates stay in your app until you send them to your own backend',
             ],
+            vendors: {
+                intro: 'With commercial editor SDKs, the vendor stays in the loop after you ship:',
+                items: [
+                    {
+                        term: 'Domain-bound keys',
+                        detail: 'A project ID or API key that works only on the domains you register with the vendor.',
+                    },
+                    {
+                        term: 'Expiring tokens',
+                        detail: 'Access tokens minted against the vendor’s servers and refreshed on their schedule.',
+                    },
+                    {
+                        term: 'Metered plans',
+                        detail: 'Monthly plans that count users, exports or designed emails, with charges past the limit.',
+                    },
+                ],
+                note: 'Patterns from the commercial editors compared on this site, checked 19 November 2026.',
+            },
         },
         ai: {
             eyebrow: 'New · AI kit, MIT',
@@ -350,13 +295,16 @@ export default {
             cta: 'See all importers',
         },
         close: {
-            headline: 'Ship an email editor this week',
+            headline: 'Installation: one npm install, one init() call',
             subheadline:
                 'One npm install. One init() call. JSON in, MJML out — render anywhere, free.',
             copyLabel: 'Copy',
             copiedLabel: 'Copied',
             ctaPrimary: 'Open playground',
-            ctaSecondary: 'Star on GitHub',
+            ctaSecondary: 'Installation guide',
+            buildNote:
+                'Building an email editor yourself means the drag-and-drop UX, merge tags, Outlook quirks and their upkeep, all before your first template.',
+            buildLink: 'See what ships in the SDK',
         },
     },
     features: {
@@ -367,7 +315,7 @@ export default {
         },
         hero: {
             eyebrow: 'Open-source SDK',
-            headline: 'The features other editors gate. In your repo. Free to embed.',
+            headline: 'Email editor features in the MIT-licensed SDK',
             subheadline:
                 'The power features, and a clean set of essentials — all included, nothing gated. Portable JSON in, MJML out, no usage tier in the way.',
             pricingPill: 'Open source · MIT · Free to self-host',
@@ -818,7 +766,7 @@ export default {
         },
         supporting: {
             eyebrow: 'The essentials',
-            headline: 'Everything else you expect — done right.',
+            headline: 'Integration and editing essentials',
             subheadline:
                 'Drop-in mount, framework-agnostic, every locale you need. Plus the polish — dark mode, undo/redo, responsive preview.',
         },
@@ -855,7 +803,7 @@ export default {
             },
         },
         migration: {
-            eyebrow: 'Painless migration',
+            eyebrow: 'Migration',
             title: 'Already in another editor? Bring your templates with you.',
             description:
                 'One importer per source format — hosted editors plus raw HTML and MJML. Free, open-source, MIT, no manual rebuilding and no vendor lock-in.',
@@ -887,8 +835,7 @@ export default {
     importers: {
         meta: {
             title: 'Template importers — Templatical',
-            description:
-                'Free, MIT-licensed converters from BeeFree, Unlayer, Stripo, Topol, Chamaileon, Easy Email Pro, raw HTML and MJML into Templatical JSON.',
+            description: 'Free, MIT-licensed converters from {importers} into Templatical JSON.',
         },
         hero: {
             eyebrow: 'Migration',
@@ -983,7 +930,7 @@ export default {
                 eyebrow: 'Comparison',
                 headline: 'An open-source alternative to Topol Plugin',
                 subheadline:
-                    'Both put a drag-and-drop email editor inside your product. Topol is the most generous of the hosted builders on what it includes per plan — the differences that remain are who runs the editor, whether your bill grows with your users, and who owns the output. Everything below is checkable against public sources.',
+                    'Both put a drag-and-drop email editor inside your product. The differences that remain are who runs the editor, whether your bill grows with your users, and who owns the output. Everything below is checkable against public sources.',
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
             },
@@ -1002,7 +949,7 @@ export default {
                     users: {
                         label: 'End-user limits',
                         us: 'None. The editor does not know or count your users.',
-                        them: '50, 100 or 500 users included; beyond that $1.60, $1.40 or $0.70 per extra user per month',
+                        them: '50, 100 or 500 users included; additional users are listed at $1.60, $1.40 and $0.70. Topol counts unique userId values within a billing cycle',
                     },
                     domains: {
                         label: 'Domain binding',
@@ -1027,7 +974,7 @@ export default {
                     customBlocks: {
                         label: 'Custom blocks',
                         us: 'Unlimited, defined in your own code',
-                        them: 'Included on every plan',
+                        them: 'On the Business plan ($300/mo) and higher',
                     },
                     storage: {
                         label: 'Image storage',
@@ -1037,7 +984,7 @@ export default {
                     frameworks: {
                         label: 'Framework support',
                         us: 'One init() call — React, Vue, Svelte, Angular and vanilla JS',
-                        them: 'Official React, Vue and Svelte packages',
+                        them: 'Official packages for plain JavaScript or TypeScript, React, Vue, Svelte and Angular',
                     },
                     languages: {
                         label: 'Language versions and translation',
@@ -1101,7 +1048,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}topol.io/editor 0.3.0 as published on npm, and the plans listed at topol.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multilingual templates and template translation documentation and the plans at topol.io/pricing.",
+                    "Verified on 19 November 2026 against {'@'}topol.io/editor 0.3.0 as published on npm, and the plans listed at topol.io/pricing on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 19 November 2026 against their multilingual templates and template translation documentation and the plans at topol.io/pricing.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1243,7 +1190,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against grapesjs 0.23.4 and grapesjs-mjml 1.0.8 as published on npm. This page compares the open-source framework; GrapesJS also sells Studio SDK, a commercial embedded editor whose pricing is quote-only and therefore not compared here. The language versions row was checked on 3 November 2026 against grapesjs 0.23.8 as published on npm and the I18n documentation at grapesjs.com.',
+                    'Verified on 19 November 2026 against grapesjs 0.23.9 and grapesjs-mjml 1.0.8 as published on npm, and the I18n documentation at grapesjs.com. This page compares the open-source framework; GrapesJS also sells Studio SDK, which has published plans at grapesjs.com/sdk/pricing and is not compared here. Pricing and features change — check their site for current terms.',
                 notDocumented:
                     '“Yours to build” means the capability is not provided out of the box, not that it is hard or unsupported — GrapesJS is a framework, and building on it is the point.',
                 trademark:
@@ -1277,7 +1224,7 @@ export default {
                     pricing: {
                         label: 'Pricing',
                         us: 'No fee, on any tier',
-                        them: 'Free Starter, then $200 or $600 per month, plus Enterprise',
+                        them: 'Free Starter, then Standard from $200/month or Scale from $600/month, plus Enterprise',
                     },
                     metering: {
                         label: 'What is metered',
@@ -1380,7 +1327,8 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their SDK documentation at chamaileon.io. The countdown row was checked on 24 November 2026 against their countdown help page.",
+                    "Verified on 19 November 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io/sdk on that date. Pricing and features change — check their site for current terms. The countdown row was checked on 24 November 2026 against their countdown help page.",
+
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1444,17 +1392,17 @@ export default {
                     hosting: {
                         label: 'Who runs the editor',
                         us: 'You. The editor ships in your bundle and runs in your page',
-                        them: 'Stripo. Server components run on their infrastructure; self-hosting is an Enterprise option',
+                        them: 'Stripo. Server components run on their infrastructure; deploying them yourself is an Enterprise option. The editor’s static files can be served from your own CDN',
                     },
                     languages: {
                         label: 'Language versions and translation',
                         us: 'Included: language versions in one template, filled by Translate through your own provider (an LLM, DeepL or a translation management system)',
-                        them: 'Not documented for the plugin, whose localization covers its own interface; Stripo documents translation versions for its email app. The plugin’s AI text assistant has a Translate prompt that rewrites the selected text',
+                        them: 'Not documented for the plugin, whose localization covers its own interface; Stripo documents translation versions for its email app. The plugin’s AI text assistant has a Translate prompt that translates the selected text into English',
                     },
                     source: {
                         label: 'Source access',
                         us: 'Full source in a public repository',
-                        them: 'Not published',
+                        them: 'Not published. Stripo publishes the editor’s built static files for self-hosting, not its source',
                     },
                     licence: {
                         label: 'Licence',
@@ -1502,7 +1450,7 @@ export default {
                     modules:
                         'You want AMP and interactive modules maintained by a vendor rather than built in-house.',
                     tooling:
-                        'You want built-in image editing and stock content bundled with the editor.',
+                        'You want stock images bundled with the editor. Stripo includes them on every plugin plan.',
                     support:
                         'You want a commercial vendor with a dedicated support channel rather than an open-source project.',
                 },
@@ -1518,7 +1466,8 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against the plugin documentation at plugin.stripo.email and their support centre. The countdown row was checked on 24 November 2026 against their timer and monthly-opens help pages.',
+                    'Verified on 19 November 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms. The language versions row was checked on 19 November 2026 against the plugin documentation at plugin.stripo.email and their support centre. The countdown row was checked on 24 November 2026 against their timer and monthly-opens help pages.',
+
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1557,7 +1506,7 @@ export default {
                     domains: {
                         label: 'Domain limits',
                         us: 'None. Run it on as many domains as you like.',
-                        them: '1 domain on Free and Launch, 3 on Scale and Optimize',
+                        them: '1 domain on Free, 2 on Launch, 3 on Scale and Optimize',
                     },
                     customTools: {
                         label: 'Custom block types',
@@ -1626,7 +1575,7 @@ export default {
                 us: {
                     cost: 'You do not want the editor billed by tier or limited by how many domains you run it on.',
                     extensibility:
-                        'You expect to add more than a handful of custom block types. Templatical does not cap them; Unlayer allows 1 to 5 depending on plan.',
+                        'You expect to add more than a handful of custom block types. Templatical does not cap them; Unlayer’s priced plans allow 1, 3 or 5.',
                     ownership:
                         'You want the editor running in your own bundle without an Enterprise contract to get it there.',
                     output: 'You want portable output. Templatical exports MJML, an open standard with an MIT implementation you can run yourself; an Unlayer template is their design JSON, rendered by their engine.',
@@ -1638,7 +1587,7 @@ export default {
                         'You would rather someone else operated the editor, with hosting and uptime handled for you.',
                     amp: 'You send AMP email. Templatical has no AMP support and no plans to add it.',
                     tooling:
-                        'You want a built-in image editor and stock images. Unlayer includes stock images on every plan and the image editor from Launch ($250/mo) up.',
+                        'You want a built-in image editor and stock images. Unlayer includes both from Launch ($250/mo) up.',
                     support:
                         'You want a commercial vendor behind the editor, with a dedicated customer success manager on their Enterprise tier.',
                 },
@@ -1654,7 +1603,8 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against react-email-editor 2.0.0 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language documentation, their help centre and the plans at unlayer.com. The countdown row was checked on 24 November 2026 against their Timer documentation.',
+                    'Verified on 19 November 2026 against react-email-editor 2.1.3 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms. The countdown row was checked on 24 November 2026 against their Timer documentation.',
+
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1668,7 +1618,7 @@ export default {
             meta: {
                 title: 'An open-source Beefree SDK alternative — Templatical',
                 description:
-                    'A sourced side-by-side comparison: hosting model, per-user pricing, what the editor needs at runtime, and how to migrate existing BeeFree templates.',
+                    'A sourced side-by-side comparison: hosting model, per-user pricing, what the editor needs at runtime, and how to migrate existing Beefree templates.',
             },
             hero: {
                 eyebrow: 'Comparison',
@@ -1687,7 +1637,7 @@ export default {
                 rows: {
                     pricing: {
                         label: 'Pricing',
-                        them: 'Free tier, then $400 to $6,000 per month',
+                        them: 'Free tier, then Essentials $400, Core $1,200 or Superpowers $3,000 per month, plus Enterprise',
                         us: 'No fee, on any tier',
                     },
                     users: {
@@ -1771,30 +1721,31 @@ export default {
                 them: {
                     scope: 'You need landing pages and popups as well as email. Templatical is email-only and intends to stay that way.',
                     operated:
-                        'You would rather someone else operated the editor — hosted, auto-scaling, with an uptime commitment behind it.',
+                        'You would rather someone else operated the editor. Beefree hosts it, and the npm package loads it from their CDN at runtime.',
                     catalog:
-                        'You want a large ready-made template catalog to offer your users on day one.',
+                        'You want Beefree’s Template Catalog API. It is a $2,000/year add-on on Core and included on Superpowers and Enterprise.',
                     support:
                         'You want a commercial vendor with a paid support contract rather than an open-source project.',
                     files: 'You want a file manager out of the box. Beefree ships one on every plan; Templatical’s media library uses a provider you implement on your own backend.',
                 },
             },
             close: {
-                headline: 'Already on BeeFree? Bring your templates',
-                body: 'Templatical ships an MIT-licensed converter for BeeFree templates, so an evaluation starts from your real designs rather than a blank canvas.',
+                headline: 'Already on Beefree? Bring your templates',
+                body: 'Templatical ships an MIT-licensed converter for Beefree templates, so an evaluation starts from your real designs rather than a blank canvas.',
                 ctaPrimary: 'Open playground',
                 ctaSecondary: 'Read the docs',
             },
             migration: {
-                label: 'Read the BeeFree migration guide',
+                label: 'Read the Beefree migration guide',
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}beefree.io/sdk 11.6.1 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language templates and DeepL add-on documentation and the plans at developers.beefree.io. The countdown row was checked on 24 November 2026 against their partner add-ons directory.",
+                    "Verified on 19 November 2026 against {'@'}beefree.io/sdk 11.8.0 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 19 November 2026 against their multi-language templates and DeepL add-on documentation and the plans at developers.beefree.io. The countdown row was checked on 24 November 2026 against their partner add-ons directory.",
+
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
-                    'BeeFree and Beefree SDK are trademarks of their respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
+                    'Beefree and Beefree SDK are trademarks of their respective owner. This page is maintained by Templatical and is neither affiliated with nor endorsed by them.',
                 sourcesLabel: 'Sources',
                 stale: 'This page is a snapshot, not a standing claim — including what we say Beefree SDK does better. If anything here is out of date or wrong,',
                 staleCta: 'open an issue',
@@ -1823,7 +1774,7 @@ export default {
                 rows: {
                     licensing: {
                         label: 'Licensing',
-                        them: 'Commercial subscription, $99–$499 per month',
+                        them: 'Commercial subscription, $99–$499 per month; three plans are listed at a limited-time price, with regular prices up to $799',
                         us: 'MIT. No fee.',
                     },
                     source: {
@@ -1843,7 +1794,7 @@ export default {
                     },
                     footprint: {
                         label: 'Install footprint',
-                        them: 'About 62 MB unpacked across four packages',
+                        them: 'About 65.7 MB unpacked across four packages',
                         us: '10.3 MB, zero runtime dependencies',
                     },
                     activation: {
@@ -1863,8 +1814,8 @@ export default {
                     },
                     importers: {
                         label: 'Migration importers',
-                        them: 'Not documented',
-                        us: 'Eight MIT converters, including one for Easy Email Pro templates',
+                        them: 'Unlayer, Beefree and Klaviyo, through the easy-email-pro-migrations package',
+                        us: '{count} MIT converters, including one for Easy Email Pro templates',
                     },
                     languages: {
                         label: 'Language versions and translation',
@@ -1918,7 +1869,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 7 August 2026 against easy-email-pro-core 1.59.9 as published on npm, and the pricing listed at easyemail.pro on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against easy-email-pro-core 1.60.2 as published on npm, their documentation and the pricing at easyemail.pro.',
+                    'Verified on 19 November 2026 against easy-email-pro-core, easy-email-pro-editor, easy-email-pro-theme and easy-email-pro-kit, all 1.61.0, as published on npm, and the pricing on the page served at easyemail.pro on that date. Pricing and features change — check their site for current terms.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1961,9 +1912,13 @@ export default {
                 question: 'What frameworks are supported?',
                 answer: 'Templatical works in React, Svelte, Angular, Vue, and vanilla JS. The published package is fully self-contained — Vue is bundled inside, so consumers install one package with zero peer dependencies and mount the editor with a single init() call into any DOM element.',
             },
+            install: {
+                question: 'How do I install Templatical?',
+                answer: "Run npm install {'@'}templatical/editor and mount the editor with one init() call. To convert templates to MJML, also install {'@'}templatical/renderer; it is optional. The installation guide on docs.templatical.com covers pnpm, yarn, bun and the CDN build.",
+            },
             migrate: {
                 question: 'How do I migrate from another editor?',
-                answer: 'We provide free, MIT-licensed converters for BeeFree, Unlayer, Stripo, Topol, Chamaileon and Easy Email Pro, plus raw HTML and MJML. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The docs carry a migration guide per source format.',
+                answer: 'We provide free, MIT-licensed converters for {importers}. They import your existing templates directly and handle block mapping, style preservation, and merge tag conversion automatically — and each returns a report of anything that needs a manual look. The docs carry a migration guide per source format.',
             },
             languages: {
                 question: 'Can one template hold several languages?',
@@ -1994,9 +1949,9 @@ export default {
             eyebrow: 'Still curious?',
             headline: "Didn't find your answer?",
             description:
-                'Ask the community on GitHub Discussions, or dive into the docs for the deeper API reference.',
+                'Ask the community on GitHub Discussions, or start with the installation guide in the docs.',
             discussionsCta: 'Ask on GitHub Discussions',
-            docsCta: 'Read the docs',
+            docsCta: 'Read the install guide',
         },
     },
     changelog: {
@@ -2110,7 +2065,7 @@ export default {
                 title: 'Editor demo: unpkg',
                 paragraphs: [
                     'On screens at least 1024px wide, the home page runs the real Templatical editor. Once the demo scrolls into view, its code is loaded from unpkg (unpkg.com), a public, community-run CDN for npm packages, and its stylesheet loads Geist from Bunny Fonts again. Your browser requests these files directly, so unpkg receives your IP address and user agent. We have no contract with unpkg’s operator. On smaller screens you see a picture instead, and nothing is loaded from unpkg.',
-                    'What you do in the demo stays in your browser (see Browser storage) and is never sent to us. If you add an image by URL, your browser loads it from that address. If you add a YouTube or Vimeo video, the editor shows its preview image, which your browser loads from YouTube (img.youtube.com) or, for Vimeo, from the third-party service vumbnail.com; each receives your IP address and user agent.',
+                    'What you do in the demo stays in your browser (see Browser storage) and is never sent to us. The seeded countdown loads a sample GIF from our playground host (play.templatical.com), which receives your IP address and user agent. If you add an image by URL, your browser loads it from that address. If you add a YouTube or Vimeo video, the editor shows its preview image, which your browser loads from YouTube (img.youtube.com) or, for Vimeo, from the third-party service vumbnail.com; each receives your IP address and user agent.',
                     'Legal basis: Art. 6(1)(f) GDPR, our legitimate interest in letting you try the actual product at its latest version.',
                 ],
             },
