@@ -538,7 +538,7 @@ const de: MessageSchema = {
             description:
                 'Ihr Team fügt einen Countdown in die E-Mail ein und legt fest, wann er endet. Einen Timer-Bilddienst binden Sie über countdown.imageUrl in init() an, und der Renderer schreibt dieses Bild ins MJML. Das SDK liefert keinen Bildserver.',
             outcome:
-                'Ihr Team legt Endzeit und Aussehen fest; Ihr Bilddienst hält den Timer in jedem Postfach aktuell.',
+                'Ihr Team legt Endzeit und Aussehen fest; Ihr Bilddienst erzeugt das Timer-Bild, das die E-Mail lädt.',
             features: [
                 'Erscheint in der Palette, sobald countdown.imageUrl gesetzt ist',
                 'Endzeit als Uhrzeit in einer IANA-Zeitzone',

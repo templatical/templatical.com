@@ -529,7 +529,7 @@ export default {
             description:
                 'Authors drop a countdown into the email and set when it ends. You connect a timer image service through countdown.imageUrl in init(), and the renderer writes that image into the MJML. The SDK ships no image server.',
             outcome:
-                'Authors set the end time and the look; your image service keeps the timer current in every inbox.',
+                'Authors set the end time and the look; your image service draws the timer image the email loads.',
             features: [
                 'Appears in the palette once countdown.imageUrl is set',
                 'End time set as wall-clock time in an IANA timezone',
