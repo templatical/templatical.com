@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { URLS } from '@/lib/urls';
+import { URLS, localizedUrl } from '@/lib/urls';
 import { useBundleSize } from '@/composables/useBundleSize';
-import { computed } from 'vue';
+import { useChangelog } from '@/composables/useChangelog';
+import { COUNTDOWN_LAUNCH, launchExpiry, launchIsActive } from '@/lib/launch-promotion';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import GitHubStarButton from './GitHubStarButton.vue';
 import HeroAurora from './HeroAurora.vue';
@@ -11,9 +13,27 @@ import SiteButton from './SiteButton.vue';
 import SiteContainer from './SiteContainer.vue';
 import { ChevronRight } from '@lucide/vue';
 
-const { t, tm } = useI18n();
+const { t, tm, locale } = useI18n();
 const heroBadges = computed(() => tm('home.hero.badges') as string[]);
 const { label: bundleLabel } = useBundleSize();
+const { versions } = useChangelog();
+const showCountdownLaunch = ref(false);
+let expiryTimer: ReturnType<typeof setTimeout> | undefined;
+
+function refreshCountdownLaunch(): void {
+    showCountdownLaunch.value = launchIsActive(versions.value, COUNTDOWN_LAUNCH);
+    if (!showCountdownLaunch.value) return;
+    const expiry = launchExpiry(versions.value, COUNTDOWN_LAUNCH);
+    if (expiry !== null) {
+        expiryTimer = setTimeout(
+            refreshCountdownLaunch,
+            Math.min(expiry - Date.now(), 2_147_483_647),
+        );
+    }
+}
+
+onMounted(refreshCountdownLaunch);
+onUnmounted(() => clearTimeout(expiryTimer));
 </script>
 
 <template>
@@ -27,6 +47,14 @@ const { label: bundleLabel } = useBundleSize();
             <GitHubStarButton
                 class="motion-safe:animate-fade-in motion-safe:[animation-delay:50ms]"
             />
+            <a
+                v-if="showCountdownLaunch"
+                :href="localizedUrl('countdownDocs', locale)"
+                class="text-sm/6 text-primary-text underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                rel="noopener noreferrer"
+            >
+                {{ t('home.hero.countdownLaunch') }}
+            </a>
             <HeroHeadline :text="t('home.hero.headline')" class="hero-headline max-w-4xl" />
             <div
                 class="flex max-w-2xl flex-col gap-4 text-lg/8 text-neutral-600 motion-safe:animate-fade-in motion-safe:[animation-delay:200ms] dark:text-neutral-400"

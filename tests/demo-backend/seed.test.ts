@@ -73,6 +73,23 @@ describe('ensureSeeded', () => {
         }
     });
 
+    it('records launch CTA copy in version order', () => {
+        const { store, versions } = setup();
+        ensureSeeded(store, versions, baseContent(), COPY);
+
+        const buttons = versions
+            .read()
+            .slice(0, 3)
+            .map(({ content }) =>
+                content.blocks.find((block) => block.id === SEED_ANCHOR_BLOCK_ID),
+            );
+        expect(buttons).toMatchObject([
+            { text: 'Save my spot', backgroundColor: '#0f172a' },
+            { text: 'Join the waitlist', backgroundColor: '#2c85de' },
+            { text: 'Join the waitlist', backgroundColor: '#0f172a' },
+        ]);
+    });
+
     it('removes the divider block from exactly one seeded version, keeping it in the rest', () => {
         const { store, versions } = setup();
 

@@ -486,6 +486,29 @@ const german = await editor.toMjml({ locale: 'de' })`,
 })`,
     },
     {
+        slug: 'countdown',
+        docsPath: '/guide/countdown',
+        docsLabel: t('features.countdown.docsLabel'),
+        eyebrow: t('features.countdown.eyebrow'),
+        title: t('features.countdown.title'),
+        description: t('features.countdown.description'),
+        outcome: t('features.countdown.outcome'),
+        features: tm('features.countdown.features') as string[],
+        code: `import { init } from '@templatical/editor'
+import '@templatical/editor/style.css'
+
+const container = document.createElement('div')
+container.style.height = '100vh'
+document.body.append(container)
+
+await init({
+  container,
+  countdown: {
+    imageUrl: () => 'https://play.templatical.com/countdown-sample.gif',
+  },
+})`,
+    },
+    {
         slug: 'media-library',
         docsPath: '/guide/images',
         docsLabel: t('features.mediaLibrary.docsLabel'),

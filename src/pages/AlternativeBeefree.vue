@@ -15,6 +15,7 @@ const ROW_KEYS = [
     'savedBlocks',
     'htmlImport',
     'languages',
+    'countdown',
     'source',
     'licence',
     'assets',
@@ -40,6 +41,7 @@ const SOURCES = [
     { label: 'npm: @beefree.io/sdk', href: URLS.beefreeNpm },
     { label: 'docs: multi-language templates', href: URLS.beefreeMultiLanguageDocs },
     { label: 'docs: DeepL add-on', href: URLS.beefreeDeeplDocs },
+    { label: 'docs: partner countdown add-ons', href: URLS.beefreePartnerAddonsDocs },
 ];
 </script>
 

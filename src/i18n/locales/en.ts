@@ -57,7 +57,7 @@ export default {
             you: 'You',
         },
         demo: {
-            templateName: 'Welcome email',
+            templateName: 'Product launch',
             eyebrow: 'Wired to a backend',
             description:
                 'Some of what you see here — saving, version history, comments, saved blocks, test sends, media, AI and translation — runs on a backend you implement. This demo uses your browser’s session storage and plays recorded AI replies and translations with no model or translation service, so nothing leaves the page.',
@@ -77,8 +77,8 @@ export default {
         },
         seed: {
             reviewerName: 'Sam Okafor',
-            threadBody: 'This button is doing the work of the whole email — can it be more direct?',
-            replyBody: 'Agreed. Something imperative, and give it the brand colour.',
+            threadBody: 'Can the launch CTA say what someone gets when they click?',
+            replyBody: 'Yes. Ask them to reserve a spot before early access opens.',
         },
     },
     footer: {
@@ -119,6 +119,7 @@ export default {
             ctaSecondary: 'Read the docs',
             frameworkNote:
                 'Works in React, Svelte, Angular, Vue, and vanilla JS — one init() call, zero runtime dependencies.',
+            countdownLaunch: 'New: countdown blocks →',
             badges: [
                 'TypeScript-first',
                 'Built on MJML',
@@ -573,6 +574,21 @@ export default {
                 'Run lintTemplate headlessly or templatical validate in CI and agents; validate --html adds compiled size',
             ],
             docsLabel: 'Linting reference',
+        },
+        countdown: {
+            eyebrow: 'Countdown',
+            title: 'Countdown timers for launches and sales',
+            description:
+                'Authors drop a countdown into the email and set when it ends. You connect a timer image service through countdown.imageUrl in init(), and the renderer writes that image into the MJML. The SDK ships no image server.',
+            outcome:
+                'Authors set the end time and the look; your image service keeps the timer current in every inbox.',
+            features: [
+                'Appears in the palette once countdown.imageUrl is set',
+                'End time set as wall-clock time in an IANA timezone',
+                'Colours, digit size and separator are set per block',
+                'Day, hour, minute and second labels translate with each language version',
+            ],
+            docsLabel: 'Countdown guide',
         },
         mediaLibrary: {
             eyebrow: 'Assets',
@@ -1313,6 +1329,11 @@ export default {
                         us: 'MIT',
                         them: 'Commercial subscription',
                     },
+                    countdown: {
+                        label: 'Countdown timer',
+                        us: 'Yes, with your own image service',
+                        them: 'No built-in timer; their guide adds a third-party timer GIF as an image',
+                    },
                     output: {
                         label: 'Output format',
                         us: 'MJML and JSON',
@@ -1359,7 +1380,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their SDK documentation at chamaileon.io.",
+                    "Verified on 8 August 2026 against {'@'}chamaileon-sdk/plugins 1.1.5 as published on npm, and the plans listed at chamaileon.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their SDK documentation at chamaileon.io. The countdown row was checked on 24 November 2026 against their countdown help page.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1445,6 +1466,11 @@ export default {
                         us: 'Community, via GitHub',
                         them: 'Dedicated Slack channel on Enterprise',
                     },
+                    countdown: {
+                        label: 'Countdown timer',
+                        us: 'Yes, with your own image service',
+                        them: 'Native Timer block with a Stripo-hosted GIF, metered by monthly opens',
+                    },
                     output: {
                         label: 'Output format',
                         us: 'MJML and JSON',
@@ -1492,7 +1518,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against the plugin documentation at plugin.stripo.email and their support centre.',
+                    'Verified on 8 August 2026 against the plans published at stripo.email and the plan comparison in their support centre. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against the plugin documentation at plugin.stripo.email and their support centre. The countdown row was checked on 24 November 2026 against their timer and monthly-opens help pages.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1578,6 +1604,11 @@ export default {
                         us: 'Not supported, and not planned',
                         them: 'From Optimize ($2,000/mo) up',
                     },
+                    countdown: {
+                        label: 'Countdown timer',
+                        us: 'Yes, with your own image service',
+                        them: 'Built-in Timer tool that generates a countdown GIF, on paid plans',
+                    },
                     output: {
                         label: 'Output format',
                         us: 'MJML and JSON',
@@ -1623,7 +1654,7 @@ export default {
             },
             footnote: {
                 verified:
-                    'Verified on 8 August 2026 against react-email-editor 2.0.0 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language documentation, their help centre and the plans at unlayer.com.',
+                    'Verified on 8 August 2026 against react-email-editor 2.0.0 as published on npm, and the plans listed at unlayer.com on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language documentation, their help centre and the plans at unlayer.com. The countdown row was checked on 24 November 2026 against their Timer documentation.',
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:
@@ -1709,6 +1740,11 @@ export default {
                         them: 'Email, landing pages and popups',
                         us: 'Email only',
                     },
+                    countdown: {
+                        label: 'Countdown timer',
+                        us: 'Yes, with your own image service',
+                        them: 'Partner add-ons from NiftyImages or Sendtric; a third-party subscription may be required',
+                    },
                     output: {
                         label: 'Output format',
                         them: 'HTML and JSON',
@@ -1754,7 +1790,7 @@ export default {
             },
             footnote: {
                 verified:
-                    "Verified on 8 August 2026 against {'@'}beefree.io/sdk 11.6.1 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language templates and DeepL add-on documentation and the plans at developers.beefree.io.",
+                    "Verified on 8 August 2026 against {'@'}beefree.io/sdk 11.6.1 as published on npm, and the plans listed at developers.beefree.io on that date. Pricing and features change — check their site for current terms. The language versions row was checked on 3 November 2026 against their multi-language templates and DeepL add-on documentation and the plans at developers.beefree.io. The countdown row was checked on 24 November 2026 against their partner add-ons directory.",
                 notDocumented:
                     '“Not documented” means we found no mention of the capability in their public documentation or marketing on the verification date, not that it is impossible to build.',
                 trademark:

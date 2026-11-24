@@ -59,7 +59,7 @@ export function ensureSeeded(
             createdAt: at(3),
             isAutomatic: true,
             content: withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, {
-                text: 'Go to dashboard',
+                text: 'Save my spot',
             }),
         },
         {
@@ -67,7 +67,7 @@ export function ensureSeeded(
             createdAt: at(26),
             isAutomatic: false,
             content: withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, {
-                text: 'Get started',
+                text: 'Join the waitlist',
                 backgroundColor: '#2c85de',
             }),
         },
@@ -76,7 +76,7 @@ export function ensureSeeded(
             createdAt: at(52),
             isAutomatic: true,
             content: withoutBlock(
-                withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, { text: 'Get started' }),
+                withBlockPatch(baseContent, SEED_ANCHOR_BLOCK_ID, { text: 'Join the waitlist' }),
                 'hero-divider',
             ),
         },

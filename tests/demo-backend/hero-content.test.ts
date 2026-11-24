@@ -14,6 +14,7 @@ import {
     HERO_DO_NOT_TRANSLATE,
     HERO_LOCALES,
     HERO_TRANSLATIONS,
+    heroTargetDate,
 } from '@/lib/demo-backend/hero-content';
 
 /*
@@ -44,6 +45,22 @@ function styles(text: string): string[] {
 }
 
 describe('the hero template', () => {
+    it('uses compact paragraph labels in the three feature columns', () => {
+        const section = content.blocks.find((block) => block.id === 'hero-features');
+        if (section?.type !== 'section') throw new Error('feature section missing');
+        expect(section.children.map((column) => column[0])).toMatchObject(
+            ['Shared boards', 'Offline mode', 'Team calendar'].map((title, index) => ({
+                id: `hero-feature-${index + 1}-title`,
+                type: 'paragraph',
+                content: `<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>${title}</strong></span></p>`,
+                styles: { padding: { top: 0, right: 8, bottom: 6, left: 8 } },
+            })),
+        );
+    });
+
+    it('sets the target from the Berlin calendar date across the UTC day boundary', () => {
+        expect(heroTargetDate(Date.parse('2026-11-24T23:30:00Z'))).toBe('2026-12-07T18:00');
+    });
     it('starts with an empty German version beside the English default', () => {
         expect(content.settings.locale).toBe('en');
         expect(content.settings.locales).toEqual(['de']);
@@ -110,10 +127,25 @@ describe('the recorded German', () => {
         const projected = resolveLocale(translated, 'de');
         const headline = projected.blocks.find((block) => block.id === 'hero-headline');
         expect(headline).toMatchObject({
-            content: '<p>Willkommen, <span data-merge-tag="{{first_name}}">First Name</span></p>',
+            content:
+                '<p><span data-merge-tag="{{first_name}}">First Name</span>, lernen Sie das neue Acme kennen</p>',
+        });
+        const featureSection = projected.blocks.find((block) => block.id === 'hero-features');
+        if (featureSection?.type !== 'section') throw new Error('feature section missing');
+        expect(featureSection.children.map((column) => column[0]?.content)).toEqual([
+            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Gemeinsame Boards</strong></span></p>',
+            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Offline-Modus</strong></span></p>',
+            '<p style="text-align: center"><span style="font-size: 15px; color: #0f172a"><strong>Teamkalender</strong></span></p>',
+        ]);
+        expect(projected.blocks.find((block) => block.id === 'hero-countdown')).toMatchObject({
+            labelDays: 'Tage',
+            labelHours: 'Stunden',
+            labelMinutes: 'Minuten',
+            labelSeconds: 'Sekunden',
+            expiredMessage: 'Der Early Access ist geöffnet',
         });
         expect(projected.settings.preheaderText).toBe(
-            'Ihr Arbeitsbereich ist bereit — so geht es weiter.',
+            'Der Early Access beginnt bald. Sichern Sie sich Ihren Platz vor dem Start.',
         );
     });
 });

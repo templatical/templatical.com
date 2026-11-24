@@ -15,6 +15,7 @@ const ROW_KEYS = [
     'hosting',
     'activation',
     'languages',
+    'countdown',
     'source',
     'licence',
     'scope',
@@ -40,6 +41,7 @@ const SOURCES = [
     { label: 'npm: react-email-editor', href: URLS.unlayerNpm },
     { label: 'docs: multi-language', href: URLS.unlayerMultiLanguageDocs },
     { label: 'help.unlayer.com: multi-language templates', href: URLS.unlayerMultiLanguageHelp },
+    { label: 'docs.unlayer.com: Timer', href: URLS.unlayerTimerDocs },
 ];
 </script>
 

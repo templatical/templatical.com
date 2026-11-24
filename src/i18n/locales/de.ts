@@ -59,7 +59,7 @@ const de: MessageSchema = {
             you: 'Sie',
         },
         demo: {
-            templateName: 'Willkommens-E-Mail',
+            templateName: 'Produkteinführung',
             eyebrow: 'Mit einem Backend verbunden',
             description:
                 'Einiges von dem, was Sie hier sehen — Speichern, Versionsverlauf, Kommentare, gespeicherte Blöcke, Testversand, Medien, KI und Übersetzung — läuft über ein Backend, das Sie selbst implementieren. Diese Demo nutzt den Session-Speicher Ihres Browsers und spielt aufgezeichnete KI-Antworten und Übersetzungen ohne Modell oder Übersetzungsdienst ab, es verlässt also nichts diese Seite.',
@@ -79,8 +79,8 @@ const de: MessageSchema = {
         },
         seed: {
             reviewerName: 'Sam Okafor',
-            threadBody: 'Dieser Button trägt die ganze E-Mail — geht das direkter?',
-            replyBody: 'Sehe ich auch so. Etwas Auffordernderes, und in der Markenfarbe.',
+            threadBody: 'Kann der Button genauer sagen, was man nach dem Klick erhält?',
+            replyBody: 'Ja. Bitten wir darum, vor dem Early Access einen Platz zu reservieren.',
         },
     },
     footer: {
@@ -122,6 +122,7 @@ const de: MessageSchema = {
             ctaSecondary: 'Dokumentation lesen',
             frameworkNote:
                 'Funktioniert in React, Svelte, Angular, Vue und Vanilla JS — ein init()-Aufruf, keine Runtime-Dependencies.',
+            countdownLaunch: 'Neu: Countdown-Blöcke →',
             badges: [
                 'TypeScript-first',
                 'Auf MJML aufgebaut',
@@ -584,6 +585,21 @@ const de: MessageSchema = {
                 'Führen Sie lintTemplate ohne Editor oder templatical validate in CI und Agenten-Workflows aus; validate --html ergänzt die kompilierte Größe',
             ],
             docsLabel: 'Prüfungs-Referenz',
+        },
+        countdown: {
+            eyebrow: 'Countdown',
+            title: 'Countdown-Timer für Launches und Aktionen',
+            description:
+                'Ihr Team fügt einen Countdown in die E-Mail ein und legt fest, wann er endet. Einen Timer-Bilddienst binden Sie über countdown.imageUrl in init() an, und der Renderer schreibt dieses Bild ins MJML. Das SDK liefert keinen Bildserver.',
+            outcome:
+                'Ihr Team legt Endzeit und Aussehen fest; Ihr Bilddienst hält den Timer in jedem Postfach aktuell.',
+            features: [
+                'Erscheint in der Palette, sobald countdown.imageUrl gesetzt ist',
+                'Endzeit als Uhrzeit in einer IANA-Zeitzone',
+                'Farben, Ziffergröße und Trennzeichen pro Block einstellbar',
+                'Beschriftungen für Tage, Stunden, Minuten und Sekunden werden mit jeder Sprachversion übersetzt',
+            ],
+            docsLabel: 'Countdown-Anleitung',
         },
         mediaLibrary: {
             eyebrow: 'Assets',
@@ -1329,6 +1345,11 @@ const de: MessageSchema = {
                         us: 'MIT',
                         them: 'Kommerzielles Abonnement',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Kein eingebauter Timer; die Anleitung fügt ein Drittanbieter-GIF als Bild ein',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         us: 'MJML und JSON',
@@ -1375,7 +1396,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren SDK-Dokumentation auf chamaileon.io geprüft.",
+                    "Geprüft am 8. August 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren SDK-Dokumentation auf chamaileon.io geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitung für Countdown-Timer geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1461,6 +1482,11 @@ const de: MessageSchema = {
                         us: 'Community, über GitHub',
                         them: 'Dedizierter Slack-Kanal in Enterprise',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Eigener Timer-Block mit einem von Stripo gehosteten GIF; monatliche Aufrufe werden gezählt',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         us: 'MJML und JSON',
@@ -1508,7 +1534,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft.',
+                    'Geprüft am 8. August 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitungen zu Timern und monatlichen Aufrufen geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1594,6 +1620,11 @@ const de: MessageSchema = {
                         us: 'Nicht unterstützt und nicht geplant',
                         them: 'Ab Optimize (2.000 $/Monat)',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Eingebautes Timer-Tool, das ein Countdown-GIF erzeugt; nur in kostenpflichtigen Tarifen',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         us: 'MJML und JSON',
@@ -1639,7 +1670,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 8. August 2026 gegen react-email-editor 2.0.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen, deren Help-Center und die Tarife auf unlayer.com geprüft.',
+                    'Geprüft am 8. August 2026 gegen react-email-editor 2.0.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen, deren Help-Center und die Tarife auf unlayer.com geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Timer-Dokumentation geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1725,6 +1756,11 @@ const de: MessageSchema = {
                         them: 'E-Mails, Landingpages und Popups',
                         us: 'Nur E-Mails',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Partner-Add-ons von NiftyImages oder Sendtric; gegebenenfalls ist ein Drittanbieter-Abo nötig',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         them: 'HTML und JSON',
@@ -1770,7 +1806,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 8. August 2026 gegen {'@'}beefree.io/sdk 11.6.1 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft.",
+                    "Geprüft am 8. August 2026 gegen {'@'}beefree.io/sdk 11.6.1 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 3. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand des Verzeichnisses der Partner-Add-ons geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
