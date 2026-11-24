@@ -74,9 +74,22 @@ export const URLS = {
     chamaileonEditorDocs: 'https://chamaileon.io/sdk/v2/docs/email-editor/',
     easyEmailProTranslateDocs: 'https://docs.easyemail.pro/docs/advanced/email-translate',
     grapesjsI18nDocs: 'https://grapesjs.com/docs/modules/I18n.html',
+    unlayerTimerDocs: 'https://docs.unlayer.com/builder/latest/tools/timer',
+    stripoTimerDocs:
+        'https://support.stripo.email/en/articles/13374791-how-to-change-the-date-in-the-timer-if-the-email-is-already-exported',
+    stripoTimerOpensDocs:
+        'https://support.stripo.email/en/articles/13374755-what-do-you-mean-by-timer-block-monthly-opens',
+    beefreePartnerAddonsDocs:
+        'https://docs.beefree.io/beefree-sdk/builder-addons/partner-addons/partner-addons-directory',
+    chamaileonTimerDocs:
+        'https://help.chamaileon.io/en/articles/2318251-how-do-i-add-a-countdown-timer',
 } as const;
 
 export const LOCALIZED_URLS = {
+    countdownDocs: {
+        en: 'https://docs.templatical.com/guide/countdown',
+        de: 'https://docs.templatical.com/de/guide/countdown',
+    },
     dynamicMergeTagsDocs: {
         en: 'https://docs.templatical.com/guide/merge-tags#dynamic-tag-loading',
         de: 'https://docs.templatical.com/de/guide/merge-tags#dynamisches-tag-laden',

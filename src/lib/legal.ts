@@ -12,7 +12,7 @@ export const LEGAL: LegalFacts = {
 };
 
 /** Bump when the privacy notice changes. */
-export const PRIVACY_UPDATED = '2026-11-19';
+export const PRIVACY_UPDATED = '2026-11-24';
 
 /** An ISO day in the reader's language, with the changelog's options so the two match. */
 export function formatLegalDate(iso: string, locale: string): string {
@@ -59,7 +59,10 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     { key: 'github', hosts: ['api.github.com'], policy: URLS.githubPrivacy },
     // The editor loaded from unpkg fetches video thumbnails itself (SDK videoThumbnailUrl:
     // YouTube's own host, Vimeo's via vumbnail.com), so no source scan here can see them.
-    { key: 'demo', hosts: ['unpkg.com', 'img.youtube.com', 'vumbnail.com'] },
+    {
+        key: 'demo',
+        hosts: ['unpkg.com', 'play.templatical.com', 'img.youtube.com', 'vumbnail.com'],
+    },
     { key: 'storage' },
     { key: 'email' },
     { key: 'rights' },

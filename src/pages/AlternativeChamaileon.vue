@@ -17,6 +17,7 @@ const ROW_KEYS = [
     'whiteLabel',
     'headless',
     'languages',
+    'countdown',
     'source',
     'licence',
     'output',
@@ -41,6 +42,7 @@ const SOURCES = [
     { label: 'chamaileon.io/sdk', href: URLS.chamaileonSdk },
     { label: 'npm: @chamaileon-sdk/plugins', href: URLS.chamaileonNpm },
     { label: 'chamaileon.io: email editor SDK docs', href: URLS.chamaileonEditorDocs },
+    { label: 'help.chamaileon.io: countdown image', href: URLS.chamaileonTimerDocs },
 ];
 </script>
 

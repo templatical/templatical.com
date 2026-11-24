@@ -123,6 +123,7 @@ const de: MessageSchema = {
             copyAriaLabel: 'Installationsbefehl kopieren',
             frameworkNote:
                 'Funktioniert in React, Svelte, Angular, Vue und Vanilla JS — ein init()-Aufruf, keine Runtime-Dependencies.',
+            countdownLaunch: 'Neu: Countdown-Blöcke →',
             badges: [
                 'TypeScript-first',
                 'Auf MJML aufgebaut',
@@ -530,6 +531,21 @@ const de: MessageSchema = {
                 'Führen Sie lintTemplate ohne Editor oder templatical validate in CI und Agenten-Workflows aus; validate --html ergänzt die kompilierte Größe',
             ],
             docsLabel: 'Prüfungs-Referenz',
+        },
+        countdown: {
+            eyebrow: 'Countdown',
+            title: 'Countdown-Timer für Launches und Aktionen',
+            description:
+                'Ihr Team fügt einen Countdown in die E-Mail ein und legt fest, wann er endet. Einen Timer-Bilddienst binden Sie über countdown.imageUrl in init() an, und der Renderer schreibt dieses Bild ins MJML. Das SDK liefert keinen Bildserver.',
+            outcome:
+                'Ihr Team legt Endzeit und Aussehen fest; Ihr Bilddienst erzeugt das Timer-Bild, das die E-Mail lädt.',
+            features: [
+                'Erscheint in der Palette, sobald countdown.imageUrl gesetzt ist',
+                'Endzeit als Uhrzeit in einer IANA-Zeitzone',
+                'Farben, Ziffergröße und Trennzeichen pro Block einstellbar',
+                'Beschriftungen für Tage, Stunden, Minuten und Sekunden werden mit jeder Sprachversion übersetzt',
+            ],
+            docsLabel: 'Countdown-Anleitung',
         },
         mediaLibrary: {
             eyebrow: 'Assets',
@@ -1275,6 +1291,11 @@ const de: MessageSchema = {
                         us: 'MIT',
                         them: 'Kommerzielles Abonnement',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Kein eingebauter Timer; die Anleitung fügt ein Drittanbieter-GIF als Bild ein',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         us: 'MJML und JSON',
@@ -1321,7 +1342,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 19. November 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io/sdk angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.",
+                    "Geprüft am 19. November 2026 gegen {'@'}chamaileon-sdk/plugins 1.1.5 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf chamaileon.io/sdk angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitung für Countdown-Timer geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1407,6 +1428,11 @@ const de: MessageSchema = {
                         us: 'Community, über GitHub',
                         them: 'Dedizierter Slack-Kanal in Enterprise',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Eigener Timer-Block mit einem von Stripo gehosteten GIF; monatliche Aufrufe werden gezählt',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         us: 'MJML und JSON',
@@ -1454,7 +1480,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 19. November 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft.',
+                    'Geprüft am 19. November 2026 gegen die auf stripo.email veröffentlichten Tarife und den Tarifvergleich in deren Support-Center. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen die Plugin-Dokumentation auf plugin.stripo.email und deren Support-Center geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand der Anleitungen zum Timer und zu den monatlichen Aufrufen geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1540,6 +1566,11 @@ const de: MessageSchema = {
                         us: 'Nicht unterstützt und nicht geplant',
                         them: 'Ab Optimize (2.000 $/Monat)',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Eingebautes Timer-Tool, das ein Countdown-GIF erzeugt; nur in kostenpflichtigen Tarifen',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         us: 'MJML und JSON',
@@ -1585,7 +1616,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    'Geprüft am 19. November 2026 gegen react-email-editor 2.1.3 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website.',
+                    'Geprüft am 19. November 2026 gegen react-email-editor 2.1.3 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf unlayer.com angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Countdown-Zeile wurde am 24. November 2026 anhand der Timer-Dokumentation geprüft.',
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -1671,6 +1702,11 @@ const de: MessageSchema = {
                         them: 'E-Mails, Landingpages und Popups',
                         us: 'Nur E-Mails',
                     },
+                    countdown: {
+                        label: 'Countdown-Timer',
+                        us: 'Ja, mit Ihrem eigenen Bilddienst',
+                        them: 'Partner-Add-ons von NiftyImages oder Sendtric; gegebenenfalls ist ein Drittanbieter-Abo nötig',
+                    },
                     output: {
                         label: 'Ausgabeformat',
                         them: 'HTML und JSON',
@@ -1716,7 +1752,7 @@ const de: MessageSchema = {
             },
             footnote: {
                 verified:
-                    "Geprüft am 19. November 2026 gegen {'@'}beefree.io/sdk 11.8.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft.",
+                    "Geprüft am 19. November 2026 gegen {'@'}beefree.io/sdk 11.8.0 in der auf npm veröffentlichten Fassung sowie gegen die an diesem Tag auf developers.beefree.io angegebenen Tarife. Preise und Funktionen ändern sich — aktuelle Konditionen finden Sie auf deren Website. Die Zeile zu Sprachversionen wurde am 19. November 2026 gegen deren Dokumentation zu mehrsprachigen Vorlagen und zum DeepL-Add-on sowie die Tarife auf developers.beefree.io geprüft. Die Countdown-Zeile wurde am 24. November 2026 anhand des Verzeichnisses der Partner-Add-ons geprüft.",
                 notDocumented:
                     '„Nicht dokumentiert“ bedeutet, dass wir zum Prüfdatum keinen Hinweis auf die Funktion in der öffentlichen Dokumentation oder im Marketing gefunden haben — nicht, dass sie unmöglich umzusetzen wäre.',
                 trademark:
@@ -2041,7 +2077,7 @@ const de: MessageSchema = {
                 title: 'Editor-Demo: unpkg',
                 paragraphs: [
                     'Auf Bildschirmen ab 1024 px Breite läuft auf der Startseite der echte Templatical-Editor. Sobald die Demo ins Bild scrollt, wird ihr Code von unpkg (unpkg.com) geladen, einem öffentlichen, von der Community betriebenen CDN für npm-Pakete; ihr Stylesheet lädt die Schrift Geist erneut von Bunny Fonts. Ihr Browser ruft diese Dateien direkt ab, daher erhält unpkg Ihre IP-Adresse und den User-Agent. Mit dem Betreiber von unpkg haben wir keinen Vertrag. Auf kleineren Bildschirmen sehen Sie stattdessen ein Bild, und von unpkg wird nichts geladen.',
-                    'Was Sie in der Demo tun, bleibt in Ihrem Browser (siehe Speicher im Browser) und wird nie an uns gesendet. Wenn Sie ein Bild per URL einfügen, lädt Ihr Browser es von dieser Adresse. Wenn Sie ein YouTube- oder Vimeo-Video einfügen, zeigt der Editor dessen Vorschaubild; Ihr Browser lädt es von YouTube (img.youtube.com) beziehungsweise für Vimeo vom Drittanbieter vumbnail.com, die dabei jeweils Ihre IP-Adresse und den User-Agent erhalten.',
+                    'Was Sie in der Demo tun, bleibt in Ihrem Browser (siehe Speicher im Browser) und wird nie an uns gesendet. Der Countdown in der Vorlage lädt ein Beispiel-GIF von unserem Playground-Host (play.templatical.com), der dabei Ihre IP-Adresse und den User-Agent erhält. Wenn Sie ein Bild per URL einfügen, lädt Ihr Browser es von dieser Adresse. Wenn Sie ein YouTube- oder Vimeo-Video einfügen, zeigt der Editor dessen Vorschaubild; Ihr Browser lädt es von YouTube (img.youtube.com) beziehungsweise für Vimeo vom Drittanbieter vumbnail.com, die dabei jeweils Ihre IP-Adresse und den User-Agent erhalten.',
                     'Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO, unser berechtigtes Interesse daran, dass Sie das echte Produkt in seiner neuesten Version ausprobieren können.',
                 ],
             },

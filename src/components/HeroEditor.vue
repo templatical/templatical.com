@@ -8,6 +8,7 @@ import { useDarkMode } from '@/composables/useDarkMode';
 import { createDemoBackend } from '@/lib/demo-backend';
 import {
     HERO_CONTENT,
+    HERO_COUNTDOWN_GIF,
     HERO_DO_NOT_TRANSLATE,
     HERO_FREE_PLAN_CONDITION,
     HERO_LOCALES,
@@ -193,6 +194,7 @@ async function mountEditor() {
                 locale: locale.value,
                 branding: false,
                 content: HERO_CONTENT,
+                countdown: { imageUrl: () => HERO_COUNTDOWN_GIF },
                 mergeTags: {
                     tags: demoTags.value.map(({ label, value, key }) => ({
                         label,

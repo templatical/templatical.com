@@ -16,6 +16,7 @@ const ROW_KEYS = [
     'storage',
     'hosting',
     'languages',
+    'countdown',
     'source',
     'licence',
     'support',
@@ -37,6 +38,8 @@ const SOURCES = [
     { label: 'plugin.stripo.email: localization', href: URLS.stripoPluginLocalization },
     { label: 'plugin.stripo.email: AI', href: URLS.stripoPluginAi },
     { label: 'support.stripo.email: translating a template', href: URLS.stripoTranslateHelp },
+    { label: 'support.stripo.email: timer GIF', href: URLS.stripoTimerDocs },
+    { label: 'support.stripo.email: monthly timer opens', href: URLS.stripoTimerOpensDocs },
     { label: 'plugin.stripo.email: CDN hosting', href: URLS.stripoCdnHosting },
 ];
 </script>

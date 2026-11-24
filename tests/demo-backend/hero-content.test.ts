@@ -11,9 +11,11 @@ import {
 import { createMockTranslationProvider } from '@templatical/ai-kit/testing';
 import {
     HERO_CONTENT,
+    HERO_COUNTDOWN_GIF,
     HERO_DO_NOT_TRANSLATE,
     HERO_LOCALES,
     HERO_TRANSLATIONS,
+    heroTargetDate,
 } from '@/lib/demo-backend/hero-content';
 
 /*
@@ -77,27 +79,53 @@ describe('the hero template', () => {
         });
     });
 
-    // Owner deferred the countdown, 2026-11-20, because send-time rendering
-    // needs a GIF service the SDK doesn't ship.
-    it('contains no countdown block', () => {
-        const types: string[] = [];
-        const walk = (blocks: readonly { type: string; children?: unknown[] }[]) => {
-            for (const block of blocks) {
-                types.push(block.type);
-                if (!Array.isArray(block.children)) continue;
-                for (const column of block.children) {
-                    if (Array.isArray(column)) walk(column);
-                }
-            }
+    it('places a white countdown band after the live updates and before the change table', () => {
+        const sections = content.blocks.map(({ id }) => id);
+        expect(sections.indexOf('ship-countdown-band')).toBe(sections.indexOf('ship-features') + 1);
+        expect(sections.indexOf('ship-changes')).toBe(sections.indexOf('ship-countdown-band') + 1);
+        const band = findBlock(content.blocks, 'ship-countdown-band') as unknown as {
+            styles: { backgroundColor: string };
         };
-        walk(content.blocks);
-        expect(types).not.toContain('countdown');
+        const countdown = findBlock(content.blocks, 'ship-countdown') as unknown as {
+            type: string;
+            timezone: string;
+            targetDate: string;
+            backgroundColor: string;
+            digitColor: string;
+            labelColor: string;
+        };
+        expect(band.styles.backgroundColor).toBe('#ffffff');
+        expect(countdown).toMatchObject({
+            type: 'countdown',
+            timezone: 'Europe/Berlin',
+            backgroundColor: '#ffffff',
+            digitColor: '#1c1733',
+            labelColor: '#4a4562',
+        });
+        expect(countdown.targetDate).toMatch(/^\d{4}-\d{2}-\d{2}T18:00$/);
+        expect(HERO_COUNTDOWN_GIF).toBe('https://play.templatical.com/countdown-sample.gif');
+    });
+
+    it('sets 18:00 twelve Berlin calendar days ahead, including a midnight boundary', () => {
+        expect(heroTargetDate(new Date('2026-11-24T22:30:00Z'))).toBe('2026-12-06T18:00');
+        expect(heroTargetDate(new Date('2026-11-24T23:30:00Z'))).toBe('2026-12-07T18:00');
     });
 });
 
 describe('the recorded German', () => {
     it('answers exactly the fields Translate sends', () => {
         expect(Object.keys(german).sort()).toEqual(gaps.strings.map(({ id }) => id).sort());
+        for (const field of [
+            'ship-countdown-kicker/content',
+            'ship-countdown-title/content',
+            'ship-countdown/labelDays',
+            'ship-countdown/labelHours',
+            'ship-countdown/labelMinutes',
+            'ship-countdown/labelSeconds',
+            'ship-countdown/expiredMessage',
+        ]) {
+            expect(german).toHaveProperty(field);
+        }
     });
 
     it.each(gaps.strings.map((entry) => [entry.id, entry] as const))(

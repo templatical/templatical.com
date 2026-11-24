@@ -55,6 +55,21 @@ const BRAND_SPAN = `font-size: 18px; color: ${CREAM}`;
 
 const html = (style: string, text: string) => `<p style="${style}">${text}</p>`;
 
+export const HERO_COUNTDOWN_GIF = 'https://play.templatical.com/countdown-sample.gif';
+
+/** A Berlin wall-clock deadline keeps the sample GIF's 12-day display aligned. */
+export function heroTargetDate(now = new Date()): string {
+    const parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Europe/Berlin',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    }).formatToParts(now);
+    const part = (type: string) => Number(parts.find((entry) => entry.type === type)?.value);
+    const date = new Date(Date.UTC(part('year'), part('month') - 1, part('day') + 12));
+    return `${date.toISOString().slice(0, 10)}T18:00`;
+}
+
 /** Shown only to recipients on the Free plan. The editor config lists the same condition. */
 export const HERO_FREE_PLAN_CONDITION = {
     label: 'Free plan',
@@ -295,6 +310,62 @@ export const HERO_CONTENT = {
             ],
         },
         {
+            id: 'ship-countdown-band',
+            type: 'section',
+            columns: '1',
+            styles: box(pad(32, 40, 32, 40), WHITE),
+            children: [
+                [
+                    {
+                        id: 'ship-countdown-kicker',
+                        type: 'paragraph',
+                        content: html(CENTER_MUTED, 'Next up'),
+                        styles: box(pad(0, 0, 8, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-countdown-title',
+                        type: 'title',
+                        content: '<p>Shared review links</p>',
+                        level: 2,
+                        color: INK,
+                        textAlign: 'center',
+                        styles: box(pad(0, 0, 8, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-countdown-copy',
+                        type: 'paragraph',
+                        content: html(CENTER_INK, 'Open to every workspace in'),
+                        styles: box(pad(0, 0, 8, 0), WHITE),
+                    },
+                    {
+                        id: 'ship-countdown',
+                        type: 'countdown',
+                        targetDate: heroTargetDate(),
+                        timezone: 'Europe/Berlin',
+                        showDays: true,
+                        showHours: true,
+                        showMinutes: true,
+                        showSeconds: true,
+                        separator: ':',
+                        digitFontSize: 32,
+                        digitColor: INK,
+                        labelColor: MUTED,
+                        labelFontSize: 12,
+                        backgroundColor: WHITE,
+                        fontFamily: 'Helvetica, Arial, sans-serif',
+                        labelDays: 'Days',
+                        labelHours: 'Hours',
+                        labelMinutes: 'Minutes',
+                        labelSeconds: 'Seconds',
+                        expiredMessage: 'Shared review links are open',
+                        expiredImageUrl: '',
+                        hideOnExpiry: false,
+                        styles: box(pad(0, 0, 0, 0), WHITE),
+                    },
+                ],
+            ],
+        },
+        {
             id: 'ship-changes',
             type: 'section',
             columns: '1',
@@ -521,6 +592,14 @@ export const HERO_TRANSLATIONS: Record<string, Record<string, string>> = {
             CENTER_MUTED,
             'Kommentare werden in einer Feedbackrunde gesammelt. Sie endet, sobald alle Beteiligten geantwortet haben.',
         ),
+        'ship-countdown-kicker/content': html(CENTER_MUTED, 'Als Nächstes'),
+        'ship-countdown-title/content': '<p>Geteilte Prüflinks</p>',
+        'ship-countdown-copy/content': html(CENTER_INK, 'Für jeden Arbeitsbereich verfügbar in'),
+        'ship-countdown/labelDays': 'Tage',
+        'ship-countdown/labelHours': 'Stunden',
+        'ship-countdown/labelMinutes': 'Minuten',
+        'ship-countdown/labelSeconds': 'Sekunden',
+        'ship-countdown/expiredMessage': 'Geteilte Prüflinks sind verfügbar',
         'ship-title-changes/content': '<p>Was sich geändert hat</p>',
         'ship-copy-changes/content': html(
             LEFT_INK,

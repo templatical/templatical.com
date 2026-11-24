@@ -11,7 +11,7 @@ describe('legal facts', () => {
     });
 
     it('dates the privacy notice with a real day that has already happened', () => {
-        expect(PRIVACY_UPDATED).toBe('2026-11-19');
+        expect(PRIVACY_UPDATED).toBe('2026-11-24');
         expect(PRIVACY_UPDATED).toMatch(/^\d{4}-\d{2}-\d{2}$/);
         const day = new Date(`${PRIVACY_UPDATED}T00:00:00Z`).getTime();
         expect(Number.isNaN(day)).toBe(false);
