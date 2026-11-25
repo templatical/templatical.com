@@ -195,13 +195,13 @@ importers:
         version: 15.0.0(vue@3.5.46(typescript@6.0.3))
       '@vueuse/integrations':
         specifier: ^15.0.0
-        version: 15.0.0(focus-trap@8.2.5)(vue@3.5.46(typescript@6.0.3))
+        version: 15.0.0(focus-trap@8.2.6)(vue@3.5.46(typescript@6.0.3))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       focus-trap:
-        specifier: 8.2.5
-        version: 8.2.5
+        specifier: 8.2.6
+        version: 8.2.6
       shiki:
         specifier: ^4.6.0
         version: 4.6.0
@@ -1034,8 +1034,8 @@ packages:
       picomatch:
         optional: true
 
-  focus-trap@8.2.5:
-    resolution: {integrity: sha512-VrqfyRXaHZ0EkhXlfyalszmhnSN9yjdYXwlwLSRoJrDJ0/eswY5J5Avj/Hcd/PrOHCMnsMhwx7+7+s1kmv9Asg==}
+  focus-trap@8.2.6:
+    resolution: {integrity: sha512-4V7uTf/7Ax3ynfbey6K3o8NOfIz+go9atKNtFU+KCP5NWhyvn2M/Qk4HY+9kOi8NWujpglRGe0y6G3r/L5M/Pw==}
 
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
@@ -2240,13 +2240,13 @@ snapshots:
       '@vueuse/shared': 15.0.0(vue@3.5.46(typescript@6.0.3))
       vue: 3.5.46(typescript@6.0.3)
 
-  '@vueuse/integrations@15.0.0(focus-trap@8.2.5)(vue@3.5.46(typescript@6.0.3))':
+  '@vueuse/integrations@15.0.0(focus-trap@8.2.6)(vue@3.5.46(typescript@6.0.3))':
     dependencies:
       '@vueuse/core': 15.0.0(vue@3.5.46(typescript@6.0.3))
       '@vueuse/shared': 15.0.0(vue@3.5.46(typescript@6.0.3))
       vue: 3.5.46(typescript@6.0.3)
     optionalDependencies:
-      focus-trap: 8.2.5
+      focus-trap: 8.2.6
 
   '@vueuse/metadata@15.0.0': {}
 
@@ -2393,7 +2393,7 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.7
 
-  focus-trap@8.2.5:
+  focus-trap@8.2.6:
     dependencies:
       tabbable: 6.5.2
 
