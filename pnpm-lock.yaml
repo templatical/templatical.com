@@ -185,8 +185,8 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0
       '@templatical/ai-kit':
-        specifier: ^0.62.2
-        version: 0.62.2
+        specifier: ^0.63.2
+        version: 0.63.5
       '@unhead/vue':
         specifier: 2.1.17
         version: 2.1.17(vue@3.5.46(typescript@6.0.3))
@@ -222,8 +222,8 @@ importers:
         specifier: 4.3.5
         version: 4.3.5(vite@8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.4))
       '@templatical/types':
-        specifier: ^0.62.2
-        version: 0.62.2
+        specifier: ^0.63.2
+        version: 0.63.5
       '@types/node':
         specifier: 26.6.6
         version: 26.6.6
@@ -644,8 +644,8 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@templatical/ai-kit@0.62.2':
-    resolution: {integrity: sha512-WETsFeAJ9snp/OchKdh9okEvC3LAjN7uFP0bWBNTs3CApOwD/yYRhlglV1RNFo43D2AAcFj5oaO6hz5RNywSpQ==}
+  '@templatical/ai-kit@0.63.5':
+    resolution: {integrity: sha512-mYelxbzpc0R46m+1fpHdH4BQtGxOIrsQe+/Zxo3ugvwQPGB50R/2IrPWUy64p9yHFY1viGg2xDl0CnxLJjvGpA==}
     peerDependencies:
       '@anthropic-ai/sdk': ^1
       ai: ^7
@@ -658,8 +658,8 @@ packages:
       openai:
         optional: true
 
-  '@templatical/types@0.62.2':
-    resolution: {integrity: sha512-EynPGE2D6CEg0aRXBv6MJa6iOhpY/JwVVnoREeeNKhBlo9MBidQvEERdjI91I5QWYvhNyUJXgehQ947JBYUYBg==}
+  '@templatical/types@0.63.5':
+    resolution: {integrity: sha512-gT8HFzp2ZU59hGiQCNf6bwIBpyBKVZ+c8cWw/bmkmtkOCkaOK8W4nAZc7M7dHiMXJ1Rj3MQX8vpu6DfGnIiOSg==}
     peerDependencies:
       liquidjs: ^10.30.1
     peerDependenciesMeta:
@@ -2053,13 +2053,13 @@ snapshots:
       tailwindcss: 4.3.5
       vite: 8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.4)
 
-  '@templatical/ai-kit@0.62.2':
+  '@templatical/ai-kit@0.63.5':
     dependencies:
-      '@templatical/types': 0.62.2
+      '@templatical/types': 0.63.5
     transitivePeerDependencies:
       - liquidjs
 
-  '@templatical/types@0.62.2': {}
+  '@templatical/types@0.63.5': {}
 
   '@tybys/wasm-util@0.10.5':
     dependencies:
